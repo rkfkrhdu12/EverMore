@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CreateUnit : MonoBehaviour
 {
+    // Github 테스트
     public GameObject _spawnPoint;
 
     public Unit[] _units = null;
