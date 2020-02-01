@@ -23,6 +23,6 @@ public class CreateUnit : MonoBehaviour
     protected void SpawnUnit(int num)
     {
         Unit unit = Instantiate(_units[num], gameObject.transform.position, gameObject.transform.rotation, null);
-        unit._isSpawn = true;
+        unit.Spawn();
     }
 }

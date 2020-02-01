@@ -12,17 +12,9 @@ public class GameSystem : MonoBehaviour
 
     private void Start()
     {
-        Unit unit1 = _unitObject.GetComponent<Unit>();
-        unit1._curhealth = 100;
-        unit1._maxhealth = 100;
-        unit1._moveSpeed = 1;
-        unit1._attackDamage = 10;
-        unit1._attackSpeed = 1;
+        Unit a = new Unit();
 
-        Unit[] units = new Unit[1];
-        units[0] = unit1;
-
-        PlayerSetUnit(units);
+        Debug.Log("Comp");
     }
     
     void PlayerSetUnit(Unit[] units)
