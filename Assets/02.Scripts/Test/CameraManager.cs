@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 윤용우
 public class CameraManager : MonoBehaviour
 {
     Transform _transform;

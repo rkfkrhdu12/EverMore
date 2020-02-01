@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// 윤용우
 public class PlayerCreateUnit : CreateUnit
 {
     public GameObject _unitSlot;
 
     // Player UnitSlot Image 파일을 Inspector 를 통해 직접 할당
-    public Image[] imageSlot; 
+    public Image[] imageSlot;
 
     void Update()
     {

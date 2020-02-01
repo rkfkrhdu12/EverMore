@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 윤용우
 public class GameSystem : MonoBehaviour
 {
-    // Test
-    public CreateUnit _playerCreateUnit;
-    public CreateUnit _enemyCreateUnit;
+    // 유닛 생성
+    [SerializeField]
+    CreateUnit _playerCreateUnit;
 
-    public GameObject _unitObject;
+    [SerializeField]
+    CreateUnit _enemyCreateUnit;
+    // #
+
+    [SerializeField]
+    GameObject _unitObject; //유니티 짱
 
     private void Start()
     {
         Unit a = new Unit();
-
-        Debug.Log("Comp");
     }
     
     void PlayerSetUnit(Unit[] units)

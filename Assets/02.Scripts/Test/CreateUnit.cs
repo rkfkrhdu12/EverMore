@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// 윤용우
 public class CreateUnit : MonoBehaviour
 {
-    // Github 테스트
-    public GameObject _spawnPoint;
+    [SerializeField]
+    GameObject _spawnPoint;
 
     public Unit[] _units = null;
 
