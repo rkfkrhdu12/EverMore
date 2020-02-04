@@ -14,7 +14,7 @@ public class Unit : MonoBehaviour
     // 방어력
     public float _defensivePower;
 
-    public (int _damage, float _speed, float _range) _attack;
+    public (float _damage, float _speed, float _range) _attack;
     //public int _attackDamage;
     //public float _attackSpeed;
     //public float _attackRange;
@@ -29,7 +29,7 @@ public class Unit : MonoBehaviour
     }
 
     // 유닛 코스트
-    public float _cost;
+    public int _cost;
     // second
     public float _coolTime;
 
@@ -61,7 +61,7 @@ public class Unit : MonoBehaviour
     }
 
     #endregion
-    
+
     public void Spawn()
     {
         _isdead = false;
@@ -78,10 +78,10 @@ public class Unit : MonoBehaviour
         retval._coolTime = 1;
         retval._cost = 10;
         retval._defensivePower = 10;
-        retval._itemsNum[(int)eEquipItem.HELMET] = 0;
-        retval._itemsNum[(int)eEquipItem.ARMOUR] = 0;
+        retval._itemsNum[(int)eEquipItem.HELMET] = 1;
+        retval._itemsNum[(int)eEquipItem.ARMOUR] = 2;
         retval._itemsNum[(int)eEquipItem.SHIELD] = 0;
-        retval._itemsNum[(int)eEquipItem.WEAPON] = 0;
+        retval._itemsNum[(int)eEquipItem.WEAPON] = 1;
         retval._moveSpeed = 3;
         retval._team = eTeam.PLAYER;
 
