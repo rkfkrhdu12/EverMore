@@ -66,7 +66,24 @@ public class Unit : MonoBehaviour
     {
         _isdead = false;
     }
-
+    public bool GetIsDead() 
+    // 윤용우 생성
+    {
+        return _isdead;
+    }
+    public void Init(int curH = 100, int maxH = 100, int speed = 3, eTeam team = eTeam.PLAYER) 
+    // 윤용우 생성
+    {
+        _curhealth = curH;
+        _maxhealth = maxH;
+        _abilityNum = 1;
+        _attack = (10, 2, 3);
+        _coolTime = 1;
+        _cost = 10;
+        _defensivePower = 10;
+        _moveSpeed = speed;
+        _team = team;
+    }
     // 추후 삭제예정
     static Unit TestInit()
     {

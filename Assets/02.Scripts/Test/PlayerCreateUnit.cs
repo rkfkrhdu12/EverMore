@@ -22,7 +22,7 @@ public class PlayerCreateUnit : CreateUnit
                 _isSpawn = true;
             }
         }
-
+        /*
         if (Input.GetKey(KeyCode.A))
             GameStart();
 
@@ -32,6 +32,7 @@ public class PlayerCreateUnit : CreateUnit
 
             SpawnUnit(0);
         }
+        */
     }
 
     private bool _isStart = false;
