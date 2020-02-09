@@ -6,8 +6,6 @@ using System.Text.RegularExpressions;
 
 public class CSVParser
 {
-    static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
-
     public static List<string> Read(string file)
     {
         var list = new List<string>();

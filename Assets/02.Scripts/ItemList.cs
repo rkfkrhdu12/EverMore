@@ -12,16 +12,16 @@ public struct WeaponList
 public class ItemList : MonoBehaviour
 {
     // 아이템은 빨리 자주 찾으며, 키를 통해 찾을것이므로 map(Dictionary)을 이용
-    Dictionary<int, Weapon> _weaponList;
+    Dictionary<int, Weapon> _weaponList = new Dictionary<int, Weapon>();
 
-    Dictionary<int, Armour> _armourList;
+    Dictionary<int, Armour> _armourList = new Dictionary<int, Armour>();
 
     void Start()
     {
         // 길이가 유동적이고 검색을 하는것이 아니므로 속도가 크게 상관없어 List를 이용
         List<string> data = CSVParser.Read("TestWeapon");
 
-        for (int i = 1; i < data.Count; ++i)
+        for (int i = 0; i < data.Count; ++i)
         {
             string[] splitData = data[i].Split(',');
 

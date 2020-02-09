@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum eTeam
+{
+    PLAYER,
+    ENEMY,
+}
+
 public class Unit : MonoBehaviour
 {
     // H
@@ -22,11 +28,16 @@ public class Unit : MonoBehaviour
     public float _moveSpeed;
 
     public eTeam _team;
-    public enum eTeam
-    {
-        PLAYER,
-        ENEMY,
-    }
+
+    // 변경 완료 시 삭제
+    //
+        public enum eTeam
+        {
+            PLAYER,
+            ENEMY,
+        }
+    //
+
 
     // 유닛 코스트
     public int _cost;
@@ -66,16 +77,24 @@ public class Unit : MonoBehaviour
     {
         _isdead = false;
     }
-    public bool GetIsDead() 
-    // 윤용우 생성
-    {
-        return _isdead;
-    }
-    public void SetIsDead(bool dead)
-    // 윤용우 생성
-    {
-        _isdead = dead;
-    }
+
+    // GetIsDead(),SetIsDead() 함수 대체
+    public bool IsDead { get { return _isdead; } set { } }
+
+    // 변경 완료 시 삭제
+    //
+        public bool GetIsDead() 
+        // 윤용우 생성
+        {
+            return _isdead;
+        }
+        public void SetIsDead(bool dead)
+        // 윤용우 생성
+        {
+            _isdead = dead;
+        }
+    //
+
     public void Init(int curH = 100, int maxH = 100, int speed = 3, eTeam team = eTeam.PLAYER) 
     // 윤용우 생성
     {
@@ -89,24 +108,25 @@ public class Unit : MonoBehaviour
         _moveSpeed = speed;
         _team = team;
     }
-    // 추후 삭제예정
-    static Unit TestInit()
-    {
-        Unit retval = new Unit();
-        retval._curhealth = 100;
-        retval._maxhealth = 100;
-        retval._abilityNum = 1;
-        retval._attack = (10, 2, 3);
-        retval._coolTime = 1;
-        retval._cost = 10;
-        retval._defensivePower = 10;
-        retval._itemsNum[(int)eEquipItem.HELMET] = 1;
-        retval._itemsNum[(int)eEquipItem.ARMOUR] = 2;
-        retval._itemsNum[(int)eEquipItem.SHIELD] = 0;
-        retval._itemsNum[(int)eEquipItem.WEAPON] = 1;
-        retval._moveSpeed = 3;
-        retval._team = eTeam.PLAYER;
 
-        return retval;
-    }
+    //// 추후 삭제예정
+    //static Unit TestInit()
+    //{
+    //    Unit retval = new Unit();
+    //    retval._curhealth = 100;
+    //    retval._maxhealth = 100;
+    //    retval._abilityNum = 1;
+    //    retval._attack = (10, 2, 3);
+    //    retval._coolTime = 1;
+    //    retval._cost = 10;
+    //    retval._defensivePower = 10;
+    //    retval._itemsNum[(int)eEquipItem.HELMET] = 1;
+    //    retval._itemsNum[(int)eEquipItem.ARMOUR] = 2;
+    //    retval._itemsNum[(int)eEquipItem.SHIELD] = 0;
+    //    retval._itemsNum[(int)eEquipItem.WEAPON] = 1;
+    //    retval._moveSpeed = 3;
+    //    retval._team = eTeam.PLAYER;
+
+    //    return retval;
+    //}
 }
