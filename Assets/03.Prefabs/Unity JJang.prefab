@@ -810,9 +810,10 @@ GameObject:
   - component: {fileID: 4560000311449939669}
   - component: {fileID: -6978658842760673328}
   - component: {fileID: 4560000311449939668}
+  - component: {fileID: 6778494563761272123}
   m_Layer: 0
   m_Name: Unity JJang
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -884,11 +885,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _curhealth: 0
   _maxhealth: 0
+  _defensivePower: 0
   _attackDamage: 0
-  _attackSpeed: 0
+  _attackInterval: 0
+  _attackRange: 0
   _moveSpeed: 0
-  _object: {fileID: 0}
-  _isSpawn: 0
+  _cost: 0
+  _coolTime: 0
+  _team: 0
+  _abilityNum: 0
+  _itemsNum: 00000000000000000000000000000000
+  _collider: {fileID: 6778494563761272123}
 --- !u!136 &4560000311449939668
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -902,6 +909,19 @@ CapsuleCollider:
   m_Radius: 0.25
   m_Height: 1
   m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!135 &6778494563761272123
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5506087092574406026}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &5552227180832251932
 GameObject:

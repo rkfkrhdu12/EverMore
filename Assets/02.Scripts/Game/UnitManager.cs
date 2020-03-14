@@ -20,6 +20,7 @@ public class UnitManager : SingletonMonoBehaviour<UnitManager>
     GameObject _unitPrefab; //유닛 프리팹
 
     #endregion
+
     protected override void OnStart()
     {
         // 풀링
@@ -38,26 +39,37 @@ public class UnitManager : SingletonMonoBehaviour<UnitManager>
 
     void Update()
     {
-        for(int i = 0; i < m_unitList.Count; i++)
-        {
-            if (m_unitList[i].GetIsDead() == true)
-                m_unitList[i].transform.position += (m_unitList[i].transform.forward * m_unitList[i]._moveSpeed * Time.deltaTime);
-        }
+        // ? 
+        //for(int i = 0; i < m_unitList.Count; i++)
+        //{
+        //    if (m_unitList[i].IsDead == true)
+        //        m_unitList[i].transform.position += (m_unitList[i].transform.forward * m_unitList[i]._moveSpeed * Time.deltaTime);
+        //}
         if (Input.GetKeyDown(KeyCode.S))
         {
-            CreateUnit(Unit.eTeam.PLAYER);
+            CreateUnit(eTeam.PLAYER);
         }
     }
 
     #region Fuctions_Public
-    public void CreateUnit(Unit.eTeam team)
+    public void CreateUnit(eTeam team)
     // 유닛 생성
     {
         var obj = m_unitPool.pop();
-        obj.gameObject.SetActive(true);
+
+        // ?
+        //obj.gameObject.SetActive(true);
+        //obj.transform.position = _playerCreateUnit.transform.position;
+        //
+        //obj.Init(100, 100, 3, team);
+
         obj.transform.position = _playerCreateUnit.transform.position;
 
         obj.Init(100, 100, 3, team);
+        obj.Spawn();
+
+        obj.gameObject.SetActive(true);
+
         m_unitList.Add(obj);
     }
     public void ResetMonster(Unit monster)
@@ -85,7 +97,7 @@ public class UnitManager : SingletonMonoBehaviour<UnitManager>
             ResetMonster(m_unitList[i]);
         }
         // 반복문의 카운트가 줄어서 나중에 리스트 삭제
-        m_unitList.RemoveAll(unit => unit.GetIsDead() == true);
+        m_unitList.RemoveAll(unit => unit.IsDead == true);
     }
     #endregion
 }

@@ -14,35 +14,26 @@ public class Unit : MonoBehaviour
 
     #region Variable
 
-    public int _curhealth;
-    public int _maxhealth;
+    #region Status
+        // 추후 모두 private
+
+    public float _curhealth;
+    public float _maxhealth;
 
     // 방어력
     public float _defensivePower;
-
-    public (float _damage, float _speed, float _range) _attack;
-    //public int _attackDamage;
-    //public float _attackSpeed;
-    //public float _attackRange;
+    public float _attackDamage;
+    public float _attackInterval;
+    public float _attackRange;
 
     public float _moveSpeed;
-
-    public eTeam _team;
-
-    // 변경 완료 시 삭제
-    //
-        public enum eTeam
-        {
-            PLAYER,
-            ENEMY,
-        }
-    //
-
-
     // 유닛 코스트
     public int _cost;
     // second
     public float _coolTime;
+    #endregion
+
+    public eTeam _team;
 
     // 파일 파싱으로 아이디 가져온 후 적용시킬 예정
     // 특성 번호
@@ -55,10 +46,25 @@ public class Unit : MonoBehaviour
         HELMET,
         ARMOUR,
         WEAPON,
-        SHIELD
+        WEAPON2,
     }
 
-    private bool _isdead = true;
+    eState _curState = eState.MOVE;
+    private enum eState
+    {
+        IDLE,
+        MOVE,
+        ATTACK,
+    }
+
+    // public으로 해놔야함 Inspector를 통해 값을 대입
+    public SphereCollider _collider;
+
+    public Queue<Unit> _attackTargets = new Queue<Unit>();
+    Unit _curTarget = null;
+    public float _attackTime = 0.0f;
+
+    public bool _isdead = true;
 
     #endregion
 
@@ -66,34 +72,90 @@ public class Unit : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_isdead) return;
+        if (_isdead) return;
 
+        UpdateState();
+
+        UpdateMonobehaviour();
+    }
+
+    private void UpdateState()
+    {
+        // 설정된 타겟도 설정되어야할 타겟도 없으면 eState.Move
+        if (null == _curTarget && 0 == _attackTargets.Count)
+        {
+            _curState = eState.MOVE;
+        }
+        else
+        { // 설정된 타겟 혹은 설정되어야할 타겟이 잇으므로 eState.Attack
+            _curState = eState.ATTACK;
+        }
+    }
+
+    private void UpdateMonobehaviour()
+    {
+
+        switch(_curState)
+        {
+            case eState.MOVE:   UpdateMove();   break;
+            case eState.ATTACK: UpdateAttack(); break;
+        }
+    }
+
+    private void UpdateMove()
+    {
         transform.Translate(0, 0, _moveSpeed * Time.deltaTime);
+    }
+
+    private void UpdateAttack()
+    {
+        if (_attackTime <= _attackInterval)
+        {
+            _attackTime += Time.deltaTime;
+        }
+        else
+        {
+            // 타겟이 없엇거나 체력이 0 이하로 내려가면 새로운 타겟을 정한다.
+            if (null == _curTarget || 0 >= _curTarget._curhealth)
+            {
+                if(0 == _attackTargets.Count) { _curTarget = null; return; }
+
+                _curTarget = _attackTargets.Dequeue();
+            }
+
+            _attackTime = 0.0f;
+
+            _curTarget.DamageReceive(_attackDamage);
+        }
     }
 
     #endregion
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.isTrigger) { return; }
+        if(!other.CompareTag("Unit")) { return; }
+
+        Unit target = other.GetComponent<Unit>();
+        if (_attackTargets.Contains(target) || _team == target._team) { return; }
+
+        _attackTargets.Enqueue(target);
+    }
+
     public void Spawn()
     {
         _isdead = false;
+
+        _collider.radius *= _attackRange;
     }
 
-    // GetIsDead(),SetIsDead() 함수 대체
-    public bool IsDead { get { return _isdead; } set { } }
+    public void DamageReceive(float damage)
+    {
+        //
+        _curhealth -= damage;
+    }
 
-    // 변경 완료 시 삭제
-    //
-        public bool GetIsDead() 
-        // 윤용우 생성
-        {
-            return _isdead;
-        }
-        public void SetIsDead(bool dead)
-        // 윤용우 생성
-        {
-            _isdead = dead;
-        }
-    //
+    public bool IsDead { get { return _isdead; } set { } }
 
     public void Init(int curH = 100, int maxH = 100, int speed = 3, eTeam team = eTeam.PLAYER) 
     // 윤용우 생성
@@ -101,32 +163,13 @@ public class Unit : MonoBehaviour
         _curhealth = curH;
         _maxhealth = maxH;
         _abilityNum = 1;
-        _attack = (10, 2, 3);
+        _attackDamage = 10;
+        _attackInterval = 2;
+        _attackRange = 3;
         _coolTime = 1;
         _cost = 10;
         _defensivePower = 10;
         _moveSpeed = speed;
         _team = team;
     }
-
-    //// 추후 삭제예정
-    //static Unit TestInit()
-    //{
-    //    Unit retval = new Unit();
-    //    retval._curhealth = 100;
-    //    retval._maxhealth = 100;
-    //    retval._abilityNum = 1;
-    //    retval._attack = (10, 2, 3);
-    //    retval._coolTime = 1;
-    //    retval._cost = 10;
-    //    retval._defensivePower = 10;
-    //    retval._itemsNum[(int)eEquipItem.HELMET] = 1;
-    //    retval._itemsNum[(int)eEquipItem.ARMOUR] = 2;
-    //    retval._itemsNum[(int)eEquipItem.SHIELD] = 0;
-    //    retval._itemsNum[(int)eEquipItem.WEAPON] = 1;
-    //    retval._moveSpeed = 3;
-    //    retval._team = eTeam.PLAYER;
-
-    //    return retval;
-    //}
 }
