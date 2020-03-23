@@ -146,6 +146,7 @@ public class Unit : MonoBehaviour
     {
         _isdead = false;
 
+        if(null == _collider) { _collider = GetComponent<SphereCollider>(); }
         _collider.radius *= _attackRange;
     }
 
