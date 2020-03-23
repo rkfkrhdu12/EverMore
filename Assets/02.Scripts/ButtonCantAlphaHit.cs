@@ -9,7 +9,12 @@ public class ButtonCantAlphaHit
     public void Start()
     {
         _image = null;
-        _image = GameObject.Find("Canvas").GetComponentsInChildren<Image>(); ;
+
+        GameObject canvasObj = GameObject.Find("Canvas");
+        if (null == canvasObj) { return; }
+
+        _image = canvasObj.GetComponentsInChildren<Image>(); ;
+
 
         for (int i = 0; i < _image.Length; ++i)
         {

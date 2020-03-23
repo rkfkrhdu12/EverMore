@@ -12,7 +12,13 @@ public class GameSystem : MonoBehaviour
         {
             if(null == _instance)
             {
-                _instance = GameObject.Find("GameSystem").GetComponent<GameSystem>();
+                GameObject gSystemObj = GameObject.Find("GameSystem");
+                if(null == gSystemObj) { return null; }
+                gSystemObj.SetActive(true);
+
+                _instance = gSystemObj.GetComponent<GameSystem>();
+
+                _instance.enabled = true;
 
                 _instance.OnAwake();
             }
@@ -59,6 +65,8 @@ public class GameSystem : MonoBehaviour
 
         _playerTeam = new Team();
         _playerTeam.InitTest();
+
+        UnitStability.Init();
     }
 
     private void Update()

@@ -19,9 +19,11 @@ public class UnitManager : SingletonMonoBehaviour<UnitManager>
     [SerializeField]
     GameObject _unitPrefab; //유닛 프리팹
 
-    Unit[] _units = new Unit[5]; 
+    Unit[] _units = new Unit[UnitCount];
 
     #endregion
+
+    readonly static int UnitCount = Team.UnitCount;
 
     protected override void OnStart()
     {
@@ -37,31 +39,41 @@ public class UnitManager : SingletonMonoBehaviour<UnitManager>
             return unit;
         });
         m_unitList = new List<Unit>();
-
+        
         GameSystem gSystem = GameSystem.Instance;
 
-        int i = 0;
-        _units[i] = gSystem.GetPlayerUnit(i++);
-        _units[i] = gSystem.GetPlayerUnit(i++);
-        _units[i] = gSystem.GetPlayerUnit(i++);
-        _units[i] = gSystem.GetPlayerUnit(i++);
-        _units[i] = gSystem.GetPlayerUnit(i++);
+        for (int i = 0; i < UnitCount; ++i)
+        {
+            _units[i] = gSystem.GetPlayerUnit(i);
+            _spawnInterval[i] = _units[i]._coolTime;
+            _spawnCost[i] = _units[i]._cost;
+        }
 
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        for (int i = 0; i < UnitCount; ++i)
         {
-            CreateUnit(1);
+            if (_spawnInterval[i] >= _spawnTime[i])
+            {
+                _spawnTime[i] += Time.deltaTime;
+            }
         }
-        if (Input.GetKeyDown(KeyCode.D))
+    }
+
+    public float[] _spawnTime       = new float[Team.UnitCount];
+    public readonly float[] _spawnInterval   = new float[Team.UnitCount];
+    public readonly int[] _spawnCost   = new int[Team.UnitCount];
+
+    public void Spawn(int num, ref float gold)
+    {
+        if (_spawnInterval[num - 1] < _spawnTime[num - 1] && _spawnCost[num - 1] <= gold)
         {
-            CreateUnit(3);
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            CreateUnit(2);
+            _spawnTime[num - 1] = 0;
+            gold -= _spawnCost[num - 1];
+
+            CreateUnit(num);
         }
     }
 
@@ -69,7 +81,7 @@ public class UnitManager : SingletonMonoBehaviour<UnitManager>
     public void CreateUnit(int num)
     // 유닛 생성
     {
-        if (0 >= num || 5 < num) { Debug.LogError("CreateUnit() "); return; }
+        if (0 >= num || 6 < num) { Debug.LogError("CreateUnit() "); return; }
 
         var obj = m_unitPool.pop();
 

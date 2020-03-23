@@ -194,6 +194,15 @@ public class Item
         _weight = weight;
         _object = obj;
     }
+
+    public virtual UnitStatus Equip(ref UnitStatus us)
+    {
+        us.cost += Cost;
+        us.coolTime += _coolTime;
+        us.weight += _weight;
+
+        return us;
+    }
 }
 
 public class Weapon : Item
@@ -208,6 +217,7 @@ public class Weapon : Item
         _range = range;
         _damage = damage;
     }
+
 }
 
 public class Armour : Item
@@ -222,6 +232,17 @@ public class Armour : Item
         _defense = defense;
         _health = health;
     }
+
+    public override UnitStatus Equip(ref UnitStatus us)
+    {
+        base.Equip(ref us);
+
+        us.maxhealth += _health;
+        us.defensivePower += _defense;
+
+        return us;
+    }
+
 }
 
 #region Weapon

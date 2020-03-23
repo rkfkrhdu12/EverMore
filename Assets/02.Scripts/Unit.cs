@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AnimatorPro;
 
 public enum eTeam
 {
@@ -8,22 +9,31 @@ public enum eTeam
     ENEMY,
 }
 
-public class Unit : MonoBehaviour
+public struct UnitStatus
 {
-    // H
+    public float    maxhealth;
+    public float    defensivePower;
 
+    public float    moveSpeed;
+    public int      cost;
+    public float    coolTime;
+    public int      weight;
+}
+
+public class Unit : FieldObject
+{
     #region Variable
 
     #region Status
         // 추후 모두 private
 
-    public float _curhealth;
-    public float _maxhealth;
+    //public float _curhealth;
+    //public float _maxhealth;
 
     // 방어력
     public float _defensivePower;
     public float _attackDamage;
-    public float _attackInterval;
+    public float _attackSpeed;
     public float _attackRange;
 
     public float _moveSpeed;
@@ -33,11 +43,12 @@ public class Unit : MonoBehaviour
     public float _coolTime;
     #endregion
 
-    public eTeam _team;
+    public int _abilityNum;
+
+    //public eTeam _team;
 
     // 파일 파싱으로 아이디 가져온 후 적용시킬 예정
     // 특성 번호
-    public int _abilityNum;
 
     // 아이템 번호
     public int[] _itemsNum = new int[4];
@@ -46,7 +57,7 @@ public class Unit : MonoBehaviour
         HELMET,
         ARMOUR,
         WEAPON,
-        WEAPON2,
+        SUBWEAPON,
     }
 
     eState _curState = eState.MOVE;
@@ -60,11 +71,20 @@ public class Unit : MonoBehaviour
     // public으로 해놔야함 Inspector를 통해 값을 대입
     public SphereCollider _collider;
 
-    public Queue<Unit> _attackTargets = new Queue<Unit>();
-    Unit _curTarget = null;
+    public Queue<FieldObject> _attackTargets = new Queue<FieldObject>();
+    FieldObject _curTarget = null;
     public float _attackTime = 0.0f;
 
-    public bool _isdead = true;
+    //public bool _isdead = true;
+
+    Animator _animator;
+    AnimatorPro _aniPro;
+
+    Rigidbody _rigid;
+
+    // Test
+    private static readonly int _idAttack   = Animator.StringToHash("Attack");
+    private static readonly int _idMove     = Animator.StringToHash("Move");
 
     #endregion
 
@@ -94,7 +114,6 @@ public class Unit : MonoBehaviour
 
     private void UpdateMonobehaviour()
     {
-
         switch(_curState)
         {
             case eState.MOVE:   UpdateMove();   break;
@@ -105,11 +124,14 @@ public class Unit : MonoBehaviour
     private void UpdateMove()
     {
         transform.Translate(0, 0, _moveSpeed * Time.deltaTime);
+
+        // Test
+        _aniPro.SetParam(_idMove, _rigid.velocity.z);
     }
 
     private void UpdateAttack()
     {
-        if (_attackTime <= _attackInterval)
+        if (_attackTime <= _attackSpeed)
         {
             _attackTime += Time.deltaTime;
         }
@@ -136,8 +158,11 @@ public class Unit : MonoBehaviour
         if(other.isTrigger) { return; }
         if(!other.CompareTag("Unit")) { return; }
 
-        Unit target = other.GetComponent<Unit>();
+        FieldObject target = other.GetComponent<FieldObject>();
         if (_attackTargets.Contains(target) || _team == target._team) { return; }
+
+        // Test
+        _aniPro.SetParam(_idAttack, true);
 
         _attackTargets.Enqueue(target);
     }
@@ -149,6 +174,7 @@ public class Unit : MonoBehaviour
         if(null == _collider) { _collider = GetComponent<SphereCollider>(); }
         _collider.radius *= _attackRange;
 
+        #region Item
         GameObject _helmetObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[0]).Object;
         Instantiate(_helmetObj, gameObject.transform);
 
@@ -159,42 +185,72 @@ public class Unit : MonoBehaviour
         {
             GameObject _weaponObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[2]).Object;
             Instantiate(_weaponObj, gameObject.transform);
-        } 
+        }
 
-        if(0 != _itemsNum[3])
+        if (0 != _itemsNum[3])
         {
             GameObject _subweaponObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[3]).Object;
             Instantiate(_subweaponObj, gameObject.transform);
         }
+        #endregion
 
+        _animator = GetComponent<Animator>();
+        if (null == _animator) { }
+
+        _aniPro = GetComponent<AnimatorPro>();
+        if (null == _aniPro) { }
+
+        _aniPro?.Init(_animator);
+
+        _rigid = GetComponent<Rigidbody>();
     }
 
-    public void DamageReceive(float damage)
+    public override  void DamageReceive(float damage)
     {
-        //
         _curhealth -= damage;
 
         if(_curhealth <= 0)
         {
+            _isdead = true;
+
             DeleteObjectManager.AddDeleteObject(gameObject);
         }
     }
-
-    public bool IsDead { get { return _isdead; } set { } }
 
     public void Equip(int code, eEquipItem weapon = eEquipItem.WEAPON)
     {
         Item i = GameSystem.Instance.itemList.ItemSearch(code);
 
-        if (null == i) { Debug.LogError("Item Equip Error Item Code " + code); return; }
+        if (null == i) { return; }
+
+        UnitStatus us = new UnitStatus();
+
+        i.Equip(ref us);
+
+        _maxhealth          += us.maxhealth;
+        _curhealth          = _maxhealth;
+        _defensivePower     += us.defensivePower;
+        _moveSpeed          += us.moveSpeed;
+        _cost               += us.cost;
+        _coolTime           += us.coolTime;
 
         switch (i.Type)
         {
-            case eItemType.NONE: break;
-            case eItemType.HELMET: _itemsNum[(int)eEquipItem.HELMET] = code; break;
-            case eItemType.BODYARMOUR: _itemsNum[(int)eEquipItem.ARMOUR] = code; break;
-            default: _itemsNum[(int)weapon] = code; break;
+            case eItemType.NONE:            { break; }
+            case eItemType.HELMET:          { _itemsNum[(int)eEquipItem.HELMET] = code; break; }
+            case eItemType.BODYARMOUR:      { _itemsNum[(int)eEquipItem.ARMOUR] = code; break; }
+            default:                        { _itemsNum[(int)weapon] = code; break; }
         }
+    }
+
+    public void Init(Unit unit)
+    {
+        Init();
+
+        Equip(unit._itemsNum[0]);                        // = unit._itemsNum[0];
+        Equip(unit._itemsNum[1]);                        // = unit._itemsNum[1];
+        Equip(unit._itemsNum[2]);                        // = unit._itemsNum[2];
+        Equip(unit._itemsNum[3],eEquipItem.SUBWEAPON);   // = unit._itemsNum[3];
     }
 
     public void Init(int curH = 100, int maxH = 100, int speed = 3, eTeam team = eTeam.PLAYER)
@@ -204,22 +260,13 @@ public class Unit : MonoBehaviour
         _maxhealth = maxH;
         _abilityNum = 1;
         _attackDamage = 10;
-        _attackInterval = 2;
+        _attackSpeed = 2;
         _attackRange = 3;
-        _coolTime = 1;
-        _cost = 10;
-        _defensivePower = 10;
+        _coolTime = 0;
+        _cost = 0;
+        _defensivePower = 0;
         _moveSpeed = speed;
         _team = team;
     }
 
-    public void Init(Unit unit)
-    {
-        Init();
-
-        _itemsNum[0] = unit._itemsNum[0];
-        _itemsNum[1] = unit._itemsNum[1];
-        _itemsNum[2] = unit._itemsNum[2];
-        _itemsNum[3] = unit._itemsNum[3];
-    }
 }
