@@ -17,13 +17,11 @@ public class ItemSlot : MonoBehaviour
 
     void UpdateText() // 기획자님께서 잘 해주시겟죠 
     {
-        Debug.Log("checking  " + _itemNum);
         Item item = GameSystem.Instance.itemList.ItemSearch(_itemNum);
         if(null == item) { return; }
-
-
-        Debug.Log("pass  " + _itemNum);
-
+        
         _text.text = item.Name;
+
+        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
     }
 }

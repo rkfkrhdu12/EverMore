@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;   
 
-// 윤용우
 public class GameSystem : MonoBehaviour
 {
     static GameSystem _instance;
@@ -20,16 +20,14 @@ public class GameSystem : MonoBehaviour
         }
     }
 
-    // 유닛 생성
-    [SerializeField]
-    CreateUnit _playerCreateUnit;
+    Team _playerTeam;
+    public int GetPlayerUnitCount() { return _playerTeam._units.Length; }
+    public Unit GetPlayerUnit(int value)
+    {
+        if(value < 0 || value >= _playerTeam._units.Length) { return null; }
 
-    [SerializeField]
-    CreateUnit _enemyCreateUnit;
-    // #
-
-    [SerializeField]
-    GameObject _unitObject; //유니티 짱
+        return _playerTeam._units[value];
+    }
 
     ItemList _itemList;
     public ItemList itemList { get { return _itemList; } }
@@ -40,7 +38,7 @@ public class GameSystem : MonoBehaviour
 
     private void Awake()
     {
-        if(_instance == null)
+        if (_instance == null)
         {
             _instance = this;
             _instance.OnAwake();
@@ -56,7 +54,11 @@ public class GameSystem : MonoBehaviour
 
         _deleteObjectManager = new DeleteObjectManager();
 
-        _scenesManager = GetComponent<ScenesManager>();
+        _scenesManager = new ScenesManager();
+        _scenesManager.Start();
+
+        _playerTeam = new Team();
+        _playerTeam.InitTest();
     }
 
     private void Update()
@@ -82,26 +84,29 @@ public class GameSystem : MonoBehaviour
         }
     }
 
-    #region Test
 
-    void PlayerSetUnit(Unit[] units)
+    #region ScenesManager
+
+    public void NextScene(string sceneName)
     {
-        _playerCreateUnit.SetUnit(units);
+        while (0 < _deleteObjectManager.GetCount())
+        {
+            GameObject deleteObj = _deleteObjectManager.Dequeue();
+
+            Destroy(deleteObj);
+        }
+
+        _scenesManager.NextScene(sceneName);
     }
-    
-    void EnemySetUnit(Unit[] units)
-    {
-        _enemyCreateUnit.SetUnit(units);
-    }
 
-    #endregion
-
-
-    #region SCENESMANAGER
+    //public void NextScene(Image image)
+    //{
+    //    _scenesManager.NextScene(image);
+    //}
 
     public void NextScene()
     {
-        _scenesManager.NextScene();
+
     }
 
     public void PrevScene()

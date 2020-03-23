@@ -32,7 +32,7 @@ public class ItemInventoryManager : MonoBehaviour
     //public void Set
 
     // null 은 inspector를 통해 저장
-    public GameObject _inventoryObject = null;
+    public GameObject _contentObject = null;
 
     public GameObject _itemPrefab = null;
 
@@ -77,8 +77,6 @@ public class ItemInventoryManager : MonoBehaviour
     private void OnEnable()
         // Start
     {
-        Debug.Log("OnEnable");
-
         Type = eItemInvenType.HELMET;
         UpdateInventory();
     }
@@ -90,9 +88,9 @@ public class ItemInventoryManager : MonoBehaviour
         int curUseItemSlotCount = _inventory[curType].Count;
 
         if (0 >= curUseItemSlotCount) { return; }
-        if (null == _itemPrefab || null == _inventoryObject) { return; }
+        if (null == _itemPrefab || null == _contentObject) { return; }
 
-        int prevUseItemSlotCount = _inventoryObject.transform.childCount;
+        int prevUseItemSlotCount = _contentObject.transform.childCount;
 
         int i = 0;
 
@@ -101,20 +99,20 @@ public class ItemInventoryManager : MonoBehaviour
         {
             for (int j = 0; j < emptySlotCount; ++j)
             {
-                DeleteObjectManager.AddDeleteObject(_inventoryObject.transform.GetChild(0).gameObject);
+                DeleteObjectManager.AddDeleteObject(_contentObject.transform.GetChild(0).gameObject);
             }
         }
         else if (0 > emptySlotCount)
         {
             for (int j = 0; j > emptySlotCount; --j) 
             {
-                GameObject clone = Instantiate(_itemPrefab, Vector3.zero, Quaternion.Euler(Vector3.zero), _inventoryObject.transform);
+                GameObject clone = Instantiate(_itemPrefab, Vector3.zero, Quaternion.Euler(Vector3.zero), _contentObject.transform);
             }
         }
 
         for (; i < curUseItemSlotCount; ++i)
         {
-            _inventoryObject.transform.GetChild(i).GetComponent<ItemSlot>().ItemNumber
+            _contentObject.transform.GetChild(i).GetComponent<ItemSlot>().ItemNumber
                 = _inventory[curType][i];
         }
     }

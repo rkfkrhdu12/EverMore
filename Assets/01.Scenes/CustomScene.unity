@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -347,7 +348,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 687269445}
   m_HandleRect: {fileID: 687269444}
   m_Direction: 2
-  m_Value: 0.99999934
+  m_Value: 1
   m_Size: 0.88596493
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -880,8 +881,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 452233680}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -1111,7 +1113,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 798}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &623470338
@@ -1608,6 +1610,7 @@ GameObject:
   - component: {fileID: 1097010344}
   - component: {fileID: 1097010348}
   - component: {fileID: 1097010349}
+  - component: {fileID: 1097010350}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1734,6 +1737,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0a8412581ec3dd49ac74a9886210d06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1097010350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097010343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4feaaf139d639f44ab2f41c6b96d76e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1102568531

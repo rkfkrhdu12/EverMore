@@ -148,17 +148,56 @@ public class Unit : MonoBehaviour
 
         if(null == _collider) { _collider = GetComponent<SphereCollider>(); }
         _collider.radius *= _attackRange;
+
+        GameObject _helmetObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[0]).Object;
+        Instantiate(_helmetObj, gameObject.transform);
+
+        GameObject _armourObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[1]).Object;
+        Instantiate(_armourObj, gameObject.transform);
+
+        if (0 != _itemsNum[2])
+        {
+            GameObject _weaponObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[2]).Object;
+            Instantiate(_weaponObj, gameObject.transform);
+        } 
+
+        if(0 != _itemsNum[3])
+        {
+            GameObject _subweaponObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[3]).Object;
+            Instantiate(_subweaponObj, gameObject.transform);
+        }
+
     }
 
     public void DamageReceive(float damage)
     {
         //
         _curhealth -= damage;
+
+        if(_curhealth <= 0)
+        {
+            DeleteObjectManager.AddDeleteObject(gameObject);
+        }
     }
 
     public bool IsDead { get { return _isdead; } set { } }
 
-    public void Init(int curH = 100, int maxH = 100, int speed = 3, eTeam team = eTeam.PLAYER) 
+    public void Equip(int code, eEquipItem weapon = eEquipItem.WEAPON)
+    {
+        Item i = GameSystem.Instance.itemList.ItemSearch(code);
+
+        if (null == i) { Debug.LogError("Item Equip Error Item Code " + code); return; }
+
+        switch (i.Type)
+        {
+            case eItemType.NONE: break;
+            case eItemType.HELMET: _itemsNum[(int)eEquipItem.HELMET] = code; break;
+            case eItemType.BODYARMOUR: _itemsNum[(int)eEquipItem.ARMOUR] = code; break;
+            default: _itemsNum[(int)weapon] = code; break;
+        }
+    }
+
+    public void Init(int curH = 100, int maxH = 100, int speed = 3, eTeam team = eTeam.PLAYER)
     // 윤용우 생성
     {
         _curhealth = curH;
@@ -172,5 +211,15 @@ public class Unit : MonoBehaviour
         _defensivePower = 10;
         _moveSpeed = speed;
         _team = team;
+    }
+
+    public void Init(Unit unit)
+    {
+        Init();
+
+        _itemsNum[0] = unit._itemsNum[0];
+        _itemsNum[1] = unit._itemsNum[1];
+        _itemsNum[2] = unit._itemsNum[2];
+        _itemsNum[3] = unit._itemsNum[3];
     }
 }

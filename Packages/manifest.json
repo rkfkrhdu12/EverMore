@@ -1,10 +1,10 @@
 {
   "dependencies": {
+    "com.unity.animatorpro": "https://github.com/bnm000215/UnityAnimatorPro.git",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ext.nunit": "1.0.0",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.1.4",
-    "com.unity.render-pipelines.universal": "7.1.8",
     "com.unity.test-framework": "1.1.11",
     "com.unity.textmeshpro": "2.0.1",
     "com.unity.timeline": "1.2.6",
@@ -40,5 +40,11 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
+  },
+  "lock": {
+    "com.unity.animatorpro": {
+      "revision": "HEAD",
+      "hash": "d74c922c0709c74b90b003861726a9992f77a230"
+    }
   }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEditor;
 
 public enum eCodeType
 {
@@ -133,13 +134,16 @@ public class ItemList
             default: _codeList[(int)eCodeType.WEAPON]                           .Add(_codeList[(int)eCodeType.WEAPON].Count, index);        break;
         }
 
+        GameObject obj = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/03.Prefabs/Item/" + data[0] + ".prefab", typeof(GameObject));
+
         // '/' 가 있음(왼쪽(방어구류),오른쪽(무기류)) 없으면 모든아이템 해당
         i.Init(data[2],                 // Name
             int.Parse(data[3]),         // Cost
             float.Parse(data[4]),       // CoolTime
             float.Parse(data[6]),       // Defense / Damage
             float.Parse(data[7]),       // Health  / Range
-            int.Parse(data[8]));        // Weight
+            int.Parse(data[8]),
+            obj);        // Weight
         _itemList.Add(index, i);
     }
 
@@ -176,15 +180,19 @@ public class Item
     protected eItemType _type = eItemType.NONE; public eItemType Type { get => _type; }
     protected int _cost;                        public int Cost { get => _cost; }
     protected float _coolTime;                  //public float CoolTime { get => _coolTime; }
-    protected UnityAction _ability;             
+    protected int _weight;
+    protected UnityAction _ability;
+    protected GameObject _object;                  public GameObject Object { get => _object; }
 
-    public virtual void Init(string name, int cost, float coolTime, float data1, float data2, int data3 = 0) { }
+    public virtual void Init(string name, int cost, float coolTime, float data1, float data2, int weight, GameObject obj) { }
 
-    protected void Init(string name,int cost,float coolTime)
+    protected void Init(string name,int cost,float coolTime, int weight, GameObject obj)
     {
         _name = name;
         _cost = cost;
         _coolTime = coolTime;
+        _weight = weight;
+        _object = obj;
     }
 }
 
@@ -192,15 +200,13 @@ public class Weapon : Item
 {
     protected float _range;
     protected float _damage;
-    protected int _weight;
 
-    public override void Init(string name, int cost, float coolTime, float damage, float range, int weight)
+    public override void Init(string name, int cost, float coolTime, float damage, float range, int weight, GameObject obj)
     {
-        Init(name, cost, coolTime);
+        Init(name, cost, coolTime, weight, obj);
 
         _range = range;
         _damage = damage;
-        _weight = weight;
     }
 }
 
@@ -209,9 +215,9 @@ public class Armour : Item
     protected float _defense;
     protected float _health;
 
-    public override void Init(string name, int cost, float coolTime, float defense, float health, int data3 = 0)
+    public override void Init(string name, int cost, float coolTime, float defense, float health, int weight, GameObject obj)
     {
-        Init(name, cost, coolTime);
+        Init(name, cost, coolTime, weight, obj);
 
         _defense = defense;
         _health = health;

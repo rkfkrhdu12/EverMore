@@ -5,11 +5,9 @@ using UnityEngine;
 // 윤용우
 public class CameraManager : SingletonMonoBehaviour<CameraManager>
 {
-    Transform _transform;
-
     private void Awake()
     {
-        _transform = gameObject.transform;
+        //transform.localPosition = Vector3.zero;
     }
 
     // Test 1
@@ -23,7 +21,8 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
         {
             float moveDistance = Input.GetAxis("Mouse X") * (_isMoveRightDrag ? 1 : -1);
 
-            _transform.position = new Vector3(Mathf.Clamp(transform.position.x + (moveDistance * _moveSpeed), 0.0f, 20.0f), transform.position.y, transform.position.z);
+            transform.localPosition = new Vector3(Mathf.Clamp(transform.localPosition.x + (moveDistance * _moveSpeed), 0.0f, 30f),
+                transform.localPosition.y, transform.localPosition.z);
         }
     }
 
