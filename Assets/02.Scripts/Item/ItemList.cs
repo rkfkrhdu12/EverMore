@@ -182,7 +182,7 @@ public class Item
     protected float _coolTime;                  //public float CoolTime { get => _coolTime; }
     protected int _weight;
     protected UnityAction _ability;
-    protected GameObject _object;                  public GameObject Object { get => _object; }
+    protected GameObject _object;               public GameObject Object { get => _object; }
 
     public virtual void Init(string name, int cost, float coolTime, float data1, float data2, int weight, GameObject obj) { }
 
