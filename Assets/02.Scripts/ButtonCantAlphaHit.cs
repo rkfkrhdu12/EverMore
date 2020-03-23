@@ -13,6 +13,8 @@ public class ButtonCantAlphaHit
 
         for (int i = 0; i < _image.Length; ++i)
         {
+            if(_image[i].CompareTag("UI")) { continue; }
+
             _image[i].alphaHitTestMinimumThreshold = .1f;
         }
     }
