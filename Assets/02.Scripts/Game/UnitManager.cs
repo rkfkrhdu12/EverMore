@@ -45,7 +45,7 @@ public class UnitManager : SingletonMonoBehaviour<UnitManager>
         for (int i = 0; i < UnitCount; ++i)
         {
             _units[i] = gSystem.GetPlayerUnit(i);
-            _spawnInterval[i] = _units[i]._coolTime;
+            _spawnInterval[i] = _spawnTime[i] = _units[i]._coolTime;
             _spawnCost[i] = _units[i]._cost;
         }
 

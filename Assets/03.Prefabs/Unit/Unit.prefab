@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 1947036433871368486}
   - component: {fileID: 1947036433871368487}
   - component: {fileID: 1947036433871368480}
-  - component: {fileID: 1947036433871368481}
-  - component: {fileID: -8688042431680244021}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -77,19 +75,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _curhealth: 100
   _maxhealth: 100
+  _team: 1
+  _isdead: 0
   _defensivePower: 1
   _attackDamage: 5
-  _attackInterval: 0.5
+  _attackSpeed: 0
   _attackRange: 6
   _moveSpeed: 0
   _cost: 0
   _coolTime: 0
-  _team: 1
   _abilityNum: 0
   _itemsNum: 00000000000000000000000000000000
   _collider: {fileID: 1947036433871368485}
   _attackTime: 0
-  _isdead: 0
 --- !u!54 &1947036433871368480
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -106,34 +104,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!95 &1947036433871368481
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947036433871368482}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bc43f9ae0ba42444da171b1d0d798f92, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-8688042431680244021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947036433871368482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdbe6214af1be004eb083ef2424b490d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

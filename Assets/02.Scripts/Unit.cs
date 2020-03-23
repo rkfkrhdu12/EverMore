@@ -84,6 +84,7 @@ public class Unit : FieldObject
 
     // Test
     private static readonly int _idAttack   = Animator.StringToHash("Attack");
+    private static readonly int _idAttackSpd   = Animator.StringToHash("AttackSpeed");
     private static readonly int _idMove     = Animator.StringToHash("Move");
 
     #endregion
@@ -112,21 +113,33 @@ public class Unit : FieldObject
         }
     }
 
+    float moveParameter = 0;
+
     private void UpdateMonobehaviour()
     {
-        switch(_curState)
+        moveParameter = 0;
+
+        switch (_curState)
         {
             case eState.MOVE:   UpdateMove();   break;
             case eState.ATTACK: UpdateAttack(); break;
         }
+
+        UpdateAnimation();
+    }
+
+    private void UpdateAnimation()
+    {
+        if (null == _aniPro) { return; }
+
+        _aniPro.SetParam(_idMove, moveParameter);
     }
 
     private void UpdateMove()
     {
-        transform.Translate(0, 0, _moveSpeed * Time.deltaTime);
+        moveParameter = 1;
 
-        // Test
-        _aniPro.SetParam(_idMove, _rigid.velocity.z);
+        transform.Translate(0, 0, _moveSpeed * Time.deltaTime);
     }
 
     private void UpdateAttack()
@@ -140,7 +153,16 @@ public class Unit : FieldObject
             // 타겟이 없엇거나 체력이 0 이하로 내려가면 새로운 타겟을 정한다.
             if (null == _curTarget || 0 >= _curTarget._curhealth)
             {
-                if(0 == _attackTargets.Count) { _curTarget = null; return; }
+                if(0 == _attackTargets.Count)
+                {
+                    _curTarget = null;
+
+                    if (null == _aniPro) { return; }
+
+                    _aniPro.SetParam(_idAttack, false);
+
+                    return;
+                }
 
                 _curTarget = _attackTargets.Dequeue();
             }
@@ -161,10 +183,11 @@ public class Unit : FieldObject
         FieldObject target = other.GetComponent<FieldObject>();
         if (_attackTargets.Contains(target) || _team == target._team) { return; }
 
-        // Test
-        _aniPro.SetParam(_idAttack, true);
-
         _attackTargets.Enqueue(target);
+
+        // Test
+        if(null == _aniPro) { return; }
+        _aniPro.SetParam(_idAttack, true);
     }
 
     public void Spawn()
@@ -175,16 +198,26 @@ public class Unit : FieldObject
         _collider.radius *= _attackRange;
 
         #region Item
-        GameObject _helmetObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[0]).Object;
-        Instantiate(_helmetObj, gameObject.transform);
+        if (0 != _itemsNum[0])
+        {
+            GameObject _helmetObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[0]).Object;
+            Instantiate(_helmetObj, gameObject.transform);
+        }
 
-        GameObject _armourObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[1]).Object;
-        Instantiate(_armourObj, gameObject.transform);
+        if (0 != _itemsNum[1])
+        {
+            GameObject _armourObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[1]).Object;
+            Instantiate(_armourObj, gameObject.transform);
+        }
 
         if (0 != _itemsNum[2])
         {
-            GameObject _weaponObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[2]).Object;
-            Instantiate(_weaponObj, gameObject.transform);
+            UnitWeaponHand hands = transform.GetChild(0).GetComponent<UnitWeaponHand>();
+            if (null != hands)
+            {
+                GameObject _weaponObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[2]).Object;
+                Instantiate(_weaponObj, hands._RightHand.transform);
+            }
         }
 
         if (0 != _itemsNum[3])
@@ -194,15 +227,15 @@ public class Unit : FieldObject
         }
         #endregion
 
-        _animator = GetComponent<Animator>();
+        _animator = transform.GetChild(0).GetComponent<Animator>();
         if (null == _animator) { }
 
-        _aniPro = GetComponent<AnimatorPro>();
+        _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
         if (null == _aniPro) { }
 
         _aniPro?.Init(_animator);
 
-        _rigid = GetComponent<Rigidbody>();
+        _aniPro.SetParam(_idAttackSpd, 3.0f);
     }
 
     public override  void DamageReceive(float damage)

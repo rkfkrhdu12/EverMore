@@ -33,12 +33,12 @@ public class Team
 
         _units[i] = new Unit();
         _units[i].Init();
-        _units[i].Equip(11);
-        _units[i++].Equip(12);
+        _units[i].Equip(13);
+        _units[i++].Equip(9);
 
         _units[i] = new Unit();
         _units[i].Init();
-        _units[i].Equip(1);
-        _units[i++].Equip(2);
+        _units[i].Equip(14);
+        _units[i].Equip(9);
     }
 }
