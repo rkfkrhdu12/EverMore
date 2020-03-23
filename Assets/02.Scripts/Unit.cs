@@ -227,15 +227,21 @@ public class Unit : FieldObject
         }
         #endregion
 
-        _animator = transform.GetChild(0).GetComponent<Animator>();
-        if (null == _animator) { }
+         _animator = transform.GetChild(0).GetComponent<Animator>();
+        
+       // _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
+        
+  //      _aniPro.Init(_animator);
 
-        _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
-        if (null == _aniPro) { }
+        StartCoroutine(ppap());
 
-        _aniPro?.Init(_animator);
-
-        _aniPro.SetParam(_idAttackSpd, 3.0f);
+    }
+    
+    IEnumerator ppap()
+    {
+        yield return new WaitForSeconds(3f);
+        Debug.Log("pppa");
+        _animator.SetFloat(_idAttackSpd, 3.0f);
     }
 
     public override  void DamageReceive(float damage)

@@ -87,11 +87,16 @@ public class UnitManager : SingletonMonoBehaviour<UnitManager>
 
         obj.transform.position = _playerCreateUnit.transform.position;
 
-        obj.transform.localPosition = new Vector3(obj.transform.localPosition.x,
-            obj.transform.localPosition.y,
-            obj.transform.localPosition.z + Random.Range(-4.5f, 4.0f));
+        var localPosition = obj.transform.localPosition;
+        
+        localPosition = new Vector3(localPosition.x,
+            localPosition.y,
+            localPosition.z + Random.Range(-4.5f, 4.0f));
 
-        obj.transform.rotation = _playerCreateUnit.transform.rotation;
+        var transform1 = obj.transform;
+        
+        transform1.localPosition = localPosition;
+        transform1.rotation = _playerCreateUnit.transform.rotation;
 
         obj.Init(_units[num - 1]);
 
