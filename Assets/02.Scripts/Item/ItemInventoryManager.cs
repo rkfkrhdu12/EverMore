@@ -62,7 +62,7 @@ public class ItemInventoryManager : MonoBehaviour
     // Test
     void TypeItemAllSet(eCodeType codeType,eItemInvenType itemType)
     {
-        ItemList itemList = GameSystem.Instance.itemList;
+        ItemList itemList = GameManager.Instance.itemList;
 
         int count = itemList.ItemCount(codeType);
 

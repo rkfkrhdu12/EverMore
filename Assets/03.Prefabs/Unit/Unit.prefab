@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1947036433871368484}
-  - component: {fileID: 1947036433871368485}
   - component: {fileID: 1947036433871368486}
   - component: {fileID: 1947036433871368487}
   - component: {fileID: 1947036433871368480}
+  - component: {fileID: 2102954290297573386}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -34,19 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1947036433871368485
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947036433871368482}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2.5
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!136 &1947036433871368486
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -86,7 +73,7 @@ MonoBehaviour:
   _coolTime: 0
   _abilityNum: 0
   _itemsNum: 00000000000000000000000000000000
-  _collider: {fileID: 1947036433871368485}
+  _collider: {fileID: 2102954290297573386}
   _attackTime: 0
 --- !u!54 &1947036433871368480
 Rigidbody:
@@ -104,3 +91,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &2102954290297573386
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947036433871368482}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 20, y: 1, z: 3}
+  m_Center: {x: 0, y: 0, z: 0}

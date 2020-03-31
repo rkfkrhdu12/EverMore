@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 //윤용우
-public class UnitManager : SingletonMonoBehaviour<UnitManager>
+public class UnitManager : MonoBehaviour
 {
     #region Variable
     GameObjectPool<Unit> m_unitPool;
@@ -13,19 +13,17 @@ public class UnitManager : SingletonMonoBehaviour<UnitManager>
     CreateUnit _playerCreateUnit;
 
     [SerializeField]
-    CreateUnit _enemyCreateUnit;
-    // #
-
-    [SerializeField]
     GameObject _unitPrefab; //유닛 프리팹
 
     Unit[] _units = new Unit[UnitCount];
+
+    public eTeam _team;
 
     #endregion
 
     readonly static int UnitCount = Team.UnitCount;
 
-    protected override void OnStart()
+    protected void Start()
     {
         // 풀링
         int count = 0;
@@ -40,7 +38,7 @@ public class UnitManager : SingletonMonoBehaviour<UnitManager>
         });
         m_unitList = new List<Unit>();
         
-        GameSystem gSystem = GameSystem.Instance;
+        GameManager gSystem = GameManager.Instance;
 
         for (int i = 0; i < UnitCount; ++i)
         {
@@ -53,6 +51,18 @@ public class UnitManager : SingletonMonoBehaviour<UnitManager>
 
     void Update()
     {
+        if (eTeam.ENEMY == _team)
+        {
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                CreateUnit(5);
+            }
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                CreateUnit(6);
+            }
+        }
+
         for (int i = 0; i < UnitCount; ++i)
         {
             if (_spawnInterval[i] >= _spawnTime[i])
@@ -98,11 +108,13 @@ public class UnitManager : SingletonMonoBehaviour<UnitManager>
         transform1.localPosition = localPosition;
         transform1.rotation = _playerCreateUnit.transform.rotation;
 
+        obj.gameObject.SetActive(true);
+
+        _units[num - 1]._team = _team;
+
         obj.Init(_units[num - 1]);
 
         obj.Spawn();
-
-        obj.gameObject.SetActive(true);
 
         m_unitList.Add(obj);
     }

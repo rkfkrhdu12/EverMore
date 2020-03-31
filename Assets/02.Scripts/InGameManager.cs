@@ -43,7 +43,16 @@ public class InGameManager : MonoBehaviour
         UpdateBase();
         UpdateGoldMana();
 
-        UpdateKey();
+        if(_enemyBase.IsDead)
+        {
+            GameManager.Instance._WinTeam = eTeam.PLAYER;
+            GameManager.Instance.NextScene("GameResultScene");
+        }
+        if (_playerBase.IsDead)
+        {
+            GameManager.Instance._WinTeam = eTeam.ENEMY;
+            GameManager.Instance.NextScene("GameResultScene");
+        }
     }
 
     void UpdateTimer()
@@ -66,15 +75,5 @@ public class InGameManager : MonoBehaviour
 
         _goldImage.fillAmount = _curGold / _maxGold;
         _manaImage.fillAmount = _curMana / _maxMana;
-    }
-
-    void UpdateKey()
-    {
-        if(Input.GetKey(KeyCode.Q)) { Spawn(1); }
-        if(Input.GetKey(KeyCode.W)) { Spawn(2); }
-        if(Input.GetKey(KeyCode.E)) { Spawn(3); }
-        if(Input.GetKey(KeyCode.R)) { Spawn(4); }
-        if(Input.GetKey(KeyCode.D)) { Spawn(5); }
-        if(Input.GetKey(KeyCode.F)) { Spawn(6); }
     }
 }

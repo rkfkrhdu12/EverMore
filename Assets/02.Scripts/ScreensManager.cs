@@ -12,7 +12,7 @@ public class ScreensManager : MonoBehaviour
 
     public GameObject[] _unitSettingScreen;
 
-    GameSystem _gSystem;
+    GameManager _gSystem;
 
     eScreenType _curType = eScreenType.LOBBY;
     private enum eScreenType
@@ -26,7 +26,7 @@ public class ScreensManager : MonoBehaviour
 
     private void Start()
     {
-        _gSystem = GameSystem.Instance;
+        _gSystem = GameManager.Instance;
 
     }
 
@@ -82,6 +82,8 @@ public class ScreensManager : MonoBehaviour
                 for (int j = 0; j < 4; ++j)
                 {
                     int equipNum = _gSystem.GetPlayerUnit(i)._itemsNum[j];
+
+                    if(0 == equipNum) { continue; }
 
                     Item item = _gSystem.itemList.ItemSearch(equipNum);
 

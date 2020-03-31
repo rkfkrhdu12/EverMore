@@ -69,7 +69,7 @@ public class Unit : FieldObject
     }
 
     // public으로 해놔야함 Inspector를 통해 값을 대입
-    public SphereCollider _collider;
+    public BoxCollider _collider;
 
     public Queue<FieldObject> _attackTargets = new Queue<FieldObject>();
     FieldObject _curTarget = null;
@@ -133,6 +133,16 @@ public class Unit : FieldObject
         if (null == _aniPro) { return; }
 
         _aniPro.SetParam(_idMove, moveParameter);
+
+        if (null == _aniPro && !_animator.GetBool(_idAttack)) { return; }
+
+        if (null == _curTarget || 0 >= _curTarget._curhealth)
+        {
+            if (0 == _attackTargets.Count)
+            {
+                _aniPro.SetParam(_idAttack, false);
+            }
+        }
     }
 
     private void UpdateMove()
@@ -156,10 +166,6 @@ public class Unit : FieldObject
                 if(0 == _attackTargets.Count)
                 {
                     _curTarget = null;
-
-                    if (null == _aniPro) { return; }
-
-                    _aniPro.SetParam(_idAttack, false);
 
                     return;
                 }
@@ -194,19 +200,19 @@ public class Unit : FieldObject
     {
         _isdead = false;
 
-        if(null == _collider) { _collider = GetComponent<SphereCollider>(); }
-        _collider.radius *= _attackRange;
+        if (null == _collider) { _collider = GetComponent<BoxCollider>(); }
+        _collider.size *= _attackRange;
 
         #region Item
         if (0 != _itemsNum[0])
         {
-            GameObject _helmetObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[0]).Object;
+            GameObject _helmetObj = GameManager.Instance.itemList.ItemSearch(_itemsNum[0]).Object;
             Instantiate(_helmetObj, gameObject.transform);
         }
 
         if (0 != _itemsNum[1])
         {
-            GameObject _armourObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[1]).Object;
+            GameObject _armourObj = GameManager.Instance.itemList.ItemSearch(_itemsNum[1]).Object;
             Instantiate(_armourObj, gameObject.transform);
         }
 
@@ -215,35 +221,27 @@ public class Unit : FieldObject
             UnitWeaponHand hands = transform.GetChild(0).GetComponent<UnitWeaponHand>();
             if (null != hands)
             {
-                GameObject _weaponObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[2]).Object;
+                GameObject _weaponObj = GameManager.Instance.itemList.ItemSearch(_itemsNum[2]).Object;
                 Instantiate(_weaponObj, hands._RightHand.transform);
             }
         }
 
         if (0 != _itemsNum[3])
         {
-            GameObject _subweaponObj = GameSystem.Instance.itemList.ItemSearch(_itemsNum[3]).Object;
+            GameObject _subweaponObj = GameManager.Instance.itemList.ItemSearch(_itemsNum[3]).Object;
             Instantiate(_subweaponObj, gameObject.transform);
         }
         #endregion
 
-         _animator = transform.GetChild(0).GetComponent<Animator>();
-        
-       // _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
-        
-  //      _aniPro.Init(_animator);
+        _animator = transform.GetChild(0).GetComponent<Animator>();
 
-        StartCoroutine(ppap());
+        _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
 
+        _aniPro.Init(_animator);
+
+        _aniPro.SetParam(_idAttackSpd, 1 / _attackSpeed);
     }
     
-    IEnumerator ppap()
-    {
-        yield return new WaitForSeconds(3f);
-        Debug.Log("pppa");
-        _animator.SetFloat(_idAttackSpd, 3.0f);
-    }
-
     public override  void DamageReceive(float damage)
     {
         _curhealth -= damage;
@@ -258,7 +256,7 @@ public class Unit : FieldObject
 
     public void Equip(int code, eEquipItem weapon = eEquipItem.WEAPON)
     {
-        Item i = GameSystem.Instance.itemList.ItemSearch(code);
+        Item i = GameManager.Instance.itemList.ItemSearch(code);
 
         if (null == i) { return; }
 
@@ -290,22 +288,23 @@ public class Unit : FieldObject
         Equip(unit._itemsNum[1]);                        // = unit._itemsNum[1];
         Equip(unit._itemsNum[2]);                        // = unit._itemsNum[2];
         Equip(unit._itemsNum[3],eEquipItem.SUBWEAPON);   // = unit._itemsNum[3];
+
+        _team = unit._team;
     }
 
-    public void Init(int curH = 100, int maxH = 100, int speed = 3, eTeam team = eTeam.PLAYER)
+    public void Init(int curH = 100, int maxH = 100, int speed = 3)
     // 윤용우 생성
     {
         _curhealth = curH;
         _maxhealth = maxH;
         _abilityNum = 1;
         _attackDamage = 10;
-        _attackSpeed = 2;
-        _attackRange = 3;
+        _attackSpeed = 1;
+        _attackRange = .75f;
         _coolTime = 0;
         _cost = 0;
         _defensivePower = 0;
         _moveSpeed = speed;
-        _team = team;
     }
 
 }

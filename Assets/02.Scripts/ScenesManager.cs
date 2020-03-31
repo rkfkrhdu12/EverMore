@@ -23,7 +23,8 @@ public class ScenesManager
                 break;
             }
             case eScene.GAMESEARCH: _curScene = eScene.INGAME; break;
-            //case eScene.INGAME:     LoadScene("");    break;
+            case eScene.INGAME:     _curScene = eScene.GAMERESULT;    break;
+            case eScene.GAMERESULT: _curScene = eScene.LOBBY; break;
         }
     }
 
@@ -57,6 +58,7 @@ public class ScenesManager
         OPTION,
         GAMESEARCH,
         INGAME,
+        GAMERESULT,
     }
 
     ButtonCantAlphaHit _buttonCantAlphaHit = new ButtonCantAlphaHit();
@@ -88,6 +90,7 @@ public class ScenesManager
             //case eScene.CUSTOM: sceneName = _customSceneName; break;
             case eScene.GAMESEARCH: sceneName = _gameSearchSceneName; break;
             case eScene.INGAME: sceneName = _ingameSceneName; break;
+            case eScene.GAMERESULT: sceneName = _gameResultScene; break;
             default: return;
         }
 

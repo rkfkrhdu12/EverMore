@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;   
 
-public class GameSystem : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    static GameSystem _instance;
-    public static GameSystem Instance 
+    static GameManager _instance;
+    public static GameManager Instance 
     {
         get
         {
@@ -16,7 +16,7 @@ public class GameSystem : MonoBehaviour
                 if(null == gSystemObj) { return null; }
                 gSystemObj.SetActive(true);
 
-                _instance = gSystemObj.GetComponent<GameSystem>();
+                _instance = gSystemObj.GetComponent<GameManager>();
 
                 _instance.enabled = true;
 
@@ -25,6 +25,8 @@ public class GameSystem : MonoBehaviour
             return _instance;
         }
     }
+
+    public eTeam _WinTeam = eTeam.PLAYER;
 
     Team _playerTeam;
     public int GetPlayerUnitCount() { return _playerTeam._units.Length; }
@@ -44,11 +46,16 @@ public class GameSystem : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance == null)
+        if (null == _instance)
         {
             _instance = this;
             _instance.OnAwake();
         }
+        else
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     private void OnAwake()
@@ -114,7 +121,14 @@ public class GameSystem : MonoBehaviour
 
     public void NextScene()
     {
+        while (0 < _deleteObjectManager.GetCount())
+        {
+            GameObject deleteObj = _deleteObjectManager.Dequeue();
 
+            Destroy(deleteObj);
+        }
+
+        _scenesManager.NextScene();
     }
 
     public void PrevScene()

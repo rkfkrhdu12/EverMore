@@ -14,7 +14,7 @@ public class Castle : FieldObject
     {
         _curhealth -= damage;
         
-
+        if(_curhealth <= 0) { _isdead = true; }
     }
 
 }
