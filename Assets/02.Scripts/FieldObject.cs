@@ -16,6 +16,4 @@ public class FieldObject : MonoBehaviour
     }
 
     public bool IsDead { get { return _isdead; } set { } }
-
-
 }

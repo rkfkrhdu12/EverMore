@@ -114,11 +114,6 @@ public class GameManager : MonoBehaviour
         _scenesManager.NextScene(sceneName);
     }
 
-    //public void NextScene(Image image)
-    //{
-    //    _scenesManager.NextScene(image);
-    //}
-
     public void NextScene()
     {
         while (0 < _deleteObjectManager.GetCount())

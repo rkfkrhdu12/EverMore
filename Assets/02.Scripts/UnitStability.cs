@@ -67,7 +67,6 @@ public class UnitStability
         Init();
     }
 
-
     // Test
     public static void Init()
     {
