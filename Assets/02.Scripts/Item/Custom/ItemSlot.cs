@@ -17,10 +17,10 @@ public class ItemSlot : MonoBehaviour
 
     void UpdateText() // 기획자님께서 잘 해주시겟죠 
     {
-        Item item = GameManager.Instance.itemList.ItemSearch(_itemNum);
-        if(null == item) { return; }
+   //     Item item = GameManager.Instance.itemList.ItemSearch(_itemNum);
+     //   if(null == item) { return; }
         
-        _text.text = item.Name;
+     //   _text.text = item.Name;
 
         transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
     }

@@ -11,13 +11,12 @@ public class UnitStability
     /// <returns> 안정도 당 공격속도 </returns>
     public static float GetStabilityPerAttackSpeed(int stability)
     {
-        if(0 < stability || 100 > stability) { return -1; }
+        if (stability > 0 || stability < 100)
+            return -1;
 
-        float returnVal = 0;
+        int digitOfTen = (int) ((float) stability / 10);
 
-        int digitOfTen = (int)((float)stability / 10);
-
-        returnVal = _stabilityPerAttackSpeeds[digitOfTen];
+        var returnVal = _stabilityPerAttackSpeeds[digitOfTen];
 
         int digitOfOne = stability % 10;
         float SPAInterval = _stabilityPerAttackSpeeds[digitOfTen + 1] - _stabilityPerAttackSpeeds[digitOfTen];
@@ -34,15 +33,14 @@ public class UnitStability
     /// <returns> 안정도 당 이동속도 </returns>
     public static float GetStabilityPerMoveSpeed(int stability)
     {
-        if (0 > stability || 100 < stability) { return -1; }
+        if (stability < 0 || stability > 100)
+            return -1;
 
-        float returnVal = 0;
+        int digitOfTen = (int) ((float) stability / 10);
 
-        int digitOfTen = (int)((float)stability / 10);
+        var returnVal = _stabilityPerMoveSpeeds[digitOfTen];
 
-        returnVal = _stabilityPerMoveSpeeds[digitOfTen];
-
-        float digitOfOne = (stability % 10.0f) / 10.0f;
+        float digitOfOne = stability % 10.0f / 10.0f;
         float SPAInterval = _stabilityPerMoveSpeeds[digitOfTen + 1] -
                             _stabilityPerMoveSpeeds[digitOfTen];
 
@@ -55,17 +53,15 @@ public class UnitStability
 
     #region Variable
 
-    static float[] _stabilityPerAttackSpeeds = new float[11];
-    static float[] _stabilityPerMoveSpeeds = new float[11];
+    private static readonly float[] _stabilityPerAttackSpeeds = new float[11];
+    private static readonly float[] _stabilityPerMoveSpeeds = new float[11];
 
     #endregion
 
     #region Private Fuction
 
-    private void Awake()
-    {
+    private void Awake() =>
         Init();
-    }
 
     // Test
     public static void Init()

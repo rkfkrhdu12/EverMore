@@ -10,20 +10,19 @@ public class CSVParser
     {
         var list = new List<string>();
         TextAsset data = Resources.Load(file) as TextAsset;
-        if (null == data) return list;
+        if (data == null) return list;
 
         var lines = Regex.Split(data.text, "\r\n");
 
         if (lines.Length <= 1) return list;
 
-        for (int i = 1; i < lines.Length; ++i) 
+        for (int i = 1; i < lines.Length; ++i)
         {
-            if ("" == lines[i]) continue;
+            if (lines[i].Equals(string.Empty)) continue;
 
             list.Add(lines[i]);
         }
-        
+
         return list;
     }
-
 }

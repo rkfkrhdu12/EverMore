@@ -1,78 +1,88 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GameplayIngredients;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class InGameManager : MonoBehaviour
 {
-    [SerializeField] FieldObject        _playerBase    = null;
-    [SerializeField] Image              _playerBar     = null;
+    [SerializeField]
+    private FieldObject _playerBase;
 
-    [SerializeField] FieldObject        _enemyBase     = null;
-    [SerializeField] Image              _enemyBar      = null;
+    [SerializeField]
+    private Image _playerBar;
 
-    [SerializeField] TextMeshProUGUI    _timerText     = null;
-    float _timerTime = 0;
+    [SerializeField]
+    private FieldObject _enemyBase;
 
-    [SerializeField] UnitManager        _unitMgr       = null;
+    [SerializeField]
+    private Image _enemyBar;
 
-    [SerializeField] Image              _goldImage     = null;
-    float _curGold = 0;
-    float _maxGold = 500;
-    float _goldPerSecond = 10;
+    [SerializeField]
+    private TextMeshProUGUI _timerText;
 
-    [SerializeField] Image              _manaImage     = null;
-    float _curMana = 0;
-    float _maxMana = 100;
-    float _manaPerSecond = 0.5f;
+    private float _timerTime;
 
-    public void Spawn(int unitNum)
-    {
-        _unitMgr.Spawn(unitNum,ref _curGold);
-    }
+    [SerializeField]
+    private UnitManager _unitMgr;
 
-    void Awake()
-    {
+    [SerializeField]
+    private Image _goldImage;
+
+    private float _curGold;
+    private const float _maxGold = 500;
+    private const float _goldPerSecond = 10;
+
+    [SerializeField]
+    private Image _manaImage;
+
+    private float _curMana;
+    private const float _maxMana = 100;
+    private const float _manaPerSecond = 0.5f;
+
+    public void Spawn(int unitNum) =>
+        _unitMgr.Spawn(unitNum, ref _curGold);
+
+    private void Awake() =>
         _timerTime = int.Parse(_timerText.text);
-    }
 
-    void Update()
+    private void Update()
     {
         UpdateTimer();
         UpdateBase();
         UpdateGoldMana();
 
-        if(_enemyBase.IsDead)
-        {
-            GameManager.Instance._WinTeam = eTeam.PLAYER;
-            GameManager.Instance.NextScene("GameResultScene");
-        }
-        if (_playerBase.IsDead)
-        {
-            GameManager.Instance._WinTeam = eTeam.ENEMY;
-            GameManager.Instance.NextScene("GameResultScene");
-        }
+        // if (_enemyBase.IsDead)
+        // {
+        //     Manager.Get<GameManager>()._WinTeam = eTeam.PLAYER;
+        //     Manager.Get<GameManager>().NextGoto("GameResultScene");
+        // }
+        //
+        // if (_playerBase.IsDead)
+        // {
+        //     Manager.Get<GameManager>()._WinTeam = eTeam.ENEMY;
+        //     Manager.Get<GameManager>().NextGoto("GameResultScene");
+        // }
     }
 
-    void UpdateTimer()
+    private void UpdateTimer()
     {
         _timerTime -= Time.deltaTime;
 
-        _timerText.text = "" + ((int)_timerTime).ToString();
+        _timerText.text = $"{_timerTime}";
     }
 
-    void UpdateBase()
+    private void UpdateBase()
     {
-        _playerBar  .fillAmount   = _playerBase.HP / _playerBase.maxHP;
-        _enemyBar   .fillAmount    = _enemyBase.HP  / _enemyBase.maxHP;
+        _playerBar.fillAmount = _playerBase._curHp / _playerBase._maxHp;
+        _enemyBar.fillAmount = _enemyBase._curHp / _enemyBase._maxHp;
     }
 
-    void UpdateGoldMana()
+    private void UpdateGoldMana()
     {
         _curGold += Time.deltaTime * _goldPerSecond;
         _curMana += Time.deltaTime * _manaPerSecond;
-
         _goldImage.fillAmount = _curGold / _maxGold;
         _manaImage.fillAmount = _curMana / _maxMana;
     }

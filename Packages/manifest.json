@@ -2,14 +2,18 @@
   "dependencies": {
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.animatorpro": "https://github.com/bnm000215/UnityAnimatorPro.git",
+    "com.unity.cinemachine": "2.5.0",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ext.nunit": "1.0.0",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.1.4",
+    "com.unity.quicksearch": "1.5.3",
+    "com.unity.render-pipelines.universal": "7.3.1",
     "com.unity.test-framework": "1.1.11",
     "com.unity.textmeshpro": "2.0.1",
     "com.unity.timeline": "1.2.6",
     "com.unity.ugui": "1.0.0",
+    "com.unity.uialphaarea": "https://github.com/bnm000215/unityUIAlphaArea.git",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
@@ -46,6 +50,10 @@
     "com.unity.animatorpro": {
       "revision": "HEAD",
       "hash": "d74c922c0709c74b90b003861726a9992f77a230"
+    },
+    "com.unity.uialphaarea": {
+      "revision": "HEAD",
+      "hash": "f44d077481fbf245a8402c5cf1ecb87bcbf2e700"
     }
   }
 }

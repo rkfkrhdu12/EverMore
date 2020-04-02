@@ -1,19 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FieldObject : MonoBehaviour
 {
-    public float _curhealth;    public float HP { get { return _curhealth; } }
-    public float _maxhealth;    public float maxHP { get { return _maxhealth; } }
+    //현재 체력에 대한 변수
+    public float _curHp;
+    
+    //체력의 최대치 변수
+    public float _maxHp;
 
+    //아군인지 적군인지에 대한 변수
     public eTeam _team = eTeam.PLAYER;
 
-    public bool _isdead = false;
+    //죽었는지 살았는지에 대한 변수
+    public bool _isdead;
 
     public virtual void DamageReceive(float damage)
     {
     }
 
-    public bool IsDead { get { return _isdead; } set { } }
+    public bool IsDead
+    {
+        get => _isdead;
+        set {  }
+    }
 }
