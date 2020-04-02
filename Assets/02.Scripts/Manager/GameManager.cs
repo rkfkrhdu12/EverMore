@@ -25,9 +25,18 @@ public class GameManager : Manager
     
     #endregion
     
+    /// <summary>
+    /// int(플레이어 유닛 갯수) return
+    /// </summary>
+    /// <returns></returns>
     public int getPlayerUnitCount() => //플레이어의 유닛 개수를 리턴합니다.
         _playerTeam._units.Length;
 
+    /// <summary>
+    /// UnitData(유닛) return
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
     //index번째 유닛에 대한 데이터를 리턴합니다.
     public UnitData getPlayerUnit(int index)
     {

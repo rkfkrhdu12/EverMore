@@ -10,9 +10,13 @@ public class DeleteObjectManager
     private static readonly Queue<GameObject> _deleteObjList = new Queue<GameObject>();
 
     #endregion
-    
+
     #region public Funtion
 
+    /// <summary>
+    /// Input GameObject(삭제할 오브젝트) 
+    /// </summary>
+    /// <param name="gObject">삭제할 오브젝트</param>
     // GameObject를 넣어두면 SetActive(false), SetParent(null) 실행 후, LateUpdate() 에서 삭제
     public static void AddDeleteObject(GameObject gObject)
     {
@@ -22,6 +26,10 @@ public class DeleteObjectManager
         if (gObject != null) _deleteObjList.Enqueue(gObject);
     }
 
+    /// <summary>
+    /// 삭제 예정인 오브젝트 수 return
+    /// </summary>
+    /// <returns></returns>
     public static int getCount() => //삭제해야할 오브젝트의 개수 return
         _deleteObjList.Count;
     

@@ -14,7 +14,7 @@ public enum eCodeType
 public class ItemList
 {
     /// <summary>
-    /// 아이템코드(int)를 넣으면 아이템정보(Item)를 return
+    /// Input int(아이템코드) | Item(아이템정보) return
     /// </summary>
     /// <param name="index"> 아이템 코드 </param>
     /// <returns> 아이템 </returns>
@@ -26,7 +26,7 @@ public class ItemList
     }
 
     /// <summary>
-    /// 원하는 아이템타입(eCodeType)과 번호(int)를 넣으면 아이템코드(int) return (추천)
+    /// Input eCodeType(아이템타입), int(타입순서) | int(아이템코드) return
     /// </summary>
     /// <param name="codeType"> eCodeType 의 형태로 된 enum값 </param>
     /// <param name="index"> 원하는 아이템의 번호 </param>
@@ -40,14 +40,8 @@ public class ItemList
         return _codeList[(int)codeType][index];
     }
 
-    // Test
-    public int ItemCount(eCodeType codeType)
-    {
-        return _codeList[(int)codeType].Count;
-    }
-
     /// <summary>
-    /// 원하는 아이템타입(eCodeType)과 아이템이름(string)를 넣으면 아이템코드(int) return  (비추천)
+    /// Input eCodeType, string | int(아이템코드) return
     /// </summary>
     /// <param name="codeType"> eCodeType 의 형태로 된 enum값 </param>
     /// <param name="name"> 원하는 아이템의 Name </param>
@@ -70,7 +64,7 @@ public class ItemList
     }
 
     /// <summary>
-    /// Set ItemList        | GameSystem 에서 해주고 있음 
+    /// Initialize        | GameSystem 에서 해주고 있음 
     /// </summary>
     public void Init()
     {
@@ -90,6 +84,12 @@ public class ItemList
 
             AddList(splitDatas);
         }
+    }
+
+    // Test
+    public int ItemCount(eCodeType codeType)
+    {
+        return _codeList[(int)codeType].Count;
     }
 
     #region Variable
