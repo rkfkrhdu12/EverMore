@@ -118,7 +118,7 @@ public class ItemInventoryManager : MonoBehaviour
         if (0 < emptySlotCount)
         {
             for (int j = 0; j < emptySlotCount; ++j)
-                DeleteObjectManager.AddDeleteObject(_contentObject.transform.GetChild(0).gameObject);
+                DeleteObjectSystem.AddDeleteObject(_contentObject.transform.GetChild(0).gameObject);
         }
         else if (0 > emptySlotCount)
         {

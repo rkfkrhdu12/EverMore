@@ -12,8 +12,8 @@ public class UnitManager : MonoBehaviour
     private List<UnitData> m_unitList;
 
     // 유닛 생성
-    [SerializeField]
-    private CreateUnit _playerCreateUnit;
+    // [SerializeField]
+    // private CreateUnit _playerCreateUnit;
 
     [SerializeField]
     private GameObject _unitPrefab; //유닛 프리팹
@@ -93,7 +93,7 @@ public class UnitManager : MonoBehaviour
 
         var obj = m_unitPool.pop();
 
-        obj.transform.position = _playerCreateUnit.transform.position;
+        //obj.transform.position = _playerCreateUnit.transform.position;
 
         var localPosition = obj.transform.localPosition;
 
@@ -101,10 +101,10 @@ public class UnitManager : MonoBehaviour
             localPosition.y,
             localPosition.z + Random.Range(-4.5f, 4.0f));
 
-        var transform1 = obj.transform;
-
-        transform1.localPosition = localPosition;
-        transform1.rotation = _playerCreateUnit.transform.rotation;
+        // var transform1 = obj.transform;
+        //
+        // transform1.localPosition = localPosition;
+        // transform1.rotation = _playerCreateUnit.transform.rotation;
 
         obj.gameObject.SetActive(true);
 
