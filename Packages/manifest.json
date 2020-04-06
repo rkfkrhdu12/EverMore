@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.sbstn_hn.rendererfeatures.urp-ssao": "https://github.com/sebastianhein/urp-ssao.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.animatorpro": "https://github.com/bnm000215/UnityAnimatorPro.git",
     "com.unity.cinemachine": "2.5.0",
@@ -54,6 +55,10 @@
     "com.unity.uialphaarea": {
       "revision": "HEAD",
       "hash": "f44d077481fbf245a8402c5cf1ecb87bcbf2e700"
+    },
+    "com.sbstn_hn.rendererfeatures.urp-ssao": {
+      "revision": "HEAD",
+      "hash": "4958115f46d11e781af478ae78732c55f2bed446"
     }
   }
 }
