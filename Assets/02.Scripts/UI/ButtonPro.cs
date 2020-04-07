@@ -13,11 +13,12 @@ public class ButtonPro : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
         NORMAL,
         PRESS
     }
-
+    
     #endregion
 
     #region Show Inspector
 
+    [Header("이미지")]
     [SerializeField, Tooltip("기본 상태일 때")]
     private Sprite normalImage;
 
@@ -26,7 +27,7 @@ public class ButtonPro : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
 
     [SerializeField, Tooltip("눌렸을 때")]
     private Sprite pressImage;
-
+    
     [SerializeField, Tooltip("누르고 땟을 때, 함수를 실행합니다.")]
     private UnityEvent onDownUp;
     
@@ -39,7 +40,11 @@ public class ButtonPro : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
 
     //버튼의 상태에 대한 변수
     private BtnState _btnState;
-
+    
+    //그룹화로 만들시, 선택권이 있는 버튼
+    [HideInInspector]
+    public bool isSelected;
+    
     #endregion
 
     private void Awake() => //초기화 해줍니다.
