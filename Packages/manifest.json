@@ -57,13 +57,13 @@
       "revision": "HEAD",
       "hash": "d74c922c0709c74b90b003861726a9992f77a230"
     },
+    "com.unity.nkstudio.buttonpro": {
+      "revision": "HEAD",
+      "hash": "769774f0527ebb5f4729701a29c8cc481c52dd20"
+    },
     "com.unity.uialphaarea": {
       "revision": "HEAD",
       "hash": "f44d077481fbf245a8402c5cf1ecb87bcbf2e700"
-    },
-    "com.unity.nkstudio.buttonpro": {
-      "revision": "HEAD",
-      "hash": "e2afbabc32352cb7daa1211bcf512891398e53df"
     }
   }
 }
