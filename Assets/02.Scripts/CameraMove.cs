@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
@@ -9,7 +7,7 @@ public class CameraMove : MonoBehaviour
     private Vector3 left = new Vector3(23, 1, -41);
     private Vector3 right = new Vector3(-5, 1, -41);
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             MyView = !MyView;

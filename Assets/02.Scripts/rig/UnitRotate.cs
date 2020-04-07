@@ -22,7 +22,8 @@ public class UnitRotate : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private bool isRotate;
 
     #endregion
-
+    
+    
     private void Update()
     {
         //유닛 미리보기를 마우스 놓을시, 다시 되돌아오게 하는 로직

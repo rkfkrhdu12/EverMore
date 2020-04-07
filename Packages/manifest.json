@@ -8,6 +8,7 @@
     "com.unity.ext.nunit": "1.0.0",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.1.4",
+    "com.unity.nkstudio.buttonpro": "https://github.com/bnm000215/UnityButtonPro.git",
     "com.unity.quicksearch": "1.5.3",
     "com.unity.render-pipelines.universal": "7.3.1",
     "com.unity.test-framework": "1.1.11",
@@ -48,6 +49,10 @@
     "com.unity.modules.xr": "1.0.0"
   },
   "lock": {
+    "com.sbstn_hn.rendererfeatures.urp-ssao": {
+      "revision": "HEAD",
+      "hash": "4958115f46d11e781af478ae78732c55f2bed446"
+    },
     "com.unity.animatorpro": {
       "revision": "HEAD",
       "hash": "d74c922c0709c74b90b003861726a9992f77a230"
@@ -56,9 +61,9 @@
       "revision": "HEAD",
       "hash": "f44d077481fbf245a8402c5cf1ecb87bcbf2e700"
     },
-    "com.sbstn_hn.rendererfeatures.urp-ssao": {
+    "com.unity.nkstudio.buttonpro": {
       "revision": "HEAD",
-      "hash": "4958115f46d11e781af478ae78732c55f2bed446"
+      "hash": "e2afbabc32352cb7daa1211bcf512891398e53df"
     }
   }
 }
