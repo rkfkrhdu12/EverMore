@@ -6,40 +6,58 @@ public class Team
 {
     public const int UnitCount = 6;
 
-    public UnitData[] _units = new UnitData[UnitCount];
+    //public UnitData[] _units = new UnitData[UnitCount];
+    public List<UnitData> _units = new List<UnitData>();
+
+    void AddUnit(UnitData unitData)
+    {
+        if (UnitCount <= _units.Count) { return; }
+
+        _units.Add(unitData);
+    }
 
     //테스트 용도 함수 입니다.
     public void InitTest()
     {
-        int i = 0;
-        _units[i] = new UnitData();
-        _units[i].Init();
-        _units[i].Equip(1);
-        _units[i++].Equip(2);
+        {
+            UnitData unit = new UnitData();
+            unit.Init();
+            unit.Equip(1);
+            unit.Equip(2);
+            AddUnit(unit);
+        }
 
-        _units[i] = new UnitData();
-        _units[i].Init();
-        _units[i].Equip(3);
-        _units[i++].Equip(4);
 
-        _units[i] =  new UnitData();
-        _units[i].Init();
-        _units[i].Equip(5);
-        _units[i++].Equip(6);
-
-        _units[i] =  new UnitData();
-        _units[i].Init();
-        _units[i].Equip(7);
-        _units[i++].Equip(8);
-
-        _units[i] = new UnitData();
-        _units[i].Init();
-        _units[i].Equip(13);
-        _units[i++].Equip(9);
-
-        _units[i] =  new UnitData();
-        _units[i].Init();
-        _units[i].Equip(14);
-        _units[i].Equip(9);
+        {
+            UnitData unit = new UnitData();
+            unit.Init();
+            unit.Equip(3);
+            unit.Equip(4);
+            AddUnit(unit);
+        }
+        {
+            UnitData unit = new UnitData();
+            unit.Init();
+            unit.Equip(5);
+            unit.Equip(6);
+        }
+        {
+            UnitData unit = new UnitData();
+            unit.Init();
+            unit.Equip(7);
+            unit.Equip(8);
+        }
+        {
+            UnitData unit = new UnitData();
+            unit.Init();
+            unit.Equip(13);
+            unit.Equip(9);
+        }
+        {
+            UnitData unit = new UnitData();
+            unit.Init();
+            unit.Equip(14);
+            unit.Equip(9);
+        }
     }
 }
