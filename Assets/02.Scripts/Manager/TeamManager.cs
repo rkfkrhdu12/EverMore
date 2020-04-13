@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,27 +23,25 @@ public class TeamManager : MonoBehaviour
     #region Private Variable
     private List<Team> _teams;
 
-    private int _teamCount = 0;
+    private int _teamCount = -1;
 
     private readonly string _prefKey = "TeamNumber";
-
 
     #endregion
 
     private void Awake()
     {
-        for (string i = PlayerPrefs.GetString(_prefKey + _teamCount.ToString());
-            !string.IsNullOrEmpty(i);
-            ++_teamCount, i = PlayerPrefs.GetString(_prefKey + _teamCount.ToString()))
-        {
+        //_teamCount = 0;
+        //for (string i = PlayerPrefs.GetString(_prefKey + _teamCount.ToString());
+        //    !string.IsNullOrEmpty(i);
+        //    ++_teamCount, i = PlayerPrefs.GetString(_prefKey + _teamCount.ToString()))
+        //{
 
-        }
+        //}
     }
 
-
-    private void Encryption(Team teamData)
+    public int GetTeamCount()
     {
-
+        return _teamCount;
     }
-
 }

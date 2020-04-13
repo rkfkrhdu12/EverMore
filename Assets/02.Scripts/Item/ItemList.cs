@@ -75,14 +75,22 @@ public class ItemList
         _codeList[(int)eCodeType.BODYARMOUR] = new Dictionary<int, int>();
         _codeList[(int)eCodeType.WEAPON] = new Dictionary<int, int>();
 
-        // 길이가 유동적이고 검색을 하는것이 아니므로 속도가 크게 상관없어 List를 이용
-        List<string> itemDatas = CSVParser.Read("ItemList");
-
-        for (int i = 0; i < itemDatas.Count; ++i)
+        // CSV Parser
         {
-            string[] splitDatas = itemDatas[i].Split(',');
+            // 길이가 유동적이고 검색을 하는것이 아니므로 속도가 크게 상관없어 List를 이용
+            List<string> itemDatas = CSVParser.Read("ItemList");
 
-            AddList(splitDatas);
+            for (int i = 0; i < itemDatas.Count; ++i)
+            {
+                string[] splitDatas = itemDatas[i].Split(',');
+
+                AddList(splitDatas);
+            }
+        }
+
+        // Json Parser
+        {
+
         }
     }
 
