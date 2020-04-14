@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.rito.getcomponentattributes": "https://github.com/rito15/Unity_GetComponent-Attributes.git",
     "com.sbstn_hn.rendererfeatures.urp-ssao": "https://github.com/sebastianhein/urp-ssao.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.addressables": "1.1.10",
@@ -61,11 +62,15 @@
     },
     "com.unity.nkstudio.buttonpro": {
       "revision": "HEAD",
-      "hash": "769774f0527ebb5f4729701a29c8cc481c52dd20"
+      "hash": "ba2a38062f44e06557acb8673746a5c68e054e96"
     },
     "com.unity.uialphaarea": {
       "revision": "HEAD",
       "hash": "f44d077481fbf245a8402c5cf1ecb87bcbf2e700"
+    },
+    "com.rito.getcomponentattributes": {
+      "revision": "HEAD",
+      "hash": "624f248d07a297d92be090193db4aee856342861"
     }
   }
 }
