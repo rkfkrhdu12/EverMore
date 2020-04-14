@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Team
 {
+    private string _name = "";
+    public string Name { set { _name = value; } get{ return _name; } }
+
     public const int UnitCount = 6;
 
     //public UnitData[] _units = new UnitData[UnitCount];
@@ -26,8 +29,6 @@ public class Team
             unit.Equip(2);
             AddUnit(unit);
         }
-
-
         {
             UnitData unit = new UnitData();
             unit.Init();

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using GameplayIngredients;
+
 public class ItemSlot : MonoBehaviour
 {
     private int _itemNum = -1;
@@ -15,12 +17,12 @@ public class ItemSlot : MonoBehaviour
         UpdateText();
     }
 
-    void UpdateText() // 기획자님께서 잘 해주시겟죠 
+    void UpdateText() 
     {
-   //     Item item = GameManager.Instance.itemList.ItemSearch(_itemNum);
-     //   if(null == item) { return; }
-        
-     //   _text.text = item.Name;
+        Item item = Manager.Get<GameManager>().itemList.ItemSearch(_itemNum);
+        if (null == item) { return; }
+
+        _text.text = item.Name;
 
         transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
     }

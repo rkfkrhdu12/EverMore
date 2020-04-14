@@ -87,11 +87,6 @@ public class ItemList
                 AddList(splitDatas);
             }
         }
-
-        // Json Parser
-        {
-
-        }
     }
 
     // Test

@@ -2,46 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TeamManager : MonoBehaviour
 {
-    [SerializeField,Tooltip("팀 버튼을 눌렀을때 생길 오브젝트")]
-    private GameObject _teamPrefab = null;
+    private string _addTeamNameString = "";
 
-    [SerializeField, Tooltip("팀 선택 뷰포트")]
-    private GameObject _viewPort = null;
+    public void SetAddTeamNameString(string name) { _addTeamNameString = name; }
+    public string GetAddTeamNameString()          { _textObject.GetComponent<TextMeshPro>().text = ""; return _addTeamNameString; }
 
-    public void AddTeam(string name)
+    public GameObject _textObject;
+
+    public OperateButtonGroup _buttonGroup;
+
+    // 팀 이름으로 팀을 찾는다
+    private Dictionary<string, Team> _teams = new Dictionary<string, Team>();
+
+    public Team GetTeam(string teamName)
     {
-        GameObject clone = Instantiate(_teamPrefab, _viewPort.transform);
-        clone.GetComponent<Text>().text = name;
-        // 팀만들기 시스템 구현중 ..
-        // 버튼 이미지 전부 세팅(Team (n))
-        //  string(name) 받는 시스템 구현(엔진)
+        if (_teams.ContainsKey(teamName)) { return null; }
+
+        return _teams[teamName];
     }
 
-    #region Private Variable
-    private List<Team> _teams;
 
-    private int _teamCount = -1;
-
-    private readonly string _prefKey = "TeamNumber";
-
-    #endregion
-
-    private void Awake()
-    {
-        //_teamCount = 0;
-        //for (string i = PlayerPrefs.GetString(_prefKey + _teamCount.ToString());
-        //    !string.IsNullOrEmpty(i);
-        //    ++_teamCount, i = PlayerPrefs.GetString(_prefKey + _teamCount.ToString()))
-        //{
-
-        //}
-    }
-
-    public int GetTeamCount()
-    {
-        return _teamCount;
-    }
 }

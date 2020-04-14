@@ -76,15 +76,15 @@ public class ItemInventoryManager : MonoBehaviour
     // Test
     void TypeItemAllSet(eCodeType codeType, eItemInvenType itemType)
     {
-       // ItemList itemList = Manager.Get<GameManager>().itemList;
+        ItemList itemList = Manager.Get<GameManager>().itemList;
 
-   //     int count = itemList.ItemCount(codeType);
+        int count = itemList.ItemCount(codeType);
 
-    //    for (int i = 0; i < count; ++i)
+        for (int i = 0; i < count; ++i)
         {
-      //      int num = itemList.CodeSearch(codeType, i);
+            int num = itemList.CodeSearch(codeType, i);
 
-      //      _inventory[(int) itemType].Add(num);
+            _inventory[(int)itemType].Add(num);
         }
     }
 

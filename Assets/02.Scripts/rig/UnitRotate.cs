@@ -49,7 +49,7 @@ public class UnitRotate : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         
         var MouseX = Input.GetAxis("Mouse X");
 
-        //회전
+        // 회전
         Units.Rotate(-Vector3.up * (rotSpeed * MouseX));
     }
     
