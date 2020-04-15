@@ -23,8 +23,6 @@ public class TeamManager : MonoBehaviour
 
     public GameObject _textObject;
 
-    public OperateButtonGroup _buttonGroup;
-
     private void Awake()
     {
         AddTeam(GetAddTeamNameString());

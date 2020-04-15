@@ -12,6 +12,7 @@
     "com.unity.ide.vscode": "1.1.4",
     "com.unity.inputsystem": "1.0.0-preview.6",
     "com.unity.nkstudio.buttonpro": "https://github.com/bnm000215/UnityButtonPro.git",
+    "com.unity.nkstudio.enumpro": "https://github.com/bnm000215/UnityEnumPro.git",
     "com.unity.quicksearch": "1.5.3",
     "com.unity.render-pipelines.universal": "7.3.1",
     "com.unity.test-framework": "1.1.13",
@@ -52,6 +53,10 @@
     "com.unity.modules.xr": "1.0.0"
   },
   "lock": {
+    "com.rito.getcomponentattributes": {
+      "revision": "HEAD",
+      "hash": "624f248d07a297d92be090193db4aee856342861"
+    },
     "com.sbstn_hn.rendererfeatures.urp-ssao": {
       "revision": "HEAD",
       "hash": "4958115f46d11e781af478ae78732c55f2bed446"
@@ -62,15 +67,15 @@
     },
     "com.unity.nkstudio.buttonpro": {
       "revision": "HEAD",
-      "hash": "ba2a38062f44e06557acb8673746a5c68e054e96"
+      "hash": "5ae62fb2ac10e46d0a8fc367af35bfbb7deb9a53"
+    },
+    "com.unity.nkstudio.enumpro": {
+      "revision": "HEAD",
+      "hash": "449735873465e09d15ece21916540358631b8c62"
     },
     "com.unity.uialphaarea": {
       "revision": "HEAD",
       "hash": "f44d077481fbf245a8402c5cf1ecb87bcbf2e700"
-    },
-    "com.rito.getcomponentattributes": {
-      "revision": "HEAD",
-      "hash": "624f248d07a297d92be090193db4aee856342861"
     }
   }
 }

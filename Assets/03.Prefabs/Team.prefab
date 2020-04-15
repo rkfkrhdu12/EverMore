@@ -61,14 +61,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\uC608\uBE441\uD300"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e9fbdb0b2d393214d8907cd8ecc47e5b, type: 2}
-  m_sharedMaterial: {fileID: 3971347823761164570, guid: e9fbdb0b2d393214d8907cd8ecc47e5b,
+  m_fontAsset: {fileID: 11400000, guid: 6adbb44c546841c4a9fc796194267c9d, type: 2}
+  m_sharedMaterial: {fileID: -6336469063090418080, guid: 6adbb44c546841c4a9fc796194267c9d,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 6309955713605022277}
   - component: {fileID: 3396010820355607362}
   - component: {fileID: 8420256010644691838}
+  - component: {fileID: 7186112770662235266}
   m_Layer: 5
   m_Name: Team
   m_TagString: Untagged
@@ -337,6 +338,20 @@ MonoBehaviour:
         m_CallState: 2
   _buttonGroup: {fileID: 0}
   isSelected: 0
+--- !u!114 &7186112770662235266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7615561643804258359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e601f5430eba9cd46908bd5657aed36b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonPro: {fileID: 8420256010644691838}
+  btnText: {fileID: 8977276783437706744}
 --- !u!1 &7999005838515617102
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

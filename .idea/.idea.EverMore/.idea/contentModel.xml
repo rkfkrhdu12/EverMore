@@ -16,6 +16,7 @@
           <e p="Game" t="Include">
             <e p="Castle.cs" t="Include" />
             <e p="FieldObject.cs" t="Include" />
+            <e p="SkyRotation.cs" t="Include" />
             <e p="UnitManager.cs" t="Include" />
           </e>
           <e p="Item" t="Include">
@@ -25,12 +26,19 @@
             <e p="ItemInventoryManager.cs" t="Include" />
             <e p="ItemList.cs" t="Include" />
           </e>
+          <e p="MainScene" t="Include">
+            <e p="TeamElemnt.cs" t="Include" />
+            <e p="TeamSelectionSystem.cs" t="Include" />
+          </e>
           <e p="Manager" t="Include">
             <e p="GameManager.cs" t="Include" />
+            <e p="MainSceneManager.cs" t="Include" />
             <e p="SceneManagerPro.cs" t="Include" />
+            <e p="TeamManager.cs" t="Include" />
           </e>
           <e p="Other" t="Include">
             <e p="CSVParser.cs" t="Include" />
+            <e p="JsonParser.cs" t="Include" />
           </e>
           <e p="ResultScene" t="Include">
             <e p="GameResult.cs" t="Include" />
@@ -38,11 +46,9 @@
           <e p="rig" t="Include">
             <e p="UnitRotate.cs" t="Include" />
           </e>
-          <e p="SkyRotation.cs" t="Include" />
           <e p="system" t="Include">
             <e p="DeleteObjectSystem.cs" t="Include" />
             <e p="InGameSystem.cs" t="Include" />
-            <e p="ScreensSystem.cs" t="Include" />
           </e>
           <e p="Utils" t="Include">
             <e p="CameraManager.cs" t="Include" />
@@ -444,6 +450,9 @@
               <e p="GameplayIngredientsSettings.cs" t="Include" />
             </e>
           </e>
+        </e>
+        <e p="JsonDotNet" t="Include">
+          <e p="link.xml" t="Include" />
         </e>
         <e p="Plugins" t="Include">
           <e p="Inspector Gadgets" t="Include">

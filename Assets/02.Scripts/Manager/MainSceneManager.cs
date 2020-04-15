@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-
-// Manager
+﻿using System.Collections.Generic;
 using GameplayIngredients;
+using UnityEngine;
 
 namespace MainScene
 {
@@ -19,87 +13,111 @@ namespace MainScene
         public const string SetUnit = "SetUnit";
     }
 
+    public class UIScreen
+    {
+        public GameObject myUI;
+
+        //해당 챕터가 꺼져있는지 켜져있는지 체크합니다.
+        public bool activeSelf;
+
+        /// <summary>
+        /// 해당 UI챕터를 켜거나 끕니다.
+        /// </summary>
+        /// <param name="active"></param>
+        public void setActive(bool active)
+        {
+            activeSelf = active;
+
+            myUI?.SetActive(active);
+        }
+    }
+
     public class MainSceneManager : MonoBehaviour
     {
         #region Show Inspector
 
         [Header("팀을 고를 UI 오브젝트들")]
-        [SerializeField, Tooltip("팀을 고를 UI 오브젝트")] 
-        private GameObject _choiceTeamUI = null;
-        [SerializeField, Tooltip("팀을 추가하는 UI 오브젝트")]
-        private GameObject _addTeamUI = null;
+        [SerializeField, Tooltip("팀을 고를 UI 오브젝트")]
+        private GameObject _choiceTeamUI;
 
+        [SerializeField, Tooltip("팀을 추가하는 UI 오브젝트")]
+        private GameObject _addTeamUI;
 
         [Header("유닛을 고를 UI 오브젝트들")]
         [SerializeField, Tooltip("유닛을 고를 UI 오브젝트")]
-        private GameObject _choiceUnitUI = null;
+        private GameObject _choiceUnitUI;
 
         [Header("유닛을 세팅할 UI 오브젝트들")]
         [SerializeField, Tooltip("유닛을 세팅할 UI 오브젝트")]
-        private GameObject _setUnitUI = null;
-        [SerializeField, Tooltip("3D 유닛 UI 오브젝트")]
-        private GameObject _unitObjectUI = null;
+        private GameObject _setUnitUI;
 
         #endregion
 
         // UIScreenObject 의 이름, List에서의 번호
-        private Dictionary<string, int> _count = new Dictionary<string, int>();
-        // private Stack<string> _curKeyStack = new Stack<string>();
-        private string _curKey = ""; // { get { return _curKeyStack.Peek(); } }
+        private Dictionary<string, UIScreen> nameToSceenUI = new Dictionary<string, UIScreen>();
 
-        // UIScreen
-        private List<UIScreen> _list = new List<UIScreen>();
+        private string _curKey = string.Empty;
 
         private void Awake()
         {
+            //UI키 : UI 오브젝트 형태로 링크해줍니다.
             InitUI(UIDataKey.Lobby);
             InitUI(UIDataKey.ChoiceTeam, _choiceTeamUI);
             InitUI(UIDataKey.AddTeam, _addTeamUI);
             InitUI(UIDataKey.ChoiceUnit, _choiceUnitUI);
-            InitUI(UIDataKey.SetUnit   , _setUnitUI, _unitObjectUI);
+            InitUI(UIDataKey.SetUnit, _setUnitUI);
         }
 
-        void InitUI(string key,GameObject ui1 = null,GameObject ui2 = null)
+        private void InitUI(string key, GameObject ui = null)
         {
-            UIScreen ui = new UIScreen();
-            if (null != ui1)
-                ui._UIList.Add(ui1);
-            if (null != ui2)
-                ui._UIList.Add(ui2);
+            //객체 생성
+            var uiScreen = new UIScreen();
 
-            _count.Add(key, _list.Count);
-            _list.Add(ui);
-            _list[_count[key]].Disable();
+            //인자로 넘어온 UI가 null이 아닐 경우, UI스크린 리스트에 수록
+            if (ui != null) uiScreen.myUI = ui;
+
+            //딕셔너리에 해당 키와 UI스크린의 리스트를 생성하고, UI 스크린 객체를 수록한다.
+            nameToSceenUI[key] = uiScreen;
+
+            //방금 Add한 오브젝트를 비활성화 시킴
+            nameToSceenUI[key].setActive(false);
         }
 
         public void UpdateScreen(string key)
         {
-            if(!_count.ContainsKey(key)) { return; }
+            //인자로 넘어온 키 값이 카운트에 없을 경우 : return
+            if (!nameToSceenUI.ContainsKey(key))
+                return;
 
-            if (_count.ContainsKey(_curKey))
-                _list[_count[_curKey]].Disable();
+            //현재 활성화된 UI는 비활성화 한다.
+            if (!_curKey.Equals(string.Empty))
+                nameToSceenUI[_curKey].setActive(false);
 
+            // //새로 들어온 Key의 UI를 활성화 한다.
+            nameToSceenUI[key].setActive(true);
             _curKey = key;
-            _list[_count[_curKey]].Enable();
         }
 
         public void UpdateCheckScreen(string key)
         {
-            if (!_count.ContainsKey(key)) { return; }
+            //인자로 넘어온 키 값이 카운트에 없을 경우 : return
+            if (!nameToSceenUI.ContainsKey(key))
+                return;
 
-            UIScreen ui = _list[_count[key]];
+            //해당 UI스크린을 가져온다.
+            UIScreen ui = nameToSceenUI[key];
 
-            if (ui._isOn) ui.Disable();
-            else          ui.Enable();
+            //활성화 <-> 비활성화
+            ui.setActive(!ui.activeSelf);
         }
 
         public void NextScreen()
         {
-            switch(_curKey)
+            switch (_curKey)
             {
-                case UIDataKey.Lobby:                                           break;
-                case UIDataKey.ChoiceTeam: UpdateScreen(UIDataKey.ChoiceUnit);  break;
-                case UIDataKey.ChoiceUnit:                                      break;
+                case UIDataKey.ChoiceTeam:
+                    UpdateScreen(UIDataKey.ChoiceUnit);
+                    break;
             }
         }
 
@@ -107,39 +125,16 @@ namespace MainScene
         {
             switch (_curKey)
             {
-                case UIDataKey.Lobby:                                           break;
-                case UIDataKey.ChoiceTeam:  UpdateScreen(UIDataKey.Lobby);      break;
-                case UIDataKey.ChoiceUnit:  UpdateScreen(UIDataKey.ChoiceTeam); break;
+                case UIDataKey.ChoiceTeam:
+                    UpdateScreen(UIDataKey.Lobby);
+                    break;
+                case UIDataKey.ChoiceUnit:
+                    UpdateScreen(UIDataKey.ChoiceTeam);
+                    break;
             }
         }
 
         public void NextGoto(string scene) =>
             Manager.Get<SceneManagerPro>().LoadScene(scene);
     }
-
-    class UIScreen
-    {
-        public List<GameObject> _UIList = new List<GameObject>();
-
-        public bool _isOn = false;
-
-        public void Enable()
-        {
-            _isOn = true;
-            foreach (GameObject i in _UIList)
-            {
-                i.SetActive(_isOn);
-            }
-        }
-
-        public void Disable()
-        {
-            _isOn = false;
-            foreach (GameObject i in _UIList)
-            {
-                i.SetActive(_isOn);
-            }
-        }
-    }
-
 }
