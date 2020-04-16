@@ -27,10 +27,5 @@ public class ItemSlot : MonoBehaviour
             return;
 
         _text.text = item.Name;
-
-        // var localPosition = transform.localPosition;
-        //
-        // localPosition = new Vector3(localPosition.x, localPosition.y, 0);
-        // transform.localPosition = localPosition;
     }
 }
