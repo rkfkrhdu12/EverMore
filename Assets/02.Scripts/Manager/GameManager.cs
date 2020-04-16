@@ -17,6 +17,9 @@ public class GameManager : Manager
     //아이템에 대한 리스트 변수
     public ItemList itemList { get; private set; }
 
+    [HideInInspector]
+    public int money = 123456789;//게임속 돈의 재화이다.
+    
     //팀에 대한 변수
     private Team _playerTeam;
 
@@ -25,12 +28,12 @@ public class GameManager : Manager
 
     //배경 음악 볼륨이다.
     [Range(0f, 1f)]
-    private float _BgmVolume = 0.7f;
+    public float _BgmVolume = 0.7f;
 
     //이펙트 음악 볼륨이다.
     [Range(0f, 1f)]
-    private float _SfxVolume = 0.7f;
-    
+    public float _SfxVolume = 0.7f;
+
     #endregion
 
     /// <summary>

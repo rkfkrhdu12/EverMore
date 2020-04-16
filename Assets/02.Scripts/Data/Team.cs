@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class Team
 {
-    private string _name = "";
-    public string Name { set { _name = value; } get{ return _name; } }
+    public string Name { set; get; } = "";
 
     public const int UnitCount = 6;
 
     //public UnitData[] _units = new UnitData[UnitCount];
     public List<UnitData> _units = new List<UnitData>();
 
-    void AddUnit(UnitData unitData)
+    private void AddUnit(UnitData unitData)
     {
-        if (UnitCount <= _units.Count) { return; }
+        //유닛 개수가 UnitCount보다 이상이면 : return
+        if (_units.Count >= UnitCount)
+            return;
 
+        //추가
         _units.Add(unitData);
     }
 
