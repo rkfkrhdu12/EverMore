@@ -14,6 +14,7 @@
     "com.unity.inputsystem": "1.0.0-preview.6",
     "com.unity.nkstudio.buttonpro": "https://github.com/bnm000215/UnityButtonPro.git",
     "com.unity.nkstudio.enumpro": "https://github.com/bnm000215/UnityEnumPro.git",
+    "com.unity.nkstudio.saveunitysystem": "https://github.com/bnm000215/UnitySavePlayModeSystem.git",
     "com.unity.quicksearch": "1.5.3",
     "com.unity.render-pipelines.universal": "7.3.1",
     "com.unity.test-framework": "1.1.13",
@@ -77,6 +78,10 @@
     "com.unity.uialphaarea": {
       "revision": "HEAD",
       "hash": "f44d077481fbf245a8402c5cf1ecb87bcbf2e700"
+    },
+    "com.unity.nkstudio.saveunitysystem": {
+      "revision": "HEAD",
+      "hash": "9ef319c8513058865ba3c26706c05d55c747978b"
     }
   }
 }

@@ -48,5 +48,5 @@ MonoBehaviour:
     m_values:
     - MainScene
     - GameSearchScene
-    - IngameScene
+    - gameScene
     - GameResultScene
