@@ -459,10 +459,10 @@
           <e p="link.xml" t="Include" />
         </e>
         <e p="Other" t="Include">
+          <e p="AllKr11170.txt" t="Include" />
           <e p="InputAction" t="Include">
-            <e p="InputSystem.cs" t="Include" />
+            <e p="UInputSystem.cs" t="Include" />
           </e>
-          <e p="전체한글11170자.txt" t="Include" />
         </e>
         <e p="Plugins" t="Include">
           <e p="Inspector Gadgets" t="Include">
