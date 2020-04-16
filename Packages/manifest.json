@@ -5,6 +5,7 @@
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.addressables": "1.1.10",
     "com.unity.animatorpro": "https://github.com/bnm000215/UnityAnimatorPro.git",
+    "com.unity.aovrecorder": "0.1.1-preview.2",
     "com.unity.cinemachine": "2.5.0",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ext.nunit": "1.0.0",
