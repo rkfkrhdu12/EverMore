@@ -19,6 +19,9 @@
             <e p="SkyRotation.cs" t="Include" />
             <e p="UnitManager.cs" t="Include" />
           </e>
+          <e p="Intro" t="Include">
+            <e p="IntroSystem.cs" t="Include" />
+          </e>
           <e p="Item" t="Include">
             <e p="Custom" t="Include">
               <e p="ItemSlot.cs" t="Include" />
@@ -50,6 +53,7 @@
             <e p="DeleteObjectSystem.cs" t="Include" />
             <e p="InGameSystem.cs" t="Include" />
           </e>
+          <e p="textPngToBase64.cs" t="Include" />
           <e p="Utils" t="Include">
             <e p="CameraManager.cs" t="Include" />
             <e p="DontDestroy.cs" t="Include" />
@@ -454,6 +458,12 @@
         <e p="JsonDotNet" t="Include">
           <e p="link.xml" t="Include" />
         </e>
+        <e p="Other" t="Include">
+          <e p="InputAction" t="Include">
+            <e p="InputSystem.cs" t="Include" />
+          </e>
+          <e p="전체한글11170자.txt" t="Include" />
+        </e>
         <e p="Plugins" t="Include">
           <e p="Inspector Gadgets" t="Include">
             <e p="Inspector" t="Include">
@@ -505,9 +515,6 @@
           </e>
         </e>
         <e p="TextMesh Pro" t="Include">
-          <e p="Fonts" t="Include">
-            <e p="LiberationSans - OFL.txt" t="Include" />
-          </e>
           <e p="Resources" t="Include">
             <e p="LineBreaking Following Characters.txt" t="Include" />
             <e p="LineBreaking Leading Characters.txt" t="Include" />
@@ -532,7 +539,6 @@
             <e p="EmojiOne Attribution.txt" t="Include" />
           </e>
         </e>
-        <e p="textPngToBase64.cs" t="Include" />
       </e>
       <e p="EverMore.sln" t="IncludeFlat" />
       <e p="GameplayIngredients-Editor.csproj" t="IncludeRecursive" />

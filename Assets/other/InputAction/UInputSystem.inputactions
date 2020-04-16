@@ -1,0 +1,33 @@
+{
+    "name": "InputSystem",
+    "maps": [
+        {
+            "name": "System",
+            "id": "cb555e62-8c29-4492-9df1-8d8b1b4ad879",
+            "actions": [
+                {
+                    "name": "any",
+                    "type": "Button",
+                    "id": "c12319f1-5bfd-4746-bdc1-297ab1e05054",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "18cf6051-6c54-4bb4-ab31-a765f9352c90",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "any",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

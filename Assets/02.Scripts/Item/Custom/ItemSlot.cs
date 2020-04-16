@@ -1,29 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
+﻿using UnityEngine;
 using GameplayIngredients;
+using TMPro;
 
 public class ItemSlot : MonoBehaviour
 {
     private int _itemNum = -1;
-    public int ItemNumber { get { return _itemNum; } set { _itemNum = value; UpdateText(); } }
-
-    public Text _text;
-
-    private void Awake()
+    public int ItemNumber
     {
-        UpdateText();
+        get => _itemNum;
+        set
+        {
+            _itemNum = value;
+            UpdateText();
+        }
     }
 
-    void UpdateText() 
+    public TMP_Text _text;
+
+    private void Awake() => UpdateText();
+
+    private void UpdateText()
     {
         Item item = Manager.Get<GameManager>().itemList.ItemSearch(_itemNum);
-        if (null == item) { return; }
+        
+        if (item == null)
+            return;
 
         _text.text = item.Name;
 
-        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
+        // var localPosition = transform.localPosition;
+        //
+        // localPosition = new Vector3(localPosition.x, localPosition.y, 0);
+        // transform.localPosition = localPosition;
     }
 }
