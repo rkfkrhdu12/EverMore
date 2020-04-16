@@ -454,7 +454,6 @@
         <e p="JsonDotNet" t="Include">
           <e p="link.xml" t="Include" />
         </e>
-        <e p="myte.cs" t="Include" />
         <e p="Plugins" t="Include">
           <e p="Inspector Gadgets" t="Include">
             <e p="Inspector" t="Include">
@@ -533,6 +532,7 @@
             <e p="EmojiOne Attribution.txt" t="Include" />
           </e>
         </e>
+        <e p="textPngToBase64.cs" t="Include" />
       </e>
       <e p="EverMore.sln" t="IncludeFlat" />
       <e p="GameplayIngredients-Editor.csproj" t="IncludeRecursive" />
