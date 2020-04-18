@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 908687834499952610}
   - component: {fileID: 5013279253329681551}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: Default_GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,11 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd2ae503e78cd14da039ced88d8e0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnGameStart: []
-  OnLevelLoaded: []
-  OnMainMenuLoaded: []
-  MainMenuGameLevel: {fileID: 0}
-  MainGameLevels: []
-  ProgressSaveName: Progress
-  MainMenuStartMessage: MAINMENU_START
-  GameLevelStartMessage: GAME_START
+  _WinTeam: 0
+  money: 123456789
+  _BgmVolume: 0.7
+  _SfxVolume: 0.7

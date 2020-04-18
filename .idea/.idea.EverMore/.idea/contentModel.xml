@@ -26,8 +26,9 @@
             <e p="Custom" t="Include">
               <e p="ItemSlot.cs" t="Include" />
             </e>
-            <e p="ItemInventoryManager.cs" t="Include" />
+            <e p="ItemInventorySystem.cs" t="Include" />
             <e p="ItemList.cs" t="Include" />
+            <e p="ShowMoney.cs" t="Include" />
           </e>
           <e p="MainScene" t="Include">
             <e p="TeamElemnt.cs" t="Include" />

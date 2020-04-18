@@ -11,6 +11,7 @@ namespace MainScene
         public const string AddTeam = "AddTeam";
         public const string ChoiceUnit = "ChoiceUnit";
         public const string SetUnit = "SetUnit";
+        public const string Matching = "Match";
     }
 
     public class UIScreen
@@ -36,20 +37,25 @@ namespace MainScene
     {
         #region Show Inspector
 
-        [Header("팀을 고를 UI 오브젝트들")]
+        [Header("각각의 UI들")]
         [SerializeField, Tooltip("팀을 고를 UI 오브젝트")]
         private GameObject _choiceTeamUI;
 
+        [Space]
         [SerializeField, Tooltip("팀을 추가하는 UI 오브젝트")]
         private GameObject _addTeamUI;
 
-        [Header("유닛을 고를 UI 오브젝트들")]
+        [Space]
         [SerializeField, Tooltip("유닛을 고를 UI 오브젝트")]
         private GameObject _choiceUnitUI;
 
-        [Header("유닛을 세팅할 UI 오브젝트들")]
+        [Space]
         [SerializeField, Tooltip("유닛을 세팅할 UI 오브젝트")]
         private GameObject _setUnitUI;
+        
+        [Space]
+        [SerializeField, Tooltip("매칭을 선택할 UI")]
+        private GameObject _MatchUI;
 
         #endregion
 
@@ -66,6 +72,7 @@ namespace MainScene
             InitUI(UIDataKey.AddTeam, _addTeamUI);
             InitUI(UIDataKey.ChoiceUnit, _choiceUnitUI);
             InitUI(UIDataKey.SetUnit, _setUnitUI);
+            InitUI(UIDataKey.Matching, _MatchUI);
         }
 
         private void InitUI(string key, GameObject ui = null)

@@ -69,19 +69,19 @@
     },
     "com.unity.nkstudio.buttonpro": {
       "revision": "HEAD",
-      "hash": "5ae62fb2ac10e46d0a8fc367af35bfbb7deb9a53"
+      "hash": "99f3b3b4df6a8f80231ee34b4bd1a62f2dd0b530"
     },
     "com.unity.nkstudio.enumpro": {
       "revision": "HEAD",
       "hash": "449735873465e09d15ece21916540358631b8c62"
     },
-    "com.unity.uialphaarea": {
-      "revision": "HEAD",
-      "hash": "f44d077481fbf245a8402c5cf1ecb87bcbf2e700"
-    },
     "com.unity.nkstudio.saveunitysystem": {
       "revision": "HEAD",
       "hash": "9ef319c8513058865ba3c26706c05d55c747978b"
+    },
+    "com.unity.uialphaarea": {
+      "revision": "HEAD",
+      "hash": "f44d077481fbf245a8402c5cf1ecb87bcbf2e700"
     }
   }
 }
