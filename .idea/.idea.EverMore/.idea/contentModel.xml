@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\bnm00\.Rider2019.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\bnm00\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_EverMore.365615458.00" t="ExcludeRecursive" />
+    <e p="C:\Users\bnm00\AppData\local\JetBrains\Rider2020.1\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\bnm00\AppData\local\JetBrains\Rider2020.1\resharper-host\local\Transient\ReSharperHost\v201\SolutionCaches\_EverMore.365615458.00" t="ExcludeRecursive" />
     <e p="C:\Users\bnm00\Desktop\EverMore" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
@@ -43,6 +43,7 @@
           <e p="Other" t="Include">
             <e p="CSVParser.cs" t="Include" />
             <e p="JsonParser.cs" t="Include" />
+            <e p="UnitPhoto.cs" t="Include" />
           </e>
           <e p="ResultScene" t="Include">
             <e p="GameResult.cs" t="Include" />
@@ -54,12 +55,12 @@
             <e p="DeleteObjectSystem.cs" t="Include" />
             <e p="InGameSystem.cs" t="Include" />
           </e>
-          <e p="textPngToBase64.cs" t="Include" />
           <e p="Utils" t="Include">
             <e p="CameraManager.cs" t="Include" />
             <e p="DontDestroy.cs" t="Include" />
             <e p="GameObjectPool.cs" t="Include" />
             <e p="SingletonMonoBehaviour.cs" t="Include" />
+            <e p="textPngToBase64.cs" t="Include" />
             <e p="Util.cs" t="Include" />
           </e>
         </e>

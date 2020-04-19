@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitStability
+public static class UnitStability
 {
     /// <summary>
     /// 안정도 당 공격속도 리턴(-1 리턴시 오류)
@@ -60,7 +60,7 @@ public class UnitStability
 
     #region Private Fuction
 
-    private void Awake() =>
+    private static void Awake() =>
         Init();
 
     // Test

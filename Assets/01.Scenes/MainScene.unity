@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -11056,7 +11056,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1989406323}
   - component: {fileID: 1989406324}
-  - component: {fileID: 1989406325}
   m_Layer: 0
   m_Name: MainSceneManager
   m_TagString: Untagged
@@ -11095,19 +11094,6 @@ MonoBehaviour:
   _choiceUnitUI: {fileID: 835341015}
   _setUnitUI: {fileID: 1237765530}
   _MatchUI: {fileID: 1247279300}
---- !u!114 &1989406325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1989406322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 971195206ce75cd4bb07be159432cea1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obj: {fileID: 835341015}
 --- !u!1 &2003768723
 GameObject:
   m_ObjectHideFlags: 0

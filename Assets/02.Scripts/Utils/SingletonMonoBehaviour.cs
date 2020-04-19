@@ -6,9 +6,9 @@ using System.Collections;
 // 다른 Scene 으로 넘어가면 삭제된다.
 public class SingletonMonoBehaviour<T> : MonoBehaviour where T : SingletonMonoBehaviour<T>
 {
-    static public T Instance { get; private set; }
+    public static T Instance { get; private set; }
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -21,7 +21,7 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : SingletonMonoBe
         }
     }
 
-    void Start()
+    private void Start()
     {
         if (Instance == (T)this)
         {
@@ -29,11 +29,11 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : SingletonMonoBe
         }
     }
 
-    virtual protected void OnAwake()
+    protected virtual void OnAwake()
     {
     }
     
-    virtual protected void OnStart()
+    protected virtual void OnStart()
     {
     }
 

@@ -3,14 +3,20 @@
   <component name="ContentModelUserStore">
     <attachedFolders />
     <explicitIncludes>
+      <Path>Library/PackageCache/com.rito.getcomponentattributes@624f248d07</Path>
+      <Path>Library/PackageCache/com.sbstn_hn.rendererfeatures.urp-ssao@4958115f46</Path>
       <Path>Library/PackageCache/com.unity.addressables@1.1.10</Path>
+      <Path>Library/PackageCache/com.unity.animatorpro@d74c922c07</Path>
       <Path>Library/PackageCache/com.unity.aovrecorder@0.1.1-preview.2</Path>
       <Path>Library/PackageCache/com.unity.cinemachine@2.5.0</Path>
       <Path>Library/PackageCache/com.unity.collab-proxy@1.2.16</Path>
       <Path>Library/PackageCache/com.unity.ext.nunit@1.0.0</Path>
-      <Path>Library/PackageCache/com.unity.ide.rider@1.1.4</Path>
+      <Path>Library/PackageCache/com.unity.ide.rider@2.0.2</Path>
       <Path>Library/PackageCache/com.unity.ide.vscode@1.1.4</Path>
-      <Path>Library/PackageCache/com.unity.inputsystem@1.0.0-preview.6</Path>
+      <Path>Library/PackageCache/com.unity.inputsystem@1.0.0-preview.7</Path>
+      <Path>Library/PackageCache/com.unity.nkstudio.buttonpro@99f3b3b4df</Path>
+      <Path>Library/PackageCache/com.unity.nkstudio.enumpro@4497358734</Path>
+      <Path>Library/PackageCache/com.unity.nkstudio.saveunitysystem@9ef319c851</Path>
       <Path>Library/PackageCache/com.unity.quicksearch@1.5.3</Path>
       <Path>Library/PackageCache/com.unity.recorder@2.1.0-preview.1</Path>
       <Path>Library/PackageCache/com.unity.render-pipelines.core@7.3.1</Path>
@@ -20,7 +26,8 @@
       <Path>Library/PackageCache/com.unity.test-framework@1.1.11</Path>
       <Path>Library/PackageCache/com.unity.test-framework@1.1.13</Path>
       <Path>Library/PackageCache/com.unity.textmeshpro@2.1.0-preview.8</Path>
-      <Path>Library/PackageCache/com.unity.timeline@1.2.6</Path>
+      <Path>Library/PackageCache/com.unity.timeline@1.2.14</Path>
+      <Path>Library/PackageCache/com.unity.uialphaarea@26662f3daf</Path>
       <Path>Packages</Path>
       <Path>ProjectSettings</Path>
     </explicitIncludes>
@@ -28,6 +35,7 @@
       <Path>.git</Path>
       <Path>.idea</Path>
       <Path>Library</Path>
+      <Path>Recordings</Path>
       <Path>Temp</Path>
       <Path>obj</Path>
     </explicitExcludes>
