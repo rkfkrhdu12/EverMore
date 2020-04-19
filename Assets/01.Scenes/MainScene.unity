@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -389,6 +389,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
       m_PersistentCalls:
         m_Calls: []
   _buttonGroup: {fileID: 0}
@@ -717,6 +720,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!1 &165543450
@@ -781,6 +787,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
       m_PersistentCalls:
         m_Calls: []
   _buttonGroup: {fileID: 0}
@@ -1706,6 +1715,9 @@ MonoBehaviour:
         m_Calls: []
     onUp:
       m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1989406324}
           m_MethodName: UpdateScreen
@@ -1829,6 +1841,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 280493003}
   m_CullTransparentMesh: 0
+--- !u!114 &295862110 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 734804567288155477, guid: 8b056c0965c501247b03ea6c77ac3e94,
+    type: 3}
+  m_PrefabInstance: {fileID: 928379303}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926a83eb4ec39c0448baaf102c59807b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &298268892
 GameObject:
   m_ObjectHideFlags: 0
@@ -1976,6 +2000,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
       m_PersistentCalls:
         m_Calls: []
   _buttonGroup: {fileID: 0}
@@ -2617,6 +2644,9 @@ MonoBehaviour:
     onUp:
       m_PersistentCalls:
         m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!114 &386535124
@@ -2711,6 +2741,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+--- !u!114 &425107998 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 734804567288155477, guid: 8b056c0965c501247b03ea6c77ac3e94,
+    type: 3}
+  m_PrefabInstance: {fileID: 832560507}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926a83eb4ec39c0448baaf102c59807b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &433853316
 GameObject:
   m_ObjectHideFlags: 0
@@ -3978,6 +4020,9 @@ MonoBehaviour:
     onUp:
       m_PersistentCalls:
         m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!114 &505839739
@@ -4788,6 +4833,9 @@ MonoBehaviour:
     onUp:
       m_PersistentCalls:
         m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!114 &599160207
@@ -4899,6 +4947,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 614362170}
   m_CullTransparentMesh: 0
+--- !u!114 &615628738 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 734804567288155477, guid: 8b056c0965c501247b03ea6c77ac3e94,
+    type: 3}
+  m_PrefabInstance: {fileID: 1252570027}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926a83eb4ec39c0448baaf102c59807b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &640344363 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 734804567288155477, guid: 8b056c0965c501247b03ea6c77ac3e94,
+    type: 3}
+  m_PrefabInstance: {fileID: 1031522911}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926a83eb4ec39c0448baaf102c59807b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &688521054
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5275,6 +5347,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!114 &709697513
@@ -5412,6 +5487,9 @@ MonoBehaviour:
         m_Calls: []
     onUp:
       m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1989406324}
           m_MethodName: UpdateScreen
@@ -5548,6 +5626,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!1 &753677838
@@ -5759,8 +5840,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
@@ -5771,11 +5857,11 @@ PrefabInstance:
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1989406324}
+      objectReference: {fileID: 425107998}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateScreen
+      value: PressUpEffect
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
@@ -5785,6 +5871,61 @@ PrefabInstance:
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 425107998}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PressUpEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1989406324}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: SetUnit
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242826, guid: 8b056c0965c501247b03ea6c77ac3e94,
@@ -6256,8 +6397,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
@@ -6268,11 +6414,11 @@ PrefabInstance:
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1989406324}
+      objectReference: {fileID: 295862110}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateScreen
+      value: PressUpEffect
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
@@ -6282,6 +6428,61 @@ PrefabInstance:
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 295862110}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PressUpEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1989406324}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: SetUnit
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242826, guid: 8b056c0965c501247b03ea6c77ac3e94,
@@ -6911,8 +7112,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
@@ -6923,11 +7129,11 @@ PrefabInstance:
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1989406324}
+      objectReference: {fileID: 640344363}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateScreen
+      value: PressUpEffect
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
@@ -6937,6 +7143,61 @@ PrefabInstance:
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 640344363}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PressUpEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1989406324}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: SetUnit
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242826, guid: 8b056c0965c501247b03ea6c77ac3e94,
@@ -7434,6 +7695,9 @@ MonoBehaviour:
     onUp:
       m_PersistentCalls:
         m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!114 &1121168808
@@ -7871,6 +8135,9 @@ MonoBehaviour:
         m_Calls: []
     onUp:
       m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1989406324}
           m_MethodName: UpdateScreen
@@ -8267,8 +8534,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
@@ -8279,11 +8551,11 @@ PrefabInstance:
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1989406324}
+      objectReference: {fileID: 615628738}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateScreen
+      value: PressUpEffect
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
@@ -8293,6 +8565,61 @@ PrefabInstance:
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 615628738}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PressUpEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1989406324}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: SetUnit
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242826, guid: 8b056c0965c501247b03ea6c77ac3e94,
@@ -8512,18 +8839,10 @@ MonoBehaviour:
         m_Calls: []
     onUp:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1989406322}
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!1 &1290299968
@@ -8813,6 +9132,9 @@ MonoBehaviour:
     onUp:
       m_PersistentCalls:
         m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!114 &1301035117
@@ -9080,18 +9402,10 @@ MonoBehaviour:
         m_Calls: []
     onUp:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1989406322}
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!114 &1437722136
@@ -9723,6 +10037,9 @@ MonoBehaviour:
         m_Calls: []
     onUp:
       m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1989406324}
           m_MethodName: UpdateScreen
@@ -9842,18 +10159,10 @@ MonoBehaviour:
         m_Calls: []
     onUp:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_MethodName: 
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!114 &1683270480
@@ -9954,6 +10263,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1989406324}
@@ -10103,6 +10415,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
       m_PersistentCalls:
         m_Calls: []
   _buttonGroup: {fileID: 0}
@@ -10278,6 +10593,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
       m_PersistentCalls:
         m_Calls: []
   _buttonGroup: {fileID: 0}
@@ -10510,6 +10828,9 @@ MonoBehaviour:
         m_Calls: []
     onUp:
       m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1989406324}
           m_MethodName: UpdateScreen
@@ -10634,12 +10955,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847281212}
   m_CullTransparentMesh: 0
+--- !u!114 &1850954200 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 734804567288155477, guid: 8b056c0965c501247b03ea6c77ac3e94,
+    type: 3}
+  m_PrefabInstance: {fileID: 7471233876344484390}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926a83eb4ec39c0448baaf102c59807b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1880534793 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8094238804262034603, guid: 414692a5e3d64cc4991fb85c6c91f971,
     type: 3}
   m_PrefabInstance: {fileID: 448961493}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1910119049 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 734804567288155477, guid: 8b056c0965c501247b03ea6c77ac3e94,
+    type: 3}
+  m_PrefabInstance: {fileID: 2034669348}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926a83eb4ec39c0448baaf102c59807b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1923197027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11242,6 +11587,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!114 &2007426652
@@ -11294,8 +11642,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
@@ -11306,11 +11659,11 @@ PrefabInstance:
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1989406324}
+      objectReference: {fileID: 1910119049}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateScreen
+      value: PressUpEffect
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
@@ -11320,6 +11673,61 @@ PrefabInstance:
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1910119049}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PressUpEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1989406324}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: SetUnit
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242826, guid: 8b056c0965c501247b03ea6c77ac3e94,
@@ -11518,6 +11926,9 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1989406324}
@@ -12093,6 +12504,9 @@ MonoBehaviour:
         m_Calls: []
     onUp:
       m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1989406324}
           m_MethodName: UpdateScreen
@@ -12663,8 +13077,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
@@ -12675,11 +13094,11 @@ PrefabInstance:
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1989406324}
+      objectReference: {fileID: 1850954200}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateScreen
+      value: PressUpEffect
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
@@ -12689,6 +13108,61 @@ PrefabInstance:
     - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
         type: 3}
       propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1850954200}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PressUpEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onUp.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1989406324}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: UpdateScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7471233876239242824, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: onButtonEvent.onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: SetUnit
       objectReference: {fileID: 0}
     - target: {fileID: 7471233876239242826, guid: 8b056c0965c501247b03ea6c77ac3e94,

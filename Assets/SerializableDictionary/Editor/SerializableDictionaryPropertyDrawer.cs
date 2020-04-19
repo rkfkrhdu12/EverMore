@@ -5,6 +5,7 @@ using UnityEditor;
 using System.Reflection;
 using System;
 
+[CustomPropertyDrawer(typeof(stringTexture2D))]
 [CustomPropertyDrawer(typeof(eSceneString))]
 public class SerializableDictionaryPropertyDrawer : PropertyDrawer
 {

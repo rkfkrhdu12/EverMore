@@ -19,6 +19,7 @@
             <e p="SkyRotation.cs" t="Include" />
             <e p="UnitManager.cs" t="Include" />
           </e>
+          <e p="go.cs" t="Include" />
           <e p="Intro" t="Include">
             <e p="IntroSystem.cs" t="Include" />
           </e>
@@ -31,6 +32,7 @@
             <e p="ShowMoney.cs" t="Include" />
           </e>
           <e p="MainScene" t="Include">
+            <e p="slotUIPressEffect.cs" t="Include" />
             <e p="TeamElemnt.cs" t="Include" />
             <e p="TeamSelectionSystem.cs" t="Include" />
           </e>
@@ -51,7 +53,7 @@
           <e p="rig" t="Include">
             <e p="UnitRotate.cs" t="Include" />
           </e>
-          <e p="system" t="Include">
+          <e p="System" t="Include">
             <e p="DeleteObjectSystem.cs" t="Include" />
             <e p="InGameSystem.cs" t="Include" />
           </e>
@@ -550,7 +552,7 @@
       <e p="NaughtyAttributes.Editor.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
-      <e p="Temp\bin" t="ExcludeRecursive" />
+      <e p="Temp\Bin" t="ExcludeRecursive" />
     </e>
   </component>
 </project>
