@@ -131,6 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 26390426}
   - component: {fileID: 26390427}
+  - component: {fileID: 26390428}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -165,7 +166,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 26390425}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8f9c263b594faa4cafdfd4280711315, type: 3}
   m_Name: 
@@ -173,6 +174,25 @@ MonoBehaviour:
   _contentObject: {fileID: 203507608}
   _itemPrefab: {fileID: 8094238805255821374, guid: 414692a5e3d64cc4991fb85c6c91f971,
     type: 3}
+--- !u!114 &26390428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26390425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1806bf3a8601e234685ef00cc5cfa4fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonPros:
+  - {fileID: 163900183}
+  - {fileID: 751911392}
+  - {fileID: 2007426651}
+  - {fileID: 709697512}
+  _SelectedNumber: -1
+  DisableToReset: 1
 --- !u!1 &26460162
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,6 +728,9 @@ MonoBehaviour:
         m_Calls: []
     onUp:
       m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 26390427}
           m_MethodName: TypeHelmet
@@ -720,9 +743,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    onClick:
-      m_PersistentCalls:
-        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!1 &165543450
@@ -5335,6 +5355,9 @@ MonoBehaviour:
         m_Calls: []
     onUp:
       m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 26390427}
           m_MethodName: TypeWeapon
@@ -5347,9 +5370,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    onClick:
-      m_PersistentCalls:
-        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!114 &709697513
@@ -5614,6 +5634,9 @@ MonoBehaviour:
         m_Calls: []
     onUp:
       m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 26390427}
           m_MethodName: TypeBodyArmour
@@ -5626,9 +5649,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    onClick:
-      m_PersistentCalls:
-        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!1 &753677838
@@ -6038,6 +6058,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7842914478401049887, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: b8c07e6b1639ad14f8d3573049212199, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b056c0965c501247b03ea6c77ac3e94, type: 3}
 --- !u!224 &832560508 stripped
@@ -6184,7 +6209,6 @@ GameObject:
   m_Component:
   - component: {fileID: 869510707}
   - component: {fileID: 869510708}
-  - component: {fileID: 869510709}
   m_Layer: 5
   m_Name: 'Folder : button'
   m_TagString: Untagged
@@ -6234,25 +6258,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
---- !u!114 &869510709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 869510706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1806bf3a8601e234685ef00cc5cfa4fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonPros:
-  - {fileID: 163900183}
-  - {fileID: 751911392}
-  - {fileID: 2007426651}
-  - {fileID: 709697512}
-  _SelectedNumber: -1
-  DisableToReset: 1
 --- !u!224 &869796672 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8094238804262034603, guid: 414692a5e3d64cc4991fb85c6c91f971,
@@ -6595,6 +6600,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7842914478401049887, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 316ef8a0fb7fc1f4b9155247dbfe90b1, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b056c0965c501247b03ea6c77ac3e94, type: 3}
 --- !u!224 &928379304 stripped
@@ -7310,6 +7320,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7842914478401049887, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 55b2b963c78aa5a4d92955420c736531, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b056c0965c501247b03ea6c77ac3e94, type: 3}
 --- !u!224 &1031522912 stripped
@@ -8732,6 +8747,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7842914478401049887, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: fbb388f0ee0e0b949bd9a39d752f5236, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b056c0965c501247b03ea6c77ac3e94, type: 3}
 --- !u!224 &1252570028 stripped
@@ -9921,7 +9941,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1982909671}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.52630424
+  m_Size: 0.5254952
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11350,7 +11370,7 @@ RectTransform:
   m_Father: {fileID: 1193928933}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.47369576}
+  m_AnchorMin: {x: 0, y: 0.47450483}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -11575,6 +11595,9 @@ MonoBehaviour:
         m_Calls: []
     onUp:
       m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 26390427}
           m_MethodName: TypeWeapon
@@ -11587,9 +11610,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    onClick:
-      m_PersistentCalls:
-        m_Calls: []
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!114 &2007426652
@@ -11840,6 +11860,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7842914478401049887, guid: 8b056c0965c501247b03ea6c77ac3e94,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 41f1934d4164a1044a6ba5494b224cf3, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b056c0965c501247b03ea6c77ac3e94, type: 3}
 --- !u!224 &2034669349 stripped

@@ -6,7 +6,7 @@ public enum eItemInvenType
 {
     HELMET,
     BODYARMOUR,
-    WEAPON,
+    WEAPON
 }
 
 public class ItemInventorySystem : MonoBehaviour
@@ -45,14 +45,14 @@ public class ItemInventorySystem : MonoBehaviour
 
     private void Start()
     {
-        // Test
-        {
-            TypeItemAllSet(eCodeType.HELMET, eItemInvenType.HELMET);
-            TypeItemAllSet(eCodeType.BODYARMOUR, eItemInvenType.BODYARMOUR);
-            TypeItemAllSet(eCodeType.WEAPON, eItemInvenType.WEAPON);
-        }
+        #region Test
 
+        TypeItemAllSet(eCodeType.HELMET, eItemInvenType.HELMET);
+        TypeItemAllSet(eCodeType.BODYARMOUR, eItemInvenType.BODYARMOUR);
+        TypeItemAllSet(eCodeType.WEAPON, eItemInvenType.WEAPON);
 
+        #endregion
+        
         Type = eItemInvenType.HELMET;
         UpdateInventory();
     }
@@ -67,7 +67,7 @@ public class ItemInventorySystem : MonoBehaviour
     // Test
     private void TypeItemAllSet(eCodeType codeType, eItemInvenType itemType)
     {
-        //아이템 리스를 가져온다.
+        //아이템 리스트를 가져온다.
         ItemList itemList = Manager.Get<GameManager>().itemList;
 
         //아이템 개수 반환.
