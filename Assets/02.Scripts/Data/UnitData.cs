@@ -44,6 +44,7 @@ public class UnitData : FieldObject
 
     private enum eState
     {
+        NONE,
         IDLE,
         MOVE,
         ATTACK,
@@ -119,10 +120,10 @@ public class UnitData : FieldObject
     private AnimatorPro _aniPro;
 
     //리지드 바디 변수
-    private Rigidbody _rigid;
+    private Rigidbody _rig;
 
     //유닛 상태에 대한 변수
-    private eState _curState = eState.MOVE;
+    private eState _curState = eState.NONE;
 
     //필드 관점에서의 해당 유닛의 상태
     private FieldObject _curTarget;
@@ -136,8 +137,8 @@ public class UnitData : FieldObject
 
     private void FixedUpdate()
     {
-        //죽었다면, 아래 코드 구문 실행 X
-        if (isdead) return;
+        //현재 상태가 비어 있거나, 죽었다면 : return
+        if (_curState == eState.NONE || isdead) return;
 
         //이동 <--> 공격, 상태 변환
         UpdateState();
@@ -211,13 +212,12 @@ public class UnitData : FieldObject
 
     private void UpdateAnimation()
     {
-        if (_aniPro == null)
-            return;
-
+        if(_aniPro == null) return;
+        
         _aniPro.SetParam(_idMove, moveParameter);
 
         //공격 중이 아니라면 : return
-        if (!_animator.GetBool(_idAttack)) return;
+        if (!_aniPro.GetParam<bool>(_idAttack)) return;
 
         //타겟이 있거나, 타겟의 체력이 0 초과라면 : return
         if (_curTarget != null && _curTarget._curHp > 0) return;
@@ -230,9 +230,6 @@ public class UnitData : FieldObject
 
     private void OnTriggerEnter(Collider other)
     {
-        // if (other.isTrigger)
-        //     return;
-
         //닿은 생대가 유닛이 아니라면 : 아래 코드 구문 실행 X
         if (!other.CompareTag("Unit"))
             return;
@@ -246,13 +243,13 @@ public class UnitData : FieldObject
 
         //공격 타겟에 해당 타겟을 넣어줍니다.
         _attackTargets.Enqueue(target);
-        
+
         _aniPro?.SetParam(_idAttack, true);
     }
 
     public void Spawn()
     {
-        //콜라이더비가 비어있다면, 가져온다.
+        //콜라이더 비가 비어있다면, 가져온다.
         if (_collider == null)
             _collider = GetComponent<BoxCollider>();
 
@@ -264,7 +261,7 @@ public class UnitData : FieldObject
         //아이템 번호가 0이 아니라면, 헬멧을 검색하여 생성합니다.
         if (_itemsNum[0] != 0)
         {
-            var _helmetObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[0]).Object; 
+            var _helmetObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[0]).Object;
             Instantiate(_helmetObj, gameObject.transform);
         }
 
@@ -296,7 +293,7 @@ public class UnitData : FieldObject
 
         #endregion
 
-        
+
         _animator = transform.GetChild(0).GetComponent<Animator>();
 
         _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
@@ -370,14 +367,14 @@ public class UnitData : FieldObject
         Equip(unit._itemsNum[0]);
         Equip(unit._itemsNum[1]);
         Equip(unit._itemsNum[2]);
-        Equip(unit._itemsNum[3], eEquipItem.SUBWEAPON); 
+        Equip(unit._itemsNum[3], eEquipItem.SUBWEAPON);
 
         //팀 처리
         eteam = unit.eteam;
     }
 
     //기본 초기화를 합니다.
-    public void Init(int curH = 100, int maxH = 100, int speed = 3) 
+    public void Init(int curH = 100, int maxH = 100, int speed = 3)
     {
         _curHp = curH;
         _maxHp = maxH;
