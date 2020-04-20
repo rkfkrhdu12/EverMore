@@ -69,7 +69,7 @@ public class GameManager : Manager
 
         //PlayerTeam : 초기화
         _playerTeam = new Team();
-        _playerTeam.InitTest();
+        //_playerTeam.InitTest();
 
         UnitStability.Init();
         _deleteObjectSystem = new DeleteObjectSystem();

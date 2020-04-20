@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEditor;
 
-
 public enum eItemType
 {
     NONE,
@@ -99,21 +98,21 @@ public class ItemList
         switch (i.Type)
         {
             case eItemType.NONE:
-                Debug.LogError("Item Error" + i.Name);
-                break;
+            Debug.LogError("Item Error" + i.Name);
+            break;
             case eItemType.HELMET:
-                _codeList[(int) eCodeType.HELMET].Add(_codeList[(int) eCodeType.HELMET].Count, index);
-                break;
+            _codeList[(int)eCodeType.HELMET].Add(_codeList[(int)eCodeType.HELMET].Count, index);
+            break;
             case eItemType.BODYARMOUR:
-                _codeList[(int) eCodeType.BODYARMOUR].Add(_codeList[(int) eCodeType.BODYARMOUR].Count, index);
-                break;
+            _codeList[(int)eCodeType.BODYARMOUR].Add(_codeList[(int)eCodeType.BODYARMOUR].Count, index);
+            break;
             default:
-                _codeList[(int) eCodeType.WEAPON].Add(_codeList[(int) eCodeType.WEAPON].Count, index);
-                break;
+            _codeList[(int)eCodeType.WEAPON].Add(_codeList[(int)eCodeType.WEAPON].Count, index);
+            break;
         }
 
         GameObject obj =
-            (GameObject) AssetDatabase.LoadAssetAtPath("Assets/03.Prefabs/Item/" + data[0] + ".prefab",
+            (GameObject)AssetDatabase.LoadAssetAtPath("Assets/03.Prefabs/Item/" + data[0] + ".prefab",
                 typeof(GameObject));
 
         // '/' 가 있음(왼쪽(방어구류),오른쪽(무기류)) 없으면 모든아이템 해당
@@ -152,11 +151,11 @@ public class ItemList
     /// <returns> 아이템코드 </returns>
     public int CodeSearch(eCodeType codeType, int index)
     {
-        int tpye = (int) codeType;
+        int tpye = (int)codeType;
 
         if (index >= _codeList[tpye].Count) return -1;
 
-        return _codeList[(int) codeType][index];
+        return _codeList[tpye][index];
     }
 
     /// <summary>
@@ -167,7 +166,7 @@ public class ItemList
     /// <returns> 아이템코드 </returns>
     public int CodeSearch(eCodeType codeType, string name)
     {
-        int tpye = (int) codeType;
+        int tpye = (int)codeType;
 
         for (int i = 0; i < _codeList[tpye].Count; ++i)
         {
@@ -188,9 +187,9 @@ public class ItemList
         if (_isInit) return;
         _isInit = true;
 
-        _codeList[(int) eCodeType.HELMET] = new Dictionary<int, int>();
-        _codeList[(int) eCodeType.BODYARMOUR] = new Dictionary<int, int>();
-        _codeList[(int) eCodeType.WEAPON] = new Dictionary<int, int>();
+        _codeList[(int)eCodeType.HELMET] = new Dictionary<int, int>();
+        _codeList[(int)eCodeType.BODYARMOUR] = new Dictionary<int, int>();
+        _codeList[(int)eCodeType.WEAPON] = new Dictionary<int, int>();
 
         // CSV Parser
         {
@@ -205,7 +204,7 @@ public class ItemList
 
     // Test
     public int ItemCount(eCodeType codeType)
-        => _codeList[(int) codeType].Count;
+        => _codeList[(int)codeType].Count;
 }
 
 public class Item

@@ -1180,14 +1180,14 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 5
+  m_ContentType: 0
   m_InputType: 0
   m_AsteriskChar: 42
   m_KeyboardType: 0
   m_LineType: 0
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
-  m_CharacterValidation: 5
+  m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 14
   m_CharacterLimit: 10
@@ -1202,18 +1202,9 @@ MonoBehaviour:
       m_Calls: []
   m_OnDeselect:
     m_PersistentCalls:
-      m_Calls: []
-  m_OnTextSelection:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnEndTextSelection:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnValueChanged:
-    m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SetAddTeamNameString
+      - m_Target: {fileID: 1230464875}
+        m_MethodName: SetAddTeamName
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1223,6 +1214,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  m_OnTextSelection:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnEndTextSelection:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5533,6 +5533,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1230464875}
+          m_MethodName: AddTeam
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!1 &751911387
@@ -8368,6 +8379,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1230464874}
+  - component: {fileID: 1230464875}
   m_Layer: 5
   m_Name: TeamSettingScreen
   m_TagString: Untagged
@@ -8399,6 +8411,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1230464875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230464873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec4ab6f6ef5654e40bcc0a6f69da8c7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _addTeamName: 
+  _teamSelectSystem: {fileID: 1396808835}
+  _sceneMgr: {fileID: 1989406324}
 --- !u!1 &1237765530
 GameObject:
   m_ObjectHideFlags: 0
@@ -9290,8 +9317,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00012207031, y: 183.72095}
-  m_SizeDelta: {x: 0.000061035, y: 302.6}
+  m_AnchoredPosition: {x: -0.00012207031, y: 0.000045776367}
+  m_SizeDelta: {x: 0.000061035, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1396808835
 MonoBehaviour:
@@ -9307,7 +9334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buttonPrefab: {fileID: 7615561643804258359, guid: ec4bdac5520b4434c8904e3bd92fbded,
     type: 3}
-  buttonGroup: {fileID: 0}
+  buttonGroup: {fileID: 926167506824992561}
 --- !u!114 &1396808837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9635,7 +9662,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC5B4\uBCA4\uC838\uC2A4"
+  m_text: "\uD300 \uC774\uB984"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e7d8cb48b3a27af4894c3cbd67cffdf1, type: 2}
   m_sharedMaterial: {fileID: -6922208653315276780, guid: e7d8cb48b3a27af4894c3cbd67cffdf1,
@@ -10002,7 +10029,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1982909671}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.52569276
+  m_Size: 0.5254952
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11974,10 +12001,10 @@ RectTransform:
   m_Father: {fileID: 1396808834}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.0000305175, y: -75.65}
-  m_SizeDelta: {x: 0.000061035, y: 151.3}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 151.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2047002290
 MonoBehaviour:
@@ -12742,7 +12769,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &926167506824992560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12946,7 +12973,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -11.7, y: 0}
   m_SizeDelta: {x: 43.3, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}

@@ -11,7 +11,6 @@ public class PhotoUIs : MonoBehaviour
     private void Awake()
     {
         var unit = Manager.Get<GameManager>().getPlayerUnitCount();
-        Debug.Log(unit);
     }
 
     private void OnEnable()

@@ -6,38 +6,32 @@ using TMPro;
 
 public class TeamManager : MonoBehaviour
 {
-    private string _addTeamNameString = "예비1팀";
-
-    public void SetAddTeamNameString(string name) { _addTeamNameString = name; }
-    public string GetAddTeamNameString()
-    {
-        string returnVal = _addTeamNameString;
-
-        _addTeamNameString = "";
-        _textObject.GetComponent<TextMeshPro>().text = "";
-
-        return returnVal;
-    }
-
-    public Team _curSelectTeam = null;
-
-    public GameObject _textObject;
-
-    private void Awake()
-    {
-        AddTeam(GetAddTeamNameString());
-    }
-
-    // 팀 이름으로 팀을 찾는다
-    private Dictionary<string, Team> _teams = new Dictionary<string, Team>();
-    private List<string> _teamNameList = new List<string>();
-
     public Team GetTeam(string teamName)
     {
         if (_teams.ContainsKey(teamName)) { return null; }
 
         return _teams[teamName];
     }
+
+    public Team _curSelectTeam;
+
+    [SerializeField]
+    private string _addTeamName;
+
+    public void SetAddTeamName(string teamName)
+    {
+        _addTeamName = teamName;
+    }
+
+    [SerializeField]
+    private TeamSelectionSystem _teamSelectSystem = null;
+    
+    // 팀 이름으로 팀을 찾는다
+    private Dictionary<string, Team> _teams = new Dictionary<string, Team>();
+    private List<string> _teamNameList = new List<string>();
+
+    [SerializeField]
+    private MainScene.MainSceneManager _sceneMgr = null;
 
     public void SelectTeam(GameObject gObject)
     {
@@ -56,7 +50,8 @@ public class TeamManager : MonoBehaviour
 
     public void AddTeam()
     {
-        string teamName = GetAddTeamNameString();
+        string teamName = _addTeamName;
+
         AddTeam(teamName);
     }
 
@@ -70,7 +65,22 @@ public class TeamManager : MonoBehaviour
         _teams.Add(teamName, t);
         _teamNameList.Add(teamName);
 
-        // Test
-        _teams[teamName].InitTest();
+        UpdateButton();
+    }
+
+    private void UpdateButton()
+    {
+        if(null == _teamSelectSystem) { return; }
+
+        int newButtonChildCount = _teamSelectSystem.transform.childCount;
+
+        ButtonPro newButton = _teamSelectSystem.transform.GetChild(newButtonChildCount - 1).GetComponent<ButtonPro>();
+
+        newButton.onButtonEvent.onClick.AddListener(UpdateScreen);
+    }
+
+    public void UpdateScreen()
+    {
+        _sceneMgr.UpdateScreen("ChoiceUnit");
     }
 }
