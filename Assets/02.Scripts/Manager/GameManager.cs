@@ -1,4 +1,3 @@
-using System;
 using GameplayIngredients;
 using UnityEngine;
 
@@ -18,8 +17,8 @@ public class GameManager : Manager
     public ItemList itemList { get; private set; }
 
     [HideInInspector]
-    public int money = 123456789;//게임속 돈의 재화이다.
-    
+    public int money = 123456789; //게임속 돈의 재화이다.
+
     //팀에 대한 변수
     private Team _playerTeam;
 
@@ -40,8 +39,8 @@ public class GameManager : Manager
     /// int(플레이어 유닛 갯수) return
     /// </summary>
     /// <returns></returns>
-    public int getPlayerUnitCount() => //플레이어의 유닛 개수를 리턴합니다.
-        _playerTeam._units.Count;
+    public int getPlayerUnitCount() //플레이어의 유닛 개수를 리턴합니다.
+        => _playerTeam._units.Count;
 
     /// <summary>
     /// UnitData(유닛) return

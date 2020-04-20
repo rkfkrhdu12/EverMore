@@ -31,9 +31,12 @@
             <e p="ShowMoney.cs" t="Include" />
           </e>
           <e p="MainScene" t="Include">
-            <e p="slotUIPressEffect.cs" t="Include" />
-            <e p="TeamElemnt.cs" t="Include" />
-            <e p="TeamSelectionSystem.cs" t="Include" />
+            <e p="UI" t="Include">
+              <e p="PhotoUIs.cs" t="Include" />
+              <e p="slotUIPressEffect.cs" t="Include" />
+              <e p="TeamElemnt.cs" t="Include" />
+              <e p="TeamSelectionSystem.cs" t="Include" />
+            </e>
           </e>
           <e p="Manager" t="Include">
             <e p="GameManager.cs" t="Include" />

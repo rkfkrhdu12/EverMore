@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.183
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.08938477, g: 0.14039254, b: 0.17777103, a: 0.183}
+  m_IndirectSpecularColor: {r: 0.089390725, g: 0.14039221, b: 0.17774375, a: 0.183}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -781,8 +781,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 374568640}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000040133926}
-  m_LocalPosition: {x: -0.65728515, y: 1.2940712, z: 3.363586}
+  m_LocalRotation: {x: 0.013251569, y: -0.9866901, z: 0.11987514, w: 0.1090738}
+  m_LocalPosition: {x: 0.5921988, y: 3.0290658, z: 3.7763715}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 607341962}
@@ -1024,7 +1024,7 @@ PrefabInstance:
     - target: {fileID: 1947036433871368482, guid: feffe836ca19cfd419adf021d1d71cfa,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1947036433871368484, guid: feffe836ca19cfd419adf021d1d71cfa,
         type: 3}
@@ -3499,7 +3499,7 @@ PrefabInstance:
     - target: {fileID: -1434456685638878187, guid: bee62b5960069cc40851af8f31076e71,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -1384939679033529742, guid: bee62b5960069cc40851af8f31076e71,
         type: 3}
@@ -3510,6 +3510,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UnitAllTest@Model
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: bee62b5960069cc40851af8f31076e71,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -382490319589176425, guid: bee62b5960069cc40851af8f31076e71,
         type: 3}
@@ -4961,6 +4966,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: IronSword
       objectReference: {fileID: 0}
+    - target: {fileID: 2441472247521614920, guid: cbf8acb16f8a23e41b5083b815916368,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbf8acb16f8a23e41b5083b815916368, type: 3}
 --- !u!1 &1676509415
@@ -6094,8 +6104,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2019170118}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000040133926}
-  m_LocalPosition: {x: -0.65728515, y: 1.2940712, z: 3.363586}
+  m_LocalRotation: {x: 0.013251569, y: -0.9866901, z: 0.11987514, w: 0.1090738}
+  m_LocalPosition: {x: 0.5921988, y: 3.0290658, z: 3.7763715}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6148,7 +6158,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 1.58
   m_Depth: -1
   m_CullingMask:
