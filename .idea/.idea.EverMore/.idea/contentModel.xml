@@ -32,6 +32,7 @@
           </e>
           <e p="MainScene" t="Include">
             <e p="UI" t="Include">
+              <e p="info.cs" t="Include" />
               <e p="PhotoUIs.cs" t="Include" />
               <e p="slotUIPressEffect.cs" t="Include" />
               <e p="TeamElemnt.cs" t="Include" />

@@ -13,9 +13,9 @@
       <Path>Library/PackageCache/com.unity.ext.nunit@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.ide.rider@2.0.2</Path>
       <Path>Library/PackageCache/com.unity.ide.vscode@1.1.4</Path>
-      <Path>Library/PackageCache/com.unity.inputsystem@1.0.0-preview.7</Path>
       <Path>Library/PackageCache/com.unity.nkstudio.buttonpro@65a8197714</Path>
       <Path>Library/PackageCache/com.unity.nkstudio.buttonpro@99f3b3b4df</Path>
+      <Path>Library/PackageCache/com.unity.nkstudio.buttonpro@ae5ec925b8</Path>
       <Path>Library/PackageCache/com.unity.nkstudio.enumpro@4497358734</Path>
       <Path>Library/PackageCache/com.unity.nkstudio.saveunitysystem@9ef319c851</Path>
       <Path>Library/PackageCache/com.unity.quicksearch@1.5.3</Path>
@@ -38,6 +38,7 @@
       <Path>.vs</Path>
       <Path>Library</Path>
       <Path>Recordings</Path>
+      <Path>Temp</Path>
       <Path>obj</Path>
     </explicitExcludes>
   </component>
