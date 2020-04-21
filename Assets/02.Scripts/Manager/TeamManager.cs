@@ -33,7 +33,7 @@ public class TeamManager : MonoBehaviour
     [SerializeField]
     private MainScene.MainSceneManager _sceneMgr = null;
 
-    public void SelectTeam(GameObject gObject)
+    public void SelectTeamName(TMP_Text text)
     {
 
     }
@@ -64,23 +64,5 @@ public class TeamManager : MonoBehaviour
 
         _teams.Add(teamName, t);
         _teamNameList.Add(teamName);
-
-        UpdateButton();
-    }
-
-    private void UpdateButton()
-    {
-        if(null == _teamSelectSystem) { return; }
-
-        int newButtonChildCount = _teamSelectSystem.transform.childCount;
-
-        ButtonPro newButton = _teamSelectSystem.transform.GetChild(newButtonChildCount - 1).GetComponent<ButtonPro>();
-
-        newButton.onButtonEvent.onClick.AddListener(UpdateScreen);
-    }
-
-    public void UpdateScreen()
-    {
-        _sceneMgr.UpdateScreen("ChoiceUnit");
     }
 }
