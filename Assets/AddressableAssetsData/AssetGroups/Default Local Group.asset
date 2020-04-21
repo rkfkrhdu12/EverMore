@@ -17,6 +17,15 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 14b0e90e885e10d4ca0df7499b04be41
   m_SerializeEntries:
+  - m_GUID: 13c1be6c11258ba46869c2d33939a97e
+    m_Address: Naked-head:Naked-body
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UnitPhoto
+    m_mainAssetType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+    m_MainAsset: {fileID: 2800000, guid: 13c1be6c11258ba46869c2d33939a97e, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: 13c1be6c11258ba46869c2d33939a97e, type: 3}
   - m_GUID: 316ef8a0fb7fc1f4b9155247dbfe90b1
     m_Address: Sharwood-head:Sharwood-body
     m_ReadOnly: 0
@@ -78,8 +87,8 @@ MonoBehaviour:
     - UnitPhoto
     m_mainAssetType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 2800000, guid: b4276d1b999fc6242b4e1110712eee4a, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: b4276d1b999fc6242b4e1110712eee4a, type: 3}
   - m_GUID: b8c07e6b1639ad14f8d3573049212199
     m_Address: Knight-head:Sharwood-bod
     m_ReadOnly: 0
@@ -96,8 +105,8 @@ MonoBehaviour:
     - UnitPhoto
     m_mainAssetType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 2800000, guid: fbb388f0ee0e0b949bd9a39d752f5236, type: 3}
+    m_TargetAsset: {fileID: 2800000, guid: fbb388f0ee0e0b949bd9a39d752f5236, type: 3}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ddf4880eb3220ce429040ccce683f3a5, type: 2}
   m_SchemaSet:

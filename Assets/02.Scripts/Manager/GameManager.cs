@@ -1,5 +1,13 @@
+using System;
+using System.Collections;
+using UnityEngine.AddressableAssets;
 using GameplayIngredients;
 using UnityEngine;
+
+[Serializable]
+public class stringTexture2D : SerializableDictionary<string, Texture2D>
+{
+}
 
 [ManagerDefaultPrefab("GameManager")]
 public class GameManager : Manager
@@ -8,6 +16,11 @@ public class GameManager : Manager
 
     [Tooltip("아군인지 적군인지 선택")]
     public eTeam _WinTeam = eTeam.PLAYER;
+
+    [SerializeField]
+    private AssetLabelReference unitPhotos;
+
+    public stringTexture2D st;
 
     #endregion
 
@@ -58,8 +71,30 @@ public class GameManager : Manager
         return _playerTeam._units[index];
     }
 
-    private void Awake() =>
+    private void Awake()
+    {
         OnAwake();
+        
+        StartCoroutine(getUnitTexture());
+    }
+
+    private IEnumerator getUnitTexture()
+    {
+        //유닛 텍스쳐 리소스를 가져옵니다.
+        Addressables.LoadResourceLocationsAsync(unitPhotos).Completed += op =>
+        {
+            foreach (var data in op.Result)
+                Addressables.LoadAssetAsync<Texture2D>(data.PrimaryKey).Completed += handle =>
+                    st.Add(data.PrimaryKey, handle.Result);
+        };
+        
+        //1초 정도 대기
+        yield return new WaitForSeconds(1f);
+        
+        //리소스를 해제합니다.
+        foreach (var texture2d in st.Values)
+            Addressables.Release(texture2d);
+    }
 
     private void OnAwake()
     {
@@ -74,6 +109,17 @@ public class GameManager : Manager
         UnitStability.Init();
         _deleteObjectSystem = new DeleteObjectSystem();
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+            Addressables.LoadResourceLocationsAsync(unitPhotos).Completed += op =>
+            {
+                foreach (var data in op.Result)
+                    Addressables.LoadAssetAsync<Texture2D>(data.PrimaryKey).Completed += handle =>
+                        st.Add(data.PrimaryKey, handle.Result);
+            };
     }
 
     private void LateUpdate() =>

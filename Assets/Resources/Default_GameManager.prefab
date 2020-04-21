@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _WinTeam: 0
+  unitPhotos:
+    m_LabelString: UnitPhoto
+  st:
+    m_keys: []
+    m_values: []
   money: 123456789
   _BgmVolume: 0.7
   _SfxVolume: 0.7
