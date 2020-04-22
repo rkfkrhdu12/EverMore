@@ -2,8 +2,9 @@
 using GameplayIngredients;
 using UnityEngine;
 
-namespace MainScene
+namespace MainSceneUI
 {
+    #region UIDataStructure
     public struct UIDataKey
     {
         public const string Lobby = "Lobby";
@@ -31,7 +32,8 @@ namespace MainScene
 
             myUI?.SetActive(active);
         }
-    }
+    } 
+    #endregion
 
     public class MainSceneManager : MonoBehaviour
     {

@@ -113,13 +113,13 @@ public class GameManager : Manager
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-            Addressables.LoadResourceLocationsAsync(unitPhotos).Completed += op =>
-            {
-                foreach (var data in op.Result)
-                    Addressables.LoadAssetAsync<Texture2D>(data.PrimaryKey).Completed += handle =>
-                        st.Add(data.PrimaryKey, handle.Result);
-            };
+        //if(Input.GetKeyDown(KeyCode.Space))
+        //    Addressables.LoadResourceLocationsAsync(unitPhotos).Completed += op =>
+        //    {
+        //        foreach (var data in op.Result)
+        //            Addressables.LoadAssetAsync<Texture2D>(data.PrimaryKey).Completed += handle =>
+        //                st.Add(data.PrimaryKey, handle.Result);
+        //    };
     }
 
     private void LateUpdate() =>
