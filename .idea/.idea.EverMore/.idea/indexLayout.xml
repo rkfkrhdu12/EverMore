@@ -5,6 +5,9 @@
     <explicitIncludes>
       <Path>Library/PackageCache/com.rito.getcomponentattributes@624f248d07</Path>
       <Path>Library/PackageCache/com.sbstn_hn.rendererfeatures.urp-ssao@4958115f46</Path>
+      <Path>Library/PackageCache/com.unity.2d.animation@3.2.1</Path>
+      <Path>Library/PackageCache/com.unity.2d.common@2.0.2</Path>
+      <Path>Library/PackageCache/com.unity.2d.psdimporter@2.1.3</Path>
       <Path>Library/PackageCache/com.unity.addressables@1.7.5</Path>
       <Path>Library/PackageCache/com.unity.animatorpro@d74c922c07</Path>
       <Path>Library/PackageCache/com.unity.aovrecorder@0.1.1-preview.2</Path>
@@ -13,6 +16,7 @@
       <Path>Library/PackageCache/com.unity.ext.nunit@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.ide.rider@2.0.2</Path>
       <Path>Library/PackageCache/com.unity.ide.vscode@1.1.4</Path>
+      <Path>Library/PackageCache/com.unity.mathematics@1.1.0</Path>
       <Path>Library/PackageCache/com.unity.nkstudio.buttonpro@65a8197714</Path>
       <Path>Library/PackageCache/com.unity.nkstudio.buttonpro@99f3b3b4df</Path>
       <Path>Library/PackageCache/com.unity.nkstudio.buttonpro@ae5ec925b8</Path>
@@ -38,7 +42,6 @@
       <Path>.vs</Path>
       <Path>Library</Path>
       <Path>Recordings</Path>
-      <Path>Temp</Path>
       <Path>obj</Path>
     </explicitExcludes>
   </component>

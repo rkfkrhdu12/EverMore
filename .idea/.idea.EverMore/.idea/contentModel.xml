@@ -43,6 +43,7 @@
             <e p="GameManager.cs" t="Include" />
             <e p="MainSceneManager.cs" t="Include" />
             <e p="SceneManagerPro.cs" t="Include" />
+            <e p="ScreenFadeManager.cs" t="Include" />
             <e p="TeamManager.cs" t="Include" />
           </e>
           <e p="Other" t="Include">
@@ -467,9 +468,6 @@
         </e>
         <e p="Other" t="Include">
           <e p="AllKr11170.txt" t="Include" />
-          <e p="InputAction" t="Include">
-            <e p="UInputSystem.cs" t="Include" />
-          </e>
         </e>
         <e p="Plugins" t="Include">
           <e p="Inspector Gadgets" t="Include">

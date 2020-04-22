@@ -7,7 +7,7 @@ public class info : MonoBehaviour
 
     private void Awake() => 
         _rect = GetComponent<RectTransform>();
-
+    
     private void Update() => 
         _rect.position = Input.mousePosition;
 }
