@@ -21,7 +21,7 @@ public class ItemSlot : MonoBehaviour
 
     private void UpdateText()
     {
-        Item item = Manager.Get<GameManager>().itemList.ItemSearch(_itemNum);
+        GameItem.Item item = Manager.Get<GameManager>().itemList.ItemSearch(_itemNum);
         
         if (item == null)
             return;

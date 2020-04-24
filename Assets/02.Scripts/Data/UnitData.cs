@@ -32,221 +32,6 @@ public struct UnitStatus
 
 public class UnitData : FieldObject
 {
-    #region Enum
-
-    public enum eEquipItem
-    {
-        HELMET,
-        ARMOUR,
-        WEAPON,
-        SUBWEAPON,
-    }
-
-    private enum eState
-    {
-        NONE,
-        IDLE,
-        MOVE,
-        ATTACK,
-    }
-
-    #endregion
-
-    #region Macro
-
-    private static readonly int _idAttack = Animator.StringToHash("Attack");
-    private static readonly int _idAttackSpd = Animator.StringToHash("AttackSpeed");
-    private static readonly int _idMove = Animator.StringToHash("Move");
-
-    #endregion
-
-    #region Show Inspector
-
-    //아군인지, 적인지에 대한 변수
-    public eTeam eteam;
-
-    //능력 번후
-    public int _abilityNum;
-
-    // 공격 범위일듯.
-    public BoxCollider _collider;
-
-    //공격 타겟에대한 큐
-    public Queue<FieldObject> _attackTargets = new Queue<FieldObject>();
-
-    //공격 시간에 대한 변수
-    public float _attackTime;
-
-    //죽었는지 살았는지에 대한 변수
-    public bool isdead;
-
-    [Header("파일 파싱으로 아이디 가져온 후 적용시킬 예정")]
-    // 아이템 번호
-    public int[] _itemsNum = new int[4];
-
-    #endregion
-
-    #region Hide Inspector
-
-    #region 유닛 상태
-
-    //방어력
-    public float _defensivePower;
-
-    //공격 데미지
-    public float _attackDamage;
-
-    //공격 속도
-    public float _attackSpeed;
-
-    //공격 범위
-    public float _attackRange;
-
-    //이동 속도
-    public float _moveSpeed;
-
-    // 유닛 코스트
-    public int _cost;
-
-    // second
-    public float _coolTime;
-
-    #endregion
-
-    #region Other
-
-    //애니메이터 관련 변수
-    private Animator _animator;
-    private AnimatorPro _aniPro;
-
-    //리지드 바디 변수
-    private Rigidbody _rig;
-
-    //유닛 상태에 대한 변수
-    private eState _curState = eState.NONE;
-
-    //필드 관점에서의 해당 유닛의 상태
-    private FieldObject _curTarget;
-
-    //이동에 대한 파라미터
-    private float moveParameter;
-
-    #endregion
-
-    #endregion
-
-    private void FixedUpdate()
-    {
-        //현재 상태가 비어 있거나, 죽었다면 : return
-        if (_curState == eState.NONE || isdead) return;
-
-        //이동 <--> 공격, 상태 변환
-        UpdateState();
-
-        //상태 변수를 통한, 유닛 업데이트
-        UpdateUnit();
-    }
-
-    private void UpdateState()
-    {
-        // 설정된 타겟이 없거나, 설정되어야할 타겟도 없으면 : eState.Move
-        if (_curTarget == null && _attackTargets.Count == 0)
-            _curState = eState.MOVE;
-        else
-            // 설정된 타겟 혹은 설정되어야할 타겟이 있으므로 : eState.Attack
-            _curState = eState.ATTACK;
-    }
-
-    private void UpdateUnit()
-    {
-        moveParameter = 0;
-
-        switch (_curState)
-        {
-            case eState.MOVE:
-                UpdateMove();
-                break;
-            case eState.ATTACK:
-                UpdateAttack();
-                break;
-        }
-
-        UpdateAnimation();
-    }
-
-    private void UpdateMove()
-    {
-        moveParameter = 1;
-
-        transform.Translate(0, 0, _moveSpeed * Time.deltaTime);
-    }
-
-    private void UpdateAttack()
-    {
-        //공격 시간이 공격 속도보다 같거나 낮다면 : 공격 시간을 높혀준다.
-        if (_attackTime <= _attackSpeed)
-            _attackTime += Time.deltaTime;
-        else
-        {
-            // 타겟이 없엇거나, 체력이 0 이하로 내려가면 : 새로운 타겟을 정한다.
-            if (_curTarget == null || _curTarget._curHp <= 0)
-            {
-                //공격할 타겟이 0명이라면 : return
-                if (_attackTargets.Count == 0)
-                {
-                    _curTarget = null;
-                    return;
-                }
-
-                //현재 타겟을 Dequeue한다.
-                _curTarget = _attackTargets.Dequeue();
-            }
-
-            //공격 시간 초기화
-            _attackTime = 0f;
-
-            //데미지 리시브
-            _curTarget.DamageReceive(_attackDamage);
-        }
-    }
-
-    private void UpdateAnimation()
-    {
-        if(_aniPro == null) return;
-        
-        _aniPro.SetParam(_idMove, moveParameter);
-
-        //공격 중이 아니라면 : return
-        if (!_aniPro.GetParam<bool>(_idAttack)) return;
-
-        //타겟이 있거나, 타겟의 체력이 0 초과라면 : return
-        if (_curTarget != null && _curTarget._curHp > 0) return;
-
-        //공격할 타겟이 0명이라면 : 공격을 중지함.
-        if (_attackTargets.Count == 0) _aniPro.SetParam(_idAttack, false);
-    }
-
-    //------------------------------
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //닿은 생대가 유닛이 아니라면 : 아래 코드 구문 실행 X
-        if (!other.CompareTag("Unit"))
-            return;
-
-        //other의 필드 관점의 데이터를 가져옴.
-        var target = other.GetComponent<FieldObject>();
-
-        //공격할 타겟 큐에 해당 타겟이 있거나, 타겟의 팀이 우리 팀이라면,
-        if (_attackTargets.Contains(target) || target._team == eteam)
-            return;
-
-        //공격 타겟에 해당 타겟을 넣어줍니다.
-        _attackTargets.Enqueue(target);
-
-        _aniPro?.SetParam(_idAttack, true);
-    }
-
     public void Spawn()
     {
         //콜라이더 비가 비어있다면, 가져온다.
@@ -292,7 +77,6 @@ public class UnitData : FieldObject
         }
 
         #endregion
-
 
         _animator = transform.GetChild(0).GetComponent<Animator>();
 
@@ -387,4 +171,225 @@ public class UnitData : FieldObject
         _defensivePower = 0;
         _moveSpeed = speed;
     }
+
+    #region Enum
+
+    public enum eEquipItem
+    {
+        HELMET,
+        ARMOUR,
+        WEAPON,
+        SUBWEAPON,
+    }
+
+    private enum eState
+    {
+        NONE,
+        IDLE,
+        MOVE,
+        ATTACK,
+    }
+
+    #endregion
+
+    #region Macro
+
+    private static readonly int _idAttack = Animator.StringToHash("Attack");
+    private static readonly int _idAttackSpd = Animator.StringToHash("AttackSpeed");
+    private static readonly int _idMove = Animator.StringToHash("Move");
+
+    #endregion
+
+    #region Show Inspector
+
+    //아군인지, 적인지에 대한 변수
+    public eTeam eteam;
+
+    //능력 번후
+    public int _abilityNum;
+
+    // 공격 범위일듯.
+    public BoxCollider _collider;
+
+    //공격 타겟에대한 큐
+    public Queue<FieldObject> _attackTargets = new Queue<FieldObject>();
+
+    //공격 시간에 대한 변수
+    public float _attackTime;
+
+    //죽었는지 살았는지에 대한 변수
+    public bool isdead;
+
+    [Header("파일 파싱으로 아이디 가져온 후 적용시킬 예정")]
+    // 아이템 번호
+    public int[] _itemsNum = new int[4];
+
+    public string _3DModelToTextureName = "Naked-head,Naked-body";
+    #endregion
+
+    #region Hide Inspector
+
+    #region 유닛 상태
+
+    //방어력
+    public float _defensivePower;
+
+    //공격 데미지
+    public float _attackDamage;
+
+    //공격 속도
+    public float _attackSpeed;
+
+    //공격 범위
+    public float _attackRange;
+
+    //이동 속도
+    public float _moveSpeed;
+
+    // 유닛 코스트
+    public int _cost;
+
+    // second
+    public float _coolTime;
+
+    #endregion
+
+    #region Other
+
+    //애니메이터 관련 변수
+    private Animator _animator;
+    private AnimatorPro _aniPro;
+
+    //리지드 바디 변수
+    private Rigidbody _rig;
+
+    //유닛 상태에 대한 변수
+    private eState _curState = eState.NONE;
+
+    //필드 관점에서의 해당 유닛의 상태
+    private FieldObject _curTarget;
+
+    //이동에 대한 파라미터
+    private float moveParameter;
+
+    #endregion
+
+    #endregion
+
+    #region Monobehaviour Function
+    private void FixedUpdate()
+    {
+        //현재 상태가 비어 있거나, 죽었다면 : return
+        if (_curState == eState.NONE || isdead) return;
+
+        //이동 <--> 공격, 상태 변환
+        UpdateState();
+
+        //상태 변수를 통한, 유닛 업데이트
+        UpdateUnit();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //닿은 생대가 유닛이 아니라면 : 아래 코드 구문 실행 X
+        if (!other.CompareTag("Unit"))
+            return;
+
+        //other의 필드 관점의 데이터를 가져옴.
+        var target = other.GetComponent<FieldObject>();
+
+        //공격할 타겟 큐에 해당 타겟이 있거나, 타겟의 팀이 우리 팀이라면,
+        if (_attackTargets.Contains(target) || target._team == eteam)
+            return;
+
+        //공격 타겟에 해당 타겟을 넣어줍니다.
+        _attackTargets.Enqueue(target);
+
+        _aniPro?.SetParam(_idAttack, true);
+    }
+
+    #endregion
+
+    #region Private Function
+
+    private void UpdateState()
+    {
+        // 설정된 타겟이 없거나, 설정되어야할 타겟도 없으면 : eState.Move
+        if (_curTarget == null && _attackTargets.Count == 0)
+            _curState = eState.MOVE;
+        else
+            // 설정된 타겟 혹은 설정되어야할 타겟이 있으므로 : eState.Attack
+            _curState = eState.ATTACK;
+    }
+
+    private void UpdateUnit()
+    {
+        moveParameter = 0;
+
+        switch (_curState)
+        {
+            case eState.MOVE:
+            UpdateMove();
+            break;
+            case eState.ATTACK:
+            UpdateAttack();
+            break;
+        }
+
+        UpdateAnimation();
+    }
+
+    private void UpdateMove()
+    {
+        moveParameter = 1;
+
+        transform.Translate(0, 0, _moveSpeed * Time.deltaTime);
+    }
+
+    private void UpdateAttack()
+    {
+        //공격 시간이 공격 속도보다 같거나 낮다면 : 공격 시간을 높혀준다.
+        if (_attackTime <= _attackSpeed)
+            _attackTime += Time.deltaTime;
+        else
+        {
+            // 타겟이 없엇거나, 체력이 0 이하로 내려가면 : 새로운 타겟을 정한다.
+            if (_curTarget == null || _curTarget._curHp <= 0)
+            {
+                //공격할 타겟이 0명이라면 : return
+                if (_attackTargets.Count == 0)
+                {
+                    _curTarget = null;
+                    return;
+                }
+
+                //현재 타겟을 Dequeue한다.
+                _curTarget = _attackTargets.Dequeue();
+            }
+
+            //공격 시간 초기화
+            _attackTime = 0f;
+
+            //데미지 리시브
+            _curTarget.DamageReceive(_attackDamage);
+        }
+    }
+
+    private void UpdateAnimation()
+    {
+        if (_aniPro == null) return;
+
+        _aniPro.SetParam(_idMove, moveParameter);
+
+        //공격 중이 아니라면 : return
+        if (!_aniPro.GetParam<bool>(_idAttack)) return;
+
+        //타겟이 있거나, 타겟의 체력이 0 초과라면 : return
+        if (_curTarget != null && _curTarget._curHp > 0) return;
+
+        //공격할 타겟이 0명이라면 : 공격을 중지함.
+        if (_attackTargets.Count == 0) _aniPro.SetParam(_idAttack, false);
+    }
+
+    #endregion
 }

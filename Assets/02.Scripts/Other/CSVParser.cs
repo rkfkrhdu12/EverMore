@@ -3,18 +3,49 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Text.RegularExpressions;
+using UnityEngine.Events;
+using UnityEngine.AddressableAssets;
+using System.Threading.Tasks;
 
 public class CSVParser
 {
-    public static List<string> Read(string file)
+    //IEnumerator LoadItemList(UnityAction<TextAsset> ppap)
+    //{
+    //    Addressables.LoadAssetAsync<TextAsset>("ItemList").Completed += op =>
+    //    {
+    //         ppap(op.Result);
+    //    };
+
+    //    yield return null;
+    //  }
+
+
+    //private async void da()
+    //{
+    //    await Addressables.LoadAssetAsync<TextAsset>("ItemList");
+
+    //}
+
+    public async static void LoadList(string fileName, UnityAction<TextAsset> ppap)
+    {
+        var returnVal = await Addressables.LoadAssetAsync<TextAsset>(fileName).Task;
+
+        Debug.Log(returnVal);
+
+        ppap(returnVal);
+    }
+
+    public static List<string> Read(string fileName)
     {
         var list = new List<string>();
-        TextAsset data = Resources.Load(file) as TextAsset;
-        if (data == null) return list;
+
+        TextAsset data = Resources.Load(fileName) as TextAsset;
+
+        if (null == data) { return null; }
 
         var lines = Regex.Split(data.text, "\r\n");
 
-        if (lines.Length <= 1) return list;
+        if (lines.Length <= 1) return null;
 
         for (int i = 1; i < lines.Length; ++i)
         {

@@ -44,13 +44,34 @@ public class TeamManager : MonoBehaviour
     private List<string> _teamNameList = new List<string>();
     #endregion
 
+    #region Monobehaviour Function
+
+    private void Awake()
+    {
+        SetAddTeamName("예비1팀");
+
+        OnAddTeam();
+    }
+
+    #endregion
+
     #region OnClickEvent Function
 
-    public void OnUpdateUI()
+    public void OnUpdateUI()                        
     {
-        int unitCount = _teams[_curSelectTeamName]._units.Count;
+        int unitCount = _teams[_curSelectTeamName]._units.Length;
+
+        if(unitCount > _slotImage.Length) { Debug.Log("TeamManager : OnUpdateUI UnitCount Error"); return; }
+
+        for (int i = 0; i < _slotImage.Length; ++i) 
+        {
+            Texture t = null == _teams[_curSelectTeamName].GetUnitTexture(i) ? null : _teams[_curSelectTeamName].GetUnitTexture(i);
+
+            _slotImage[i].texture = null != t ? t : _UnitAddImage.texture;
+            _slotImage[i].SetNativeSize();
+        }
     }
-    public void OnSelectTeamName(TMP_Text text)
+    public void OnSelectTeamName(TMP_Text text)     
     {
         string teamName = text.text;
 
@@ -59,12 +80,12 @@ public class TeamManager : MonoBehaviour
 
         _curSelectTeamName = teamName;
     }
-    public void OnDeleteTeam()
+    public void OnDeleteTeam()                      
     {
         // Team 데이터는 가비지 컬렉터가 지워줄꺼라 믿숩니다 ............
         _teams.Remove(_curSelectTeamName);
     }
-    public void OnAddTeam()
+    public void OnAddTeam()                         
     {
         string teamName = _addTeamName;
 
@@ -74,10 +95,14 @@ public class TeamManager : MonoBehaviour
         _teams.Add(teamName, t);
         _teamNameList.Add(teamName);
     }
-    public void OnSetTeamNameUI()
+    public void OnSetTeamNameUI()                   
     {
         _choiceUnitTeamNameUI.text = _teams[_curSelectTeamName].Name;
-    } 
+    }
+    public void OnUpdateUnit(int index)             
+    {
+        _teams[_curSelectTeamName].UpdateUnit(index);
+    }
 
     #endregion
 }
