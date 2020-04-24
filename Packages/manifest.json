@@ -10,6 +10,7 @@
     "com.unity.cinemachine": "2.5.0",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ext.nunit": "1.0.0",
+    "com.unity.gameplay-ingredient-simple": "https://github.com/bnm000215/GamePlayIngredient-Simple.git",
     "com.unity.ide.rider": "2.0.2",
     "com.unity.ide.vscode": "1.1.4",
     "com.unity.nkstudio.buttonpro": "https://github.com/bnm000215/UnityButtonPro.git",
@@ -82,6 +83,10 @@
     "com.unity.uialphaarea": {
       "revision": "HEAD",
       "hash": "26662f3dafc45d0652d4d948745e1c4a6e005060"
+    },
+    "com.unity.gameplay-ingredient-simple": {
+      "revision": "HEAD",
+      "hash": "e7b171b847370b689792797ca86c7b7534e7184f"
     }
   }
 }

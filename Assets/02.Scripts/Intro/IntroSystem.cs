@@ -1,6 +1,5 @@
 ﻿using System;
 using GameplayIngredients;
-using GameplayIngredients.Logic;
 using UnityEngine;
 using UnityEngine.AnimatorPro;
 using UnityEngine.UI;
@@ -39,7 +38,7 @@ public class IntroSystem : MonoBehaviour
         animatorPro = GetComponent<AnimatorPro>();
         animatorPro.Init(anim);
         
-        Manager.Get<ScreenFadeManager>().Fade(1.3f,ScreenFadeManager.FadeMode.FromBlack,Color.black);
+        Manager.Get<FullScreenFadeManager>().Fade(1.3f,FullScreenFadeManager.FadeMode.FadeOut,Color.black);
     }
 
     private void Update()
