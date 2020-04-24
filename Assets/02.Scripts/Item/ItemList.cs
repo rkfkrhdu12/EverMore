@@ -112,9 +112,9 @@ public class ItemList
             break;
         }
 
-        GameObject obj =
-            (GameObject)AssetDatabase.LoadAssetAtPath("Assets/03.Prefabs/Item/" + data[0] + ".prefab",
-                typeof(GameObject));
+        //GameObject obj =
+        //    (GameObject)AssetDatabase.LoadAssetAtPath("Assets/03.Prefabs/Item/" + data[0] + ".prefab",
+        //        typeof(GameObject));
 
         // '/' 가 있음(왼쪽(방어구류),오른쪽(무기류)) 없으면 모든아이템 해당
         i.Init(data[2], // Name
@@ -123,7 +123,7 @@ public class ItemList
             float.Parse(data[6]), // Defense / Damage
             float.Parse(data[7]), // Health  / Range
             int.Parse(data[8]),
-            obj); // Weight
+            null); // Weight
         _itemList.Add(index, i);
     }
 

@@ -39,28 +39,20 @@ public class CSVParser
     {
         var list = new List<string>();
 
-        //TextAsset data = Resources.Load(file) as TextAsset;
+        TextAsset data = Resources.Load(fileName) as TextAsset;
 
-    
-        LoadList(fileName,(tx)=> {
+        if (null == data) { return null; }
 
-            Debug.Log(tx);
-        });
+        var lines = Regex.Split(data.text, "\r\n");
 
-        //if(null == data) { Debug.Log("응 안대"); return null; }
+        if (lines.Length <= 1) return null;
 
-        //var lines = Regex.Split(data.text, "\r\n");
+        for (int i = 1; i < lines.Length; ++i)
+        {
+            if (lines[i].Equals(string.Empty)) continue;
 
-        //if (lines.Length <= 1) return list;
-
-        //for (int i = 1; i < lines.Length; ++i)
-        //{
-        //    if (lines[i].Equals(string.Empty)) continue;
-
-        //    list.Add(lines[i]);
-        //}
-
-        //Addressables.Release(data);
+            list.Add(lines[i]);
+        }
 
         return list;
     }
