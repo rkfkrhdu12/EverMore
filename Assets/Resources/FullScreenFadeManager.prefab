@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5109819757260758818}
   - component: {fileID: 5109819757260758819}
   m_Layer: 0
-  m_Name: ScreenFadeManager
+  m_Name: FullScreenFadeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FullScreenFadePlane: {fileID: 5109819757273068124}
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5109819757273068126
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,7 +65,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5109819757273068125
 RectTransform:
   m_ObjectHideFlags: 0

@@ -53,7 +53,7 @@ public class GameManager : Manager
     /// </summary>
     /// <returns></returns>
     public int getPlayerUnitCount() //플레이어의 유닛 개수를 리턴합니다.
-        => _playerTeam._units.Count;
+        => _playerTeam._units.Length;
 
     /// <summary>
     /// UnitData(유닛) return
@@ -64,36 +64,20 @@ public class GameManager : Manager
     public UnitData getPlayerUnit(int index)
     {
         //index 값이 0미만이거나, 배열의 길이를 초과한다면 : null을 반환
-        if (index < 0 || index >= _playerTeam._units.Count)
+        if (index < 0 || index >= _playerTeam._units.Length)
             return null;
 
         //해당 index번째 유닛을 리턴합니다.
         return _playerTeam._units[index];
     }
 
+    #region Monobehaviour Function
+
     private void Awake()
     {
         OnAwake();
-        
-        StartCoroutine(getUnitTexture());
-    }
 
-    private IEnumerator getUnitTexture()
-    {
-        //유닛 텍스쳐 리소스를 가져옵니다.
-        Addressables.LoadResourceLocationsAsync(unitPhotos).Completed += op =>
-        {
-            foreach (var data in op.Result)
-                Addressables.LoadAssetAsync<Texture2D>(data.PrimaryKey).Completed += handle =>
-                    st.Add(data.PrimaryKey, handle.Result);
-        };
-        
-        //1초 정도 대기
-        yield return new WaitForSeconds(1f);
-        
-        //리소스를 해제합니다.
-        foreach (var texture2d in st.Values)
-            Addressables.Release(texture2d);
+        StartCoroutine(getUnitTexture());
     }
 
     private void OnAwake()
@@ -110,9 +94,31 @@ public class GameManager : Manager
         _deleteObjectSystem = new DeleteObjectSystem();
         DontDestroyOnLoad(gameObject);
     }
-    
+
     private void LateUpdate() =>
         objectToDelete();
+
+    #endregion
+
+    #region Private Function
+
+    private IEnumerator getUnitTexture()
+    {
+        //유닛 텍스쳐 리소스를 가져옵니다.
+        Addressables.LoadResourceLocationsAsync(unitPhotos).Completed += op =>
+        {
+            foreach (var data in op.Result)
+                Addressables.LoadAssetAsync<Texture2D>(data.PrimaryKey).Completed += handle =>
+                    st.Add(data.PrimaryKey, handle.Result);
+        };
+
+        //1초 정도 대기
+        yield return new WaitForSeconds(1f);
+
+        //리소스를 해제합니다.
+        foreach (var texture2d in st.Values)
+            Addressables.Release(texture2d);
+    }
 
     private void objectToDelete()
     {
@@ -124,5 +130,6 @@ public class GameManager : Manager
 
         //삭제
         Destroy(deleteObj);
-    }
+    } 
+    #endregion
 }

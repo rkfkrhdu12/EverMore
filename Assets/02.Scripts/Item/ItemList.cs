@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEditor;
 
+
 public enum eItemType
 {
     NONE,
@@ -195,6 +196,7 @@ public class ItemList
         {
             // 길이가 유동적이고 검색을 하는것이 아니므로 속도가 크게 상관없어 List를 이용
             List<string> itemDatas = CSVParser.Read("ItemList");
+            if(null == itemDatas) { Debug.Log("."); return; }
 
             //itemDatas에서 ','으로 나뉘어진 것을 선택하여 가져온다는 Linq구문이다.
             foreach (var splitDatas in itemDatas.Select(t => t.Split(',')))
@@ -205,6 +207,22 @@ public class ItemList
     // Test
     public int ItemCount(eCodeType codeType)
         => _codeList[(int)codeType].Count;
+
+    private string[] _textureNames;
+
+    private void InitTexture()
+    {
+        _textureNames = new string[16];
+
+
+    }
+
+    public string TextureName(int index)
+    {
+        if(System.Convert.ToUInt32(index) > _textureNames.Length) { return ""; }
+
+        return _textureNames[index];
+    }
 }
 
 public class Item
