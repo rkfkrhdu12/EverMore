@@ -10,7 +10,7 @@ public static class Util
         //렌더 텍스쳐를 바이트화 시킵니다.
         var bytes = toTexture2D(rt).EncodeToPNG();
         
-        File.WriteAllBytes(path, bytes);
+        File.WriteAllBytes(path, bytes);  
     }
             
     private static Texture2D toTexture2D(RenderTexture rTex)
