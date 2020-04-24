@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEditor;
 
+using GameItem;
 
 public enum eItemType
 {
@@ -117,13 +118,17 @@ public class ItemList
         //        typeof(GameObject));
 
         // '/' 가 있음(왼쪽(방어구류),오른쪽(무기류)) 없으면 모든아이템 해당
-        i.Init(data[2], // Name
-            int.Parse(data[3]), // Cost
-            float.Parse(data[4]), // CoolTime
-            float.Parse(data[6]), // Defense / Damage
-            float.Parse(data[7]), // Health  / Range
-            int.Parse(data[8]),
-            null); // Weight
+
+        //i.Init(data[2], // Name
+        //    int.Parse(data[3]), // Cost
+        //    float.Parse(data[4]), // CoolTime
+        //    float.Parse(data[6]), // Defense 
+        //                          // Damage
+        //    float.Parse(data[7]), // Health  
+        //                          // Range
+        //    int.Parse(data[8]),
+        //    null); // Weight
+        i.Init(data);
         _itemList.Add(index, i);
     }
 
@@ -224,132 +229,127 @@ public class ItemList
         return _textureNames[index];
     }
 }
-
-public class Item
+namespace GameItem
 {
-    protected string _name;
 
-    public string Name => _name;
+    public delegate void ItemAbility();
 
-    protected eItemType _type = eItemType.NONE;
-
-    public eItemType Type => _type;
-
-    protected int _cost;
-
-    public int Cost => _cost;
-
-    protected float _coolTime; //public float CoolTime { get => _coolTime; }
-    protected int _weight;
-    protected UnityAction _ability;
-    protected GameObject _object;
-
-    public GameObject Object => _object;
-
-    public virtual void Init(string name, int cost, float coolTime, float data1, float data2, int weight,
-        GameObject obj)
+    public class Item
     {
+        protected string _name;                         public string Name => _name;
+
+        protected eItemType _type = eItemType.NONE;     public eItemType Type => _type;
+
+        protected int _cost;                            public int Cost => _cost;
+
+        protected float _coolTime;                      //public float CoolTime { get => _coolTime; }
+        protected int _weight;
+        protected ItemAbility _ability;                 public ItemAbility Ability => _ability;
+
+        protected GameObject _object;                   public GameObject Object => _object;
+
+        public virtual void Init(IReadOnlyList<string> datas)
+        {
+            if (null == datas[0]) { return; }
+
+            _name = datas[2];
+            int.TryParse(datas[3], out _cost);
+            float.TryParse(datas[4], out _coolTime);
+            int.TryParse(datas[10], out _weight);
+
+        }
+
+
+        //protected virtual UnitStatus Equip(ref UnitStatus us)
+        //{
+        //    us.cost += Cost;
+        //    us.coolTime += _coolTime;
+        //    us.weight += _weight;
+
+        //    return us;
+        //}
     }
 
-    protected void Init(string name, int cost, float coolTime, int weight, GameObject obj)
+    public class Weapon : Item
     {
-        _name = name;
-        _cost = cost;
-        _coolTime = coolTime;
-        _weight = weight;
-        _object = obj;
+        protected float _range;
+        protected float _damage;
+
+        public override void Init(IReadOnlyList<string> datas)
+        {
+            base.Init(datas);
+
+            float.TryParse(datas[9], out _range);
+            float.TryParse(datas[7], out _damage);
+        }
     }
 
-    protected virtual UnitStatus Equip(ref UnitStatus us)
+    public class Armour : Item
     {
-        us.cost += Cost;
-        us.coolTime += _coolTime;
-        us.weight += _weight;
+        protected float _defense;
+        protected float _health;
 
-        return us;
-    }
-}
+        public override void Init(IReadOnlyList<string> datas)
+        {
+            base.Init(datas);
 
-public class Weapon : Item
-{
-    protected float _range;
-    protected float _damage;
+            float.TryParse(datas[6], out _defense);
+            float.TryParse(datas[8], out _health);
+        }
 
-    public override void Init(string name, int cost, float coolTime, float damage, float range, int weight,
-        GameObject obj)
-    {
-        Init(name, cost, coolTime, weight, obj);
+        //protected override UnitStatus Equip(ref UnitStatus us)
+        //{
+        //    base.Equip(ref us);
 
-        _range = range;
-        _damage = damage;
-    }
-}
+        //    us.maxhealth += _health;
+        //    us.defensivePower += _defense;
 
-public class Armour : Item
-{
-    protected float _defense;
-    protected float _health;
-
-    public override void Init(string name, int cost, float coolTime, float defense, float health, int weight,
-        GameObject obj)
-    {
-        Init(name, cost, coolTime, weight, obj);
-
-        _defense = defense;
-        _health = health;
+        //    return us;
+        //}
     }
 
-    protected override UnitStatus Equip(ref UnitStatus us)
+    #region Weapon
+
+    public class OneHandSword : Weapon
     {
-        base.Equip(ref us);
-
-        us.maxhealth += _health;
-        us.defensivePower += _defense;
-
-        return us;
+        public OneHandSword()
+            => _type = eItemType.ONEHANDSWORD;
     }
-}
 
-#region Weapon
-
-public class OneHandSword : Weapon
-{
-    public OneHandSword()
-        => _type = eItemType.ONEHANDSWORD;
-}
-
-public class Shield : Weapon
-{
-    public Shield()
-        => _type = eItemType.SHIELD;
-
-    protected float _defense
+    public class Shield : Weapon
     {
-        get => _damage;
-        set => _damage = value;
+        public Shield()
+            => _type = eItemType.SHIELD;
+
+        protected float _defense
+        {
+            get => _damage;
+            set => _damage = value;
+        }
     }
+
+    public class Dagger : Weapon
+    {
+        public Dagger()
+            => _type = eItemType.DAGGER;
+    }
+
+    #endregion
+
+    #region Armour
+
+    public class Helmet : Armour
+    {
+        public Helmet()
+            => _type = eItemType.HELMET;
+    }
+
+    public class BodyArmour : Armour
+    {
+        public BodyArmour()
+            => _type = eItemType.BODYARMOUR;
+    }
+
+    #endregion
+
 }
-
-public class Dagger : Weapon
-{
-    public Dagger()
-        => _type = eItemType.DAGGER;
-}
-
-#endregion
-
-#region Armour
-
-public class Helmet : Armour
-{
-    public Helmet()
-        => _type = eItemType.HELMET;
-}
-
-public class BodyArmour : Armour
-{
-    public BodyArmour()
-        => _type = eItemType.BODYARMOUR;
-}
-
-#endregion
