@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -8860,8 +8860,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 139.61609, y: 190}
-  m_SizeDelta: {x: 263, y: 190}
+  m_AnchoredPosition: {x: 144, y: 190}
+  m_SizeDelta: {x: 233, y: 181}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1200414546
 MonoBehaviour:
@@ -9655,8 +9655,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 223.05359, y: 380}
-  m_SizeDelta: {x: 242, y: 190}
+  m_AnchoredPosition: {x: 238, y: 368}
+  m_SizeDelta: {x: 235, y: 181}
   m_Pivot: {x: 0.8902595, y: 0.5}
 --- !u!114 &1253572529
 MonoBehaviour:
@@ -9703,28 +9703,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1253572526}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalImage: {fileID: 21300000, guid: 761cfda86d65b1d4c90aebf2f1e18831, type: 3}
-  reachImage: {fileID: 21300000, guid: 520c72afc48a6d742a042ad17f708f82, type: 3}
-  pressImage: {fileID: 0}
-  selectImage: {fileID: 21300000, guid: 18061f5e8f1f191468816bb508b490d1, type: 3}
-  onButtonEvent:
-    onDown:
-      m_PersistentCalls:
-        m_Calls: []
-    onPress:
-      m_PersistentCalls:
-        m_Calls: []
-    onUp:
-      m_PersistentCalls:
-        m_Calls: []
-    onClick:
-      m_PersistentCalls:
-        m_Calls: []
-  _buttonGroup: {fileID: 0}
-  isSelected: 0
 --- !u!1 &1290299968
 GameObject:
   m_ObjectHideFlags: 0
@@ -10282,8 +10263,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 154.18256, y: -424}
-  m_SizeDelta: {x: 317, y: 190}
+  m_AnchoredPosition: {x: 142, y: -424}
+  m_SizeDelta: {x: 260, y: 165}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1437722135
 MonoBehaviour:
@@ -11561,8 +11542,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 154.18256, y: -219.9}
-  m_SizeDelta: {x: 312, y: 190}
+  m_AnchoredPosition: {x: 145, y: -219.9}
+  m_SizeDelta: {x: 273, y: 181}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1683270479
 MonoBehaviour:
@@ -11573,28 +11554,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1683270477}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalImage: {fileID: 21300000, guid: 7208360f56cf16641ba1f29c50db6d47, type: 3}
-  reachImage: {fileID: 21300000, guid: 4e03dadb233bdcf48be6711e39e7829d, type: 3}
-  pressImage: {fileID: 0}
-  selectImage: {fileID: 21300000, guid: 50afa5b00c717a64e83dbc01f634431d, type: 3}
-  onButtonEvent:
-    onDown:
-      m_PersistentCalls:
-        m_Calls: []
-    onPress:
-      m_PersistentCalls:
-        m_Calls: []
-    onUp:
-      m_PersistentCalls:
-        m_Calls: []
-    onClick:
-      m_PersistentCalls:
-        m_Calls: []
-  _buttonGroup: {fileID: 0}
-  isSelected: 0
 --- !u!114 &1683270480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11666,8 +11628,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 139.64911, y: -8.999973}
-  m_SizeDelta: {x: 326, y: 190}
+  m_AnchoredPosition: {x: 147, y: -8.999973}
+  m_SizeDelta: {x: 256, y: 181}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1690984731
 MonoBehaviour:
