@@ -20,8 +20,13 @@ public class TeamManager : MonoBehaviour
     [SerializeField]
     private TeamSelectionSystem _teamSelectSystem = null;
 
-    [Header((MainSceneUI.UIDataKey.ChoiceUnit) + " UI")]
+    // 팀 이름으로 팀을 찾는다
+    private Dictionary<string, Team> _teams = new Dictionary<string, Team>();
+    private List<string> _teamNameList = new List<string>();
 
+
+    [Header((MainSceneUI.UIDataKey.ChoiceUnit) + " UI")]
+    // ChoiceUnit
     [SerializeField,Tooltip("현재 선택된 팀 이름")]
     private string _curSelectTeamName;
 
@@ -34,43 +39,44 @@ public class TeamManager : MonoBehaviour
     [SerializeField, Tooltip("팀이름 UI")]
     private TMP_Text _choiceUnitTeamNameUI = null;
 
+    [SerializeField]
+    private TeamSelectionSystem _teamSelectionSystem;
+
     [Header((MainSceneUI.UIDataKey.AddTeam) + " UI")]
+    // AddTeam
+    [SerializeField]
+    private TMP_InputField _teamAddInputField;
 
     [SerializeField,Tooltip("추가될 팀 이름")]
     private string _addTeamName;
 
-    // 팀 이름으로 팀을 찾는다
-    private Dictionary<string, Team> _teams = new Dictionary<string, Team>();
-    private List<string> _teamNameList = new List<string>();
+    [Header(MainSceneUI.UIDataKey.SetUnit + " UI")]
+    // SetUnit
+    int _curUnitNum = 0;
+
+    [SerializeField]
+    private GameObject _SetUnitObject = null;
+
     #endregion
 
     #region Monobehaviour Function
 
     private void Awake()
     {
-        SetAddTeamName("예비1팀");
+        string teamName = "예비1팀";
+        Team t = new Team();
+        t.Name = teamName;
 
-        OnAddTeam();
+        _teams.Add(teamName, t);
+        _teamNameList.Add(teamName);
     }
 
     #endregion
 
     #region OnClickEvent Function
 
-    public void OnUpdateUI()                        
-    {
-        int unitCount = _teams[_curSelectTeamName]._units.Length;
-
-        if(unitCount > _slotImage.Length) { Debug.Log("TeamManager : OnUpdateUI UnitCount Error"); return; }
-
-        for (int i = 0; i < _slotImage.Length; ++i) 
-        {
-            Texture t = null == _teams[_curSelectTeamName].GetUnitTexture(i) ? null : _teams[_curSelectTeamName].GetUnitTexture(i);
-
-            _slotImage[i].texture = null != t ? t : _UnitAddImage.texture;
-            _slotImage[i].SetNativeSize();
-        }
-    }
+    
+    // Choice Team
     public void OnSelectTeamName(TMP_Text text)     
     {
         string teamName = text.text;
@@ -80,13 +86,12 @@ public class TeamManager : MonoBehaviour
 
         _curSelectTeamName = teamName;
     }
-    public void OnDeleteTeam()                      
-    {
-        // Team 데이터는 가비지 컬렉터가 지워줄꺼라 믿숩니다 ............
-        _teams.Remove(_curSelectTeamName);
-    }
+    
+    // Add Team
     public void OnAddTeam()                         
     {
+        if(_teams.ContainsKey(_addTeamName)) { return; }
+
         string teamName = _addTeamName;
 
         Team t = new Team();
@@ -94,14 +99,47 @@ public class TeamManager : MonoBehaviour
 
         _teams.Add(teamName, t);
         _teamNameList.Add(teamName);
+
+        _teamSelectionSystem.AddButton(_teamAddInputField);
+    }
+
+    // Choice Unit
+    public void OnDeleteTeam()                      
+    {
+        // Team 데이터는 가비지 컬렉터가 지워줄꺼라 믿숩니다 ............
+        _teams.Remove(_curSelectTeamName);
     }
     public void OnSetTeamNameUI()                   
     {
         _choiceUnitTeamNameUI.text = _teams[_curSelectTeamName].Name;
     }
-    public void OnUpdateUnit(int index)             
+    public void OnUpdateChoiceUnitUI()
     {
-        _teams[_curSelectTeamName].UpdateUnit(index);
+        int unitCount = _teams[_curSelectTeamName].Length;
+
+        if (unitCount > _slotImage.Length) { Debug.Log("TeamManager : OnUpdateUI UnitCount Error"); return; }
+
+        for (int i = 0; i < _slotImage.Length; ++i)
+        {
+            Texture t = null == _teams[_curSelectTeamName].GetUnitTexture(i) ? 
+                                null : _teams[_curSelectTeamName].GetUnitTexture(i);
+
+            _slotImage[i].texture = null != t ? t : _UnitAddImage.texture;
+            _slotImage[i].SetNativeSize();
+        }
+    }
+
+    // SetUnit
+    public void OnUpdateUnitModel(int index)
+    {
+        if(index >= _teams[_curSelectTeamName].Length|| index < 0) { return; }
+
+        _curUnitNum = index;
+
+        UnitController curSelectUnit = _teams[_curSelectTeamName].GetUnit(_curUnitNum);
+
+        UnitModelManager UMMgr = new UnitModelManager();
+        UMMgr.UpdateModel(_SetUnitObject, curSelectUnit._itemsNum);
     }
 
     #endregion

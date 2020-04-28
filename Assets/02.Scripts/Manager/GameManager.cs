@@ -53,7 +53,7 @@ public class GameManager : Manager
     /// </summary>
     /// <returns></returns>
     public int getPlayerUnitCount() //플레이어의 유닛 개수를 리턴합니다.
-        => _playerTeam._units.Length;
+        => _playerTeam.Length;
 
     /// <summary>
     /// UnitData(유닛) return
@@ -61,14 +61,14 @@ public class GameManager : Manager
     /// <param name="index"></param>
     /// <returns></returns>
     //index번째 유닛에 대한 데이터를 리턴합니다.
-    public UnitData getPlayerUnit(int index)
+    public UnitController getPlayerUnit(int index)
     {
         //index 값이 0미만이거나, 배열의 길이를 초과한다면 : null을 반환
-        if (index < 0 || index >= _playerTeam._units.Length)
+        if (index < 0 || index >= _playerTeam.Length)
             return null;
 
         //해당 index번째 유닛을 리턴합니다.
-        return _playerTeam._units[index];
+        return _playerTeam.GetUnit(index);
     }
 
     #region Monobehaviour Function

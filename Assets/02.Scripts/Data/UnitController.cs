@@ -3,11 +3,73 @@ using GameplayIngredients;
 using UnityEngine;
 using UnityEngine.AnimatorPro;
 
+using GameplayIngredients;
+
 public enum eTeam
 {
     PLAYER,
     ENEMY
 }
+
+public class UnitModelManager
+{
+    // 아이템 이름 > 오브젝트에서의 아이템 위치
+    Dictionary<string, int[]> _modelItemPoint = new Dictionary<string, int[]>();
+
+    const int _completeModelCount = 4;
+
+    private void Init()
+    {
+        string[] itemNameList = new string[_completeModelCount * 2];
+        int itemIndex = 0;
+        itemNameList[itemIndex++] = "일반 머리";
+        itemNameList[itemIndex++] = "일반 옷";
+        itemNameList[itemIndex++] = "견습 기사의 투구";
+        itemNameList[itemIndex++] = "견습 기사의 갑옷";
+        itemNameList[itemIndex++] = "셔우드 숲의 모자";
+        itemNameList[itemIndex++] = "셔우드 숲의 코트";
+        itemNameList[itemIndex++] = "하얀 눈의 모자";
+        itemNameList[itemIndex++] = "하얀 눈의 옷";
+
+        int equipmentCount = 2;
+
+        int[] modelNumList = new int[_completeModelCount * 2];
+        for (int i = 1; i < _completeModelCount * 2 + 1; ++i) 
+        {
+            modelNumList[i - 1] = (1 == i % 2 ? i / 2 : i / 2 - 1);
+        }
+
+        int[] v = new int[equipmentCount];
+        for (int i = 0; i < itemIndex; ++i)
+        {
+            v = new int[equipmentCount];
+            v[0] = modelNumList[i];
+            v[1] = i % equipmentCount;
+
+            _modelItemPoint.Add(itemNameList[i], v);
+        }
+    }
+
+    public void UpdateModel(GameObject unit, in int[] equipedItem)
+    {
+        if (0 == _modelItemPoint.Count)
+            Init();
+
+        if (null == unit) { return; }
+
+        if(!unit.activeSelf) { unit.SetActive(true); }
+
+        for (int i = 0; i < 2; ++i)
+        {
+            string itemName = Manager.Get<GameManager>().itemList.ItemSearch(equipedItem[i]).Name;
+
+            int[] index = _modelItemPoint?[itemName];
+
+            unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(true);
+        }
+    }
+}
+
 
 public struct UnitStatus
 {
@@ -30,7 +92,7 @@ public struct UnitStatus
     }
 }
 
-public class UnitData : FieldObject
+public class UnitController : FieldObject
 {
     public void Spawn()
     {
@@ -142,7 +204,7 @@ public class UnitData : FieldObject
     }
 
     //유닛 데이터를 가지고 초기화를 합니다.
-    public void Init(UnitData unit)
+    public void Init(UnitController unit)
     {
         //기본 초기화
         Init();
@@ -160,16 +222,23 @@ public class UnitData : FieldObject
     //기본 초기화를 합니다.
     public void Init(int curH = 100, int maxH = 100, int speed = 3)
     {
-        _curHp = curH;
-        _maxHp = maxH;
-        _abilityNum = 1;
-        _attackDamage = 10;
-        _attackSpeed = 1;
-        _attackRange = .75f;
+        _curHp = 0;
+        _maxHp = 0;
+        _abilityNum = 0;
+        _attackDamage = 5f;
+        _attackSpeed = 1f;
+        _attackRange = 1f;
         _coolTime = 0;
         _cost = 0;
         _defensivePower = 0;
         _moveSpeed = speed;
+        _3DModelToTextureName = "Naked-head,Naked-body";
+
+        _itemsNum[0] = 1;
+        _itemsNum[1] = 2;
+        for (int i = 2; i < _itemsNum.Length; ++i)
+            _itemsNum[i] = 0;
+
     }
 
     #region Enum

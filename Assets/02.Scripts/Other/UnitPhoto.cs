@@ -24,29 +24,31 @@ public class UnitPhoto : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
             StartCoroutine(Iphoto($"{Application.dataPath}/04.Image/Photo"));
+        }
     }
 
     private readonly WaitForSeconds SideTime = new WaitForSeconds(0.1f);
     
     private IEnumerator Iphoto(string path)
     {
-        Naked.head.SetActive(true);
+        //Naked.head.SetActive(true);
         
-        //중간 텀
-        yield return SideTime;
+        ////중간 텀
+        //yield return SideTime;
         
-        //김치
-        Util.SaveRenderTextuerToPng($"{path}/{Naked.name}-head,{Naked.name}-body.png", renderTexture);
+        ////김치
+        //Util.SaveRenderTextuerToPng($"{path}/{Naked.name}-head,{Naked.name}-body.png", renderTexture);
         
-        //중간 텀
-        yield return SideTime;
+        ////중간 텀
+        //yield return SideTime;
         
-        Naked.head.SetActive(false);
+        //Naked.head.SetActive(false);
         
-        //중간 텀
-        yield return SideTime;
+        ////중간 텀
+        //yield return SideTime;
         
         //전체 유닛의 사진을 찍어야하기 때문에 유닛 개수만큼 반복합니다.
         for (int i = 0; i < partNameToObj.Length; i++)

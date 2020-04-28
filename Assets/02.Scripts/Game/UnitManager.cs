@@ -8,8 +8,8 @@ public class UnitManager : MonoBehaviour
 {
     #region Variable
 
-    private GameObjectPool<UnitData> m_unitPool;
-    private List<UnitData> m_unitList;
+    private GameObjectPool<UnitController> m_unitPool;
+    private List<UnitController> m_unitList;
 
     // 유닛 생성
     // [SerializeField]
@@ -18,7 +18,7 @@ public class UnitManager : MonoBehaviour
     [SerializeField]
     private GameObject _unitPrefab; //유닛 프리팹
 
-    private readonly UnitData[] _units = new UnitData[UnitCount];
+    private readonly UnitController[] _units = new UnitController[UnitCount];
 
     public eTeam _eTeam;
     
@@ -30,15 +30,15 @@ public class UnitManager : MonoBehaviour
     {
         // 풀링
         int count = 0;
-        m_unitPool = new GameObjectPool<UnitData>(20, () =>
+        m_unitPool = new GameObjectPool<UnitController>(20, () =>
         {
             var obj = Instantiate(_unitPrefab, transform, true);
             obj.name = $"Unit{++count}";
             obj.SetActive(false);
-            var unit = obj.GetComponent<UnitData>();
+            var unit = obj.GetComponent<UnitController>();
             return unit;
         });
-        m_unitList = new List<UnitData>();
+        m_unitList = new List<UnitController>();
 
 
         for (int i = 0; i < UnitCount; ++i)
