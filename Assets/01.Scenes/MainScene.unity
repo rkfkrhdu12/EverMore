@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2919,7 +2919,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -179.8, y: -15}
+  m_AnchoredPosition: {x: -184, y: -15}
   m_SizeDelta: {x: 205.29999, y: 39.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &433853318
@@ -2950,8 +2950,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4293917183
+  m_fontColor: {r: 1, g: 0.97594076, b: 0.9386792, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -8860,7 +8860,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 144, y: 190}
+  m_AnchoredPosition: {x: 138, y: 190}
   m_SizeDelta: {x: 233, y: 181}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1200414546
@@ -8877,7 +8877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalImage: {fileID: 21300000, guid: 0efe61a506b3ae64a84c151a7381b4f4, type: 3}
   reachImage: {fileID: 21300000, guid: 7bcc74e767394d947af24df8545fd45b, type: 3}
-  pressImage: {fileID: 0}
+  pressImage: {fileID: 21300000, guid: 2e68653609e58bc4a8d23f1c4b900afd, type: 3}
   selectImage: {fileID: 21300000, guid: 35d598c0ccd19094eae04a2e2718a449, type: 3}
   onButtonEvent:
     onDown:
@@ -9632,6 +9632,7 @@ GameObject:
   - component: {fileID: 1253572530}
   - component: {fileID: 1253572529}
   - component: {fileID: 1253572531}
+  - component: {fileID: 1253572528}
   m_Layer: 5
   m_Name: LobbyBtn
   m_TagString: Untagged
@@ -9658,6 +9659,37 @@ RectTransform:
   m_AnchoredPosition: {x: 238, y: 368}
   m_SizeDelta: {x: 235, y: 181}
   m_Pivot: {x: 0.8902595, y: 0.5}
+--- !u!114 &1253572528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253572526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalImage: {fileID: 21300000, guid: 761cfda86d65b1d4c90aebf2f1e18831, type: 3}
+  reachImage: {fileID: 21300000, guid: 520c72afc48a6d742a042ad17f708f82, type: 3}
+  pressImage: {fileID: 21300000, guid: 8b53a3c0d971abe4c9381e24e65fd61f, type: 3}
+  selectImage: {fileID: 21300000, guid: 18061f5e8f1f191468816bb508b490d1, type: 3}
+  onButtonEvent:
+    onDown:
+      m_PersistentCalls:
+        m_Calls: []
+    onPress:
+      m_PersistentCalls:
+        m_Calls: []
+    onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
+  _buttonGroup: {fileID: 0}
+  isSelected: 0
 --- !u!114 &1253572529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10263,7 +10295,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 142, y: -424}
+  m_AnchoredPosition: {x: 130, y: -424}
   m_SizeDelta: {x: 260, y: 165}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1437722135
@@ -10280,7 +10312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalImage: {fileID: 21300000, guid: c661602b50bfea847bf9ad2dbdb0b079, type: 3}
   reachImage: {fileID: 21300000, guid: 078ee378a1e550d4788ee24bebfc247a, type: 3}
-  pressImage: {fileID: 0}
+  pressImage: {fileID: 21300000, guid: 8bcf518d131d9a54897e200704285590, type: 3}
   selectImage: {fileID: 21300000, guid: 8498f2e4410b28f4fa1342b78b219fc9, type: 3}
   onButtonEvent:
     onDown:
@@ -11519,6 +11551,7 @@ GameObject:
   - component: {fileID: 1683270481}
   - component: {fileID: 1683270480}
   - component: {fileID: 1683270479}
+  - component: {fileID: 1683270482}
   m_Layer: 5
   m_Name: TradingBtn
   m_TagString: Untagged
@@ -11575,7 +11608,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7208360f56cf16641ba1f29c50db6d47, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8ced97b3d888b0b4c9766160134d7d2e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11593,6 +11626,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1683270477}
   m_CullTransparentMesh: 0
+--- !u!114 &1683270482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683270477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalImage: {fileID: 21300000, guid: 8ced97b3d888b0b4c9766160134d7d2e, type: 3}
+  reachImage: {fileID: 21300000, guid: 4e03dadb233bdcf48be6711e39e7829d, type: 3}
+  pressImage: {fileID: 21300000, guid: a457d15003f5b434ea25ab10f0fe2ee3, type: 3}
+  selectImage: {fileID: 21300000, guid: 50afa5b00c717a64e83dbc01f634431d, type: 3}
+  onButtonEvent:
+    onDown:
+      m_PersistentCalls:
+        m_Calls: []
+    onPress:
+      m_PersistentCalls:
+        m_Calls: []
+    onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls: []
+  _buttonGroup: {fileID: 0}
+  isSelected: 0
 --- !u!1 &1690984729
 GameObject:
   m_ObjectHideFlags: 0
@@ -11628,7 +11692,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 147, y: -8.999973}
+  m_AnchoredPosition: {x: 139, y: -8.999973}
   m_SizeDelta: {x: 256, y: 181}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1690984731
@@ -11645,7 +11709,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalImage: {fileID: 21300000, guid: 0c7836f3335ffb34facfa477ebaf4dd2, type: 3}
   reachImage: {fileID: 21300000, guid: 10348f37c874c7547af855753ebb4bd2, type: 3}
-  pressImage: {fileID: 0}
+  pressImage: {fileID: 21300000, guid: 56e5acd5960432747b122150e4a0ed29, type: 3}
   selectImage: {fileID: 21300000, guid: 1c8832e0f34b92b4cbfb663ff91f9eb2, type: 3}
   onButtonEvent:
     onDown:
