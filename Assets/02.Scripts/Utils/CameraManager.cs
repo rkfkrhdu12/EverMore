@@ -5,30 +5,41 @@ using UnityEngine;
 // 윤용우
 public class CameraManager : SingletonMonoBehaviour<CameraManager>
 {
-    private void Awake()
-    {
-        //transform.localPosition = Vector3.zero;
-    }
+    [SerializeField]
+    private GameObject[] _CMCams;
 
-    // Test 1
-    // 카메라를 움직이게 하거나 움직임을 제한한다.
-    float _prevMousePositionX;
-    const float _moveSpeed = .5f;
-    public bool _isMoveRightDrag = true;
-    void Test1CameraUpdate()
+    private int _curCamNum;
+
+    void UpdateCamera(int camNum)
     {
-        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
+        for (int i = 0; i < _CMCams.Length; ++i)
         {
-            float moveDistance = Input.GetAxis("Mouse X") * (_isMoveRightDrag ? 1 : -1);
-
-            transform.localPosition = new Vector3(Mathf.Clamp(transform.localPosition.x + (moveDistance * _moveSpeed), 0.0f, 30f),
-                transform.localPosition.y, transform.localPosition.z);
+            _CMCams[i].SetActive(camNum == i ? true : false);
         }
     }
 
-    public void Update()
+    private void Start()
     {
-        Test1CameraUpdate();
+        _curCamNum = 0;
+        UpdateCamera(_curCamNum);
+    }
+
+    public bool _isMoveRightDrag = true;
+    private void Update()
+    {
+        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
+        {
+            float moveMouseX = Input.GetAxis("Mouse X");
+            if(0 == moveMouseX) { return; }
+
+            float flipValue = Mathf.Abs(1.0f / moveMouseX);
+            int moveDirection = (int)(moveMouseX * (_isMoveRightDrag ? flipValue : -flipValue));
+
+            if(_curCamNum + moveDirection >= _CMCams.Length || _curCamNum + moveDirection < 0) { return; }
+
+            _curCamNum += moveDirection;
+            UpdateCamera(_curCamNum);
+        }
     }
 
 }

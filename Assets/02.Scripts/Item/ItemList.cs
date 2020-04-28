@@ -55,6 +55,8 @@ public class ItemList
 
     private void AddList(IReadOnlyList<string> data)
     {
+        if(string.IsNullOrEmpty(data[0])) { return; }
+
         Item i = null;
 
         switch (data[1])
@@ -201,7 +203,7 @@ public class ItemList
         {
             // 길이가 유동적이고 검색을 하는것이 아니므로 속도가 크게 상관없어 List를 이용
             List<string> itemDatas = CSVParser.Read("ItemList");
-            if(null == itemDatas) { Debug.Log("."); return; }
+            if(null == itemDatas) { return; }
 
             //itemDatas에서 ','으로 나뉘어진 것을 선택하여 가져온다는 Linq구문이다.
             foreach (var splitDatas in itemDatas.Select(t => t.Split(',')))
