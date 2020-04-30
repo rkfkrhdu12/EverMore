@@ -26,11 +26,13 @@ public static class Util
         if (PlayerSettings.colorSpace == ColorSpace.Linear)
         {
             var color = tex.GetPixels();
+            
             for (int i = 0; i < color.Length; i++)
             {
-                color[i].r = Mathf.Pow(color[i].r, 1 / 2.2f);
-                color[i].g = Mathf.Pow(color[i].g, 1 / 2.2f);
-                color[i].b = Mathf.Pow(color[i].b, 1 / 2.2f);
+                //컬러를 감마->리니어로 변환합니다.
+                color[i].r = Mathf.LinearToGammaSpace(color[i].r);
+                color[i].g = Mathf.LinearToGammaSpace(color[i].g);
+                color[i].b = Mathf.LinearToGammaSpace(color[i].b);
             }
             tex.SetPixels(color);
         }

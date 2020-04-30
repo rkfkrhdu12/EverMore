@@ -36,6 +36,7 @@ public class UnitPhoto : MonoBehaviour
 
     private IEnumerator ILoadTexture()
     {
+
         using (var uwr = UnityWebRequestTexture.GetTexture($@"{Application.persistentDataPath}/{partNameToObj.HeadName}-head,{partNameToObj.BodyName}-body,{partNameToObj.LeftWeaponName}-leftWeapon,{partNameToObj.RightWeaponName}-rightWeapon.png"))
         {
             yield return uwr.SendWebRequest();
