@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.IO;
 using System.Linq;
+using UnityEditor;
 
 // 여러 기능을 하는 유틸 클래스
 public static class Util
@@ -21,7 +22,19 @@ public static class Util
 
         //렌더 텍스쳐 가로 X 세로 사이즈로 읽을 수 있는 픽셀을 처리합니다.
         tex.ReadPixels(new Rect(0, 0, rTex.width, rTex.height), 0, 0);
-
+        
+        if (PlayerSettings.colorSpace == ColorSpace.Linear)
+        {
+            var color = tex.GetPixels();
+            for (int i = 0; i < color.Length; i++)
+            {
+                color[i].r = Mathf.Pow(color[i].r, 1 / 2.2f);
+                color[i].g = Mathf.Pow(color[i].g, 1 / 2.2f);
+                color[i].b = Mathf.Pow(color[i].b, 1 / 2.2f);
+            }
+            tex.SetPixels(color);
+        }
+        
         //적용
         tex.Apply();
         return tex;
