@@ -13,11 +13,13 @@
       <Path>Library/PackageCache/com.unity.aovrecorder@0.1.1-preview.2</Path>
       <Path>Library/PackageCache/com.unity.cinemachine@2.5.0</Path>
       <Path>Library/PackageCache/com.unity.collab-proxy@1.2.16</Path>
+      <Path>Library/PackageCache/com.unity.editorcoroutines@0.1.0-preview.2</Path>
       <Path>Library/PackageCache/com.unity.ext.nunit@1.0.0</Path>
-      <Path>Library/PackageCache/com.unity.gameplay-ingredient-simple@e7b171b847</Path>
+      <Path>Library/PackageCache/com.unity.gameplay-ingredient-simple@5bbcd9f301</Path>
       <Path>Library/PackageCache/com.unity.ide.rider@2.0.2</Path>
-      <Path>Library/PackageCache/com.unity.ide.vscode@1.1.4</Path>
+      <Path>Library/PackageCache/com.unity.ide.vscode@1.2.0</Path>
       <Path>Library/PackageCache/com.unity.mathematics@1.1.0</Path>
+      <Path>Library/PackageCache/com.unity.memoryprofiler@0.2.3-preview.2</Path>
       <Path>Library/PackageCache/com.unity.nkstudio.buttonpro@65a8197714</Path>
       <Path>Library/PackageCache/com.unity.nkstudio.buttonpro@99f3b3b4df</Path>
       <Path>Library/PackageCache/com.unity.nkstudio.buttonpro@ae5ec925b8</Path>
@@ -42,6 +44,7 @@
       <Path>.idea</Path>
       <Path>.vs</Path>
       <Path>Library</Path>
+      <Path>Logs</Path>
       <Path>Recordings</Path>
       <Path>Temp</Path>
       <Path>obj</Path>

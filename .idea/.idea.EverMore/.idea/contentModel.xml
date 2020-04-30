@@ -10,7 +10,7 @@
         <e p="02.Scripts" t="Include">
           <e p="Data" t="Include">
             <e p="Team.cs" t="Include" />
-            <e p="UnitData.cs" t="Include" />
+            <e p="UnitController.cs" t="Include" />
             <e p="UnitStability.cs" t="Include" />
           </e>
           <e p="Game" t="Include">
