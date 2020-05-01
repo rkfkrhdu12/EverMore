@@ -37,6 +37,8 @@ namespace MainSceneUI
 
     public class MainSceneManager : MonoBehaviour
     {
+        #region Private Variable
+
         #region Show Inspector
 
         [Header("각각의 UI들")]
@@ -54,7 +56,7 @@ namespace MainSceneUI
         [Space]
         [SerializeField, Tooltip("유닛을 세팅할 UI 오브젝트")]
         private GameObject _setUnitUI;
-        
+
         [Space]
         [SerializeField, Tooltip("매칭을 선택할 UI")]
         private GameObject _MatchUI;
@@ -65,7 +67,9 @@ namespace MainSceneUI
         private Dictionary<string, UIScreen> nameToSceenUI = new Dictionary<string, UIScreen>();
 
         private string _curKey = string.Empty;
+        #endregion
 
+        #region Monobehaviour Function
         private void Awake()
         {
             //UI키 : UI 오브젝트 형태로 링크해줍니다.
@@ -75,8 +79,11 @@ namespace MainSceneUI
             InitUI(UIDataKey.ChoiceUnit, _choiceUnitUI);
             InitUI(UIDataKey.SetUnit, _setUnitUI);
             InitUI(UIDataKey.Matching, _MatchUI);
-        }
 
+            }
+        #endregion
+
+        #region Private Function
         private void InitUI(string key, GameObject ui = null)
         {
             //객체 생성
@@ -91,6 +98,8 @@ namespace MainSceneUI
             //방금 Add한 오브젝트를 비활성화 시킴
             nameToSceenUI[key].setActive(false);
         }
+
+        #endregion
 
         public void UpdateScreen(string key)
         {
@@ -120,28 +129,28 @@ namespace MainSceneUI
             ui.setActive(!ui.activeSelf);
         }
 
-        public void NextScreen()
-        {
-            switch (_curKey)
-            {
-                case UIDataKey.ChoiceTeam:
-                    UpdateScreen(UIDataKey.ChoiceUnit);
-                    break;
-            }
-        }
+        //public void NextScreen()
+        //{
+        //    switch (_curKey)
+        //    {
+        //        case UIDataKey.ChoiceTeam:
+        //            UpdateScreen(UIDataKey.ChoiceUnit);
+        //            break;
+        //    }
+        //}
 
-        public void PrevScreen()
-        {
-            switch (_curKey)
-            {
-                case UIDataKey.ChoiceTeam:
-                    UpdateScreen(UIDataKey.Lobby);
-                    break;
-                case UIDataKey.ChoiceUnit:
-                    UpdateScreen(UIDataKey.ChoiceTeam);
-                    break;
-            }
-        }
+        //public void PrevScreen()
+        //{
+        //    switch (_curKey)
+        //    {
+        //        case UIDataKey.ChoiceTeam:
+        //            UpdateScreen(UIDataKey.Lobby);
+        //            break;
+        //        case UIDataKey.ChoiceUnit:
+        //            UpdateScreen(UIDataKey.ChoiceTeam);
+        //            break;
+        //    }
+        //}
 
         public void NextGoto(string scene) =>
             Manager.Get<SceneManagerPro>().LoadScene(scene);

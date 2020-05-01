@@ -13,10 +13,35 @@ public enum eTeam
 
 public class UnitModelManager
 {
-    // 아이템 이름 > 오브젝트에서의 아이템 위치
-    Dictionary<string, int[]> _modelItemPoint = new Dictionary<string, int[]>();
+    public void UpdateModel(GameObject unit, in int[] equipedItem)
+    {
+        if (0 == _modelItemPoint.Count)
+            Init();
 
-    const int _completeModelCount = 4;
+        if (null == unit) { return; }
+
+        if (!unit.activeSelf) { unit.SetActive(true); }
+
+        for (int i = 0; i < 2; ++i)
+        {
+            string itemName = Manager.Get<GameManager>().itemList.ItemSearch(equipedItem[i]).Name;
+
+            int[] index = _modelItemPoint?[itemName];
+
+            unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(true);
+        }
+    }
+
+    #region Private Variable
+
+    // 아이템 이름 > 오브젝트에서의 아이템 위치
+    private Dictionary<string, int[]> _modelItemPoint = new Dictionary<string, int[]>();
+
+    private const int _completeModelCount = 4;
+
+    #endregion
+
+    #region Private Function
 
     private void Init()
     {
@@ -34,7 +59,7 @@ public class UnitModelManager
         int equipmentCount = 2;
 
         int[] modelNumList = new int[_completeModelCount * 2];
-        for (int i = 1; i < _completeModelCount * 2 + 1; ++i) 
+        for (int i = 1; i < _completeModelCount * 2 + 1; ++i)
         {
             modelNumList[i - 1] = (1 == i % 2 ? i / 2 : i / 2 - 1);
         }
@@ -50,45 +75,35 @@ public class UnitModelManager
         }
     }
 
-    public void UpdateModel(GameObject unit, in int[] equipedItem)
-    {
-        if (0 == _modelItemPoint.Count)
-            Init();
-
-        if (null == unit) { return; }
-
-        if(!unit.activeSelf) { unit.SetActive(true); }
-
-        for (int i = 0; i < 2; ++i)
-        {
-            string itemName = Manager.Get<GameManager>().itemList.ItemSearch(equipedItem[i]).Name;
-
-            int[] index = _modelItemPoint?[itemName];
-
-            unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(true);
-        }
-    }
+    #endregion
 }
-
 
 public struct UnitStatus
 {
-    public float maxhealth;
-    public float defensivePower;
+    public float _maxhealth;
+    public float _curhealth;
+    public float _defensivePower;
 
-    public float moveSpeed;
-    public int cost;
-    public float coolTime;
-    public int weight;
+    public float _attackDamage;
+    public float _attackSpeed;
+    public float _attackRange;
+
+    public float _moveSpeed;
+    public int _cost;
+    public float _coolTime;
+    public int _weight;
+
+    public int[] _equiedItems;
 
     public void Reset()
     {
-        maxhealth = 0f;
-        defensivePower = 0f;
-        moveSpeed = 0f;
-        cost = 0;
-        coolTime = 0f;
-        weight = 0;
+        _maxhealth = 0f;
+        _defensivePower = 0f;
+        _moveSpeed = 0f;
+        _cost = 0;
+        _coolTime = 0f;
+        _weight = 0;
+        _equiedItems = new int[4];
     }
 }
 
@@ -101,43 +116,42 @@ public class UnitController : FieldObject
             _collider = GetComponent<BoxCollider>();
 
         //공격 영역 사이즈를 공격 범위에 영향을 준다. 
-        _collider.size *= _attackRange;
+        _collider.size *= _status._attackRange;
 
         #region Item
-
-        //아이템 번호가 0이 아니라면, 헬멧을 검색하여 생성합니다.
-        if (_itemsNum[0] != 0)
-        {
-            var _helmetObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[0]).Object;
-            Instantiate(_helmetObj, gameObject.transform);
-        }
-
-        //아이템 번호가 0이 아니라면, 아머를 검색하여 생성합니다.
-        if (_itemsNum[1] != 0)
-        {
-            var _armourObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[1]).Object;
-            Instantiate(_armourObj, gameObject.transform);
-        }
-
-        //아이템 번호가 0이 아니라면, 무기를 검색하여 생성합니다.
-        if (_itemsNum[2] != 0)
-        {
-            // var hands = transform.GetChild(0).GetComponent<UnitWeaponHand>();
-            //
-            // if (hands != null)
-            // {
-            //     var _weaponObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[2]).Object;
-            //     Instantiate(_weaponObj, hands._RightHand.transform);
-            // }
-        }
-
-        //아이템 번호가 0이 아니라면, 서브 무기를 검색하여 생성합니다.
-        if (_itemsNum[3] != 0)
-        {
-            var _subweaponObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[3]).Object;
-            Instantiate(_subweaponObj, gameObject.transform);
-        }
-
+        ////아이템 번호가 0이 아니라면, 헬멧을 검색하여 생성합니다.
+        //if (_itemsNum[0] != 0)
+        //{
+        //    var _helmetObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[0]).Object;
+        //    Instantiate(_helmetObj, gameObject.transform);
+        //}
+        //
+        ////아이템 번호가 0이 아니라면, 아머를 검색하여 생성합니다.
+        //if (_itemsNum[1] != 0)
+        //{
+        //    var _armourObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[1]).Object;
+        //    Instantiate(_armourObj, gameObject.transform);
+        //}
+        //
+        ////아이템 번호가 0이 아니라면, 무기를 검색하여 생성합니다.
+        //if (_itemsNum[2] != 0)
+        //{
+        //    // var hands = transform.GetChild(0).GetComponent<UnitWeaponHand>();
+        //    //
+        //    // if (hands != null)
+        //    // {
+        //    //     var _weaponObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[2]).Object;
+        //    //     Instantiate(_weaponObj, hands._RightHand.transform);
+        //    // }
+        //}
+        //
+        ////아이템 번호가 0이 아니라면, 서브 무기를 검색하여 생성합니다.
+        //if (_itemsNum[3] != 0)
+        //{
+        //    var _subweaponObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[3]).Object;
+        //    Instantiate(_subweaponObj, gameObject.transform);
+        //}
+        //
         #endregion
 
         _animator = transform.GetChild(0).GetComponent<Animator>();
@@ -158,88 +172,87 @@ public class UnitController : FieldObject
         if (_curHp > 0) return;
 
         //사망 처리 한다.
-        isdead = true;
+        _isDead = true;
 
         //해당 유닛을 삭제 목록에 올립니다.
         DeleteObjectSystem.AddDeleteObject(gameObject);
     }
 
-    //창작 함수
-    public void Equip(int code, eEquipItem weapon = eEquipItem.WEAPON)
-    {
-        // //코드를 기반하여 아이템을 검색하여 할당 받습니다.
-        // var item = Manager.Get<GameManager>().itemList.ItemSearch(code);
-        //
-        // //받아와지지 않았다면 : return
-        // if (item == null)
-        //     return;
-        //
-        // //유닛 상태 객체 생성
-        // var unitStatus = new UnitStatus();
-        //
-        // //아이템을 장착합니다.
-        // item.Equip(ref unitStatus);
-        //
-        // //능력 처리를 함.
-        // _maxHp += unitStatus.maxhealth;
-        // _curHp = _maxHp;
-        // _defensivePower += unitStatus.defensivePower;
-        // _moveSpeed += unitStatus.moveSpeed;
-        // _cost += unitStatus.cost;
-        // _coolTime += unitStatus.coolTime;
-        //
-        // //헬멧과 아머, 무기에 코드를 대입
-        // switch (item.Type)
-        // {
-        //     case eItemType.HELMET:
-        //         _itemsNum[(int) eEquipItem.HELMET] = code;
-        //         break;
-        //     case eItemType.BODYARMOUR:
-        //         _itemsNum[(int) eEquipItem.ARMOUR] = code;
-        //         break;
-        //     default:
-        //         _itemsNum[(int) weapon] = code;
-        //         break;
-        // }
-    }
+    // //창작 함수
+    //public void Equip(int code, eEquipItem weapon = eEquipItem.WEAPON)
+    //{
+    // //코드를 기반하여 아이템을 검색하여 할당 받습니다.
+    // var item = Manager.Get<GameManager>().itemList.ItemSearch(code);
+    //
+    // //받아와지지 않았다면 : return
+    // if (item == null)
+    //     return;
+    //
+    // //유닛 상태 객체 생성
+    // var unitStatus = new UnitStatus();
+    //
+    // //아이템을 장착합니다.
+    // item.Equip(ref unitStatus);
+    //
+    // //능력 처리를 함.
+    // _maxHp += unitStatus.maxhealth;
+    // _curHp = _maxHp;
+    // _defensivePower += unitStatus.defensivePower;
+    // _moveSpeed += unitStatus.moveSpeed;
+    // _cost += unitStatus.cost;
+    // _coolTime += unitStatus.coolTime;
+    //
+    // //헬멧과 아머, 무기에 코드를 대입
+    // switch (item.Type)
+    // {
+    //     case eItemType.HELMET:
+    //         _itemsNum[(int) eEquipItem.HELMET] = code;
+    //         break;
+    //     case eItemType.BODYARMOUR:
+    //         _itemsNum[(int) eEquipItem.ARMOUR] = code;
+    //         break;
+    //     default:
+    //         _itemsNum[(int) weapon] = code;
+    //         break;
+    // }
+    //}
 
-    //유닛 데이터를 가지고 초기화를 합니다.
-    public void Init(UnitController unit)
-    {
-        //기본 초기화
-        Init();
+    ////유닛 데이터를 가지고 초기화를 합니다.
+    //public void Init(UnitController unit)
+    //{
+    //    //기본 초기화
+    //    Init();
 
-        //장착한 아이템을 기반으로 초기화
-        Equip(unit._itemsNum[0]);
-        Equip(unit._itemsNum[1]);
-        Equip(unit._itemsNum[2]);
-        Equip(unit._itemsNum[3], eEquipItem.SUBWEAPON);
+    //    //장착한 아이템을 기반으로 초기화
+    //    Equip(unit._itemsNum[0]);
+    //    Equip(unit._itemsNum[1]);
+    //    Equip(unit._itemsNum[2]);
+    //    Equip(unit._itemsNum[3], eEquipItem.SUBWEAPON);
 
-        //팀 처리
-        eteam = unit.eteam;
-    }
+    //    //팀 처리
+    //    eteam = unit.eteam;
+    //}
 
-    //기본 초기화를 합니다.
-    public void Init(int curH = 100, int maxH = 100, int speed = 3)
-    {
-        _curHp = 0;
-        _maxHp = 0;
-        _abilityNum = 0;
-        _attackDamage = 5f;
-        _attackSpeed = 1f;
-        _attackRange = 1f;
-        _coolTime = 0;
-        _cost = 0;
-        _defensivePower = 0;
-        _moveSpeed = speed;
-        _3DModelToTextureName = "Naked-head,Naked-body";
+    ////기본 초기화를 합니다.
+    //public void Init(int curH = 100, int maxH = 100, int speed = 3)
+    //{
+    //    _curHp = 0;
+    //    _maxHp = 0;
+    //    _abilityNum = 0;
+    //    _attackDamage = 5f;
+    //    _attackSpeed = 1f;
+    //    _attackRange = 1f;
+    //    _coolTime = 0;
+    //    _cost = 0;
+    //    _defensivePower = 0;
+    //    _moveSpeed = speed;
+    //    //_3DModelToTextureName = "Naked-head,Naked-body";
 
-        _itemsNum[0] = 1;
-        _itemsNum[1] = 2;
-        for (int i = 2; i < _itemsNum.Length; ++i)
-            _itemsNum[i] = 0;
-
-    }
+    //    _itemsNum[0] = 1;
+    //    _itemsNum[1] = 2;
+    //    for (int i = 2; i < _itemsNum.Length; ++i)
+    //        _itemsNum[i] = 0;
+    //}
 
     #region Enum
 
@@ -287,39 +300,41 @@ public class UnitController : FieldObject
     public float _attackTime;
 
     //죽었는지 살았는지에 대한 변수
-    public bool isdead;
+    public bool _isDead;
 
-    [Header("파일 파싱으로 아이디 가져온 후 적용시킬 예정")]
+    //[Header("파일 파싱으로 아이디 가져온 후 적용시킬 예정")]
     // 아이템 번호
-    public int[] _itemsNum = new int[4];
+    public int[] _itemsNum => _status._equiedItems;
 
-    public string _3DModelToTextureName = "Naked-head,Naked-body";
+    // public string _3DModelToTextureName = "Naked-head,Naked-body";
     #endregion
 
     #region Hide Inspector
 
     #region 유닛 상태
 
+    public UnitStatus _status;
+
     //방어력
-    public float _defensivePower;
+    public float _defensivePower { get { return _status._defensivePower; } }
 
     //공격 데미지
-    public float _attackDamage;
+    public float _attackDamage { get { return _status._attackDamage; } }
 
     //공격 속도
-    public float _attackSpeed;
+    public float _attackSpeed { get { return _status._attackSpeed; } }
 
     //공격 범위
-    public float _attackRange;
+    public float _attackRange { get { return _status._attackRange; } }
 
     //이동 속도
-    public float _moveSpeed;
+    public float _moveSpeed { get { return _status._moveSpeed; } }
 
     // 유닛 코스트
-    public int _cost;
+    public int _cost { get { return _status._cost; } }
 
     // second
-    public float _coolTime;
+    public float _coolTime { get { return _status._coolTime; } }
 
     #endregion
 
@@ -349,7 +364,7 @@ public class UnitController : FieldObject
     private void FixedUpdate()
     {
         //현재 상태가 비어 있거나, 죽었다면 : return
-        if (_curState == eState.NONE || isdead) return;
+        if (_curState == eState.NONE || _isDead) return;
 
         //이동 <--> 공격, 상태 변환
         UpdateState();

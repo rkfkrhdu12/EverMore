@@ -7,6 +7,15 @@ using TMPro;
 
 public class InGameSystem : MonoBehaviour
 {
+
+    public void Spawn(int unitNum)
+    {
+        //=> _unitMgr.Spawn(unitNum, ref _curGold);
+
+
+    }
+
+    #region Private Variable
     [SerializeField]
     private FieldObject _playerBase;
 
@@ -21,11 +30,10 @@ public class InGameSystem : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI _timerText;
+    private float _timerUITime;
 
-    private float _timerTime;
-
-    [SerializeField]
-    private UnitManager _unitMgr;
+    //[SerializeField]
+    //private UnitManager _unitMgr;
 
     [SerializeField]
     private Image _goldImage;
@@ -41,36 +49,31 @@ public class InGameSystem : MonoBehaviour
     private const float _maxMana = 100;
     private const float _manaPerSecond = 0.5f;
 
-    public void Spawn(int unitNum) =>
-        _unitMgr.Spawn(unitNum, ref _curGold);
+    #endregion
 
-    private void Awake() =>
-        _timerTime = int.Parse(_timerText.text);
+    #region Monobehaviour Function
+    private void Awake()
+    {
+        if (null == Manager.Get<GameManager>().GetPlayerUnits()) { return; }
+
+        _timerUITime = int.Parse(_timerText.text);
+    }
 
     private void Update()
     {
         UpdateTimer();
         UpdateBase();
         UpdateGoldMana();
-
-        // if (_enemyBase.IsDead)
-        // {
-        //     Manager.Get<GameManager>()._WinTeam = eTeam.PLAYER;
-        //     Manager.Get<GameManager>().NextGoto("GameResultScene");
-        // }
-        //
-        // if (_playerBase.IsDead)
-        // {
-        //     Manager.Get<GameManager>()._WinTeam = eTeam.ENEMY;
-        //     Manager.Get<GameManager>().NextGoto("GameResultScene");
-        // }
     }
+    #endregion
+
+    #region Private Function
 
     private void UpdateTimer()
     {
-        _timerTime -= Time.deltaTime;
+        _timerUITime -= Time.deltaTime;
 
-        _timerText.text = $"{_timerTime}";
+        _timerText.text = $"{_timerUITime}";
     }
 
     private void UpdateBase()
@@ -83,7 +86,9 @@ public class InGameSystem : MonoBehaviour
     {
         _curGold += Time.deltaTime * _goldPerSecond;
         _curMana += Time.deltaTime * _manaPerSecond;
+
         _goldImage.fillAmount = _curGold / _maxGold;
         _manaImage.fillAmount = _curMana / _maxMana;
-    }
+    } 
+    #endregion
 }

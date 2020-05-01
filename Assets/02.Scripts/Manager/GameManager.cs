@@ -9,13 +9,14 @@ public class stringTexture2D : SerializableDictionary<string, Texture2D>
 {
 }
 
+
 [ManagerDefaultPrefab("GameManager")]
 public class GameManager : Manager
 {
     #region Show Inspector
 
-    [Tooltip("아군인지 적군인지 선택")]
-    public eTeam _WinTeam = eTeam.PLAYER;
+    //[Tooltip("아군인지 적군인지 선택")]
+    //public eTeam _WinTeam = eTeam.PLAYER;
 
     [SerializeField]
     private AssetLabelReference unitPhotos;
@@ -61,14 +62,22 @@ public class GameManager : Manager
     /// <param name="index"></param>
     /// <returns></returns>
     //index번째 유닛에 대한 데이터를 리턴합니다.
-    public UnitController getPlayerUnit(int index)
-    {
-        //index 값이 0미만이거나, 배열의 길이를 초과한다면 : null을 반환
-        if (index < 0 || index >= _playerTeam.Length)
-            return null;
+    //public UnitController getPlayerUnit(int index)
+    //{
+    //    //index 값이 0미만이거나, 배열의 길이를 초과한다면 : null을 반환
+    //    if (index < 0 || index >= _playerTeam.Length)
+    //        return null;
 
-        //해당 index번째 유닛을 리턴합니다.
-        return _playerTeam.GetUnit(index);
+    //    //해당 index번째 유닛을 리턴합니다.
+    //    return _playerTeam.GetUnit(index);
+    //}
+
+    public Team GetPlayerUnits()
+    {
+        // 시작 하려는데 정해진 팀이 없을때 
+        if(null == _playerTeam) { return null; }
+
+        return _playerTeam;
     }
 
     #region Monobehaviour Function

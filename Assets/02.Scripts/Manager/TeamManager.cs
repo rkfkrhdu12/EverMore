@@ -113,7 +113,7 @@ public class TeamManager : MonoBehaviour
     {
         _choiceUnitTeamNameUI.text = _teams[_curSelectTeamName].Name;
     }
-    public void OnUpdateChoiceUnitUI()
+    public void OnUpdateChoiceUnitUI()              
     {
         int unitCount = _teams[_curSelectTeamName].Length;
 
@@ -121,16 +121,16 @@ public class TeamManager : MonoBehaviour
 
         for (int i = 0; i < _slotImage.Length; ++i)
         {
-            Texture t = null == _teams[_curSelectTeamName].GetUnitTexture(i) ? 
-                                null : _teams[_curSelectTeamName].GetUnitTexture(i);
+            //Texture t = null == _teams[_curSelectTeamName].GetUnitTexture(i) ? 
+            //                    null : _teams[_curSelectTeamName].GetUnitTexture(i);
 
-            _slotImage[i].texture = null != t ? t : _UnitAddImage.texture;
+            _slotImage[i].texture = /*null != t ? t : */_UnitAddImage.texture;
             _slotImage[i].SetNativeSize();
         }
     }
 
     // SetUnit
-    public void OnUpdateUnitModel(int index)
+    public void OnUpdateUnitModel(int index)        
     {
         if(index >= _teams[_curSelectTeamName].Length|| index < 0) { return; }
 
@@ -139,7 +139,7 @@ public class TeamManager : MonoBehaviour
         UnitController curSelectUnit = _teams[_curSelectTeamName].GetUnit(_curUnitNum);
 
         UnitModelManager UMMgr = new UnitModelManager();
-        UMMgr.UpdateModel(_SetUnitObject, curSelectUnit._itemsNum);
+        UMMgr.UpdateModel(_SetUnitObject, curSelectUnit._status._equiedItems);
     }
 
     #endregion

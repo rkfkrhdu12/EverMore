@@ -34,6 +34,8 @@ public class UnitPhoto : MonoBehaviour
             Debug.Log(Application.persistentDataPath);
     }
 
+    
+
     private IEnumerator ILoadTexture()
     {
 

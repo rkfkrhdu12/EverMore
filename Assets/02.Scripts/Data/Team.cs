@@ -43,9 +43,10 @@ public class Team
         // null == 0
         if (null == _units[index])
         { // 유닛이 없을때
-            _units[index] = new UnitController();
+            UnitStatus us;
+            us.
 
-            _units[index].Init();
+            _units[index];
         }
         else
         { // 유닛이 있을때
@@ -55,18 +56,18 @@ public class Team
         return _units[index];
     }
 
-    public Texture GetUnitTexture(int index)
-    {
-        if((index <= 0 && index > _units.Length) || null == _units[index]) { return null; }
+    //public Texture GetUnitTexture(int index)
+    //{
+    //    if((index <= 0 && index > _units.Length) || null == _units[index]) { return null; }
 
-        ref stringTexture2D st = ref Manager.Get<GameManager>().st;
+    //    ref stringTexture2D st = ref Manager.Get<GameManager>().st;
 
-        if (!st.ContainsKey(_units[index]._3DModelToTextureName)) { return null; }
+    //    if (!st.ContainsKey(_units[index]._3DModelToTextureName)) { return null; }
 
-        Texture returnTexture = st[_units[index]._3DModelToTextureName];
+    //    Texture returnTexture = st[_units[index]._3DModelToTextureName];
 
-        return returnTexture;
-    }
+    //    return returnTexture;
+    //}
 
     //테스트 용도 함수 입니다.
     //public void InitTest()
