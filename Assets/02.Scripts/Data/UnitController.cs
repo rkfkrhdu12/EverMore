@@ -2,6 +2,7 @@
 using GameplayIngredients;
 using UnityEngine;
 using UnityEngine.AnimatorPro;
+using UnityEngine.AI;
 
 public enum eTeam
 {
@@ -14,47 +15,11 @@ public class UnitController : FieldObject
     public void Spawn()
     {
         //콜라이더 비가 비어있다면, 가져온다.
-        if (_collider == null)
-            _collider = GetComponent<BoxCollider>();
+        if (_attackAreaCollider == null)
+            _attackAreaCollider = GetComponent<BoxCollider>();
 
         //공격 영역 사이즈를 공격 범위에 영향을 준다. 
-        _collider.size *= _status._attackRange;
-
-        #region Item
-        ////아이템 번호가 0이 아니라면, 헬멧을 검색하여 생성합니다.
-        //if (_itemsNum[0] != 0)
-        //{
-        //    var _helmetObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[0]).Object;
-        //    Instantiate(_helmetObj, gameObject.transform);
-        //}
-        //
-        ////아이템 번호가 0이 아니라면, 아머를 검색하여 생성합니다.
-        //if (_itemsNum[1] != 0)
-        //{
-        //    var _armourObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[1]).Object;
-        //    Instantiate(_armourObj, gameObject.transform);
-        //}
-        //
-        ////아이템 번호가 0이 아니라면, 무기를 검색하여 생성합니다.
-        //if (_itemsNum[2] != 0)
-        //{
-        //    // var hands = transform.GetChild(0).GetComponent<UnitWeaponHand>();
-        //    //
-        //    // if (hands != null)
-        //    // {
-        //    //     var _weaponObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[2]).Object;
-        //    //     Instantiate(_weaponObj, hands._RightHand.transform);
-        //    // }
-        //}
-        //
-        ////아이템 번호가 0이 아니라면, 서브 무기를 검색하여 생성합니다.
-        //if (_itemsNum[3] != 0)
-        //{
-        //    var _subweaponObj = Manager.Get<GameManager>().itemList.ItemSearch(_itemsNum[3]).Object;
-        //    Instantiate(_subweaponObj, gameObject.transform);
-        //}
-        //
-        #endregion
+        _attackAreaCollider.size *= _status._attackRange;
 
         _animator = transform.GetChild(0).GetComponent<Animator>();
 
@@ -63,6 +28,9 @@ public class UnitController : FieldObject
         _aniPro.Init(_animator);
 
         _aniPro.SetParam(_idAttackSpd, 1 / _attackSpeed);
+
+        // 
+        _navMeshAgent.updateRotation = false;
     }
 
     public override void DamageReceive(float damage)
@@ -79,82 +47,6 @@ public class UnitController : FieldObject
         //해당 유닛을 삭제 목록에 올립니다.
         DeleteObjectSystem.AddDeleteObject(gameObject);
     }
-
-    // //창작 함수
-    //public void Equip(int code, eEquipItem weapon = eEquipItem.WEAPON)
-    //{
-    // //코드를 기반하여 아이템을 검색하여 할당 받습니다.
-    // var item = Manager.Get<GameManager>().itemList.ItemSearch(code);
-    //
-    // //받아와지지 않았다면 : return
-    // if (item == null)
-    //     return;
-    //
-    // //유닛 상태 객체 생성
-    // var unitStatus = new UnitStatus();
-    //
-    // //아이템을 장착합니다.
-    // item.Equip(ref unitStatus);
-    //
-    // //능력 처리를 함.
-    // _maxHp += unitStatus.maxhealth;
-    // _curHp = _maxHp;
-    // _defensivePower += unitStatus.defensivePower;
-    // _moveSpeed += unitStatus.moveSpeed;
-    // _cost += unitStatus.cost;
-    // _coolTime += unitStatus.coolTime;
-    //
-    // //헬멧과 아머, 무기에 코드를 대입
-    // switch (item.Type)
-    // {
-    //     case eItemType.HELMET:
-    //         _itemsNum[(int) eEquipItem.HELMET] = code;
-    //         break;
-    //     case eItemType.BODYARMOUR:
-    //         _itemsNum[(int) eEquipItem.ARMOUR] = code;
-    //         break;
-    //     default:
-    //         _itemsNum[(int) weapon] = code;
-    //         break;
-    // }
-    //}
-
-    ////유닛 데이터를 가지고 초기화를 합니다.
-    //public void Init(UnitController unit)
-    //{
-    //    //기본 초기화
-    //    Init();
-
-    //    //장착한 아이템을 기반으로 초기화
-    //    Equip(unit._itemsNum[0]);
-    //    Equip(unit._itemsNum[1]);
-    //    Equip(unit._itemsNum[2]);
-    //    Equip(unit._itemsNum[3], eEquipItem.SUBWEAPON);
-
-    //    //팀 처리
-    //    eteam = unit.eteam;
-    //}
-
-    ////기본 초기화를 합니다.
-    //public void Init(int curH = 100, int maxH = 100, int speed = 3)
-    //{
-    //    _curHp = 0;
-    //    _maxHp = 0;
-    //    _abilityNum = 0;
-    //    _attackDamage = 5f;
-    //    _attackSpeed = 1f;
-    //    _attackRange = 1f;
-    //    _coolTime = 0;
-    //    _cost = 0;
-    //    _defensivePower = 0;
-    //    _moveSpeed = speed;
-    //    //_3DModelToTextureName = "Naked-head,Naked-body";
-
-    //    _itemsNum[0] = 1;
-    //    _itemsNum[1] = 2;
-    //    for (int i = 2; i < _itemsNum.Length; ++i)
-    //        _itemsNum[i] = 0;
-    //}
 
     #region Enum
 
@@ -193,7 +85,7 @@ public class UnitController : FieldObject
     public int _abilityNum;
 
     // 공격 범위일듯.
-    public BoxCollider _collider;
+    public BoxCollider _attackAreaCollider;
 
     //공격 타겟에대한 큐
     public Queue<FieldObject> _attackTargets = new Queue<FieldObject>();
@@ -208,7 +100,12 @@ public class UnitController : FieldObject
     // 아이템 번호
     public int[] _itemsNum => _status._equipedItems;
 
-    // public string _3DModelToTextureName = "Naked-head,Naked-body";
+    [SerializeField]
+    private NavMeshAgent _navMeshAgent;
+
+    // 상대방 진영의 성
+    public Vector3 _enemyCastlePosition;
+
     #endregion
 
     #region Hide Inspector
@@ -267,7 +164,7 @@ public class UnitController : FieldObject
     {
         //현재 상태가 비어 있거나, 죽었다면 : return
         if (_curState == eState.NONE || _isDead) return;
-
+        
         //이동 <--> 공격, 상태 변환
         UpdateState();
 
@@ -327,54 +224,85 @@ public class UnitController : FieldObject
 
     private void UpdateMove()
     {
-        moveParameter = 1;
+        if(_curTarget == null) { return; }
 
-        transform.Translate(0, 0, _moveSpeed * Time.deltaTime);
+        _navMeshAgent.SetDestination(
+            _curTarget == null ?
+            _enemyCastlePosition :
+            _curTarget.transform.position);
+
+        //moveParameter = 1;
+
+        //transform.Translate(0, 0, _moveSpeed * Time.deltaTime);
     }
 
     private void UpdateAttack()
     {
-        //공격 시간이 공격 속도보다 같거나 낮다면 : 공격 시간을 높혀준다.
-        if (_attackTime <= _attackSpeed)
-            _attackTime += Time.deltaTime;
-        else
+        // 타겟이 없엇거나, 체력이 0 이하로 내려가면 : 새로운 타겟을 정한다.
+        if (_curTarget == null || _curTarget._curHp <= 0)
         {
-            // 타겟이 없엇거나, 체력이 0 이하로 내려가면 : 새로운 타겟을 정한다.
-            if (_curTarget == null || _curTarget._curHp <= 0)
-            {
-                //공격할 타겟이 0명이라면 : return
-                if (_attackTargets.Count == 0)
-                {
-                    _curTarget = null;
-                    return;
-                }
-
-                //현재 타겟을 Dequeue한다.
-                _curTarget = _attackTargets.Dequeue();
-            }
-
-            //공격 시간 초기화
-            _attackTime = 0f;
-
-            //데미지 리시브
-            _curTarget.DamageReceive(_attackDamage);
+            //공격할 타겟이 0명이라면 : null(상대 성이 타겟) 아니면 그 대상에게 전진
+            if (_attackTargets.Count == 0) { _curTarget = null; }
+            //현재 타겟을 Dequeue한다.
+            else { _curTarget = _attackTargets.Dequeue(); }
         }
+
+        ////공격 시간이 공격 속도보다 같거나 낮다면 : 공격 시간을 높혀준다.
+        //if (_attackTime <= _attackSpeed)
+        //    _attackTime += Time.deltaTime;
+        //else
+        //{
+        //    // 타겟이 없엇거나, 체력이 0 이하로 내려가면 : 새로운 타겟을 정한다.
+        //    if (_curTarget == null || _curTarget._curHp <= 0)
+        //    {
+        //        //공격할 타겟이 0명이라면 : return
+        //        if (_attackTargets.Count == 0)
+        //        {
+        //            _curTarget = _lastTarget;
+        //            return;
+        //        }
+
+        //        //현재 타겟을 Dequeue한다.
+        //        _curTarget = _attackTargets.Dequeue();
+        //    }
+
+        //    //공격 시간 초기화
+        //    _attackTime = 0f;
+
+        //    //데미지 리시브
+        //    _curTarget.DamageReceive(_attackDamage);
+        //}
     }
 
     private void UpdateAnimation()
     {
         if (_aniPro == null) return;
 
-        _aniPro.SetParam(_idMove, moveParameter);
+        if (_navMeshAgent.velocity.sqrMagnitude >= .1f * .1f && _navMeshAgent.remainingDistance <= .1f)
+        {
+            _aniPro.SetParam(_idMove, 0);
+        }
+        else if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f* .1f)
+        {
+            Vector3 direction = _navMeshAgent.desiredVelocity;
 
-        //공격 중이 아니라면 : return
-        if (!_aniPro.GetParam<bool>(_idAttack)) return;
+            Quaternion targetAngle = Quaternion.LookRotation(direction);
 
-        //타겟이 있거나, 타겟의 체력이 0 초과라면 : return
-        if (_curTarget != null && _curTarget._curHp > 0) return;
+            transform.rotation = Quaternion.Slerp(transform.rotation,
+                                                  targetAngle,
+                                                  Time.deltaTime * 8.0f);
 
-        //공격할 타겟이 0명이라면 : 공격을 중지함.
-        if (_attackTargets.Count == 0) _aniPro.SetParam(_idAttack, false);
+            _aniPro.SetParam(_idMove, 1);
+        }
+
+        ////공격 중이 아니라면 : return
+        //if (!_aniPro.GetParam<bool>(_idAttack)) return;
+
+        ////타겟이 있거나, 타겟의 체력이 0 초과라면 : return
+        //if (_curTarget != null && _curTarget._curHp > 0) return;
+
+        ////공격할 타겟이 0명이라면 : 공격을 중지함.
+        //if (_attackTargets.Count == 0) _aniPro.SetParam(_idAttack, false);
     }
 
     #endregion

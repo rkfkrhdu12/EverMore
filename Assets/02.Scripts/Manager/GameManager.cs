@@ -48,34 +48,8 @@ public class GameManager : Manager
     public float _SfxVolume = 0.7f;
 
     #endregion
-
-    /// <summary>
-    /// int(플레이어 유닛 갯수) return
-    /// </summary>
-    /// <returns></returns>
-    public int getPlayerUnitCount() //플레이어의 유닛 개수를 리턴합니다.
-        => _playerTeam.Length;
-
-    /// <summary>
-    /// UnitData(유닛) return
-    /// </summary>
-    /// <param name="index"></param>
-    /// <returns></returns>
-    //index번째 유닛에 대한 데이터를 리턴합니다.
-    //public UnitController getPlayerUnit(int index)
-    //{
-    //    //index 값이 0미만이거나, 배열의 길이를 초과한다면 : null을 반환
-    //    if (index < 0 || index >= _playerTeam.Length)
-    //        return null;
-
-    //    //해당 index번째 유닛을 리턴합니다.
-    //    return _playerTeam.GetUnit(index);
-    //}
-
-    public void SetPlayerUnits(in Team playerTeam) { _playerTeam = playerTeam; }
+    public void SetPlayerUnits(Team playerTeam) { _playerTeam = playerTeam; }
     public Team GetPlayerUnits() { return _playerTeam; }
-
-
 
     #region Monobehaviour Function
 

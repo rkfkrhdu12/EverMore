@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -177,6 +177,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 5a51252b74043394b94abdc029de6822, type: 3}
   selectImage: {fileID: 21300000, guid: d77370a098b9e46438e5a0003e1778ce, type: 3}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -400,6 +406,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 1bfc18e6cc0b78d45b04121932dad699, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -580,6 +592,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 26f5eca9a756f764395117264cfe973b, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -687,6 +705,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 7584f21d624b3f8438d4661fd533cc3f, type: 3}
   selectImage: {fileID: 21300000, guid: f1d3448f73510d345a86e8412be7ee83, type: 3}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -837,6 +861,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 59fdd31158594464e931b66fcddd2707, type: 3}
   selectImage: {fileID: 21300000, guid: 91eb5b2564a98484aac979b0c246a12b, type: 3}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -986,6 +1016,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 1bfc18e6cc0b78d45b04121932dad699, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -1448,6 +1484,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 1bfc18e6cc0b78d45b04121932dad699, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -1554,6 +1596,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 1b2eb96c06f04f54fa25f3f77fa5cd8c, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -1653,10 +1701,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1761,6 +1809,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 1bfc18e6cc0b78d45b04121932dad699, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -1868,6 +1922,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: cd875c35e24a9ce45a1ccd63791c9933, type: 3}
   selectImage: {fileID: 21300000, guid: c8675a125195d4849a4d4cb78753f869, type: 3}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -2157,6 +2217,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: c914908482836c8438d1a818a0f9ad78, type: 3}
   selectImage: {fileID: 21300000, guid: 355430622e9a1524787d4bc4432840ea, type: 3}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -2263,6 +2329,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: ccab9a5a7efe6bf4da9af43762449a8c, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -2369,6 +2441,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: f8ba57816f7cfc54293d8526337504c8, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -2549,6 +2627,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 1bfc18e6cc0b78d45b04121932dad699, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -2655,6 +2739,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 26f5eca9a756f764395117264cfe973b, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -2761,6 +2851,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 26f5eca9a756f764395117264cfe973b, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -2868,6 +2964,12 @@ MonoBehaviour:
   pressImage: {fileID: 0}
   selectImage: {fileID: 21300000, guid: e4cbe30b344b5ec48b33dbf3181f1111, type: 3}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -3656,6 +3758,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 26f5eca9a756f764395117264cfe973b, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -3763,6 +3871,12 @@ MonoBehaviour:
   pressImage: {fileID: 0}
   selectImage: {fileID: 21300000, guid: e4cbe30b344b5ec48b33dbf3181f1111, type: 3}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -3921,6 +4035,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 1bfc18e6cc0b78d45b04121932dad699, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -4032,6 +4152,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 26f5eca9a756f764395117264cfe973b, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -4139,6 +4265,12 @@ MonoBehaviour:
   pressImage: {fileID: 0}
   selectImage: {fileID: 21300000, guid: e4cbe30b344b5ec48b33dbf3181f1111, type: 3}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -4288,6 +4420,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 1bfc18e6cc0b78d45b04121932dad699, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -4395,6 +4533,12 @@ MonoBehaviour:
   pressImage: {fileID: 0}
   selectImage: {fileID: 21300000, guid: e4cbe30b344b5ec48b33dbf3181f1111, type: 3}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -4544,6 +4688,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 1bfc18e6cc0b78d45b04121932dad699, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -4650,6 +4800,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 1bfc18e6cc0b78d45b04121932dad699, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -4756,6 +4912,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 1bfc18e6cc0b78d45b04121932dad699, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -4862,6 +5024,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 6cfc921d8c12ef84f9caa13f287394ef, type: 3}
   selectImage: {fileID: 21300000, guid: 0dc3a3faa4d07ed4fbdd7244aa4216f1, type: 3}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -5124,6 +5292,12 @@ MonoBehaviour:
   pressImage: {fileID: 0}
   selectImage: {fileID: 21300000, guid: e4cbe30b344b5ec48b33dbf3181f1111, type: 3}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -5318,6 +5492,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: ace77548db5aefd459ffe962e2e8d7ed, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -5424,6 +5604,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 26f5eca9a756f764395117264cfe973b, type: 3}
   selectImage: {fileID: 0}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -5947,6 +6133,12 @@ MonoBehaviour:
   pressImage: {fileID: 0}
   selectImage: {fileID: 21300000, guid: e4cbe30b344b5ec48b33dbf3181f1111, type: 3}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
@@ -6203,6 +6395,12 @@ MonoBehaviour:
   pressImage: {fileID: 21300000, guid: 617312b4861da5542aee6ccbef6f35d2, type: 3}
   selectImage: {fileID: 21300000, guid: 9c65634bbf36bd24a821831839ae4fb7, type: 3}
   onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
     onDown:
       m_PersistentCalls:
         m_Calls: []
