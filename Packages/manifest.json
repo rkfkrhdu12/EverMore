@@ -1,26 +1,26 @@
 {
   "dependencies": {
-    "com.rito.getcomponentattributes": "https://github.com/rito15/Unity_GetComponent-Attributes.git",
     "com.sbstn_hn.rendererfeatures.urp-ssao": "https://github.com/sebastianhein/urp-ssao.git",
-    "com.unity.2d.psdimporter": "2.1.3",
+    "com.unity.2d.psdimporter": "2.1.4",
     "com.unity.2d.sprite": "1.0.0",
-    "com.unity.addressables": "1.7.5",
+    "com.unity.addressables": "1.8.3",
     "com.unity.animatorpro": "https://github.com/bnm000215/UnityAnimatorPro.git",
     "com.unity.aovrecorder": "0.1.1-preview.2",
     "com.unity.cinemachine": "2.5.0",
-    "com.unity.collab-proxy": "1.2.16",
     "com.unity.ext.nunit": "1.0.0",
-    "com.unity.gameplay-ingredient-simple": "https://github.com/bnm000215/GamePlayIngredient-Simple.git",
-    "com.unity.ide.rider": "2.0.2",
+    "com.unity.gameplay-ingredient-simple": "https://github.com/bnm000215/net.peeweek.gameplay-ingredients.git",
+    "com.unity.ide.rider": "2.0.3",
     "com.unity.ide.vscode": "1.2.0",
     "com.unity.memoryprofiler": "0.2.3-preview.2",
     "com.unity.nkstudio.buttonpro": "https://github.com/bnm000215/UnityButtonPro.git",
     "com.unity.nkstudio.enumpro": "https://github.com/bnm000215/UnityEnumPro.git",
     "com.unity.nkstudio.saveunitysystem": "https://github.com/bnm000215/UnitySavePlayModeSystem.git",
+    "com.unity.nkstudio.unitydebugoptimization": "https://github.com/bnm000215/Unity-Debug-Optimization.git",
+    "com.unity.polybrush": "1.0.1",
     "com.unity.quicksearch": "1.5.3",
     "com.unity.render-pipelines.universal": "7.3.1",
-    "com.unity.test-framework": "1.1.13",
-    "com.unity.textmeshpro": "2.1.0-preview.8",
+    "com.unity.test-framework": "1.1.14",
+    "com.unity.textmeshpro": "2.1.0-preview.11",
     "com.unity.timeline": "1.2.14",
     "com.unity.ugui": "1.0.0",
     "com.unity.uialphaarea": "https://github.com/bnm000215/unityUIAlphaArea.git",
@@ -57,10 +57,6 @@
     "com.unity.modules.xr": "1.0.0"
   },
   "lock": {
-    "com.rito.getcomponentattributes": {
-      "revision": "HEAD",
-      "hash": "624f248d07a297d92be090193db4aee856342861"
-    },
     "com.sbstn_hn.rendererfeatures.urp-ssao": {
       "revision": "HEAD",
       "hash": "4958115f46d11e781af478ae78732c55f2bed446"
@@ -71,23 +67,27 @@
     },
     "com.unity.gameplay-ingredient-simple": {
       "revision": "HEAD",
-      "hash": "5bbcd9f301681d228757001d92938a77220a367c"
+      "hash": "1785669f1284212ad622c44e61b8fc01d0c0f8d4"
+    },
+    "com.unity.nkstudio.buttonpro": {
+      "revision": "HEAD",
+      "hash": "d7abf626b0e35e76ecdd3db80a4e8ed6bcc577cb"
     },
     "com.unity.nkstudio.enumpro": {
       "revision": "HEAD",
-      "hash": "449735873465e09d15ece21916540358631b8c62"
+      "hash": "031de9d1751a98174ed78fff8cb8ef39e7f61f50"
     },
     "com.unity.nkstudio.saveunitysystem": {
       "revision": "HEAD",
       "hash": "9ef319c8513058865ba3c26706c05d55c747978b"
     },
+    "com.unity.nkstudio.unitydebugoptimization": {
+      "revision": "HEAD",
+      "hash": "f47f32d3b07de162ce6f34859544bab17dce5576"
+    },
     "com.unity.uialphaarea": {
       "revision": "HEAD",
       "hash": "26662f3dafc45d0652d4d948745e1c4a6e005060"
-    },
-    "com.unity.nkstudio.buttonpro": {
-      "revision": "HEAD",
-      "hash": "d7abf626b0e35e76ecdd3db80a4e8ed6bcc577cb"
     }
   }
 }
