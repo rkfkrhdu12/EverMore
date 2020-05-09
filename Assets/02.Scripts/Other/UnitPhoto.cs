@@ -16,54 +16,95 @@ public class UnitPhoto : MonoBehaviour
     [Space, SerializeField]
     private RenderTexture renderTexture;
 
-    [SerializeField, Tooltip("이미지 가져오기 용도")]
-    private RawImage rawimage;
+    [SerializeField]
+    private RawImage _rawimage = null;
 
-    private void Update()
+    private string _path;
+
+    private void Start()
     {
-        //저장하기
-        if (Input.GetKeyDown(KeyCode.Space)) 
-            StartCoroutine(Iphoto($"{Application.persistentDataPath}"));
-
-        //불러오기
-        if (Input.GetKeyDown(KeyCode.L)) 
-            StartCoroutine(ILoadTexture());
-        
-        //텍스쳐가 저장된 폴더 경로
-        if(Input.GetKeyDown(KeyCode.H))
-            Debug.Log(Application.persistentDataPath);
+        _path = $"{Application.persistentDataPath}";
+        Debug.Log(_path);
     }
 
-    
+    public void UpdateTexture(ref RawImage rawImage,in int[] equipedItems)
+    {
+        if (null == equipedItems) { return; }
+
+        partNameToObj.HeadName = equipedItems[0].ToString();
+        partNameToObj.BodyName = equipedItems[1].ToString();
+        partNameToObj.LeftWeaponName = equipedItems[2].ToString();
+        partNameToObj.RightWeaponName = equipedItems[3].ToString();
+        _rawimage = rawImage;
+
+        Debug.Log("ILoadTexture : " + equipedItems[0] + " " + equipedItems[1]);
+
+        StartCoroutine(ILoadTexture());
+    }
+
+    public void SaveTexture(in int[] equipedItems)
+    {
+        StartCoroutine(ISaveTexture(equipedItems));
+    }
+
+    bool _isComplete = false;
+
+    private IEnumerator ISaveTexture(int[] equipedItems)
+    {
+        Debug.Log("ISaveTexture : " + equipedItems[0] + " " + equipedItems[1]);
+
+        Util.SaveRenderTextuerToPng(
+                    $"{_path}/" +
+                    $"{equipedItems[0].ToString()}-head,{equipedItems[1].ToString()}-body," +
+                    $"{equipedItems[2].ToString()}-leftWeapon,{equipedItems[3].ToString()}-rightWeapon.png",
+                    renderTexture);
+        
+        //중간 텀
+        yield return SideTime;
+
+        _isComplete = true;
+    }
+
 
     private IEnumerator ILoadTexture()
     {
-
         using (var uwr = UnityWebRequestTexture.GetTexture($@"{Application.persistentDataPath}/{partNameToObj.HeadName}-head,{partNameToObj.BodyName}-body,{partNameToObj.LeftWeaponName}-leftWeapon,{partNameToObj.RightWeaponName}-rightWeapon.png"))
         {
             yield return uwr.SendWebRequest();
 
             if (uwr.isNetworkError || uwr.isHttpError)
-                Debug.Log(uwr.error);
-            else
             {
-                var texture = DownloadHandlerTexture.GetContent(uwr);
-                rawimage.texture = texture;
+                while (true)
+                {
+                    if (_isComplete)
+                    {
+                        _isComplete = false;
+
+                    }
+                    yield return SideTime;
+                }
             }
+
+            var texture = DownloadHandlerTexture.GetContent(uwr);
+
+            _rawimage.texture = texture;
+
+            //if (uwr.isNetworkError || uwr.isHttpError)
+            //{
+            //    Util.SaveRenderTextuerToPng(
+            //        $"{_path}/{partNameToObj.HeadName}-head,{partNameToObj.BodyName}-body,{partNameToObj.LeftWeaponName}-leftWeapon,{partNameToObj.RightWeaponName}-rightWeapon.png",
+            //        renderTexture);
+
+            //    //중간 텀
+            //    yield return SideTime;
+            //    //StartCoroutine(Iphoto(_path));
+            //}
+
+            //var texture = DownloadHandlerTexture.GetContent(uwr);
+
+            //_rawimage.texture = texture;
         }
     }
 
     private readonly WaitForSeconds SideTime = new WaitForSeconds(0.1f);
-
-    private IEnumerator Iphoto(string path)
-    {
-        Util.SaveRenderTextuerToPng(
-            $"{path}/{partNameToObj.HeadName}-head,{partNameToObj.BodyName}-body,{partNameToObj.LeftWeaponName}-leftWeapon,{partNameToObj.RightWeaponName}-rightWeapon.png",
-            renderTexture);
-
-        //중간 텀
-        yield return SideTime;
-
-        Debug.Log("찍힘");
-    }
 }

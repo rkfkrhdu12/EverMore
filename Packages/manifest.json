@@ -73,10 +73,6 @@
       "revision": "HEAD",
       "hash": "5bbcd9f301681d228757001d92938a77220a367c"
     },
-    "com.unity.nkstudio.buttonpro": {
-      "revision": "HEAD",
-      "hash": "ae5ec925b8044d7d2a8810d365216f8c624980c6"
-    },
     "com.unity.nkstudio.enumpro": {
       "revision": "HEAD",
       "hash": "449735873465e09d15ece21916540358631b8c62"
@@ -88,6 +84,10 @@
     "com.unity.uialphaarea": {
       "revision": "HEAD",
       "hash": "26662f3dafc45d0652d4d948745e1c4a6e005060"
+    },
+    "com.unity.nkstudio.buttonpro": {
+      "revision": "HEAD",
+      "hash": "d7abf626b0e35e76ecdd3db80a4e8ed6bcc577cb"
     }
   }
 }

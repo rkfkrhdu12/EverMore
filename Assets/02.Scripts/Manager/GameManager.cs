@@ -72,13 +72,10 @@ public class GameManager : Manager
     //    return _playerTeam.GetUnit(index);
     //}
 
-    public Team GetPlayerUnits()
-    {
-        // 시작 하려는데 정해진 팀이 없을때 
-        if(null == _playerTeam) { return null; }
+    public void SetPlayerUnits(in Team playerTeam) { _playerTeam = playerTeam; }
+    public Team GetPlayerUnits() { return _playerTeam; }
 
-        return _playerTeam;
-    }
+
 
     #region Monobehaviour Function
 

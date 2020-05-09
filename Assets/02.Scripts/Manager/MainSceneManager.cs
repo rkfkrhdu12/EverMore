@@ -42,26 +42,30 @@ namespace MainSceneUI
         #region Show Inspector
 
         [Header("각각의 UI들")]
+
+        #region Team UIs
         [SerializeField, Tooltip("팀을 고를 UI 오브젝트")]
         private GameObject _choiceTeamUI;
 
-        [Space]
         [SerializeField, Tooltip("팀을 추가하는 UI 오브젝트")]
         private GameObject _addTeamUI;
 
-        [Space]
         [SerializeField, Tooltip("유닛을 고를 UI 오브젝트")]
         private GameObject _choiceUnitUI;
 
-        [Space]
         [SerializeField, Tooltip("유닛을 세팅할 UI 오브젝트")]
         private GameObject _setUnitUI;
 
-        [Space]
         [SerializeField, Tooltip("매칭을 선택할 UI")]
-        private GameObject _MatchUI;
+        private GameObject _MatchUI; 
+        #endregion
+
+        [Space, SerializeField]
+        private TeamManager _teamManager;
 
         #endregion
+
+        private Team _selectTeam;
 
         // UIScreenObject 의 이름, List에서의 번호
         private Dictionary<string, UIScreen> nameToSceenUI = new Dictionary<string, UIScreen>();
@@ -129,28 +133,10 @@ namespace MainSceneUI
             ui.setActive(!ui.activeSelf);
         }
 
-        //public void NextScreen()
-        //{
-        //    switch (_curKey)
-        //    {
-        //        case UIDataKey.ChoiceTeam:
-        //            UpdateScreen(UIDataKey.ChoiceUnit);
-        //            break;
-        //    }
-        //}
-
-        //public void PrevScreen()
-        //{
-        //    switch (_curKey)
-        //    {
-        //        case UIDataKey.ChoiceTeam:
-        //            UpdateScreen(UIDataKey.Lobby);
-        //            break;
-        //        case UIDataKey.ChoiceUnit:
-        //            UpdateScreen(UIDataKey.ChoiceTeam);
-        //            break;
-        //    }
-        //}
+        public void OnGameStart()
+        {
+            _selectTeam = _teamManager.GetSelectTeam();
+        }
 
         public void NextGoto(string scene) =>
             Manager.Get<SceneManagerPro>().LoadScene(scene);

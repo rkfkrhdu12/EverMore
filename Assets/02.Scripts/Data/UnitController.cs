@@ -3,108 +3,10 @@ using GameplayIngredients;
 using UnityEngine;
 using UnityEngine.AnimatorPro;
 
-using GameplayIngredients;
-
 public enum eTeam
 {
     PLAYER,
     ENEMY
-}
-
-public class UnitModelManager
-{
-    public void UpdateModel(GameObject unit, in int[] equipedItem)
-    {
-        if (0 == _modelItemPoint.Count)
-            Init();
-
-        if (null == unit) { return; }
-
-        if (!unit.activeSelf) { unit.SetActive(true); }
-
-        for (int i = 0; i < 2; ++i)
-        {
-            string itemName = Manager.Get<GameManager>().itemList.ItemSearch(equipedItem[i]).Name;
-
-            int[] index = _modelItemPoint?[itemName];
-
-            unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(true);
-        }
-    }
-
-    #region Private Variable
-
-    // 아이템 이름 > 오브젝트에서의 아이템 위치
-    private Dictionary<string, int[]> _modelItemPoint = new Dictionary<string, int[]>();
-
-    private const int _completeModelCount = 4;
-
-    #endregion
-
-    #region Private Function
-
-    private void Init()
-    {
-        string[] itemNameList = new string[_completeModelCount * 2];
-        int itemIndex = 0;
-        itemNameList[itemIndex++] = "일반 머리";
-        itemNameList[itemIndex++] = "일반 옷";
-        itemNameList[itemIndex++] = "견습 기사의 투구";
-        itemNameList[itemIndex++] = "견습 기사의 갑옷";
-        itemNameList[itemIndex++] = "셔우드 숲의 모자";
-        itemNameList[itemIndex++] = "셔우드 숲의 코트";
-        itemNameList[itemIndex++] = "하얀 눈의 모자";
-        itemNameList[itemIndex++] = "하얀 눈의 옷";
-
-        int equipmentCount = 2;
-
-        int[] modelNumList = new int[_completeModelCount * 2];
-        for (int i = 1; i < _completeModelCount * 2 + 1; ++i)
-        {
-            modelNumList[i - 1] = (1 == i % 2 ? i / 2 : i / 2 - 1);
-        }
-
-        int[] v = new int[equipmentCount];
-        for (int i = 0; i < itemIndex; ++i)
-        {
-            v = new int[equipmentCount];
-            v[0] = modelNumList[i];
-            v[1] = i % equipmentCount;
-
-            _modelItemPoint.Add(itemNameList[i], v);
-        }
-    }
-
-    #endregion
-}
-
-public struct UnitStatus
-{
-    public float _maxhealth;
-    public float _curhealth;
-    public float _defensivePower;
-
-    public float _attackDamage;
-    public float _attackSpeed;
-    public float _attackRange;
-
-    public float _moveSpeed;
-    public int _cost;
-    public float _coolTime;
-    public int _weight;
-
-    public int[] _equiedItems;
-
-    public void Reset()
-    {
-        _maxhealth = 0f;
-        _defensivePower = 0f;
-        _moveSpeed = 0f;
-        _cost = 0;
-        _coolTime = 0f;
-        _weight = 0;
-        _equiedItems = new int[4];
-    }
 }
 
 public class UnitController : FieldObject
@@ -304,7 +206,7 @@ public class UnitController : FieldObject
 
     //[Header("파일 파싱으로 아이디 가져온 후 적용시킬 예정")]
     // 아이템 번호
-    public int[] _itemsNum => _status._equiedItems;
+    public int[] _itemsNum => _status._equipedItems;
 
     // public string _3DModelToTextureName = "Naked-head,Naked-body";
     #endregion
@@ -473,6 +375,103 @@ public class UnitController : FieldObject
 
         //공격할 타겟이 0명이라면 : 공격을 중지함.
         if (_attackTargets.Count == 0) _aniPro.SetParam(_idAttack, false);
+    }
+
+    #endregion
+}
+
+public class UnitModelManager
+{
+    public static void ResetModel(GameObject unit, in int[] equipedItems)
+    {
+        if (0 == _modelItemPoint.Count)
+            Init();
+
+        if (null == unit) { return; }
+
+        if (!unit.activeSelf) { unit.SetActive(true); }
+
+        for (int i = 0; i < 2; ++i)
+        {
+            if(0 == equipedItems[i]) { continue; }
+            string itemName = _itemList.ItemSearch(equipedItems[i]).Name;
+
+            int[] index = _modelItemPoint?[itemName];
+
+            unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(false);
+        }
+    }
+
+    public static void UpdateModel(GameObject unit, in int[] equipedItems, in int prevItem = 0)
+    {
+        if (0 == _modelItemPoint.Count)
+            Init();
+
+        if (null == unit) { return; }
+
+        if (!unit.activeSelf) { unit.SetActive(true); }
+
+        if (0 != prevItem)
+        {
+            int[] index = _modelItemPoint[_itemList.ItemSearch(prevItem).Name];
+
+            unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < 2; ++i)
+        {
+            string itemName = _itemList.ItemSearch(equipedItems[i]).Name;
+
+            int[] index = _modelItemPoint?[itemName];
+
+            unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(true);
+        }
+    }
+
+    #region Private Variable
+
+    // 아이템 이름 > 오브젝트에서의 아이템 위치
+    private static Dictionary<string, int[]> _modelItemPoint = new Dictionary<string, int[]>();
+
+    private const int _completeModelCount = 4;
+
+    private static ItemList _itemList;
+    #endregion
+
+    #region Private Function
+
+    private static void Init()
+    {
+        _itemList = Manager.Get<GameManager>().itemList;
+
+        string[] itemNameList = new string[_completeModelCount * 2];
+        int itemIndex = 0;
+        itemNameList[itemIndex++] = "일반 머리";
+        itemNameList[itemIndex++] = "일반 옷";
+        itemNameList[itemIndex++] = "견습 기사의 투구";
+        itemNameList[itemIndex++] = "견습 기사의 갑옷";
+        itemNameList[itemIndex++] = "셔우드 숲의 모자";
+        itemNameList[itemIndex++] = "셔우드 숲의 코트";
+        itemNameList[itemIndex++] = "하얀 눈의 모자";
+        itemNameList[itemIndex++] = "하얀 눈의 옷";
+
+        int equipmentCount = 2;
+
+        int[] modelNumList = new int[_completeModelCount * 2];
+        for (int i = 1; i < _completeModelCount * 2 + 1; ++i)
+        {
+            modelNumList[i - 1] = (1 == i % 2 ? i / 2 : i / 2 - 1);
+        }
+
+        int[] v = new int[equipmentCount];
+        for (int i = 0; i < itemIndex; ++i)
+        {
+            v = new int[equipmentCount];
+            v[0] = modelNumList[i];
+            v[1] = 1 - (i % equipmentCount);
+
+            _modelItemPoint.Add(itemNameList[i], v);
+        }
     }
 
     #endregion

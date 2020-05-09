@@ -6,26 +6,6 @@ using UnityEditor;
 
 using GameItem;
 
-public enum eItemType
-{
-    NONE,
-
-    // Armour
-    HELMET,
-    BODYARMOUR,
-
-    // Weapon
-    ONEHANDSWORD,
-    SHIELD,
-    DAGGER,
-}
-
-public enum eCodeType
-{
-    HELMET,
-    BODYARMOUR,
-    WEAPON,
-}
 
 // 파싱한 데이터는 string 이므로 const string 으로 비교하여 판단
 internal struct ItemTypeList
@@ -233,6 +213,26 @@ public class ItemList
 }
 namespace GameItem
 {
+    public enum eItemType
+    {
+        NONE,
+
+        // Armour
+        HELMET,
+        BODYARMOUR,
+
+        // Weapon
+        ONEHANDSWORD,
+        SHIELD,
+        DAGGER,
+    }
+
+    public enum eCodeType
+    {
+        HELMET,
+        BODYARMOUR,
+        WEAPON,
+    }
 
     public delegate void ItemAbility();
 
@@ -242,13 +242,11 @@ namespace GameItem
 
         protected eItemType _type = eItemType.NONE;     public eItemType Type => _type;
 
-        protected int _cost;                            public int Cost => _cost;
+        protected int _cost;                            // public int Cost => _cost;
 
-        protected float _coolTime;                      //public float CoolTime { get => _coolTime; }
+        protected float _coolTime;                      // public float CoolTime { get => _coolTime; }
         protected int _weight;
         protected ItemAbility _ability;                 public ItemAbility Ability => _ability;
-
-        protected GameObject _object;                   public GameObject Object => _object;
 
         public virtual void Init(IReadOnlyList<string> datas)
         {
@@ -258,18 +256,21 @@ namespace GameItem
             int.TryParse(datas[3], out _cost);
             float.TryParse(datas[4], out _coolTime);
             int.TryParse(datas[10], out _weight);
-
         }
 
+        public virtual void Equip(ref UnitStatus us)
+        {
+            us._cost        += _cost;
+            us._coolTime    += _coolTime;
+            us._weight      += _weight;
+        }
 
-        //protected virtual UnitStatus Equip(ref UnitStatus us)
-        //{
-        //    us.cost += Cost;
-        //    us.coolTime += _coolTime;
-        //    us.weight += _weight;
-
-        //    return us;
-        //}
+        public virtual void UnEquip(ref UnitStatus us)
+        {
+            us._cost        -= _cost;
+            us._coolTime    -= _coolTime;
+            us._weight      -= _weight;
+        }
     }
 
     public class Weapon : Item
@@ -283,6 +284,22 @@ namespace GameItem
 
             float.TryParse(datas[9], out _range);
             float.TryParse(datas[7], out _damage);
+        }
+
+        public override void Equip(ref UnitStatus us)
+        {
+            base.Equip(ref us);
+
+            us._attackRange += _range;
+            us._attackDamage += _damage;
+        }
+
+        public override void UnEquip(ref UnitStatus us)
+        {
+            base.Equip(ref us);
+
+            us._attackRange  -= _range;
+            us._attackDamage -= _damage;
         }
     }
 
@@ -299,15 +316,23 @@ namespace GameItem
             float.TryParse(datas[8], out _health);
         }
 
-        //protected override UnitStatus Equip(ref UnitStatus us)
-        //{
-        //    base.Equip(ref us);
+        public override void Equip(ref UnitStatus us)
+        {
+            base.Equip(ref us);
 
-        //    us.maxhealth += _health;
-        //    us.defensivePower += _defense;
+            us._defensivePower  += _defense;
+            us._maxhealth       += _health;
+            us._curhealth       += _health;
+        }
 
-        //    return us;
-        //}
+        public override void UnEquip(ref UnitStatus us)
+        {
+            base.Equip(ref us);
+
+            us._defensivePower  -= _defense;
+            us._maxhealth       -= _health;
+            us._curhealth       -= _health;
+        }
     }
 
     #region Weapon
@@ -322,12 +347,6 @@ namespace GameItem
     {
         public Shield()
             => _type = eItemType.SHIELD;
-
-        protected float _defense
-        {
-            get => _damage;
-            set => _damage = value;
-        }
     }
 
     public class Dagger : Weapon
@@ -353,5 +372,4 @@ namespace GameItem
     }
 
     #endregion
-
 }
