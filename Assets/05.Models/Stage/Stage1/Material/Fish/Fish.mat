@@ -8,14 +8,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Fish
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: e50dc42a67f357d4c9178a0e35172d9e,
+    type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2050
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -49,6 +49,17 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Boolean_73A18E88: 0
+    - Vector1_22945F37: 1.1
+    - Vector1_54EC8D1B: 0.33
+    - Vector1_814530F0: 0
+    - Vector1_85BF2D7B: 0.06
+    - Vector1_8D24CCBB: 10
+    - Vector1_967624D6: 0
+    - Vector1_9B013F21: 4.9
+    - Vector1_B3FFAA06: 2.24
+    - Vector1_EB0BDD0D: 0.1
+    - Vector1_FA5BD4D7: 0.03
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -71,6 +82,15 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_1F9E15B2: {r: 0, g: 0, b: 0, a: 0}
+    - Color_4EE8D44D: {r: 0, g: 0, b: 0, a: 0}
+    - Color_781BF453: {r: 0, g: 0, b: 0, a: 0}
+    - Color_984BFD57: {r: 0, g: 0, b: 0, a: 0}
+    - Color_9B4593B7: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_3F1DBD37: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_6B794E2A: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_8AC5A996: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - Vector2_C50737C: {r: -0.3, g: 0.104, b: 0, a: 0}
     - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
