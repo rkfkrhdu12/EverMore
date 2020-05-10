@@ -21,7 +21,7 @@ MonoBehaviour:
     max: 100
   tint:
     m_OverrideState: 1
-    m_Value: 43
+    m_Value: 45
     min: -100
     max: 100
 --- !u!114 &-3327301518898489673
@@ -58,7 +58,7 @@ MonoBehaviour:
     min: 0.01
     max: 1
   rounded:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -77,7 +77,7 @@ MonoBehaviour:
   - {fileID: 1733689738981730075}
   - {fileID: 7233297348840293121}
   - {fileID: -3327301518898489673}
-  - {fileID: 2325181443582964432}
+  - {fileID: 5428096087621540357}
 --- !u!114 &1733689738981730075
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -108,7 +108,7 @@ MonoBehaviour:
     m_Value: 0.092
     min: 0
     max: 0.2
---- !u!114 &2325181443582964432
+--- !u!114 &5428096087621540357
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,14 +117,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
-  m_Name: Tonemapping
+  m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
+  m_Name: Bloom
   m_EditorClassIdentifier: 
   active: 1
   m_AdvancedMode: 0
-  mode:
+  threshold:
+    m_OverrideState: 0
+    m_Value: 1
+    min: 0
+  intensity:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 4.11
+    min: 0
+  scatter:
+    m_OverrideState: 0
+    m_Value: 0.279
+    min: 0
+    max: 1
+  clamp:
+    m_OverrideState: 0
+    m_Value: 65472
+    min: 0
+  tint:
+    m_OverrideState: 0
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    hdr: 0
+    showAlpha: 0
+    showEyeDropper: 1
+  highQualityFiltering:
+    m_OverrideState: 1
+    m_Value: 1
+  dirtTexture:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
+  dirtIntensity:
+    m_OverrideState: 0
+    m_Value: 0
+    min: 0
 --- !u!114 &7233297348840293121
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -140,21 +170,21 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   shadows:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {x: 1, y: 1, z: 1, w: -0.122843035}
   midtones:
     m_OverrideState: 1
     m_Value: {x: 1, y: 1, z: 1, w: 0.071302325}
   highlights:
     m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_Value: {x: 1, y: 1, z: 1, w: 0.025575444}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0.03
     min: 0
   shadowsEnd:
     m_OverrideState: 0
-    m_Value: 0.94
+    m_Value: 0.38
     min: 0
   highlightsStart:
     m_OverrideState: 0

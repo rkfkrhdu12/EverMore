@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.sbstn_hn.rendererfeatures.urp-ssao": "https://github.com/sebastianhein/urp-ssao.git",
     "com.unity.2d.psdimporter": "2.1.4",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.addressables": "1.8.3",
@@ -57,10 +56,6 @@
     "com.unity.modules.xr": "1.0.0"
   },
   "lock": {
-    "com.sbstn_hn.rendererfeatures.urp-ssao": {
-      "revision": "HEAD",
-      "hash": "4958115f46d11e781af478ae78732c55f2bed446"
-    },
     "com.unity.animatorpro": {
       "revision": "HEAD",
       "hash": "d74c922c0709c74b90b003861726a9992f77a230"
