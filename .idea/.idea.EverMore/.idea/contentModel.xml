@@ -12,12 +12,13 @@
             <e p="Team.cs" t="Include" />
             <e p="UnitController.cs" t="Include" />
             <e p="UnitStability.cs" t="Include" />
+            <e p="UnitStatus.cs" t="Include" />
           </e>
           <e p="Game" t="Include">
             <e p="Castle.cs" t="Include" />
             <e p="FieldObject.cs" t="Include" />
             <e p="SkyRotation.cs" t="Include" />
-            <e p="UnitManager.cs" t="Include" />
+            <e p="SpawnManager.cs" t="Include" />
           </e>
           <e p="Intro" t="Include">
             <e p="IntroSystem.cs" t="Include" />
@@ -33,7 +34,6 @@
           <e p="MainScene" t="Include">
             <e p="UI" t="Include">
               <e p="info.cs" t="Include" />
-              <e p="PhotoUIs.cs" t="Include" />
               <e p="slotUIPressEffect.cs" t="Include" />
               <e p="TeamElemnt.cs" t="Include" />
               <e p="TeamSelectionSystem.cs" t="Include" />
@@ -43,6 +43,7 @@
             <e p="FullScreenFadeManager.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />
             <e p="MainSceneManager.cs" t="Include" />
+            <e p="MatchManager.cs" t="Include" />
             <e p="SceneManagerPro.cs" t="Include" />
             <e p="TeamManager.cs" t="Include" />
           </e>
@@ -69,6 +70,17 @@
             <e p="SubUnityEvent.cs" t="Include" />
             <e p="textPngToBase64.cs" t="Include" />
             <e p="Util.cs" t="Include" />
+          </e>
+        </e>
+        <e p="05.Models" t="Include">
+          <e p="Stage" t="Include">
+            <e p="Stage1" t="Include">
+              <e p="Material" t="Include">
+                <e p="grasses" t="Include">
+                  <e p="PW_Tree.shader" t="Include" />
+                </e>
+              </e>
+            </e>
           </e>
         </e>
         <e p="09.Shader" t="Include">
