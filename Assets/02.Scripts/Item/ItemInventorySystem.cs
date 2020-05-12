@@ -53,6 +53,9 @@ public class ItemInventorySystem : MonoBehaviour
 
     private void Awake()
     {
+        _equipedItems[0] = 1;
+        _equipedItems[1] = 2;
+
         _unitPhoto = _teamManager.GetUnitPhoto();
         if (null == _unitPhoto) { Debug.LogError("ItemInventorySystem : _unitPhoto is null"); }
 
@@ -69,9 +72,37 @@ public class ItemInventorySystem : MonoBehaviour
     {
         #region Test
 
-        TypeItemAllSet(eCodeType.HELMET);
-        TypeItemAllSet(eCodeType.BODYARMOUR);
-        TypeItemAllSet(eCodeType.WEAPON);
+        const int _completeModelCount = 6;
+        string[] itemNameList = new string[_completeModelCount * 2];
+
+        int itemIndex = 0;
+        itemNameList[itemIndex++] = "일반 머리";
+        itemNameList[itemIndex++] = "일반 옷";
+        itemNameList[itemIndex++] = "견습 기사의 투구";
+        itemNameList[itemIndex++] = "견습 기사의 갑옷";
+        itemNameList[itemIndex++] = "셔우드 숲의 모자";
+        itemNameList[itemIndex++] = "셔우드 숲의 코트";
+        itemNameList[itemIndex++] = "하얀 눈의 모자";
+        itemNameList[itemIndex++] = "하얀 눈의 옷";
+        itemNameList[itemIndex++] = "A.I의 머리 파츠";
+        itemNameList[itemIndex++] = "A.I의 몸통 파츠";
+        itemNameList[itemIndex++] = "제국의 헬멧";
+        itemNameList[itemIndex++] = "제국의 슈트";
+
+        eCodeType[] codes = new eCodeType[2];
+        codes[0] = eCodeType.HELMET;
+        codes[1] = eCodeType.BODYARMOUR;
+
+        for (int i = 0; i < itemNameList.Length; ++i)
+        {
+            int num = _itemList.CodeSearch(codes[i % 2],itemNameList[i]);
+
+            _inventory[(int)codes[i % 2]].Add(num);
+        }
+
+        //TypeItemAllSet(eCodeType.HELMET);
+        //TypeItemAllSet(eCodeType.BODYARMOUR);
+        //TypeItemAllSet(eCodeType.WEAPON);
 
         #endregion
 
@@ -121,10 +152,10 @@ public class ItemInventorySystem : MonoBehaviour
     {
         UnitModelManager.ResetModel(_unitModelUI, _equipedItems);
 
-        _equipedItems[0] = items[0];
-        _equipedItems[1] = items[1];
-        _equipedItems[2] = items[2];
-        _equipedItems[3] = items[3];
+        // 유닛 아이템들이 유닛1 수정완료(5,6)   유닛2 수정완료(5,6)
+
+        _equipedItems = new int[4];
+        _equipedItems = items;
 
         UpdateInventory();
     }
@@ -176,12 +207,11 @@ public class ItemInventorySystem : MonoBehaviour
             //현재 타입이 무엇인지 가져옵니다.
             int curType = (int)_curType;
 
+            for (int i = 0; i < _inventory[curType].Count; ++i)
+                if (_itemList.ItemSearch(_inventory[curType][i]) == null) _inventory[curType].Remove(i);
+
             //현재 사용중인 아이템 슬롯의 개수를 가져옵니다.
             int curUseItemSlotCount = _inventory[curType].Count;
-
-            //현재 아이템 슬롯 개수가 0이하라면 : return
-            if (curUseItemSlotCount <= 0)
-                return;
 
             //아이템이 없거나, 오브젝트 컨텐츠가 없을시 : return
             if (_itemPrefab == null || _contentObject == null)

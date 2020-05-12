@@ -61,6 +61,8 @@ public struct UnitStatus
 
         for (int i = 0; i < _equipedItems.Length; ++i)
         {
+            if(_equipedItems[i] == 0) { continue; }
+
             _itemList.ItemSearch(_equipedItems[i]).Equip(ref this);
         }
     }

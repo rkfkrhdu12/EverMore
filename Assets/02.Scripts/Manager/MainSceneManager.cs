@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using GameplayIngredients;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MainSceneUI
 {
@@ -63,6 +64,9 @@ namespace MainSceneUI
         [Space, SerializeField]
         private TeamManager _teamManager;
 
+        [SerializeField]
+        private GameObject _canvas;
+
         #endregion
 
         private Team _selectTeam;
@@ -84,7 +88,9 @@ namespace MainSceneUI
             InitUI(UIDataKey.SetUnit, _setUnitUI);
             InitUI(UIDataKey.Matching, _MatchUI);
 
-            }
+            Image[] images = FindObjectsOfType<Image>();
+
+        }
         #endregion
 
         #region Private Function
@@ -133,9 +139,15 @@ namespace MainSceneUI
             ui.setActive(!ui.activeSelf);
         }
 
-        public void OnGameStart()
+        public void OnGameStart(string scene)
         {
             _selectTeam = _teamManager.GetSelectTeam();
+
+            if(_selectTeam == null) { Debug.Log("설정된 팀 또는 팀의 유닛들이 불안정합니다."); return; }
+
+            Manager.Get<GameManager>().SetPlayerUnits(_selectTeam);
+
+            NextGoto(scene);
         }
 
         public void NextGoto(string scene) =>

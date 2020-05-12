@@ -163,7 +163,6 @@ public class ItemList
             if (string.Equals(ItemSearch(code).Name, name))
                 return code;
         }
-
         return -1;
     }
 
@@ -200,8 +199,6 @@ public class ItemList
     private void InitTexture()
     {
         _textureNames = new string[16];
-
-
     }
 
     public string TextureName(int index)

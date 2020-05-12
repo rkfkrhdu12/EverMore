@@ -13,7 +13,9 @@ public class TeamManager : MonoBehaviour
 
     public void SetSelectUnitEquipedItems(int[] equipedItems)
     {
-        _teams[_curSelectTeamName].GetUnit(_curSelectUnitNum)._equipedItems = equipedItems;
+        //_teams[_curSelectTeamName].GetUnit(_curSelectUnitNum)._equipedItems = equipedItems;
+
+        _teams[_curSelectTeamName].SetEquipedItems(_curSelectUnitNum,equipedItems);
         _teams[_curSelectTeamName].GetUnit(_curSelectUnitNum).UpdateItems();
     } 
 
@@ -88,6 +90,13 @@ public class TeamManager : MonoBehaviour
         AddTeam();
 
         Manager.Get<GameManager>().SetPlayerUnits(_teams[_teamNameList[0]]);
+
+        for (int i = 0; i < _slotImage.Length; ++i)
+        {
+            Image im = _slotImage[i].transform.parent.GetComponent<Image>();
+
+            im.alphaHitTestMinimumThreshold = 0.5f;
+        }
     }
 
     #endregion
@@ -130,15 +139,14 @@ public class TeamManager : MonoBehaviour
 
         UnitStatus curSelectUnit = _teams[_curSelectTeamName].GetUnit(_curSelectUnitNum);
 
-        //UnitModelManager UMMgr = new UnitModelManager();
-        //UMMgr.UpdateModel(_SetUnitObject, curSelectUnit._equiedItems);
-
         _itemInventory.SetEquipedItems(curSelectUnit._equipedItems);
     }
 
     public Team GetSelectTeam()
     {
-        if(string.IsNullOrWhiteSpace(_curSelectTeamName)) { return null; }
+        if (string.IsNullOrWhiteSpace(_curSelectTeamName))  { return null; }
+        if (_teams[_curSelectTeamName].Length == 0)         { return null; }
+
 
         return _teams[_curSelectTeamName];
     }

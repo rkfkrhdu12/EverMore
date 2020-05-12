@@ -13,6 +13,9 @@ public class stringTexture2D : SerializableDictionary<string, Texture2D>
 [ManagerDefaultPrefab("GameManager")]
 public class GameManager : Manager
 {
+    public void SetPlayerUnits(Team playerTeam) { _playerTeam = playerTeam; }
+    public Team GetPlayerUnits()                { return _playerTeam; }
+
     #region Show Inspector
 
     //[Tooltip("아군인지 적군인지 선택")]
@@ -48,8 +51,6 @@ public class GameManager : Manager
     public float _SfxVolume = 0.7f;
 
     #endregion
-    public void SetPlayerUnits(Team playerTeam) { _playerTeam = playerTeam; }
-    public Team GetPlayerUnits() { return _playerTeam; }
 
     #region Monobehaviour Function
 
@@ -57,7 +58,7 @@ public class GameManager : Manager
     {
         OnAwake();
 
-        StartCoroutine(getUnitTexture());
+        //StartCoroutine(getUnitTexture());
     }
 
     private void OnAwake()
@@ -72,6 +73,7 @@ public class GameManager : Manager
 
         UnitStability.Init();
         _deleteObjectSystem = new DeleteObjectSystem();
+
         DontDestroyOnLoad(gameObject);
     }
 
@@ -82,23 +84,23 @@ public class GameManager : Manager
 
     #region Private Function
 
-    private IEnumerator getUnitTexture()
-    {
-        //유닛 텍스쳐 리소스를 가져옵니다.
-        Addressables.LoadResourceLocationsAsync(unitPhotos).Completed += op =>
-        {
-            foreach (var data in op.Result)
-                Addressables.LoadAssetAsync<Texture2D>(data.PrimaryKey).Completed += handle =>
-                    st.Add(data.PrimaryKey, handle.Result);
-        };
+    //private IEnumerator getUnitTexture()
+    //{
+    //    //유닛 텍스쳐 리소스를 가져옵니다.
+    //    Addressables.LoadResourceLocationsAsync(unitPhotos).Completed += op =>
+    //    {
+    //        foreach (var data in op.Result)
+    //            Addressables.LoadAssetAsync<Texture2D>(data.PrimaryKey).Completed += handle =>
+    //                st.Add(data.PrimaryKey, handle.Result);
+    //    };
 
-        //1초 정도 대기
-        yield return new WaitForSeconds(1f);
+    //    //1초 정도 대기
+    //    yield return new WaitForSeconds(1f);
 
-        //리소스를 해제합니다.
-        foreach (var texture2d in st.Values)
-            Addressables.Release(texture2d);
-    }
+    //    //리소스를 해제합니다.
+    //    foreach (var texture2d in st.Values)
+    //        Addressables.Release(texture2d);
+    //}
 
     private void objectToDelete()
     {

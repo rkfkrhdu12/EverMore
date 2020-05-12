@@ -18,6 +18,8 @@ public class UnitController : FieldObject
         if (_attackAreaCollider == null)
             _attackAreaCollider = GetComponent<BoxCollider>();
 
+        _status.UpdateItems();
+
         //공격 영역 사이즈를 공격 범위에 영향을 준다. 
         _attackAreaCollider.size *= _status._attackRange;
 
@@ -29,8 +31,9 @@ public class UnitController : FieldObject
 
         _aniPro.SetParam(_idAttackSpd, 1 / _attackSpeed);
 
-        // 
         _navMeshAgent.updateRotation = false;
+
+        _curState = eState.IDLE;
     }
 
     public override void DamageReceive(float damage)
@@ -58,7 +61,7 @@ public class UnitController : FieldObject
         SUBWEAPON,
     }
 
-    private enum eState
+    public enum eState
     {
         NONE,
         IDLE,
@@ -77,11 +80,8 @@ public class UnitController : FieldObject
     #endregion
 
     #region Show Inspector
-
-    //아군인지, 적인지에 대한 변수
-    public eTeam eteam;
-
     //능력 번후
+    [HideInInspector]
     public int _abilityNum;
 
     // 공격 범위일듯.
@@ -91,20 +91,19 @@ public class UnitController : FieldObject
     public Queue<FieldObject> _attackTargets = new Queue<FieldObject>();
 
     //공격 시간에 대한 변수
-    public float _attackTime;
-
-    //죽었는지 살았는지에 대한 변수
-    public bool _isDead;
+    private float _attackTime;
 
     //[Header("파일 파싱으로 아이디 가져온 후 적용시킬 예정")]
     // 아이템 번호
     public int[] _itemsNum => _status._equipedItems;
 
     [SerializeField]
-    private NavMeshAgent _navMeshAgent;
+    private NavMeshAgent _navMeshAgent = null;
 
     // 상대방 진영의 성
     public Vector3 _enemyCastlePosition;
+
+    public Transform _enemyCastleTrs;
 
     #endregion
 
@@ -147,10 +146,10 @@ public class UnitController : FieldObject
     private Rigidbody _rig;
 
     //유닛 상태에 대한 변수
-    private eState _curState = eState.NONE;
+    public eState _curState = eState.NONE;
 
     //필드 관점에서의 해당 유닛의 상태
-    private FieldObject _curTarget;
+    public FieldObject _curTarget = null;
 
     //이동에 대한 파라미터
     private float moveParameter;
@@ -160,6 +159,11 @@ public class UnitController : FieldObject
     #endregion
 
     #region Monobehaviour Function
+    private void Awake()
+    {
+        Spawn();
+    }
+
     private void FixedUpdate()
     {
         //현재 상태가 비어 있거나, 죽었다면 : return
@@ -182,7 +186,7 @@ public class UnitController : FieldObject
         var target = other.GetComponent<FieldObject>();
 
         //공격할 타겟 큐에 해당 타겟이 있거나, 타겟의 팀이 우리 팀이라면,
-        if (_attackTargets.Contains(target) || target._team == eteam)
+        if (_attackTargets.Contains(target) || target._team == _team)
             return;
 
         //공격 타겟에 해당 타겟을 넣어줍니다.
@@ -224,12 +228,10 @@ public class UnitController : FieldObject
 
     private void UpdateMove()
     {
-        if(_curTarget == null) { return; }
-
         _navMeshAgent.SetDestination(
-            _curTarget == null ?
-            _enemyCastlePosition :
-            _curTarget.transform.position);
+            //_curTarget == null ?
+            _enemyCastleTrs.position);// :
+            //_curTarget.transform.position);
 
         //moveParameter = 1;
 
@@ -278,6 +280,8 @@ public class UnitController : FieldObject
     {
         if (_aniPro == null) return;
 
+        _aniPro.SetParam(_idMove, 1.0f);
+
         if (_navMeshAgent.velocity.sqrMagnitude >= .1f * .1f && _navMeshAgent.remainingDistance <= .1f)
         {
             _aniPro.SetParam(_idMove, 0);
@@ -292,7 +296,6 @@ public class UnitController : FieldObject
                                                   targetAngle,
                                                   Time.deltaTime * 8.0f);
 
-            _aniPro.SetParam(_idMove, 1);
         }
 
         ////공격 중이 아니라면 : return
@@ -361,7 +364,6 @@ public class UnitModelManager
     // 아이템 이름 > 오브젝트에서의 아이템 위치
     private static Dictionary<string, int[]> _modelItemPoint = new Dictionary<string, int[]>();
 
-    private const int _completeModelCount = 4;
 
     private static ItemList _itemList;
     #endregion
@@ -372,7 +374,9 @@ public class UnitModelManager
     {
         _itemList = Manager.Get<GameManager>().itemList;
 
+        const int _completeModelCount = 6;
         string[] itemNameList = new string[_completeModelCount * 2];
+
         int itemIndex = 0;
         itemNameList[itemIndex++] = "일반 머리";
         itemNameList[itemIndex++] = "일반 옷";
@@ -382,6 +386,10 @@ public class UnitModelManager
         itemNameList[itemIndex++] = "셔우드 숲의 코트";
         itemNameList[itemIndex++] = "하얀 눈의 모자";
         itemNameList[itemIndex++] = "하얀 눈의 옷";
+        itemNameList[itemIndex++] = "A.I의 머리 파츠";
+        itemNameList[itemIndex++] = "A.I의 몸통 파츠";
+        itemNameList[itemIndex++] = "제국의 헬멧";
+        itemNameList[itemIndex++] = "제국의 슈트";
 
         int equipmentCount = 2;
 

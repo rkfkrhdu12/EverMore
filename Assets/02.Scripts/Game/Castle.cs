@@ -8,6 +8,6 @@
         _curHp -= damage;
 
         if (_curHp <= 0)
-            _isdead = true;
+            _isDead = true;
     }
 }

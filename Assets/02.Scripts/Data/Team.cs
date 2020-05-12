@@ -21,14 +21,18 @@ public class Team
         }
     }
 
-    public void Spawn(Vector3 spawnPoint, int unitNum)
+    public UnitStatus GetUnit(int index)
     {
+        if(_units[index]._equipedItems == null) { _units[index].Init(); }
+
+        return _units[index];
     }
 
-    public ref UnitStatus GetUnit(int index)
+    public void SetEquipedItems(int index, int[] items)
     {
-        return ref _units[index];
-    }
+        if(_units[index]._equipedItems == null) { _units[index].Init(); }
 
+        _units[index]._equipedItems = items;
+    }
 
 }
