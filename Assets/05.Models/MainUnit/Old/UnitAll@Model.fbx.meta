@@ -1,11 +1,14 @@
 fileFormatVersion: 2
-guid: d93e28f3f9d441b4f893339369d2479e
+guid: 424fcceec362759469942968f18d235b
 ModelImporter:
   serializedVersion: 19300
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 1827226128182048838
+    second: Take 001
   externalObjects: {}
   materials:
-    materialImportMode: 0
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -40,9 +43,9 @@ ModelImporter:
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
-    importBlendShapes: 0
-    importCameras: 0
-    importLights: 0
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -81,15 +84,16 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 0.01
-    rootMotionBoneName: 
+    rootMotionBoneName: Rot
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 524820ebc765cb642920ad8ba2038dbd,
+    type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 2
   additionalBone: 0
   userData: 
   assetBundleName: 
