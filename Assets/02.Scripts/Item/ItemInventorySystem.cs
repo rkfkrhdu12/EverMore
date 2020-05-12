@@ -92,17 +92,24 @@ public class ItemInventorySystem : MonoBehaviour
         eCodeType[] codes = new eCodeType[2];
         codes[0] = eCodeType.HELMET;
         codes[1] = eCodeType.BODYARMOUR;
-
+        int num;
         for (int i = 0; i < itemNameList.Length; ++i)
         {
-            int num = _itemList.CodeSearch(codes[i % 2],itemNameList[i]);
+            num = _itemList.CodeSearch(codes[i % 2],itemNameList[i]);
 
             _inventory[(int)codes[i % 2]].Add(num);
         }
 
-        //TypeItemAllSet(eCodeType.HELMET);
-        //TypeItemAllSet(eCodeType.BODYARMOUR);
-        //TypeItemAllSet(eCodeType.WEAPON);
+        const int _completeWeaponCount = 6;
+        string[] weaponList = new string[_completeWeaponCount * 2];
+
+        int weaponIndex = 0;
+
+        weaponList[weaponIndex++] = "기사의 검";
+
+        num = _itemList.CodeSearch(eCodeType.WEAPON, weaponList[0]);
+
+        _inventory[(int)eCodeType.WEAPON].Add(num);
 
         #endregion
 
@@ -186,7 +193,7 @@ public class ItemInventorySystem : MonoBehaviour
                 case eItemType.NONE: Debug.Log("ItemInventorySystem : UpdateEquipedItem i.Type is Error"); return;
                 case eItemType.HELMET: partsNum = 0; break;
                 case eItemType.BODYARMOUR: partsNum = 1; break;
-                default: partsNum = (_isLeftWeapon ? 3 : 4); break;
+                default: partsNum = (_isLeftWeapon ? 2 : 3); break;
             }
 
             if (partsNum >= _equipedItems.Length) { Debug.Log("ItemInventorySystem : UpdateEquipedItem partsNum is Error"); return; }

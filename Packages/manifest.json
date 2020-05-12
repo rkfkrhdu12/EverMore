@@ -13,7 +13,6 @@
     "com.unity.memoryprofiler": "0.2.3-preview.2",
     "com.unity.nkstudio.buttonpro": "https://github.com/bnm000215/UnityButtonPro.git",
     "com.unity.nkstudio.enumpro": "https://github.com/bnm000215/UnityEnumPro.git",
-    "com.unity.nkstudio.saveunitysystem": "https://github.com/bnm000215/UnitySavePlayModeSystem.git",
     "com.unity.nkstudio.unitydebugoptimization": "https://github.com/bnm000215/Unity-Debug-Optimization.git",
     "com.unity.polybrush": "1.0.1",
     "com.unity.quicksearch": "1.5.3",
@@ -71,10 +70,6 @@
     "com.unity.nkstudio.enumpro": {
       "revision": "HEAD",
       "hash": "031de9d1751a98174ed78fff8cb8ef39e7f61f50"
-    },
-    "com.unity.nkstudio.saveunitysystem": {
-      "revision": "HEAD",
-      "hash": "9ef319c8513058865ba3c26706c05d55c747978b"
     },
     "com.unity.nkstudio.unitydebugoptimization": {
       "revision": "HEAD",

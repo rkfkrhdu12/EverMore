@@ -34,5 +34,12 @@ public class Team
 
         _units[index]._equipedItems = items;
     }
-
+    
+    public void UpdateItems()
+    {
+        for (int i = 0; i < Length; ++i)
+        {
+            _units[i].UpdateItems();
+        }
+    }
 }

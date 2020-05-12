@@ -103,8 +103,6 @@ public class UnitController : FieldObject
     // 상대방 진영의 성
     public Vector3 _enemyCastlePosition;
 
-    public Transform _enemyCastleTrs;
-
     #endregion
 
     #region Hide Inspector
@@ -159,10 +157,6 @@ public class UnitController : FieldObject
     #endregion
 
     #region Monobehaviour Function
-    private void Awake()
-    {
-        Spawn();
-    }
 
     private void FixedUpdate()
     {
@@ -212,7 +206,7 @@ public class UnitController : FieldObject
     private void UpdateUnit()
     {
         moveParameter = 0;
-
+        
         switch (_curState)
         {
             case eState.MOVE:
@@ -230,7 +224,7 @@ public class UnitController : FieldObject
     {
         _navMeshAgent.SetDestination(
             //_curTarget == null ?
-            _enemyCastleTrs.position);// :
+            _enemyCastlePosition);// :
             //_curTarget.transform.position);
 
         //moveParameter = 1;
@@ -240,40 +234,40 @@ public class UnitController : FieldObject
 
     private void UpdateAttack()
     {
-        // 타겟이 없엇거나, 체력이 0 이하로 내려가면 : 새로운 타겟을 정한다.
-        if (_curTarget == null || _curTarget._curHp <= 0)
-        {
-            //공격할 타겟이 0명이라면 : null(상대 성이 타겟) 아니면 그 대상에게 전진
-            if (_attackTargets.Count == 0) { _curTarget = null; }
-            //현재 타겟을 Dequeue한다.
-            else { _curTarget = _attackTargets.Dequeue(); }
-        }
-
-        ////공격 시간이 공격 속도보다 같거나 낮다면 : 공격 시간을 높혀준다.
-        //if (_attackTime <= _attackSpeed)
-        //    _attackTime += Time.deltaTime;
-        //else
+        //// 타겟이 없엇거나, 체력이 0 이하로 내려가면 : 새로운 타겟을 정한다.
+        //if (_curTarget == null || _curTarget._curHp <= 0)
         //{
-        //    // 타겟이 없엇거나, 체력이 0 이하로 내려가면 : 새로운 타겟을 정한다.
-        //    if (_curTarget == null || _curTarget._curHp <= 0)
-        //    {
-        //        //공격할 타겟이 0명이라면 : return
-        //        if (_attackTargets.Count == 0)
-        //        {
-        //            _curTarget = _lastTarget;
-        //            return;
-        //        }
-
-        //        //현재 타겟을 Dequeue한다.
-        //        _curTarget = _attackTargets.Dequeue();
-        //    }
-
-        //    //공격 시간 초기화
-        //    _attackTime = 0f;
-
-        //    //데미지 리시브
-        //    _curTarget.DamageReceive(_attackDamage);
+        //    //공격할 타겟이 0명이라면 : null(상대 성이 타겟) 아니면 그 대상에게 전진
+        //    if (_attackTargets.Count == 0) { _curTarget = null; }
+        //    //현재 타겟을 Dequeue한다.
+        //    else { _curTarget = _attackTargets.Dequeue(); }
         //}
+
+        //공격 시간이 공격 속도보다 같거나 낮다면 : 공격 시간을 높혀준다.
+        if (_attackTime <= _attackSpeed)
+            _attackTime += Time.deltaTime;
+        else
+        {
+            // 타겟이 없엇거나, 체력이 0 이하로 내려가면 : 새로운 타겟을 정한다.
+            if (_curTarget == null || _curTarget._curHp <= 0)
+            {
+                //공격할 타겟이 0명이라면 : return
+                if (_attackTargets.Count == 0)
+                {
+                    _curTarget = null;
+                    return;
+                }
+
+                //현재 타겟을 Dequeue한다.
+                _curTarget = _attackTargets.Dequeue();
+            }
+
+            //공격 시간 초기화
+            _attackTime = 0f;
+
+            //데미지 리시브
+            _curTarget.DamageReceive(_attackDamage);
+        }
     }
 
     private void UpdateAnimation()
@@ -342,9 +336,10 @@ public class UnitModelManager
 
         if (!unit.activeSelf) { unit.SetActive(true); }
 
+        int[] index;
         if (0 != prevItem)
         {
-            int[] index = _modelItemPoint[_itemList.ItemSearch(prevItem).Name];
+            index = _modelItemPoint[_itemList.ItemSearch(prevItem).Name];
 
             unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(false);
         }
@@ -353,9 +348,27 @@ public class UnitModelManager
         {
             string itemName = _itemList.ItemSearch(equipedItems[i]).Name;
 
-            int[] index = _modelItemPoint?[itemName];
+            index = _modelItemPoint?[itemName];
 
             unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(true);
+        }
+
+        if (equipedItems[2] != 0)
+        {
+            string leftItemName = _itemList.ItemSearch(equipedItems[2]).Name;
+
+            index = _modelItemPoint?[leftItemName];
+
+            unit.transform.GetChild(unit.transform.childCount - 3).GetChild(index[1]).gameObject.SetActive(true);
+        }
+
+        if (equipedItems[3] != 0)
+        {
+            string rightItemName = _itemList.ItemSearch(equipedItems[3]).Name;
+
+            index = _modelItemPoint?[rightItemName];
+
+            unit.transform.GetChild(unit.transform.childCount - 2).GetChild(index[1]).gameObject.SetActive(true);
         }
     }
 
@@ -374,39 +387,54 @@ public class UnitModelManager
     {
         _itemList = Manager.Get<GameManager>().itemList;
 
-        const int _completeModelCount = 6;
-        string[] itemNameList = new string[_completeModelCount * 2];
+        const int _completeArmourCount = 6;
+        string[] armourList = new string[_completeArmourCount * 2];
 
-        int itemIndex = 0;
-        itemNameList[itemIndex++] = "일반 머리";
-        itemNameList[itemIndex++] = "일반 옷";
-        itemNameList[itemIndex++] = "견습 기사의 투구";
-        itemNameList[itemIndex++] = "견습 기사의 갑옷";
-        itemNameList[itemIndex++] = "셔우드 숲의 모자";
-        itemNameList[itemIndex++] = "셔우드 숲의 코트";
-        itemNameList[itemIndex++] = "하얀 눈의 모자";
-        itemNameList[itemIndex++] = "하얀 눈의 옷";
-        itemNameList[itemIndex++] = "A.I의 머리 파츠";
-        itemNameList[itemIndex++] = "A.I의 몸통 파츠";
-        itemNameList[itemIndex++] = "제국의 헬멧";
-        itemNameList[itemIndex++] = "제국의 슈트";
+        int armourIndex = 0;
+        armourList[armourIndex++] = "일반 머리";
+        armourList[armourIndex++] = "일반 옷";
+        armourList[armourIndex++] = "견습 기사의 투구";
+        armourList[armourIndex++] = "견습 기사의 갑옷";
+        armourList[armourIndex++] = "셔우드 숲의 모자";
+        armourList[armourIndex++] = "셔우드 숲의 코트";
+        armourList[armourIndex++] = "하얀 눈의 모자";
+        armourList[armourIndex++] = "하얀 눈의 옷";
+        armourList[armourIndex++] = "A.I의 머리 파츠";
+        armourList[armourIndex++] = "A.I의 몸통 파츠";
+        armourList[armourIndex++] = "제국의 헬멧";
+        armourList[armourIndex++] = "제국의 슈트";
 
         int equipmentCount = 2;
-
-        int[] modelNumList = new int[_completeModelCount * 2];
-        for (int i = 1; i < _completeModelCount * 2 + 1; ++i)
+        int[] modelNumList = new int[_completeArmourCount * 2];
+        for (int i = 1; i < _completeArmourCount * 2 + 1; ++i)
         {
             modelNumList[i - 1] = (1 == i % 2 ? i / 2 : i / 2 - 1);
         }
 
-        int[] v = new int[equipmentCount];
-        for (int i = 0; i < itemIndex; ++i)
+        int[] v;
+        for (int i = 0; i < armourIndex; ++i)
         {
             v = new int[equipmentCount];
             v[0] = modelNumList[i];
             v[1] = 1 - (i % equipmentCount);
 
-            _modelItemPoint.Add(itemNameList[i], v);
+            _modelItemPoint.Add(armourList[i], v);
+        }
+
+        const int _completeWeaponCount = 6;
+        string[] weaponList = new string[_completeWeaponCount * 2];
+
+        int weaponIndex = 0;
+
+        weaponList[weaponIndex++] = "기사의 검";
+
+        for (int i = 0; i < weaponIndex; ++i)
+        {
+            v = new int[equipmentCount];
+            v[0] = 0;
+            v[1] = i;
+
+            _modelItemPoint.Add(weaponList[i], v);
         }
     }
 

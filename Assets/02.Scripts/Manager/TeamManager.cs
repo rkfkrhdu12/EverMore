@@ -202,7 +202,6 @@ public class TeamManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("UpdateTexture : " + unit._equipedItems[0] + " " + unit._equipedItems[1]);
                 _unitPhoto.UpdateTexture(ref _slotImage[i], unit._equipedItems);
                 _slotImage[i].rectTransform.sizeDelta = new Vector2(256.0f, 256.0f);
 

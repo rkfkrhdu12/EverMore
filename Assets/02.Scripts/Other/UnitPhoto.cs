@@ -37,8 +37,6 @@ public class UnitPhoto : MonoBehaviour
         partNameToObj.RightWeaponName = equipedItems[3].ToString();
         _rawimage = rawImage;
 
-        Debug.Log("ILoadTexture : " + equipedItems[0] + " " + equipedItems[1]);
-
         StartCoroutine(ILoadTexture());
     }
 
@@ -51,8 +49,6 @@ public class UnitPhoto : MonoBehaviour
 
     private IEnumerator ISaveTexture(int[] equipedItems)
     {
-        Debug.Log("ISaveTexture : " + equipedItems[0] + " " + equipedItems[1]);
-
         Util.SaveRenderTextuerToPng(
                     $"{_path}/" +
                     $"{equipedItems[0].ToString()}-head,{equipedItems[1].ToString()}-body," +
@@ -68,7 +64,8 @@ public class UnitPhoto : MonoBehaviour
 
     private IEnumerator ILoadTexture()
     {
-        using (var uwr = UnityWebRequestTexture.GetTexture($@"{Application.persistentDataPath}/{partNameToObj.HeadName}-head,{partNameToObj.BodyName}-body,{partNameToObj.LeftWeaponName}-leftWeapon,{partNameToObj.RightWeaponName}-rightWeapon.png"))
+        using (var uwr = UnityWebRequestTexture.GetTexture
+            ($@"{_path}/{partNameToObj.HeadName}-head,{partNameToObj.BodyName}-body,{partNameToObj.LeftWeaponName}-leftWeapon,{partNameToObj.RightWeaponName}-rightWeapon.png"))
         {
             yield return uwr.SendWebRequest();
 

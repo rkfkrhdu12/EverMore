@@ -24,8 +24,16 @@ public class PlayerController : MonoBehaviour
 
     #region Monobehaviour Function
 
+    private void Awake()
+    {
+        _curMouseState = eMouseState.Spawn;
+    }
+
     void Update()
     {
+        if (Input.GetMouseButton(0) && _curMouseState != eMouseState.Spawning)  { _curMouseState = eMouseState.Camera; }
+        else if (_curMouseState == eMouseState.Camera) { _curMouseState = eMouseState.Spawn; }
+
         UpdateMouseState();
     }
 
@@ -39,16 +47,46 @@ public class PlayerController : MonoBehaviour
         {
             case eMouseState.None:                      break;
             case eMouseState.Camera:                    break;
-            case eMouseState.Spawn:                     break;
+            case eMouseState.Spawn:    UpdateSpawn(); break;
             case eMouseState.Spawning: UpdateSpawnPoint();   break;
         }
     }
 
     void UpdateSpawn()
     {
-        if(Input.GetKeyDown(KeyCode.Keypad1))
+        if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _spawnManager.OnSpawn(0);
+            _curMouseState = eMouseState.Spawning;
+
+            _spawnManager.SetSpawnIndex(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            _curMouseState = eMouseState.Spawning;
+
+            _spawnManager.SetSpawnIndex(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            _curMouseState = eMouseState.Spawning;
+
+            _spawnManager.SetSpawnIndex(2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            _curMouseState = eMouseState.Spawning;
+
+            _spawnManager.SetSpawnIndex(3);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            _curMouseState = eMouseState.Spawning;
+
+            _spawnManager.SetSpawnIndex(4);
         }
     }
 
@@ -59,16 +97,20 @@ public class PlayerController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
 
-            if (Physics.Raycast(ray, out hitInfo, 100f))
+            if (Physics.Raycast(ray, out hitInfo, 200))
             {
                 Vector3 dist = hitInfo.point - transform.position;
+
+                Debug.Log("" + dist.sqrMagnitude + " < " + (_spawnRange * _spawnRange) + "  "+ dist.sqrMagnitude + " > " + (_spawnRange + _spawnRange));
+
                 if (dist.sqrMagnitude < _spawnRange * _spawnRange && dist.sqrMagnitude > _spawnRange + _spawnRange)
                 { // Spawn
-                    // Test
-                    //Debug.Log("Access  ");
+                    _spawnManager.SetSpawnPoint(hitInfo.point);
 
-                    //Destroy(Instantiate(_prefabs, hitInfo.point, Quaternion.identity, null),10);
+                    _spawnManager.Spawn();
 
+                    Debug.Log("Spawn");
+                    _curMouseState = eMouseState.Spawn;
                 }
             }
         }
