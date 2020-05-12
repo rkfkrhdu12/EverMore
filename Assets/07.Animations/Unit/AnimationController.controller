@@ -741,28 +741,28 @@ AnimatorController:
   m_AnimatorParameters:
   - m_Name: Move
     m_Type: 1
-    m_DefaultFloat: 1
+    m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: AttackSpeed
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Attack
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: WeaponType
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 3
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -1623,9 +1623,6 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -5029237058191813274}
-    second:
-    - {fileID: -889437642583268331}
   - first: {fileID: -2815559327898529610}
     second:
     - {fileID: -6903151837374203971}
@@ -1639,12 +1636,15 @@ AnimatorStateMachine:
   - first: {fileID: 2369382212018708983}
     second:
     - {fileID: 8108167921057510263}
-  - first: {fileID: 5016423895888783009}
-    second:
-    - {fileID: 8530850625762427287}
   - first: {fileID: 5132837662512287736}
     second:
     - {fileID: -5998353983908374387}
+  - first: {fileID: 5016423895888783009}
+    second:
+    - {fileID: 8530850625762427287}
+  - first: {fileID: -5029237058191813274}
+    second:
+    - {fileID: -889437642583268331}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -80, y: 400, z: 0}
   m_EntryPosition: {x: -80, y: 100, z: 0}
