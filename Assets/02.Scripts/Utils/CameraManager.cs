@@ -36,7 +36,7 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
         if (0 == moveMouseX) { return; }
 
         float flipValue = Mathf.Abs(1.0f / moveMouseX);
-        int moveDirection = (int)-moveMouseX;
+        float moveDirection = -moveMouseX;
 
         if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
         {

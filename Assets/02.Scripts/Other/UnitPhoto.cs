@@ -11,8 +11,6 @@ public class UnitPhoto : MonoBehaviour
         public string HeadName, BodyName, LeftWeaponName, RightWeaponName;
     }
 
-    public PartNameToObj partNameToObj;
-
     [Space, SerializeField]
     private RenderTexture renderTexture;
 
@@ -31,13 +29,9 @@ public class UnitPhoto : MonoBehaviour
     {
         if (null == equipedItems) { return; }
 
-        partNameToObj.HeadName = equipedItems[0].ToString();
-        partNameToObj.BodyName = equipedItems[1].ToString();
-        partNameToObj.LeftWeaponName = equipedItems[2].ToString();
-        partNameToObj.RightWeaponName = equipedItems[3].ToString();
-        _rawimage = rawImage;
+        //_rawimage = rawImage;
 
-        StartCoroutine(ILoadTexture());
+        StartCoroutine(ILoadTexture(equipedItems, rawImage));
     }
 
     public void SaveTexture(in int[] equipedItems)
@@ -50,9 +44,7 @@ public class UnitPhoto : MonoBehaviour
     private IEnumerator ISaveTexture(int[] equipedItems)
     {
         Util.SaveRenderTextuerToPng(
-                    $"{_path}/" +
-                    $"{equipedItems[0].ToString()}-head,{equipedItems[1].ToString()}-body," +
-                    $"{equipedItems[2].ToString()}-leftWeapon,{equipedItems[3].ToString()}-rightWeapon.png",
+            $@"{_path}/{equipedItems[0].ToString()}-head,{equipedItems[1].ToString()}-body,{equipedItems[2].ToString()}-leftWeapon,{equipedItems[3].ToString()}-rightWeapon.png",
                     renderTexture);
         
         //중간 텀
@@ -61,30 +53,21 @@ public class UnitPhoto : MonoBehaviour
         _isComplete = true;
     }
 
-
-    private IEnumerator ILoadTexture()
+    private IEnumerator ILoadTexture(int[] equipedItems,RawImage rawImage)
     {
         using (var uwr = UnityWebRequestTexture.GetTexture
-            ($@"{_path}/{partNameToObj.HeadName}-head,{partNameToObj.BodyName}-body,{partNameToObj.LeftWeaponName}-leftWeapon,{partNameToObj.RightWeaponName}-rightWeapon.png"))
+            ($@"{_path}/{equipedItems[0].ToString()}-head,{equipedItems[1].ToString()}-body,{equipedItems[2].ToString()}-leftWeapon,{equipedItems[3].ToString()}-rightWeapon.png"))
         {
             yield return uwr.SendWebRequest();
 
             if (uwr.isNetworkError || uwr.isHttpError)
             {
-                while (true)
-                {
-                    if (_isComplete)
-                    {
-                        _isComplete = false;
-
-                    }
-                    yield return SideTime;
-                }
+                yield return SideTime;
             }
 
             var texture = DownloadHandlerTexture.GetContent(uwr);
 
-            _rawimage.texture = texture;
+            rawImage.texture = texture;
 
             //if (uwr.isNetworkError || uwr.isHttpError)
             //{

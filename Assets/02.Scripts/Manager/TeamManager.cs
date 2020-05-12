@@ -107,7 +107,7 @@ public class TeamManager : MonoBehaviour
     public void OnSelectTeam(TMP_Text text)         
     {
         SelectTeamName(text);
-        UpdateChoiceUnitUI();
+        UpdateChoiceUnitsUI();
         SetTeamNameUI();
     }
     
@@ -129,8 +129,11 @@ public class TeamManager : MonoBehaviour
     }
 
     // SetUnit
-    public void OnUpdateChoiceUnitUI()              
-    { UpdateChoiceUnitUI(); }
+    public void OnUpdateChoiceUnitUI()
+    {
+        UpdateChoiceUnitUI();
+    }
+
     public void OnSelectUnit(int index)
     {
         if (index >= _teams[_curSelectTeamName].Length || index < 0) { return; }
@@ -186,6 +189,28 @@ public class TeamManager : MonoBehaviour
 
     // ChoiceUnit
     private void UpdateChoiceUnitUI()
+    {
+        UnitStatus unit = _teams[_curSelectTeamName].GetUnit(_curSelectUnitNum);
+
+        if ((unit._equipedItems[0] == 0 && unit._equipedItems[1] == 0) || (unit._equipedItems[0] == 1 && unit._equipedItems[1] == 2))
+        { // 알몸 상태 혹은 초기화가 안된상태 = _UnitAddImage.texture
+            _slotImage[_curSelectUnitNum].texture = _UnitAddImage.texture;
+            _slotImage[_curSelectUnitNum].SetNativeSize();
+        }
+        else
+        {
+            _unitPhoto.UpdateTexture(ref _slotImage[_curSelectUnitNum], unit._equipedItems);
+            _slotImage[_curSelectUnitNum].rectTransform.sizeDelta = new Vector2(256.0f, 256.0f);
+
+            if (_slotImage[_curSelectUnitNum].texture == null)
+            {
+                _slotImage[_curSelectUnitNum].texture = _UnitAddImage.texture;
+                _slotImage[_curSelectUnitNum].SetNativeSize();
+            }
+        }
+    }
+
+    private void UpdateChoiceUnitsUI()
     {
         int unitCount = _teams[_curSelectTeamName].Length;
 
