@@ -32,7 +32,9 @@ public class SpawnManager : MonoBehaviour
     /// </summary>
     public void Spawn()
     {
-        GameObject clone = Instantiate(_unitPrefabs, _spawnPoint, Quaternion.identity, null);
+        GameObject clone = Instantiate(_unitPrefabs, 
+            (_spawnPoint != Vector3.zero ? _spawnPoint: transform.position + new Vector3(3,0,0)),
+            Quaternion.identity, null);
 
         clone.SetActive(false);
 
@@ -47,36 +49,78 @@ public class SpawnManager : MonoBehaviour
         clone.SetActive(true);
         unitCtrl.Spawn();
     }
-
+    
     #region Monobehaviour Function
 
     private void Awake()
     {
-        //// Test
-        //_teamUnits = new Team();
-        //_teamUnits.Init();
+        if (_isPlayer2)
+        {
+            // Test
+            _teamUnits = new Team();
+            _teamUnits.Init();
 
-        //int[] items = new int[4];
-        //items[0] = 3;
-        //items[1] = 4;
-        //_teamUnits.SetEquipedItems(0,items);
+            int[] items = new int[4];
+            items[0] = 3;
+            items[1] = 4;
+            _teamUnits.SetEquipedItems(0, items);
 
-        //items = new int[4];
-        //items[0] = 7;
-        //items[1] = 8;
-        //_teamUnits.SetEquipedItems(1, items);
+            items = new int[4];
+            items[0] = 7;
+            items[1] = 8;
+            _teamUnits.SetEquipedItems(1, items);
 
-        //items = new int[4];
-        //items[0] = 27;
-        //items[1] = 28;
-        //_teamUnits.SetEquipedItems(2, items);
+            items = new int[4];
+            items[0] = 27;
+            items[1] = 28;
+            _teamUnits.SetEquipedItems(2, items);
 
-        //items = new int[4];
-        //items[0] = 29;
-        //items[1] = 30;
-        //_teamUnits.SetEquipedItems(3, items);
+            items = new int[4];
+            items[0] = 29;
+            items[1] = 30;
+            _teamUnits.SetEquipedItems(3, items);
+        }
 
         _teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
+    }
+
+    public bool _isPlayer2 = false;
+
+    private void Update()
+    {
+        if (_isPlayer2)
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                SetSpawnIndex(0);
+                Spawn();
+            }
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                SetSpawnIndex(1);
+                Spawn();
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                SetSpawnIndex(2);
+                Spawn();
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SetSpawnIndex(3);
+                Spawn();
+            }
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                SetSpawnIndex(4);
+                Spawn();
+            }
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                SetSpawnIndex(5);
+                Spawn();
+            }
+        }
     }
 
     #endregion

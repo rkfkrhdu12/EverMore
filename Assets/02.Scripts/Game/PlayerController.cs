@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private SpawnManager _spawnManager;
 
-    //public GameObject _prefabs;
+    KeyCode[] _spawnKeyCode = new KeyCode[5];
 
     eMouseState _curMouseState;
     private enum eMouseState
@@ -27,6 +27,14 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _curMouseState = eMouseState.Spawn;
+
+        int i = 0;
+        _spawnKeyCode[i++] = KeyCode.Alpha1;
+        _spawnKeyCode[i++] = KeyCode.Alpha2;
+        _spawnKeyCode[i++] = KeyCode.Alpha3;
+        _spawnKeyCode[i++] = KeyCode.Alpha4;
+        _spawnKeyCode[i++] = KeyCode.Alpha5;
+
     }
 
     void Update()
@@ -47,47 +55,50 @@ public class PlayerController : MonoBehaviour
         {
             case eMouseState.None:                      break;
             case eMouseState.Camera:                    break;
-            case eMouseState.Spawn:    UpdateSpawn(); break;
+            case eMouseState.Spawn:    UpdateSpawnInput(); break;
             case eMouseState.Spawning: UpdateSpawnPoint();   break;
         }
     }
 
-    void UpdateSpawn()
+    void Spawn(int index)
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            _curMouseState = eMouseState.Spawning;
+        _curMouseState = eMouseState.Spawning;
 
-            _spawnManager.SetSpawnIndex(0);
+        _spawnManager.SetSpawnIndex(index);
+    }
+
+    void UpdateSpawnInput()
+    {
+        for(int i =0;i<_spawnKeyCode.Length;++i)
+        {
+            if (Input.GetKeyDown(_spawnKeyCode[i]))
+                Spawn(i);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            _curMouseState = eMouseState.Spawning;
-
-            _spawnManager.SetSpawnIndex(1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            _curMouseState = eMouseState.Spawning;
-
-            _spawnManager.SetSpawnIndex(2);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            _curMouseState = eMouseState.Spawning;
-
-            _spawnManager.SetSpawnIndex(3);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            _curMouseState = eMouseState.Spawning;
-
-            _spawnManager.SetSpawnIndex(4);
-        }
+        //if(Input.GetKeyDown(_spawnKeyCode[0]))
+        //{
+        //    Spawn(0);
+        //}
+        //
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    Spawn(1);
+        //}
+        //
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    Spawn(2);
+        //}
+        //
+        //if (Input.GetKeyDown(KeyCode.Alpha4))
+        //{
+        //    Spawn(3);
+        //}
+        //
+        //if (Input.GetKeyDown(KeyCode.Alpha5))
+        //{
+        //    Spawn(4);
+        //}
     }
 
     void UpdateSpawnPoint()
