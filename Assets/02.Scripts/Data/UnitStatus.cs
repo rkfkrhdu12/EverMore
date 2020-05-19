@@ -6,7 +6,7 @@ using GameplayIngredients;
 
 public struct UnitStatus
 {
-    private ItemList _itemList;
+    public eTeam _team;
 
     public float _maxhealth;
     public float _curhealth;
@@ -25,18 +25,17 @@ public struct UnitStatus
 
     public void ChangeItem(int curCode, int changeCode)
     {
-        if (null == _itemList)
-            _itemList = Manager.Get<GameManager>().itemList;
+        ItemList itemList = Manager.Get<GameManager>().itemList;
 
         for (int i = 0; i < 4; ++i)
         {
             if (curCode == _equipedItems[i])
             {
-                _itemList.ItemSearch(_equipedItems[i]).UnEquip(ref this);
+                itemList.ItemSearch(_equipedItems[i]).UnEquip(ref this);
 
                 _equipedItems[i] = changeCode;
 
-                _itemList.ItemSearch(_equipedItems[i]).Equip(ref this);
+                itemList.ItemSearch(_equipedItems[i]).Equip(ref this);
                 return;
             }
         }
@@ -47,7 +46,7 @@ public struct UnitStatus
         {
             _maxhealth = 0f;
             _defensivePower = 0f;
-            _moveSpeed = 0f;
+            _moveSpeed = 3.5f;
             _cost = 0;
             _coolTime = 0f;
             _weight = 0;
@@ -56,22 +55,19 @@ public struct UnitStatus
             _attackSpeed = 1f;
         }
 
-        if (null == _itemList)
-            _itemList = Manager.Get<GameManager>().itemList;
+        ItemList itemList = Manager.Get<GameManager>().itemList;
 
         for (int i = 0; i < _equipedItems.Length; ++i)
         {
             if(_equipedItems[i] == 0) { continue; }
 
-            _itemList.ItemSearch(_equipedItems[i]).Equip(ref this);
+            itemList.ItemSearch(_equipedItems[i]).Equip(ref this);
         }
     }
 
-    public void Init()
+    public void Init(eTeam team = eTeam.PLAYER)
     {
-        if (null == _itemList)
-            _itemList = Manager.Get<GameManager>().itemList;
-
+        _team = team;
         _maxhealth = 0f;
         _defensivePower = 0f;
         _moveSpeed = 0f;

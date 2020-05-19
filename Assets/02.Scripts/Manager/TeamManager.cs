@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class TeamManager : MonoBehaviour
 {
-    public void SetAddTeamName(string teamName) { _addTeamName = teamName; }
+    // public void SetAddTeamName(string teamName) { _addTeamName = teamName; }
 
     public void SetSelectUnitEquipedItems(int[] equipedItems)
     {
@@ -26,20 +26,20 @@ public class TeamManager : MonoBehaviour
     [SerializeField]
     private UnitPhoto _unitPhoto = null;
 
-    [SerializeField]
-    private MainSceneUI.MainSceneManager _sceneMgr = null;
+    //[SerializeField]
+    //private MainSceneUI.MainSceneManager _sceneMgr = null;
 
-    [SerializeField]
-    private TeamSelectionSystem _teamSelectSystem = null;
+    //[SerializeField]
+    //private TeamSelectionSystem _teamSelectSystem = null;
 
     // 팀 이름으로 팀을 찾는다
     private Dictionary<string, Team> _teams = new Dictionary<string, Team>();
     private List<string> _teamNameList = new List<string>();
 
 
-    [Header((MainSceneUI.UIDataKey.ChoiceUnit) + " UI")] 
- 
-    #region ChoiceUnit
+    [Header((MainSceneUI.UIDataKey.ChoiceUnitTeam) + " UI")]
+
+    #region ChoiceUnitTeam
     [SerializeField, Tooltip("현재 선택된 팀 이름")]
     private string _curSelectTeamName;
 
@@ -52,20 +52,20 @@ public class TeamManager : MonoBehaviour
     [SerializeField, Tooltip("팀이름 UI")]
     private TMP_Text _choiceUnitTeamNameUI = null;
 
-    [SerializeField]
-    private TeamSelectionSystem _teamSelectionSystem;
+    //[SerializeField]
+    //private TeamSelectionSystem _teamSelectionSystem;
 
     #endregion
 
-    [Header((MainSceneUI.UIDataKey.AddTeam) + " UI")]
+    //[Header((MainSceneUI.UIDataKey.AddTeam) + " UI")]
     
-    #region AddTeam
-    [SerializeField]
-    private TMP_InputField _teamAddInputField;
+    //#region AddTeam
+    //[SerializeField]
+    //private TMP_InputField _teamAddInputField;
 
-    [SerializeField, Tooltip("추가될 팀 이름")]
-    private string _addTeamName; 
-    #endregion
+    //[SerializeField, Tooltip("추가될 팀 이름")]
+    //private string _addTeamName; 
+    //#endregion
 
     [Header(MainSceneUI.UIDataKey.SetUnit + " UI")]
     
@@ -85,47 +85,53 @@ public class TeamManager : MonoBehaviour
 
     private void Awake()
     {
-        _addTeamName = "예비1팀";
+        // _addTeamName = "예비1팀";
 
-        AddTeam();
+        // AddTeam();
 
-        Manager.Get<GameManager>().SetPlayerUnits(_teams[_teamNameList[0]]);
+        string[] teamNames = new string[3];
+        teamNames[0] = "예비1팀";
+        teamNames[1] = "예비2팀";
+        teamNames[2] = "예비3팀";
 
-        for (int i = 0; i < _slotImage.Length; ++i)
+        for (int i = 0; i < 3; ++i)
         {
-            Image im = _slotImage[i].transform.parent.GetComponent<Image>();
+            Team t = new Team();
+            t.Name = teamNames[i];
+            t.Init();
 
-            im.alphaHitTestMinimumThreshold = 0.5f;
+            _teams.Add(teamNames[i], t);
+            _teamNameList.Add(teamNames[i]);
         }
+
+        //Manager.Get<GameManager>().SetPlayerUnits(_teams[_teamNameList[0]]);
+
+        //for (int i = 0; i < _slotImage.Length; ++i)
+        //{
+        //    Image im = _slotImage[i].transform.parent.GetComponent<Image>();
+
+        //    im.alphaHitTestMinimumThreshold = 0.5f;
+        //}
+    }
+
+    private void OnEnable()
+    {
+        _curSelectTeamName = _teamNameList[0];
     }
 
     #endregion
 
     #region OnClickEvent Function
 
-    // Choice Team
-    public void OnSelectTeam(TMP_Text text)         
+    public void OnSelectTeam(int teamIndex)
     {
-        SelectTeamName(text);
+        if(teamIndex >= _teamNameList.Count) { return; }
+
+        _curSelectTeamName = _teamNameList[teamIndex];
+
+        _choiceUnitTeamNameUI.text = _teams[_curSelectTeamName].Name;
+
         UpdateChoiceUnitsUI();
-        SetTeamNameUI();
-    }
-    
-    // Add Team
-    public void OnAddTeam()                         
-    {
-        if(_teams.ContainsKey(_addTeamName)) { return; }
-
-        AddTeam();
-
-        _teamSelectionSystem.AddButton(_teamAddInputField);
-    }
-
-    // Choice Unit
-    public void OnDeleteTeam()                      
-    {
-        // Team 데이터는 가비지 컬렉터가 지워줄꺼라 믿숩니다 ............
-        _teams.Remove(_curSelectTeamName);
     }
 
     // SetUnit
@@ -157,56 +163,53 @@ public class TeamManager : MonoBehaviour
 
     #region Private Function
 
-    // ChoiceTeam
-    private void SelectTeamName(TMP_Text text)  
-    {
-        string teamName = text.text;
-
-        if (string.IsNullOrEmpty(teamName)) { return; }
-        if (!_teams.ContainsKey(teamName)) { return; }
-
-        _curSelectTeamName = teamName;
-    }
-    private void SetTeamNameUI()                
-    {
-        _choiceUnitTeamNameUI.text = _teams[_curSelectTeamName].Name;
-    }
-
-    // AddTeam
-    private void AddTeam()                      
-    {
-        if (_teams.ContainsKey(_addTeamName)) { return; }
-
-        string teamName = _addTeamName;
-
-        Team t = new Team();
-        t.Name = teamName;
-        t.Init();
-
-        _teams.Add(teamName, t);
-        _teamNameList.Add(teamName);
-    }
-
     // ChoiceUnit
-    private void UpdateChoiceUnitUI()
+    private void UpdateChoiceUnitUI(int index = -1)
     {
-        UnitStatus unit = _teams[_curSelectTeamName].GetUnit(_curSelectUnitNum);
+        int selectUnitNum = index == -1 ? _curSelectUnitNum : index;
+
+        UnitStatus unit = _teams[_curSelectTeamName].GetUnit(selectUnitNum) ;
+        RawImage rawImage = _slotImage[selectUnitNum];
 
         if ((unit._equipedItems[0] == 0 && unit._equipedItems[1] == 0) || (unit._equipedItems[0] == 1 && unit._equipedItems[1] == 2))
         { // 알몸 상태 혹은 초기화가 안된상태 = _UnitAddImage.texture
-            _slotImage[_curSelectUnitNum].texture = _UnitAddImage.texture;
-            _slotImage[_curSelectUnitNum].SetNativeSize();
+            rawImage.texture = _UnitAddImage.texture;
+            rawImage.SetNativeSize();
         }
         else
         {
-            _unitPhoto.UpdateTexture(ref _slotImage[_curSelectUnitNum], unit._equipedItems);
-            _slotImage[_curSelectUnitNum].rectTransform.sizeDelta = new Vector2(256.0f, 256.0f);
+            _unitPhoto.UpdateTexture(ref rawImage, unit._equipedItems);
 
-            if (_slotImage[_curSelectUnitNum].texture == null)
-            {
-                _slotImage[_curSelectUnitNum].texture = _UnitAddImage.texture;
-                _slotImage[_curSelectUnitNum].SetNativeSize();
-            }
+            StartCoroutine(UnitTextureWaiting(rawImage));
+
+            //if (rawImage.texture == null)
+            //{
+            //    rawImage.texture = _UnitAddImage.texture;
+            //    rawImage.SetNativeSize();
+            //}
+            //else
+            //{
+            //    rawImage.SetNativeSize();
+            //    rawImage.rectTransform.sizeDelta *= .625f;
+            //}
+        }
+    }
+
+    private readonly WaitForSeconds SideTime = new WaitForSeconds(0.075f);
+    private IEnumerator UnitTextureWaiting(RawImage rawImage)
+    {
+        //중간 텀
+        yield return SideTime;
+
+        if (rawImage.texture == null)
+        {
+            rawImage.texture = _UnitAddImage.texture;
+            rawImage.SetNativeSize();
+        }
+        else
+        {
+            rawImage.SetNativeSize();
+            rawImage.rectTransform.sizeDelta *= .6f;
         }
     }
 
@@ -218,24 +221,26 @@ public class TeamManager : MonoBehaviour
 
         for (int i = 0; i < _slotImage.Length; ++i)
         {
-            UnitStatus unit = _teams[_curSelectTeamName].GetUnit(i);
+            UpdateChoiceUnitUI(i);
 
-            if ((unit._equipedItems[0] == 0 && unit._equipedItems[1] == 0) || (unit._equipedItems[0] == 1 && unit._equipedItems[1] == 2))
-            { // 알몸 상태 혹은 초기화가 안된상태 = _UnitAddImage.texture
-                _slotImage[i].texture = _UnitAddImage.texture;
-                _slotImage[i].SetNativeSize();
-            }
-            else
-            {
-                _unitPhoto.UpdateTexture(ref _slotImage[i], unit._equipedItems);
-                _slotImage[i].rectTransform.sizeDelta = new Vector2(256.0f, 256.0f);
+            //UnitStatus unit = _teams[_curSelectTeamName].GetUnit(i);
 
-                if(_slotImage[i].texture == null)
-                {
-                    _slotImage[i].texture = _UnitAddImage.texture;
-                    _slotImage[i].SetNativeSize();
-                }
-            }
+            //if ((unit._equipedItems[0] == 0 && unit._equipedItems[1] == 0) || (unit._equipedItems[0] == 1 && unit._equipedItems[1] == 2))
+            //{ // 알몸 상태 혹은 초기화가 안된상태 = _UnitAddImage.texture
+            //    _slotImage[i].texture = _UnitAddImage.texture;
+            //    _slotImage[i].SetNativeSize();
+            //}
+            //else
+            //{
+            //    _unitPhoto.UpdateTexture(ref _slotImage[i], unit._equipedItems);
+            //    // _slotImage[i].rectTransform.sizeDelta = new Vector2(320.0f, 320.0f);
+
+            //    if(_slotImage[i].texture == null)
+            //    {
+            //        _slotImage[i].texture = _UnitAddImage.texture;
+            //        _slotImage[i].SetNativeSize();
+            //    }
+            //}
         }
     }
 

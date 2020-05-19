@@ -80,8 +80,8 @@ public class InGameSystem : MonoBehaviour
 
     private void UpdateBase()
     {
-        _player1Bar.fillAmount = _player1Base._curHp / _player1Base._maxHp;
-        _player2Bar.fillAmount = _player2Base._curHp / _player2Base._maxHp;
+        _player1Bar.fillAmount = _player1Base.GetCurHealth() / _player1Base.GetMaxHealth();
+        _player2Bar.fillAmount = _player2Base.GetCurHealth() / _player2Base.GetMaxHealth();
     }
 
     private void UpdateGoldMana()

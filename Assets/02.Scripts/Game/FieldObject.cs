@@ -2,12 +2,7 @@
 
 public class FieldObject : MonoBehaviour
 {
-    //현재 체력에 대한 변수
-    [HideInInspector]
     public float _curHp;
-
-    //체력의 최대치 변수
-    [HideInInspector]
     public float _maxHp;
 
     //아군인지 적군인지에 대한 변수
@@ -18,9 +13,9 @@ public class FieldObject : MonoBehaviour
     [HideInInspector]
     public bool _isDead;
 
-    public virtual void DamageReceive(float damage)
-    {
-    }
+    public virtual void DamageReceive(float damage) { }
+    public float GetCurHealth() { return _curHp; }
+    public float GetMaxHealth() { return _maxHp; }
 
     public bool IsDead
     {

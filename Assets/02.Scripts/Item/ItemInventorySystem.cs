@@ -19,7 +19,10 @@ public class ItemInventorySystem : MonoBehaviour
     [SerializeField]
     private GameObject _unitModelUI = null;
 
-    public eCodeType Type
+    [SerializeField]
+    private ButtonGroup _itemsButtonGroup;
+
+    public eCodeType Type   
     {
         get => _curType;
         set
@@ -142,16 +145,8 @@ public class ItemInventorySystem : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 타입을 헤멧을 만듭니다.
-    /// </summary>
     public void TypeHelmet() => Type = eCodeType.HELMET;
-
-    /// <summary>
-    /// 타입을 아머로 만듭니다.
-    /// </summary>
     public void TypeBodyArmour() => Type = eCodeType.BODYARMOUR;
-
     public void TypeRightWeapon() { Type = eCodeType.WEAPON; _isLeftWeapon = false; }
     public void TypeLeftWeapon()  { Type = eCodeType.WEAPON; _isLeftWeapon = true; }
 
@@ -162,7 +157,8 @@ public class ItemInventorySystem : MonoBehaviour
         // 유닛 아이템들이 유닛1 수정완료(5,6)   유닛2 수정완료(5,6)
 
         _equipedItems = new int[4];
-        _equipedItems = items;
+        for (int i = 0; i < 4; ++i)
+            _equipedItems[i] = items[i];
 
         UpdateInventory();
     }
@@ -209,10 +205,11 @@ public class ItemInventorySystem : MonoBehaviour
 
     private void UpdateInventory()
     {
+        int curType = (int)_curType;
         // Update Slot
         {
             //현재 타입이 무엇인지 가져옵니다.
-            int curType = (int)_curType;
+            
 
             for (int i = 0; i < _inventory[curType].Count; ++i)
                 if (_itemList.ItemSearch(_inventory[curType][i]) == null) _inventory[curType].Remove(i);
@@ -240,17 +237,28 @@ public class ItemInventorySystem : MonoBehaviour
                 for (int j = 0; j > emptySlotCount; --j)
                     Instantiate(_itemPrefab, Vector3.zero, Quaternion.identity, _contentObject.transform).SetActive(true);
 
+            int selectedSlot = _itemsButtonGroup.GetSelectNumber();
+            if (selectedSlot != -1)
+                _itemsButtonGroup.buttonPros[selectedSlot].isSelected = false;
+
+            _itemsButtonGroup.buttonPros = new List<ButtonPro>();
+
             //현재 슬롯 개수만큼 반복하여, 아이템 넘버를 변경한다.
             for (int i = 0; i < curUseItemSlotCount; ++i)
-                _contentObject.transform.GetChild(i).GetComponent<ItemSlot>().ItemNumber = _inventory[curType][i];
+            {
+                GameObject curSlot = _contentObject.transform.GetChild(i).gameObject;
+
+                curSlot.GetComponent<ItemSlot>().ItemNumber = _inventory[curType][i];
+                _itemsButtonGroup.AddButton(curSlot.GetComponent<ButtonPro>());
+
+                if(_inventory[curType][i] == _equipedItems[curType])
+                { // 창작한 아이템코드가 이번 아이템코드
+                    _itemsButtonGroup.SelectButton(curSlot.GetComponent<ButtonPro>());
+                }
+            }
         }
 
         UpdateModel();
-
-        // Update Select
-        { // 유닛이 끼고잇는 아이템을 표시
-
-        }
     }
 
     void UpdateModel(in int prevItem = 0)

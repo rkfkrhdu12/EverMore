@@ -11,7 +11,6 @@
     "com.unity.ide.rider": "2.0.3",
     "com.unity.ide.vscode": "1.2.0",
     "com.unity.memoryprofiler": "0.2.3-preview.2",
-    "com.unity.nkstudio.buttonpro": "https://github.com/bnm000215/UnityButtonPro.git",
     "com.unity.nkstudio.enumpro": "https://github.com/bnm000215/UnityEnumPro.git",
     "com.unity.nkstudio.unitydebugoptimization": "https://github.com/bnm000215/Unity-Debug-Optimization.git",
     "com.unity.polybrush": "1.0.1",
@@ -62,10 +61,6 @@
     "com.unity.gameplay-ingredient-simple": {
       "revision": "HEAD",
       "hash": "1785669f1284212ad622c44e61b8fc01d0c0f8d4"
-    },
-    "com.unity.nkstudio.buttonpro": {
-      "revision": "HEAD",
-      "hash": "1c4bd476b640ef3ec65b425afa85c4242db2d7ca"
     },
     "com.unity.nkstudio.enumpro": {
       "revision": "HEAD",

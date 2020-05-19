@@ -53,10 +53,10 @@ public class PlayerController : MonoBehaviour
     {
         switch (_curMouseState)
         {
-            case eMouseState.None:                      break;
-            case eMouseState.Camera:                    break;
-            case eMouseState.Spawn:    UpdateSpawnInput(); break;
-            case eMouseState.Spawning: UpdateSpawnPoint();   break;
+            case eMouseState.None:                              break;
+            case eMouseState.Camera:                            break;
+            case eMouseState.Spawn:    UpdateSpawnInput();      break;
+            case eMouseState.Spawning: UpdateSpawnPoint();      break;
         }
     }
 
@@ -69,36 +69,11 @@ public class PlayerController : MonoBehaviour
 
     void UpdateSpawnInput()
     {
-        for(int i =0;i<_spawnKeyCode.Length;++i)
+        for (int i = 0; i < _spawnKeyCode.Length; ++i) 
         {
             if (Input.GetKeyDown(_spawnKeyCode[i]))
                 Spawn(i);
         }
-
-        //if(Input.GetKeyDown(_spawnKeyCode[0]))
-        //{
-        //    Spawn(0);
-        //}
-        //
-        //if (Input.GetKeyDown(KeyCode.Alpha2))
-        //{
-        //    Spawn(1);
-        //}
-        //
-        //if (Input.GetKeyDown(KeyCode.Alpha3))
-        //{
-        //    Spawn(2);
-        //}
-        //
-        //if (Input.GetKeyDown(KeyCode.Alpha4))
-        //{
-        //    Spawn(3);
-        //}
-        //
-        //if (Input.GetKeyDown(KeyCode.Alpha5))
-        //{
-        //    Spawn(4);
-        //}
     }
 
     void UpdateSpawnPoint()
@@ -112,18 +87,19 @@ public class PlayerController : MonoBehaviour
             {
                 Vector3 dist = hitInfo.point - transform.position;
 
-                Debug.Log("" + dist.sqrMagnitude + " < " + (_spawnRange * _spawnRange) + "  "+ dist.sqrMagnitude + " > " + (_spawnRange + _spawnRange));
-
                 if (dist.sqrMagnitude < _spawnRange * _spawnRange && dist.sqrMagnitude > _spawnRange + _spawnRange)
                 { // Spawn
                     _spawnManager.SetSpawnPoint(hitInfo.point);
 
                     _spawnManager.Spawn();
 
-                    Debug.Log("Spawn");
                     _curMouseState = eMouseState.Spawn;
                 }
             }
+        }
+        else if(Input.GetMouseButtonDown(0) && _curMouseState != eMouseState.Spawning)
+        {
+            _curMouseState = eMouseState.Camera;
         }
     }
     #endregion

@@ -9,11 +9,9 @@ namespace MainSceneUI
     public struct UIDataKey
     {
         public const string Lobby = "Lobby";
-        public const string ChoiceTeam = "ChoiceTeam";
-        public const string AddTeam = "AddTeam";
-        public const string ChoiceUnit = "ChoiceUnit";
         public const string SetUnit = "SetUnit";
         public const string Matching = "Match";
+        public const string ChoiceUnitTeam = "ChoiceUnitTeam";
     }
 
     public class UIScreen
@@ -31,7 +29,7 @@ namespace MainSceneUI
         {
             activeSelf = active;
 
-            myUI?.SetActive(active);
+            myUI?.SetActive(active); 
         }
     } 
     #endregion
@@ -45,14 +43,8 @@ namespace MainSceneUI
         [Header("각각의 UI들")]
 
         #region Team UIs
-        [SerializeField, Tooltip("팀을 고를 UI 오브젝트")]
-        private GameObject _choiceTeamUI;
-
-        [SerializeField, Tooltip("팀을 추가하는 UI 오브젝트")]
-        private GameObject _addTeamUI;
-
-        [SerializeField, Tooltip("유닛을 고를 UI 오브젝트")]
-        private GameObject _choiceUnitUI;
+        [SerializeField]
+        private GameObject _choiceUnitTeamUI;
 
         [SerializeField, Tooltip("유닛을 세팅할 UI 오브젝트")]
         private GameObject _setUnitUI;
@@ -64,8 +56,8 @@ namespace MainSceneUI
         [Space, SerializeField]
         private TeamManager _teamManager;
 
-        [SerializeField]
-        private GameObject _canvas;
+        //[SerializeField]
+        //private GameObject _canvas;
 
         #endregion
 
@@ -82,11 +74,9 @@ namespace MainSceneUI
         {
             //UI키 : UI 오브젝트 형태로 링크해줍니다.
             InitUI(UIDataKey.Lobby);
-            InitUI(UIDataKey.ChoiceTeam, _choiceTeamUI);
-            InitUI(UIDataKey.AddTeam, _addTeamUI);
-            InitUI(UIDataKey.ChoiceUnit, _choiceUnitUI);
             InitUI(UIDataKey.SetUnit, _setUnitUI);
             InitUI(UIDataKey.Matching, _MatchUI);
+            InitUI(UIDataKey.ChoiceUnitTeam, _choiceUnitTeamUI);
 
             Image[] images = FindObjectsOfType<Image>();
 

@@ -13,11 +13,11 @@ public class Team
     private UnitStatus[] _units = new UnitStatus[UnitCount];
     public int Length { get { return _units.Length; } }
 
-    public void Init()
+    public void Init(eTeam team = eTeam.PLAYER)
     {
         for (int i = 0; i < Length; ++i)
         {
-           _units[i].Init();
+           _units[i].Init(team);
         }
     }
 

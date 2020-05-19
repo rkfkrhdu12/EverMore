@@ -25,7 +25,7 @@ public class SpawnManager : MonoBehaviour
     public void SetSpawnIndex(int index) => _curSpawnIndex = index;
 
     public void SetSpawnPoint(Vector3 pos) => _spawnPoint = pos;
-    public Vector3 GetCastlePosition() { return transform.position; }
+    public Castle GetCastle() { return GetComponent<Castle>(); }
 
     /// <summary>
     /// UI의 버튼 혹은 설정된 키로 유닛을 스폰
@@ -36,33 +36,35 @@ public class SpawnManager : MonoBehaviour
             (_spawnPoint != Vector3.zero ? _spawnPoint: transform.position + new Vector3(3,0,0)),
             Quaternion.identity, null);
 
-        clone.SetActive(false);
-
         UnitController unitCtrl = clone.GetComponent<UnitController>();
 
-        unitCtrl._enemyCastlePosition = _enemySpawnManager.GetCastlePosition();
+        unitCtrl._enemyCastleObject = _enemySpawnManager.GetCastle();
 
         unitCtrl._status = _teamUnits.GetUnit(_curSpawnIndex);
 
         UnitModelManager.UpdateModel(clone.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
 
-        clone.SetActive(true);
         unitCtrl.Spawn();
+
+        clone.SetActive(true);
     }
     
     #region Monobehaviour Function
 
     private void Awake()
     {
+        GetComponent<FieldObject>()._team = _isPlayer2 ? eTeam.ENEMY : eTeam.PLAYER;
+
         if (_isPlayer2)
         {
             // Test
             _teamUnits = new Team();
-            _teamUnits.Init();
+            _teamUnits.Init(eTeam.ENEMY);
 
             int[] items = new int[4];
             items[0] = 3;
             items[1] = 4;
+            items[3] = 9;
             _teamUnits.SetEquipedItems(0, items);
 
             items = new int[4];
@@ -80,8 +82,8 @@ public class SpawnManager : MonoBehaviour
             items[1] = 30;
             _teamUnits.SetEquipedItems(3, items);
         }
-
-        _teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
+        else
+            _teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
     }
 
     public bool _isPlayer2 = false;

@@ -14,26 +14,12 @@ public class UnitController : FieldObject
 {
     public void Spawn()
     {
-        //콜라이더 비가 비어있다면, 가져온다.
-        if (_attackAreaCollider == null)
-            _attackAreaCollider = GetComponent<BoxCollider>();
+        if (_aniPro == null)
+            _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
+
+        _aniPro.Init(transform.GetChild(0).GetComponent<Animator>());
 
         _status.UpdateItems();
-
-        //공격 영역 사이즈를 공격 범위에 영향을 준다. 
-        _attackAreaCollider.size *= _status._attackRange;
-
-        _animator = transform.GetChild(0).GetComponent<Animator>();
-
-        _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
-
-        _aniPro.Init(_animator);
-
-        _aniPro.SetParam(_idAttackSpd, 1 / _attackSpeed);
-
-        _navMeshAgent.updateRotation = false;
-
-        _curState = eState.IDLE;
     }
 
     public override void DamageReceive(float damage)
@@ -50,6 +36,8 @@ public class UnitController : FieldObject
         //해당 유닛을 삭제 목록에 올립니다.
         DeleteObjectSystem.AddDeleteObject(gameObject);
     }
+
+    #region Show Inspector
 
     #region Enum
 
@@ -71,21 +59,12 @@ public class UnitController : FieldObject
 
     #endregion
 
-    #region Macro
-
-    private static readonly int _idAttack = Animator.StringToHash("Attack");
-    private static readonly int _idAttackSpd = Animator.StringToHash("AttackSpeed");
-    private static readonly int _idMove = Animator.StringToHash("Move");
-
-    #endregion
-
-    #region Show Inspector
     //능력 번후
     [HideInInspector]
-    public int _abilityNum;
+    private int _abilityNum;
 
     // 공격 범위일듯.
-    public BoxCollider _attackAreaCollider;
+    // public SphereCollider _attackAreaCollider;
 
     //공격 타겟에대한 큐
     public Queue<FieldObject> _attackTargets = new Queue<FieldObject>();
@@ -101,30 +80,38 @@ public class UnitController : FieldObject
     private NavMeshAgent _navMeshAgent = null;
 
     // 상대방 진영의 성
-    public Vector3 _enemyCastlePosition;
+    public FieldObject _enemyCastleObject;
 
     #endregion
 
     #region Hide Inspector
+
+    #region Macro
+
+    private static readonly int _idAttack = Animator.StringToHash("Attack");
+    private static readonly int _idAttackSpd = Animator.StringToHash("AttackSpeed");
+    private static readonly int _idMove = Animator.StringToHash("Move");
+
+    #endregion
 
     #region 유닛 상태
 
     public UnitStatus _status;
 
     //방어력
-    public float _defensivePower { get { return _status._defensivePower; } }
+    // public float _defensivePower { get { return _status._defensivePower; } }
 
     //공격 데미지
-    public float _attackDamage { get { return _status._attackDamage; } }
+    private float _attackDamage { get { return _status._attackDamage; } }
 
     //공격 속도
-    public float _attackSpeed { get { return _status._attackSpeed; } }
+    private float _attackSpeed { get { return _status._attackSpeed; } }
 
     //공격 범위
-    public float _attackRange { get { return _status._attackRange; } }
+    private float _attackRange { get { return _status._attackRange; } }
 
     //이동 속도
-    public float _moveSpeed { get { return _status._moveSpeed; } }
+    private float _moveSpeed { get { return _status._moveSpeed; } }
 
     // 유닛 코스트
     public int _cost { get { return _status._cost; } }
@@ -137,11 +124,11 @@ public class UnitController : FieldObject
     #region Other
 
     //애니메이터 관련 변수
-    private Animator _animator;
+    //private Animator _animator;
     private AnimatorPro _aniPro;
 
     //리지드 바디 변수
-    private Rigidbody _rig;
+    //private Rigidbody _rig;
 
     //유닛 상태에 대한 변수
     public eState _curState = eState.NONE;
@@ -150,8 +137,9 @@ public class UnitController : FieldObject
     public FieldObject _curTarget = null;
 
     //이동에 대한 파라미터
-    private float moveParameter;
+    // private float moveParameter;
 
+    // bool _isSpawn = false;
     #endregion
 
     #endregion
@@ -160,20 +148,44 @@ public class UnitController : FieldObject
 
     private void FixedUpdate()
     {
+        //if (!_isSpawn) return;
+
         //현재 상태가 비어 있거나, 죽었다면 : return
-        if (_curState == eState.NONE || _isDead) return;
+        if (_isDead) return;
         
         //이동 <--> 공격, 상태 변환
-        UpdateState();
+        // UpdateState();
 
         //상태 변수를 통한, 유닛 업데이트
         UpdateUnit();
     }
 
+    private void OnEnable()
+    {
+        UpdateTarget();
+
+        //_navMeshAgent.SetDestination(_curTarget.transform.position);
+        _navMeshAgent.updateRotation = false;
+
+        _aniPro.SetParam(_idAttackSpd, _attackSpeed + .15f);
+        _aniPro.SetParam(_idAttack, false);
+
+        _curState = eState.IDLE;
+
+        _team = _status._team;
+        _curHp = _status._curhealth;
+        _maxHp = _status._maxhealth;
+
+        _navMeshAgent.stoppingDistance = _status._attackRange;
+        _navMeshAgent.speed = _status._moveSpeed;
+
+        //_isSpawn = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         //닿은 생대가 유닛이 아니라면 : 아래 코드 구문 실행 X
-        if (!other.CompareTag("Unit"))
+        if (!other.CompareTag("Unit") || other.isTrigger)
             return;
 
         //other의 필드 관점의 데이터를 가져옴.
@@ -183,99 +195,63 @@ public class UnitController : FieldObject
         if (_attackTargets.Contains(target) || target._team == _team)
             return;
 
+        // if(_team == eTeam.PLAYER) { Debug.Log("Enemy Check !"); }
+
         //공격 타겟에 해당 타겟을 넣어줍니다.
         _attackTargets.Enqueue(target);
-
-        _aniPro?.SetParam(_idAttack, true);
     }
 
     #endregion
 
     #region Private Function
 
-    private void UpdateState()
-    {
-        // 설정된 타겟이 없거나, 설정되어야할 타겟도 없으면 : eState.Move
-        if (_curTarget == null && _attackTargets.Count == 0)
-            _curState = eState.MOVE;
-        else
-            // 설정된 타겟 혹은 설정되어야할 타겟이 있으므로 : eState.Attack
-            _curState = eState.ATTACK;
-    }
-
     private void UpdateUnit()
     {
-        moveParameter = 0;
-        
-        switch (_curState)
-        {
-            case eState.MOVE:
-            UpdateMove();
-            break;
-            case eState.ATTACK:
-            UpdateAttack();
-            break;
-        }
+        //moveParameter = 0;
+
+        UpdateMonobehaviour();
 
         UpdateAnimation();
     }
 
-    private void UpdateMove()
+    private void UpdateMonobehaviour()
     {
-        _navMeshAgent.SetDestination(
-            //_curTarget == null ?
-            _enemyCastlePosition);// :
-            //_curTarget.transform.position);
+        if (_curTarget == _enemyCastleObject || _curTarget.GetCurHealth() <= 0)
+            UpdateTarget();
 
-        //moveParameter = 1;
+        float remainingDistance = (transform.position - _curTarget.transform.position).magnitude;
 
-        //transform.Translate(0, 0, _moveSpeed * Time.deltaTime);
-    }
+        if(_team == eTeam.PLAYER) { Debug.Log("" + remainingDistance + "   " + _attackRange); }
 
-    private void UpdateAttack()
-    {
-        //// 타겟이 없엇거나, 체력이 0 이하로 내려가면 : 새로운 타겟을 정한다.
-        //if (_curTarget == null || _curTarget._curHp <= 0)
-        //{
-        //    //공격할 타겟이 0명이라면 : null(상대 성이 타겟) 아니면 그 대상에게 전진
-        //    if (_attackTargets.Count == 0) { _curTarget = null; }
-        //    //현재 타겟을 Dequeue한다.
-        //    else { _curTarget = _attackTargets.Dequeue(); }
-        //}
-
-        //공격 시간이 공격 속도보다 같거나 낮다면 : 공격 시간을 높혀준다.
-        if (_attackTime <= _attackSpeed)
-            _attackTime += Time.deltaTime;
-        else
+        if (remainingDistance <= _attackRange)
         {
-            // 타겟이 없엇거나, 체력이 0 이하로 내려가면 : 새로운 타겟을 정한다.
-            if (_curTarget == null || _curTarget._curHp <= 0)
-            {
-                //공격할 타겟이 0명이라면 : return
-                if (_attackTargets.Count == 0)
-                {
-                    _curTarget = null;
-                    return;
-                }
+            _curState = eState.ATTACK;
+            _navMeshAgent.isStopped = true;
+            _navMeshAgent.velocity = Vector3.zero;
 
-                //현재 타겟을 Dequeue한다.
-                _curTarget = _attackTargets.Dequeue();
-            }
+            if (_attackTime <= _attackSpeed) { _attackTime += Time.deltaTime; return; }
 
-            //공격 시간 초기화
             _attackTime = 0f;
 
             //데미지 리시브
             _curTarget.DamageReceive(_attackDamage);
+
+            // if(_team == eTeam.PLAYER) { Debug.Log("Hit !"); }
+
+            if (_curTarget.GetCurHealth() <= 0)
+                UpdateTarget();
+        }
+        else
+        {
+            _navMeshAgent.isStopped = false;
+            _curState = eState.MOVE;
         }
     }
 
     private void UpdateAnimation()
     {
         if (_aniPro == null) return;
-
-        _aniPro.SetParam(_idMove, 1.0f);
-
+        
         if (_navMeshAgent.velocity.sqrMagnitude >= .1f * .1f && _navMeshAgent.remainingDistance <= .1f)
         {
             _aniPro.SetParam(_idMove, 0);
@@ -289,17 +265,32 @@ public class UnitController : FieldObject
             transform.rotation = Quaternion.Slerp(transform.rotation,
                                                   targetAngle,
                                                   Time.deltaTime * 8.0f);
-
         }
 
-        ////공격 중이 아니라면 : return
-        //if (!_aniPro.GetParam<bool>(_idAttack)) return;
+        if (_curState == eState.ATTACK)
+        {
+            _aniPro.SetParam(_idAttack, true);
+        }
+        else if (_curState == eState.MOVE) 
+        {
+            _aniPro.SetParam(_idAttack, false);
 
-        ////타겟이 있거나, 타겟의 체력이 0 초과라면 : return
-        //if (_curTarget != null && _curTarget._curHp > 0) return;
+            _aniPro.SetParam(_idMove, 1.0f);
+        }
+    }
 
-        ////공격할 타겟이 0명이라면 : 공격을 중지함.
-        //if (_attackTargets.Count == 0) _aniPro.SetParam(_idAttack, false);
+    void UpdateTarget()
+    {
+        if (_attackTargets.Count == 0)
+        {
+            _curTarget = _enemyCastleObject;
+        }
+        else
+        {
+            _curTarget = _attackTargets.Dequeue();
+        }
+
+        _navMeshAgent.SetDestination(_curTarget.transform.position);
     }
 
     #endregion
@@ -383,14 +374,8 @@ public class UnitModelManager
 
     #region Private Function
 
-    private static void Init()
+    private static void InitData(ref string[] armourList, ref int armourIndex, ref string[] weaponList, ref int weaponIndex)
     {
-        _itemList = Manager.Get<GameManager>().itemList;
-
-        const int _completeArmourCount = 6;
-        string[] armourList = new string[_completeArmourCount * 2];
-
-        int armourIndex = 0;
         armourList[armourIndex++] = "일반 머리";
         armourList[armourIndex++] = "일반 옷";
         armourList[armourIndex++] = "견습 기사의 투구";
@@ -403,6 +388,30 @@ public class UnitModelManager
         armourList[armourIndex++] = "A.I의 몸통 파츠";
         armourList[armourIndex++] = "제국의 헬멧";
         armourList[armourIndex++] = "제국의 슈트";
+
+        weaponList[weaponIndex++] = "ㅡ"; // +창
+        weaponList[weaponIndex++] = "병사의 창";
+        weaponList[weaponIndex++] = "십자창";
+        weaponList[weaponIndex++] = "기사의 검";
+        weaponList[weaponIndex++] = "병사의 검";
+        weaponList[weaponIndex++] = "ㅡㅡ"; // 소주
+        weaponList[weaponIndex++] = "사각 나무 방패";
+        weaponList[weaponIndex++] = "셔우드의 활";
+    }
+
+    private static void Init()
+    {
+        _itemList = Manager.Get<GameManager>().itemList;
+
+        const int _completeArmourCount = 6;
+        string[] armourList = new string[_completeArmourCount * 2];
+        int armourIndex = 0;
+
+        const int _completeWeaponCount = 6;
+        string[] weaponList = new string[_completeWeaponCount * 2];
+        int weaponIndex = 0;
+
+        InitData(ref armourList, ref armourIndex, ref weaponList, ref weaponIndex);
 
         int equipmentCount = 2;
         int[] modelNumList = new int[_completeArmourCount * 2];
@@ -420,13 +429,6 @@ public class UnitModelManager
 
             _modelItemPoint.Add(armourList[i], v);
         }
-
-        const int _completeWeaponCount = 6;
-        string[] weaponList = new string[_completeWeaponCount * 2];
-
-        int weaponIndex = 0;
-
-        weaponList[weaponIndex++] = "기사의 검";
 
         for (int i = 0; i < weaponIndex; ++i)
         {
