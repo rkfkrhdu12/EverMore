@@ -207,7 +207,7 @@ MonoBehaviour:
   - {fileID: 751911392}
   - {fileID: 2007426651}
   - {fileID: 709697512}
-  _SelectedNumber: -1
+  _SelectedNumber: 0
   DisableToReset: 1
 --- !u!114 &66291317 stripped
 MonoBehaviour:
@@ -1094,7 +1094,7 @@ MonoBehaviour:
   - {fileID: 1906777474}
   - {fileID: 1279398548}
   - {fileID: 1496452333}
-  _SelectedNumber: 0
+  _SelectedNumber: -1
   DisableToReset: 0
 --- !u!1 &249735005
 GameObject:

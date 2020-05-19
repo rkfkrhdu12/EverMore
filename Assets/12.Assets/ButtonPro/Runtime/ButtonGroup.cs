@@ -127,7 +127,7 @@ public class ButtonGroup : MonoBehaviour
 
         SelectedNumber = ButtonSearch(buttonPros, button);
 
-        if (buttonPros.Count > _preNumber)
+        if (buttonPros.Count > _preNumber && 0 <= _preNumber) 
             buttonPros[_preNumber].isSelected = false;
 
         button.isSelected = true;

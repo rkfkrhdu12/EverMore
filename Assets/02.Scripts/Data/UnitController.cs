@@ -318,7 +318,7 @@ public class UnitModelManager
         }
     }
 
-    public static void UpdateModel(GameObject unit, in int[] equipedItems, in int prevItem = 0)
+    public static void UpdateModel(GameObject unit, in int[] equipedItems,int prevItem = 0)
     {
         if (0 == _modelItemPoint.Count)
             Init();
@@ -327,12 +327,22 @@ public class UnitModelManager
 
         if (!unit.activeSelf) { unit.SetActive(true); }
 
+        for (int i = 0; i < equipedItems.Length; ++i) 
+        {
+            if(equipedItems[i] == prevItem)
+            {
+                prevItem = 0;
+                break;
+            }
+        }
+
         int[] index;
         if (0 != prevItem)
         {
             index = _modelItemPoint[_itemList.ItemSearch(prevItem).Name];
 
-            unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(false);
+            if (unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.activeSelf)
+                unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(false);
         }
 
         for (int i = 0; i < 2; ++i)
@@ -341,7 +351,8 @@ public class UnitModelManager
 
             index = _modelItemPoint?[itemName];
 
-            unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(true);
+            if (!unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.activeSelf)
+                unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(true);
         }
 
         if (equipedItems[2] != 0)

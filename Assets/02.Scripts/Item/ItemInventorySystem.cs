@@ -251,11 +251,14 @@ public class ItemInventorySystem : MonoBehaviour
                 curSlot.GetComponent<ItemSlot>().ItemNumber = _inventory[curType][i];
                 _itemsButtonGroup.AddButton(curSlot.GetComponent<ButtonPro>());
 
-                if(_inventory[curType][i] == _equipedItems[curType])
+                if (_inventory[curType][i] == _equipedItems[curType])
                 { // 창작한 아이템코드가 이번 아이템코드
                     _itemsButtonGroup.SelectButton(curSlot.GetComponent<ButtonPro>());
                 }
+                
             }
+
+            // _itemsButtonGroup.SelectedNumber = -1;
         }
 
         UpdateModel();
