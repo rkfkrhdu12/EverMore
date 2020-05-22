@@ -75,44 +75,47 @@ public class ItemInventorySystem : MonoBehaviour
     {
         #region Test
 
-        const int _completeModelCount = 6;
-        string[] itemNameList = new string[_completeModelCount * 2];
+        List<string> armourList = new List<string>();
 
-        int itemIndex = 0;
-        itemNameList[itemIndex++] = "일반 머리";
-        itemNameList[itemIndex++] = "일반 옷";
-        itemNameList[itemIndex++] = "견습 기사의 투구";
-        itemNameList[itemIndex++] = "견습 기사의 갑옷";
-        itemNameList[itemIndex++] = "셔우드 숲의 모자";
-        itemNameList[itemIndex++] = "셔우드 숲의 코트";
-        itemNameList[itemIndex++] = "하얀 눈의 모자";
-        itemNameList[itemIndex++] = "하얀 눈의 옷";
-        itemNameList[itemIndex++] = "A.I의 머리 파츠";
-        itemNameList[itemIndex++] = "A.I의 몸통 파츠";
-        itemNameList[itemIndex++] = "제국의 헬멧";
-        itemNameList[itemIndex++] = "제국의 슈트";
+        armourList.Add("일반 머리");
+        armourList.Add("일반 옷");
+        armourList.Add("견습 기사의 투구");
+        armourList.Add("견습 기사의 갑옷");
+        armourList.Add("셔우드 숲의 모자");
+        armourList.Add("셔우드 숲의 코트");
+        armourList.Add("하얀 눈의 모자");
+        armourList.Add("하얀 눈의 옷");
+        armourList.Add("A.I의 머리 파츠");
+        armourList.Add("A.I의 몸통 파츠");
+        armourList.Add("제국의 헬멧");
+        armourList.Add("제국의 슈트");
 
         eCodeType[] codes = new eCodeType[2];
         codes[0] = eCodeType.HELMET;
         codes[1] = eCodeType.BODYARMOUR;
         int num;
-        for (int i = 0; i < itemNameList.Length; ++i)
+        for (int i = 0; i < armourList.Count; ++i)
         {
-            num = _itemList.CodeSearch(codes[i % 2],itemNameList[i]);
+            num = _itemList.CodeSearch(codes[i % 2], armourList[i]);
 
             _inventory[(int)codes[i % 2]].Add(num);
         }
 
-        const int _completeWeaponCount = 6;
-        string[] weaponList = new string[_completeWeaponCount * 2];
+        List<string> weaponList = new List<string>();
 
-        int weaponIndex = 0;
+        weaponList.Add("병사의 창");
+        weaponList.Add("십자창");
+        weaponList.Add("기사의 검");
+        weaponList.Add("병사의 검");
+        weaponList.Add("사각 나무 방패");
+        weaponList.Add("셔우드의 활");
 
-        weaponList[weaponIndex++] = "기사의 검";
+        for (int i = 0; i < weaponList.Count; ++i) 
+        {
+            num = _itemList.CodeSearch(eCodeType.WEAPON, weaponList[i]);
 
-        num = _itemList.CodeSearch(eCodeType.WEAPON, weaponList[0]);
-
-        _inventory[(int)eCodeType.WEAPON].Add(num);
+            _inventory[(int)eCodeType.WEAPON].Add(num);
+        }
 
         #endregion
 
@@ -130,21 +133,6 @@ public class ItemInventorySystem : MonoBehaviour
     } 
     #endregion
 
-    // Test
-    private void TypeItemAllSet(eCodeType codeType)
-    {
-        //아이템 개수 반환.
-        int count = _itemList.ItemCount(codeType);
-
-        //아이템 개수만큼 반복,
-        for (int i = 0; i < count; ++i)
-        {
-            int num = _itemList.CodeSearch(codeType, i);
-
-            _inventory[(int)codeType].Add(num);
-        }
-    }
-
     public void TypeHelmet() => Type = eCodeType.HELMET;
     public void TypeBodyArmour() => Type = eCodeType.BODYARMOUR;
     public void TypeRightWeapon() { Type = eCodeType.WEAPON; _isLeftWeapon = false; }
@@ -152,7 +140,7 @@ public class ItemInventorySystem : MonoBehaviour
 
     public void SetEquipedItems(int[] items)
     {
-        UnitModelManager.ResetModel(_unitModelUI, _equipedItems);
+        UnitModelManager.Reset(_unitModelUI, _equipedItems);
 
         // 유닛 아이템들이 유닛1 수정완료(5,6)   유닛2 수정완료(5,6)
 
@@ -176,11 +164,6 @@ public class ItemInventorySystem : MonoBehaviour
         Item i = _itemList.ItemSearch(itemCode);
         if (i == null) { Debug.Log("ItemInventorySystem : UpdateEquipedItem i is Error"); return; }
 
-        // 장착한 아이템 업데이트
-        {
-
-        }
-
         // 모델링 업데이트
         {
             int partsNum = 0;
@@ -199,6 +182,12 @@ public class ItemInventorySystem : MonoBehaviour
 
             UpdateModel(prevItem);
         }
+
+        {
+            if (_curType != eCodeType.WEAPON) return;
+
+            UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelUI.GetComponent<Animator>());
+        }
     }
 
     #region Private Function
@@ -212,7 +201,7 @@ public class ItemInventorySystem : MonoBehaviour
             
 
             for (int i = 0; i < _inventory[curType].Count; ++i)
-                if (_itemList.ItemSearch(_inventory[curType][i]) == null) _inventory[curType].Remove(i);
+                if (_itemList.ItemSearch(_inventory[curType][i]) == null) _inventory[curType].Remove(_inventory[curType][i--]);
 
             //현재 사용중인 아이템 슬롯의 개수를 가져옵니다.
             int curUseItemSlotCount = _inventory[curType].Count;
@@ -269,7 +258,7 @@ public class ItemInventorySystem : MonoBehaviour
         if (_equipedItems == null && _unitModelUI == null) { return; }
         if (_equipedItems.Length == 0) { return; }
 
-        UnitModelManager.UpdateModel(_unitModelUI, _equipedItems, prevItem);
+        UnitModelManager.Update(_unitModelUI, _equipedItems, prevItem);
     }
 
     #endregion

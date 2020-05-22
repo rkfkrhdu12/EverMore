@@ -42,7 +42,7 @@ public class SpawnManager : MonoBehaviour
 
         unitCtrl._status = _teamUnits.GetUnit(_curSpawnIndex);
 
-        UnitModelManager.UpdateModel(clone.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
+        UnitModelManager.Update(clone.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
 
         unitCtrl.Spawn();
 

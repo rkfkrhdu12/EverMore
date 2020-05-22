@@ -7,19 +7,22 @@ using UnityEditor;
 using GameItem;
 
 
-// 파싱한 데이터는 string 이므로 const string 으로 비교하여 판단
-internal struct ItemTypeList
-{
-    public const string Helmet = "모자";
-    public const string BodyArmour = "갑옷";
-    public const string OneHandSword = "한손검";
-    public const string Shield = "방패";
-    public const string Dagger = "단검";
-}
 
 public class ItemList
 {
     #region Variable
+    // 파싱한 데이터는 string 이므로 const string 으로 비교하여 판단
+    private struct ItemTypeList
+    {
+        public const string Helmet = "모자";
+        public const string BodyArmour = "갑옷";
+        public const string OneHandSword = "한손검";
+        public const string Shield = "방패";
+        public const string Dagger = "단검";
+        public const string Spear = "창";
+        public const string Bow = "활";
+    }
+
 
     // 아이템은 빨리 자주 찾으며, 키를 통해 찾을것이므로 map(Dictionary)을 이용
     private Dictionary<int, Item> _itemList = new Dictionary<int, Item>();
@@ -42,33 +45,15 @@ public class ItemList
         switch (data[1])
         {
             // Weapon
-            case ItemTypeList.OneHandSword:
-            {
-                i = new OneHandSword();
-                break;
-            }
-            case ItemTypeList.Shield:
-            {
-                i = new Shield();
-                break;
-            }
-            case ItemTypeList.Dagger:
-            {
-                i = new Dagger();
-                break;
-            }
+            case ItemTypeList.OneHandSword: i = new OneHandSword(); break;
+            case ItemTypeList.Shield:       i = new Shield();       break;
+            case ItemTypeList.Dagger:       i = new Dagger();       break;
+            case ItemTypeList.Spear:        i = new Spear();        break;
+            case ItemTypeList.Bow:          i = new Bow();          break;
 
             // Armour
-            case ItemTypeList.Helmet:
-            {
-                i = new Helmet();
-                break;
-            }
-            case ItemTypeList.BodyArmour:
-            {
-                i = new BodyArmour();
-                break;
-            }
+            case ItemTypeList.Helmet:       i = new Helmet();       break;
+            case ItemTypeList.BodyArmour:   i = new BodyArmour();   break;
         }
 
         if (i == null)
@@ -81,35 +66,12 @@ public class ItemList
 
         switch (i.Type)
         {
-            case eItemType.NONE:
-            Debug.LogError("Item Error" + i.Name);
-            break;
-            case eItemType.HELMET:
-            _codeList[(int)eCodeType.HELMET].Add(_codeList[(int)eCodeType.HELMET].Count, index);
-            break;
-            case eItemType.BODYARMOUR:
-            _codeList[(int)eCodeType.BODYARMOUR].Add(_codeList[(int)eCodeType.BODYARMOUR].Count, index);
-            break;
-            default:
-            _codeList[(int)eCodeType.WEAPON].Add(_codeList[(int)eCodeType.WEAPON].Count, index);
-            break;
+            case eItemType.NONE: Debug.LogError("Item Error" + i.Name); break;
+            case eItemType.HELMET:      _codeList[(int)eCodeType.HELMET].Add    (_codeList[(int)eCodeType.HELMET].Count, index);  break;
+            case eItemType.BODYARMOUR:  _codeList[(int)eCodeType.BODYARMOUR].Add(_codeList[(int)eCodeType.BODYARMOUR].Count, index); break;
+            default:                    _codeList[(int)eCodeType.WEAPON].Add    (_codeList[(int)eCodeType.WEAPON].Count, index); break;
         }
 
-        //GameObject obj =
-        //    (GameObject)AssetDatabase.LoadAssetAtPath("Assets/03.Prefabs/Item/" + data[0] + ".prefab",
-        //        typeof(GameObject));
-
-        // '/' 가 있음(왼쪽(방어구류),오른쪽(무기류)) 없으면 모든아이템 해당
-
-        //i.Init(data[2], // Name
-        //    int.Parse(data[3]), // Cost
-        //    float.Parse(data[4]), // CoolTime
-        //    float.Parse(data[6]), // Defense 
-        //                          // Damage
-        //    float.Parse(data[7]), // Health  
-        //                          // Range
-        //    int.Parse(data[8]),
-        //    null); // Weight
         i.Init(data);
         _itemList.Add(index, i);
     }
@@ -190,23 +152,19 @@ public class ItemList
         }
     }
 
-    // Test
-    public int ItemCount(eCodeType codeType)
-        => _codeList[(int)codeType].Count;
+    //private string[] _textureNames;
 
-    private string[] _textureNames;
+    //private void InitTexture()
+    //{
+    //    _textureNames = new string[16];
+    //}
 
-    private void InitTexture()
-    {
-        _textureNames = new string[16];
-    }
+    //public string TextureName(int index)
+    //{
+    //    if(System.Convert.ToUInt32(index) > _textureNames.Length) { return ""; }
 
-    public string TextureName(int index)
-    {
-        if(System.Convert.ToUInt32(index) > _textureNames.Length) { return ""; }
-
-        return _textureNames[index];
-    }
+    //    return _textureNames[index];
+    //}
 }
 namespace GameItem
 {
@@ -218,10 +176,16 @@ namespace GameItem
         HELMET,
         BODYARMOUR,
 
+        WEAPONS,
+
         // Weapon
         ONEHANDSWORD,
         SHIELD,
         DAGGER,
+        SPEAR,
+        BOW,
+
+        LAST,
     }
 
     public enum eCodeType
@@ -350,6 +314,18 @@ namespace GameItem
     {
         public Dagger()
             => _type = eItemType.DAGGER;
+    }
+
+    public class Spear : Weapon
+    {
+        public Spear()
+            => _type = eItemType.SPEAR;
+    }
+
+    public class Bow : Weapon
+    {
+        public Bow()
+            => _type = eItemType.BOW;
     }
 
     #endregion
