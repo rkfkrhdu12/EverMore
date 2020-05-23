@@ -20,6 +20,8 @@ public class UnitController : FieldObject
         _aniPro.Init(transform.GetChild(0).GetComponent<Animator>());
 
         _status.UpdateItems();
+
+        UnitAnimationManager.Update(_status._equipedItems[2], _status._equipedItems[3], _aniPro);
     }
 
     public override void DamageReceive(float damage)
@@ -563,36 +565,22 @@ public class UnitAnimationManager
 {
     public static void Update(int leftWeaponCode, int rightWeaponCode, Animator ani)
     {
-        if (_typeStrings.Count == 0)
-            Init();
+        int num = -1;
 
-        GameItem.Item leftWeapon = _itemList.ItemSearch(leftWeaponCode);
-        GameItem.Item rightWeapon = _itemList.ItemSearch(rightWeaponCode);
+        FindNum(leftWeaponCode, rightWeaponCode,ref num);
 
-        if (leftWeapon == null && rightWeapon == null) { return; }
-
-        string leftString = "", rightString = "";
-        if(leftWeapon != null) leftString = _typeStrings[leftWeapon.Type];
-        if(rightWeapon != null) rightString = _typeStrings[rightWeapon.Type];
-
-        if (_typeAnimationNum.ContainsKey(leftString + rightString))
-        {
-            int num = _typeAnimationNum[leftString + rightString];
-
+        if (num != -1)
             ani.SetInteger(_idWeaponType, num);
-        }
-        else if(_typeAnimationNum.ContainsKey(rightString + leftString))
-        {
-            int num = _typeAnimationNum[rightString + leftString];
-
-            ani.SetInteger(_idWeaponType, num);
-        }
-
     }
 
-    public static void Update(int[] equipedWeapons, Animator ani)
+    public static void Update(int leftWeaponCode, int rightWeaponCode, AnimatorPro ani)
     {
-        Update(equipedWeapons[0], equipedWeapons[1], ani);
+        int num = -1;
+
+        FindNum(leftWeaponCode, rightWeaponCode,ref num);
+
+        if (num != -1)
+            ani.SetParam(_idWeaponType, num);
     }
     
     #region Variable
@@ -606,6 +594,32 @@ public class UnitAnimationManager
     #endregion
 
     #region Private Function
+
+    private static void FindNum(int leftWeaponCode,int rightWeaponCode,ref int num)
+    {
+        if (_typeStrings.Count == 0)
+            Init();
+
+        GameItem.Item leftWeapon = _itemList.ItemSearch(leftWeaponCode);
+        GameItem.Item rightWeapon = _itemList.ItemSearch(rightWeaponCode);
+
+        if (leftWeapon == null && rightWeapon == null) { return; }
+
+        string leftString = "", rightString = "";
+        if (leftWeapon != null) leftString = _typeStrings[leftWeapon.Type];
+        if (rightWeapon != null) rightString = _typeStrings[rightWeapon.Type];
+
+        if (_typeAnimationNum.ContainsKey(leftString + rightString))
+        {
+            num = _typeAnimationNum[leftString + rightString];
+        }
+        else if (_typeAnimationNum.ContainsKey(rightString + leftString))
+        {
+            num = _typeAnimationNum[rightString + leftString];
+        }
+        else { return; }
+    }
+
     private static void InitData(ref List<string> typeName, ref List<string> aniName)
     {
         typeName.Add("Sword");
