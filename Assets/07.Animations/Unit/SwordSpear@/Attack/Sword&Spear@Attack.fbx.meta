@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: bd1cd4ce6ab19114887345b5c12c016a
+guid: da1436ef2b467a84aab568bf0408e33e
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
-      74: 7572344613039948371
-    second: Attack1
+      74: -6239216113759591374
+    second: attack
   externalObjects: {}
   materials:
     materialImportMode: 0
@@ -42,7 +42,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importVisibility: 1
+    importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
     importLights: 0
