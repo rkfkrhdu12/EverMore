@@ -58,6 +58,8 @@ public class ItemInventorySystem : MonoBehaviour
     {
         _equipedItems[0] = 1;
         _equipedItems[1] = 2;
+        _equipedItems[2] = 0;
+        _equipedItems[3] = 0;
 
         _unitPhoto = _teamManager.GetUnitPhoto();
         if (null == _unitPhoto) { Debug.LogError("ItemInventorySystem : _unitPhoto is null"); }
@@ -133,10 +135,10 @@ public class ItemInventorySystem : MonoBehaviour
     } 
     #endregion
 
-    public void TypeHelmet() => Type = eCodeType.HELMET;
-    public void TypeBodyArmour() => Type = eCodeType.BODYARMOUR;
-    public void TypeRightWeapon() { Type = eCodeType.WEAPON; _isLeftWeapon = false; }
-    public void TypeLeftWeapon()  { Type = eCodeType.WEAPON; _isLeftWeapon = true; }
+    public void TypeHelmet()        => Type = eCodeType.HELMET;
+    public void TypeBodyArmour()    => Type = eCodeType.BODYARMOUR;
+    public void TypeRightWeapon()   { Type = eCodeType.WEAPON; _isLeftWeapon = false; }
+    public void TypeLeftWeapon()    { Type = eCodeType.WEAPON; _isLeftWeapon = true; }
 
     public void SetEquipedItems(int[] items)
     {
@@ -251,6 +253,8 @@ public class ItemInventorySystem : MonoBehaviour
         }
 
         UpdateModel();
+
+        UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelUI.GetComponent<Animator>());
     }
 
     void UpdateModel(in int prevItem = 0)

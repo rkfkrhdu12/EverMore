@@ -307,6 +307,12 @@ public class UnitModelManager
 
         if (!unit.activeSelf) { unit.SetActive(true); }
 
+        _weaponFindPoint = unit.transform.childCount;
+
+        Transform leftWeaponTrs = unit.transform.GetChild(_leftWeaponPoint);
+        Transform rightWeaponTrs = unit.transform.GetChild(_rightWeaponPoint);
+
+        // 방어구 장착 해제
         for (int i = 0; i < 2; ++i)
         {
             if(0 == equipedItems[i]) { continue; }
@@ -315,6 +321,26 @@ public class UnitModelManager
             int[] index = _modelItemPoint?[itemName];
 
             unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(false);
+        }
+
+        // 왼손무기 장착 해제
+        if (equipedItems[2] != 0)
+        {
+            string leftItemName = _itemList.ItemSearch(equipedItems[2]).Name;
+
+            int[] index = _modelItemPoint?[leftItemName];
+
+            leftWeaponTrs.GetChild(index[1]).gameObject.SetActive(false);
+        }
+
+        // 오른손 무기 장착 해제
+        if (equipedItems[3] != 0)
+        {
+            string rightItemName = _itemList.ItemSearch(equipedItems[3]).Name;
+
+            int[] index = _modelItemPoint?[rightItemName];
+
+            rightWeaponTrs.GetChild(index[1]).gameObject.SetActive(false);
         }
     }
 
@@ -327,6 +353,11 @@ public class UnitModelManager
 
         if (!unit.activeSelf) { unit.SetActive(true); }
 
+        _weaponFindPoint = unit.transform.childCount;
+
+        Transform leftWeaponTrs = unit.transform.GetChild(_leftWeaponPoint);
+        Transform rightWeaponTrs = unit.transform.GetChild(_rightWeaponPoint);
+
         for (int i = 0; i < equipedItems.Length; ++i) 
         {
             if(equipedItems[i] == prevItem)
@@ -337,6 +368,7 @@ public class UnitModelManager
         }
 
         int[] index;
+        // 이전무기 장착해제
         if (0 != prevItem)
         {
             GameItem.Item i = _itemList.ItemSearch(prevItem);
@@ -345,11 +377,11 @@ public class UnitModelManager
             // true 면 무기 false 면 방어구
             if (i.Type > GameItem.eItemType.WEAPONS)
             {
-                if (unit.transform.GetChild(unit.transform.childCount - 3).GetChild(index[1]).gameObject.activeSelf)
-                    unit.transform.GetChild(unit.transform.childCount - 3).GetChild(index[1]).gameObject.SetActive(false);
+                if (leftWeaponTrs.GetChild(index[1]).gameObject.activeSelf)
+                    leftWeaponTrs.GetChild(index[1]).gameObject.SetActive(false);
 
-                if (unit.transform.GetChild(unit.transform.childCount - 2).GetChild(index[1]).gameObject.activeSelf)
-                    unit.transform.GetChild(unit.transform.childCount - 2).GetChild(index[1]).gameObject.SetActive(false);
+                if (rightWeaponTrs.GetChild(index[1]).gameObject.activeSelf)
+                    rightWeaponTrs.GetChild(index[1]).gameObject.SetActive(false);
             }
             else
             {
@@ -358,6 +390,7 @@ public class UnitModelManager
             }
         }
 
+        // 방어구 장착
         for (int i = 0; i < 2; ++i)
         {
             string itemName = _itemList.ItemSearch(equipedItems[i]).Name;
@@ -368,22 +401,24 @@ public class UnitModelManager
                 unit.transform.GetChild(index[0]).GetChild(index[1]).gameObject.SetActive(true);
         }
 
+        // 왼손무기 장착
         if (equipedItems[2] != 0)
         {
             string leftItemName = _itemList.ItemSearch(equipedItems[2]).Name;
 
             index = _modelItemPoint?[leftItemName];
 
-            unit.transform.GetChild(unit.transform.childCount - 3).GetChild(index[1]).gameObject.SetActive(true);
+            leftWeaponTrs.GetChild(index[1]).gameObject.SetActive(true);
         }
 
+        // 오른손 무기 장착
         if (equipedItems[3] != 0)
         {
             string rightItemName = _itemList.ItemSearch(equipedItems[3]).Name;
 
             index = _modelItemPoint?[rightItemName];
 
-            unit.transform.GetChild(unit.transform.childCount - 2).GetChild(index[1]).gameObject.SetActive(true);
+            rightWeaponTrs.GetChild(index[1]).gameObject.SetActive(true);
         }
     }
 
@@ -393,6 +428,10 @@ public class UnitModelManager
     private static Dictionary<string, int[]> _modelItemPoint = new Dictionary<string, int[]>();
 
     private static ItemList _itemList;
+
+    private static int _weaponFindPoint = 0;
+    private static int _leftWeaponPoint { get { return _weaponFindPoint - 3; } }
+    private static int _rightWeaponPoint { get { return _weaponFindPoint - 2; } }
     #endregion
 
     #region Private Function
