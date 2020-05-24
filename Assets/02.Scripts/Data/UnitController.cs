@@ -14,15 +14,34 @@ public class UnitController : FieldObject
 {
     public void Spawn()
     {
+        UpdateTarget();
+
+        _status.UpdateItems();
+
+        UnitAnimationManager.Update(_status._equipedItems[2], _status._equipedItems[3], _aniPro);
+
+        _team = _status._team;
+        _curHp = _status._curhealth;
+        _maxHp = _status._maxhealth;
+
+        _navMeshAgent.stoppingDistance = _status._attackRange;
+        _navMeshAgent.speed = _status._moveSpeed;
+
+        _aniPro.SetParam(_idAttackSpd, _attackSpeed);
+        _aniPro.SetParam(_idAttack, false);
+    }
+
+    private void OnEnable()
+    {
         if (_aniPro == null)
             _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
 
         _aniPro.Init(transform.GetChild(0).GetComponent<Animator>());
 
-        _status.UpdateItems();
-
-        UnitAnimationManager.Update(_status._equipedItems[2], _status._equipedItems[3], _aniPro);
+        _navMeshAgent.updateRotation = false;
+        _curState = eState.IDLE;
     }
+
 
     public override void DamageReceive(float damage)
     {
@@ -162,27 +181,7 @@ public class UnitController : FieldObject
         UpdateUnit();
     }
 
-    private void OnEnable()
-    {
-        UpdateTarget();
-
-        //_navMeshAgent.SetDestination(_curTarget.transform.position);
-        _navMeshAgent.updateRotation = false;
-
-        _aniPro.SetParam(_idAttackSpd, _attackSpeed + .15f);
-        _aniPro.SetParam(_idAttack, false);
-
-        _curState = eState.IDLE;
-
-        _team = _status._team;
-        _curHp = _status._curhealth;
-        _maxHp = _status._maxhealth;
-
-        _navMeshAgent.stoppingDistance = _status._attackRange;
-        _navMeshAgent.speed = _status._moveSpeed;
-
-        //_isSpawn = true;
-    }
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -221,7 +220,7 @@ public class UnitController : FieldObject
         if (_curTarget == _enemyCastleObject || _curTarget.GetCurHealth() <= 0)
             UpdateTarget();
 
-        float remainingDistance = (transform.position - _curTarget.transform.position).magnitude;
+        float remainingDistance = _navMeshAgent.remainingDistance; //(transform.position - _curTarget.transform.position).magnitude;
 
         if(_team == eTeam.PLAYER) { Debug.Log("" + remainingDistance + "   " + _attackRange); }
 
@@ -267,6 +266,10 @@ public class UnitController : FieldObject
             transform.rotation = Quaternion.Slerp(transform.rotation,
                                                   targetAngle,
                                                   Time.deltaTime * 8.0f);
+        }
+        else
+        {
+            transform.LookAt(_curTarget.transform);
         }
 
         if (_curState == eState.ATTACK)
@@ -513,7 +516,6 @@ public class UnitIconManager
         if (0 == _iconPoints.Count)
             Init();
 
-        // if ((uint)headItemNum >= _iconPoints.Count) return;
         if (!IconObject) return;
 
         GameItem.Item headItem = null;
@@ -523,7 +525,10 @@ public class UnitIconManager
 
         int iconPoint = _iconPoints[headItem.Name];
 
-        IconObject.transform.GetChild(iconPoint).gameObject.SetActive(true);
+        GameObject headObject = null;
+        if ((headObject = IconObject.transform.GetChild(iconPoint).gameObject) == null) { return; }
+
+        headObject.SetActive(true);
     }
     
     #region Variable
@@ -537,12 +542,22 @@ public class UnitIconManager
     #region Private Function
     private static void InitData(ref List<string> iconNames)
     {
-        iconNames.Add("일반 머리");
-        iconNames.Add("견습 기사의 투구");
-        iconNames.Add("셔우드 숲의 모자");
-        iconNames.Add("하얀 눈의 모자");
-        iconNames.Add("A.I의 머리 파츠");
-        iconNames.Add("제국의 헬멧");
+        GameItem.eCodeType helmet = GameItem.eCodeType.HELMET;
+        for (int i = 0; i < _itemList.GetCodeItemCount(helmet); ++i)
+        {
+            int code = _itemList.CodeSearch(helmet, i);
+
+            iconNames.Add(_itemList.ItemSearch(code).Name);
+        }
+
+        //iconNames.Add("일반 머리");
+        //iconNames.Add("견습 기사의 투구");
+        //iconNames.Add("셔우드 숲의 모자");
+        //iconNames.Add("하얀 눈의 모자");
+        //iconNames.Add("A.I의 머리 파츠");
+        //iconNames.Add("제국의 헬멧");
+
+        Debug.Log("");
     }
 
     private static void Init()
@@ -603,8 +618,6 @@ public class UnitAnimationManager
         GameItem.Item leftWeapon = _itemList.ItemSearch(leftWeaponCode);
         GameItem.Item rightWeapon = _itemList.ItemSearch(rightWeaponCode);
 
-        if (leftWeapon == null && rightWeapon == null) { return; }
-
         string leftString = "", rightString = "";
         if (leftWeapon != null) leftString = _typeStrings[leftWeapon.Type];
         if (rightWeapon != null) rightString = _typeStrings[rightWeapon.Type];
@@ -620,14 +633,8 @@ public class UnitAnimationManager
         else { return; }
     }
 
-    private static void InitData(ref List<string> typeName, ref List<string> aniName)
+    private static void InitData(ref List<string> aniName)
     {
-        typeName.Add("Sword");
-        typeName.Add("Shield");
-        typeName.Add("Dagger");
-        typeName.Add("Spear");
-        typeName.Add("Bow");
-
         aniName.Add("Bow");
         aniName.Add("SwordShield");
         aniName.Add("Spear");
@@ -635,6 +642,8 @@ public class UnitAnimationManager
         aniName.Add("Sword");
         aniName.Add("SpearShield");
         aniName.Add("SwordSpear");
+
+        _typeAnimationNum.Add("", 5); // 아무 무기도 없을때 애니메이션은 Sword(제일 무난..)
     }
 
     private static void Init()
@@ -642,9 +651,15 @@ public class UnitAnimationManager
         _itemList = Manager.Get<GameManager>().itemList;
 
         List<string> typeName = new List<string>();
+
+        for (int i = 1; i < GameItem.eItemType.LAST - GameItem.eItemType.WEAPONS; ++i)
+        {
+            typeName.Add((GameItem.eItemType.WEAPONS + i).ToString());
+        }
+
         List<string> aniName = new List<string>();
 
-        InitData(ref typeName, ref aniName);
+        InitData(ref aniName);
 
         GameItem.eItemType t = GameItem.eItemType.WEAPONS;
         for (int i = 0; i < typeName.Count; ++i)
@@ -656,6 +671,7 @@ public class UnitAnimationManager
         {
             _typeAnimationNum.Add(aniName[i], i + 1);
         }
+
     } 
     #endregion
 }

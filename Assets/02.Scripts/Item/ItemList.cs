@@ -108,6 +108,8 @@ public class ItemList
         return _codeList[tpye][index];
     }
 
+    public int GetCodeItemCount(eCodeType codeType) { return _codeList[(int)codeType].Count; }
+
     /// <summary>
     /// Input eCodeType, string | int(아이템코드) return
     /// </summary>
@@ -151,20 +153,6 @@ public class ItemList
                 AddList(splitDatas);
         }
     }
-
-    //private string[] _textureNames;
-
-    //private void InitTexture()
-    //{
-    //    _textureNames = new string[16];
-    //}
-
-    //public string TextureName(int index)
-    //{
-    //    if(System.Convert.ToUInt32(index) > _textureNames.Length) { return ""; }
-
-    //    return _textureNames[index];
-    //}
 }
 namespace GameItem
 {
@@ -179,11 +167,11 @@ namespace GameItem
         WEAPONS,
 
         // Weapon
-        ONEHANDSWORD,
-        SHIELD,
-        DAGGER,
-        SPEAR,
-        BOW,
+        Sword,
+        Shield,
+        Dagger,
+        Spear,
+        Bow,
 
         LAST,
     }
@@ -301,31 +289,31 @@ namespace GameItem
     public class OneHandSword : Weapon
     {
         public OneHandSword()
-            => _type = eItemType.ONEHANDSWORD;
+            => _type = eItemType.Sword;
     }
 
     public class Shield : Weapon
     {
         public Shield()
-            => _type = eItemType.SHIELD;
+            => _type = eItemType.Shield;
     }
 
     public class Dagger : Weapon
     {
         public Dagger()
-            => _type = eItemType.DAGGER;
+            => _type = eItemType.Dagger;
     }
 
     public class Spear : Weapon
     {
         public Spear()
-            => _type = eItemType.SPEAR;
+            => _type = eItemType.Spear;
     }
 
     public class Bow : Weapon
     {
         public Bow()
-            => _type = eItemType.BOW;
+            => _type = eItemType.Bow;
     }
 
     #endregion

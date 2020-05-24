@@ -199,9 +199,6 @@ public class ItemInventorySystem : MonoBehaviour
         int curType = (int)_curType;
         // Update Slot
         {
-            //현재 타입이 무엇인지 가져옵니다.
-            
-
             for (int i = 0; i < _inventory[curType].Count; ++i)
                 if (_itemList.ItemSearch(_inventory[curType][i]) == null) _inventory[curType].Remove(_inventory[curType][i--]);
 
