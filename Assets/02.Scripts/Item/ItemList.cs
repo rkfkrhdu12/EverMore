@@ -172,6 +172,7 @@ namespace GameItem
         Dagger,
         Spear,
         Bow,
+        BFSword,
 
         LAST,
     }

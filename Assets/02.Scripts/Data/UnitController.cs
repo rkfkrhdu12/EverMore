@@ -222,7 +222,7 @@ public class UnitController : FieldObject
 
         float remainingDistance = _navMeshAgent.remainingDistance; //(transform.position - _curTarget.transform.position).magnitude;
 
-        if(_team == eTeam.PLAYER) { Debug.Log("" + remainingDistance + "   " + _attackRange); }
+        // if(_team == eTeam.PLAYER) { Debug.Log("" + remainingDistance + "   " + _attackRange); }
 
         if (remainingDistance <= _attackRange)
         {
@@ -456,14 +456,19 @@ public class UnitModelManager
         armourList.Add("제국의 헬멧");
         armourList.Add("제국의 슈트");
 
-        weaponList.Add("ㅡ"); // + 창
+        weaponList.Add("빛의 포크"); // + 창
         weaponList.Add("병사의 창");
         weaponList.Add("십자창");
         weaponList.Add("기사의 검");
         weaponList.Add("병사의 검");
-        weaponList.Add("ㅡㅡ"); // 소주
+        weaponList.Add("마지막처럼"); // 소주
         weaponList.Add("사각 나무 방패");
-        weaponList.Add("셔우드의 활");
+        weaponList.Add("롤리팝!");
+        weaponList.Add("급조한 나무망치");
+        weaponList.Add("원형 나무 방패"); 
+        weaponList.Add("연습용 목검"); 
+        weaponList.Add("셔우드의 활"); 
+        weaponList.Add("숲지기의 활"); 
     }
 
     private static void Init() 
@@ -622,15 +627,9 @@ public class UnitAnimationManager
         if (leftWeapon != null) leftString = _typeStrings[leftWeapon.Type];
         if (rightWeapon != null) rightString = _typeStrings[rightWeapon.Type];
 
-        if (_typeAnimationNum.ContainsKey(leftString + rightString))
-        {
-            num = _typeAnimationNum[leftString + rightString];
-        }
-        else if (_typeAnimationNum.ContainsKey(rightString + leftString))
-        {
-            num = _typeAnimationNum[rightString + leftString];
-        }
-        else { return; }
+        num = _typeAnimationNum.ContainsKey(leftString + rightString) ?
+            _typeAnimationNum[leftString + rightString] :
+            _typeAnimationNum[rightString + leftString];
     }
 
     private static void InitData(ref List<string> aniName)
