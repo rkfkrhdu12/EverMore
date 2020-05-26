@@ -33,8 +33,6 @@ public class InGameSystem : MonoBehaviour
 
     [SerializeField]
     private Image _goldImage;
-    [SerializeField]
-    private TextMeshProUGUI _goldText;
 
     private float _curGold;
     private const float _maxGold = 500;
@@ -42,12 +40,12 @@ public class InGameSystem : MonoBehaviour
 
     [SerializeField]
     private Image _manaImage;
-    [SerializeField]
-    private TextMeshProUGUI _manaText;
 
     private float _curMana;
     private const float _maxMana = 100;
     private const float _manaPerSecond = 0.5f;
+
+    public GameObject[] _iconObjects = new GameObject[6];
 
     #endregion
 
@@ -59,6 +57,13 @@ public class InGameSystem : MonoBehaviour
         _player1Base.GetComponent<SpawnManager>()._teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
 
         _timerUITime = int.Parse(_timerText.text);
+
+        
+        for (int i = 0; i < 6;++i)
+        {
+            int headNum = _player1Base.GetComponent<SpawnManager>()._teamUnits.GetUnit(i)._equipedItems[0];
+            UnitIconManager.Update(headNum, _iconObjects[i]);
+        }
     }
 
     private void Update()
@@ -89,8 +94,8 @@ public class InGameSystem : MonoBehaviour
         _curGold = Mathf.Clamp(_curGold + Time.deltaTime * _goldPerSecond, 0, _maxGold);
         _curMana = Mathf.Clamp(_curMana + Time.deltaTime * _manaPerSecond, 0, _maxMana);
 
-        _goldText.text = ((int)_curGold).ToString();
-        _manaText.text = ((int)_curMana).ToString();
+        // _goldText.text = ((int)_curGold).ToString();
+        // _manaText.text = ((int)_curMana).ToString();
 
         _goldImage.fillAmount = _curGold / _maxGold;
         _manaImage.fillAmount = _curMana / _maxMana;

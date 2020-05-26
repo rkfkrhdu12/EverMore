@@ -24,8 +24,6 @@ public class UnitController : FieldObject
         _status.UpdateItems();
         _curState = eState.IDLE;
 
-        UnitAnimationManager.Update(_status._equipedItems[2], _status._equipedItems[3], _aniPro);
-
         _aniPro.SetParam(_idAttackSpd, _attackSpeed);
         _aniPro.SetParam(_idAttack, false);
 
@@ -43,6 +41,7 @@ public class UnitController : FieldObject
         _navMeshAgent.stoppingDistance = _status._attackRange;
         _navMeshAgent.speed = _status._moveSpeed;
 
+        UnitAnimationManager.Update(_status._equipedItems[2], _status._equipedItems[3], _aniPro);
     }
 
     public override void DamageReceive(float damage)
@@ -220,7 +219,7 @@ public class UnitController : FieldObject
         if (_curTarget == _enemyCastleObject || _curTarget.GetCurHealth() <= 0)
             UpdateTarget();
 
-        float remainingDistance = _navMeshAgent.remainingDistance; //(transform.position - _curTarget.transform.position).magnitude;
+        float remainingDistance = (transform.position - _curTarget.transform.position).magnitude; // _navMeshAgent.remainingDistance; //
 
         // if(_team == eTeam.PLAYER) { Debug.Log("" + remainingDistance + "   " + _attackRange); }
 

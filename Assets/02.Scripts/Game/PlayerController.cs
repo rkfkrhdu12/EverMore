@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Spawn(int index)
+    public void Spawn(int index)
     {
         _curMouseState = eMouseState.Spawning;
 
