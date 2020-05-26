@@ -64,7 +64,7 @@ public class SpawnManager : MonoBehaviour
             int[] items = new int[4];
             items[0] = 3;
             items[1] = 4;
-            items[3] = 7;
+            items[3] = 19;
             _teamUnits.SetEquipedItems(0, items);
 
         }

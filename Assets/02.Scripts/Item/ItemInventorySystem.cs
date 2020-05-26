@@ -79,18 +79,18 @@ public class ItemInventorySystem : MonoBehaviour
 
         List<string> armourList = new List<string>();
 
-        armourList.Add("일반 머리");
-        armourList.Add("일반 옷");
-        armourList.Add("견습 기사의 투구");
-        armourList.Add("견습 기사의 갑옷");
-        armourList.Add("셔우드 숲의 모자");
-        armourList.Add("셔우드 숲의 코트");
-        armourList.Add("하얀 눈의 모자");
-        armourList.Add("하얀 눈의 옷");
-        armourList.Add("A.I의 머리 파츠");
-        armourList.Add("A.I의 몸통 파츠");
-        armourList.Add("제국의 헬멧");
-        armourList.Add("제국의 슈트");
+        GameItem.eCodeType helmet = GameItem.eCodeType.HELMET;
+        GameItem.eCodeType armour = GameItem.eCodeType.BODYARMOUR;
+
+        for (int i = 0; i < _itemList.GetCodeItemCount(helmet); ++i)
+        {
+            int code = -1;
+            if ((code = _itemList.CodeSearch(helmet, i)) != -1)
+                armourList.Add(_itemList.ItemSearch(code).Name);
+
+            if ((code = _itemList.CodeSearch(armour, i)) != -1)
+                armourList.Add(_itemList.ItemSearch(code).Name);
+        }
 
         eCodeType[] codes = new eCodeType[2];
         codes[0] = eCodeType.HELMET;
@@ -105,12 +105,15 @@ public class ItemInventorySystem : MonoBehaviour
 
         List<string> weaponList = new List<string>();
 
-        weaponList.Add("병사의 창");
-        weaponList.Add("십자창");
-        weaponList.Add("기사의 검");
-        weaponList.Add("병사의 검");
-        weaponList.Add("사각 나무 방패");
-        weaponList.Add("셔우드의 활");
+        GameItem.eCodeType weapon = GameItem.eCodeType.WEAPON;
+        for (int i = 0; i < _itemList.GetCodeItemCount(weapon); ++i)
+        {
+            int code = _itemList.CodeSearch(weapon, i);
+
+            weaponList.Add(_itemList.ItemSearch(code).Name);
+        }
+
+        weaponList.Remove("빛의 포크");
 
         for (int i = 0; i < weaponList.Count; ++i) 
         {

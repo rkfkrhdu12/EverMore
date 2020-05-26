@@ -14,11 +14,27 @@ public class UnitController : FieldObject
 {
     public void Spawn()
     {
-        UpdateTarget();
+        if (_aniPro == null)
+            _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
+
+        _aniPro.Init(transform.GetChild(0).GetComponent<Animator>());
+
+        _navMeshAgent.updateRotation = false;
 
         _status.UpdateItems();
+        _curState = eState.IDLE;
 
         UnitAnimationManager.Update(_status._equipedItems[2], _status._equipedItems[3], _aniPro);
+
+        _aniPro.SetParam(_idAttackSpd, _attackSpeed);
+        _aniPro.SetParam(_idAttack, false);
+
+        UpdateTarget();
+    }
+
+    private void OnEnable()
+    {
+        UpdateTarget();
 
         _team = _status._team;
         _curHp = _status._curhealth;
@@ -27,21 +43,7 @@ public class UnitController : FieldObject
         _navMeshAgent.stoppingDistance = _status._attackRange;
         _navMeshAgent.speed = _status._moveSpeed;
 
-        _aniPro.SetParam(_idAttackSpd, _attackSpeed);
-        _aniPro.SetParam(_idAttack, false);
     }
-
-    private void OnEnable()
-    {
-        if (_aniPro == null)
-            _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
-
-        _aniPro.Init(transform.GetChild(0).GetComponent<Animator>());
-
-        _navMeshAgent.updateRotation = false;
-        _curState = eState.IDLE;
-    }
-
 
     public override void DamageReceive(float damage)
     {
@@ -208,8 +210,6 @@ public class UnitController : FieldObject
 
     private void UpdateUnit()
     {
-        //moveParameter = 0;
-
         UpdateMonobehaviour();
 
         UpdateAnimation();
@@ -295,7 +295,8 @@ public class UnitController : FieldObject
             _curTarget = _attackTargets.Dequeue();
         }
 
-        _navMeshAgent.SetDestination(_curTarget.transform.position);
+        if (gameObject.activeSelf)
+            _navMeshAgent.SetDestination(_curTarget.transform.position);
     }
 
     #endregion
@@ -443,32 +444,27 @@ public class UnitModelManager
 
     private static void InitData(ref List<string> armourList, ref List<string> weaponList)
     {
-        armourList.Add("일반 머리");
-        armourList.Add("일반 옷");
-        armourList.Add("견습 기사의 투구");
-        armourList.Add("견습 기사의 갑옷");
-        armourList.Add("셔우드 숲의 모자");
-        armourList.Add("셔우드 숲의 코트");
-        armourList.Add("하얀 눈의 모자");
-        armourList.Add("하얀 눈의 옷");
-        armourList.Add("A.I의 머리 파츠");
-        armourList.Add("A.I의 몸통 파츠");
-        armourList.Add("제국의 헬멧");
-        armourList.Add("제국의 슈트");
+        GameItem.eCodeType helmet = GameItem.eCodeType.HELMET;
+        GameItem.eCodeType armour = GameItem.eCodeType.BODYARMOUR;
 
-        weaponList.Add("빛의 포크"); // + 창
-        weaponList.Add("병사의 창");
-        weaponList.Add("십자창");
-        weaponList.Add("기사의 검");
-        weaponList.Add("병사의 검");
-        weaponList.Add("마지막처럼"); // 소주
-        weaponList.Add("사각 나무 방패");
-        weaponList.Add("롤리팝!");
-        weaponList.Add("급조한 나무망치");
-        weaponList.Add("원형 나무 방패"); 
-        weaponList.Add("연습용 목검"); 
-        weaponList.Add("셔우드의 활"); 
-        weaponList.Add("숲지기의 활"); 
+        for (int i = 0; i < _itemList.GetCodeItemCount(helmet); ++i)
+        {
+            int code = _itemList.CodeSearch(helmet, i);
+
+            armourList.Add(_itemList.ItemSearch(code).Name);
+
+            code = _itemList.CodeSearch(armour, i);
+
+            armourList.Add(_itemList.ItemSearch(code).Name);
+        }
+
+        GameItem.eCodeType weapon = GameItem.eCodeType.WEAPON;
+        for (int i = 0; i < _itemList.GetCodeItemCount(weapon); ++i)
+        {
+            int code = _itemList.CodeSearch(weapon, i);
+
+            weaponList.Add(_itemList.ItemSearch(code).Name);
+        }
     }
 
     private static void Init() 
@@ -476,26 +472,18 @@ public class UnitModelManager
         _itemList = Manager.Get<GameManager>().itemList;
 
         List<string> armourList = new List<string>();
-        //string[] armourList = new string[_completeArmourCount * 2];
 
         List<string> weaponList = new List<string>();
-        //string[] weaponList = new string[_completeWeaponCount * 2];
 
         InitData(ref armourList, ref weaponList);
 
         int equipmentCount = 2;
-        //List<int> modelNumList = new List<int>();
-        //for (int i = 1; i < armourList.Count + 1; ++i)
-        //{
-        //    modelNumList.Add(1 == i % 2 ? i / 2 : i / 2 - 1);
-        //}
 
         int[] v;
         for (int i = 0; i < armourList.Count; ++i)
         {
             v = new int[equipmentCount];
             v[0] = (1 == (i + 1) % 2 ? (i + 1) / 2 : (i + 1) / 2 - 1);
-            // v[0] = modelNumList[i];
             v[1] = 1 - (i % equipmentCount);
 
             _modelItemPoint.Add(armourList[i], v);
@@ -554,13 +542,6 @@ public class UnitIconManager
 
             iconNames.Add(_itemList.ItemSearch(code).Name);
         }
-
-        //iconNames.Add("일반 머리");
-        //iconNames.Add("견습 기사의 투구");
-        //iconNames.Add("셔우드 숲의 모자");
-        //iconNames.Add("하얀 눈의 모자");
-        //iconNames.Add("A.I의 머리 파츠");
-        //iconNames.Add("제국의 헬멧");
 
         Debug.Log("");
     }
@@ -624,8 +605,11 @@ public class UnitAnimationManager
         GameItem.Item rightWeapon = _itemList.ItemSearch(rightWeaponCode);
 
         string leftString = "", rightString = "";
-        if (leftWeapon != null) leftString = _typeStrings[leftWeapon.Type];
-        if (rightWeapon != null) rightString = _typeStrings[rightWeapon.Type];
+        if (leftWeapon != null && _typeStrings.ContainsKey(leftWeapon.Type))    leftString = _typeStrings[leftWeapon.Type];
+        if (rightWeapon != null && _typeStrings.ContainsKey(rightWeapon.Type))  rightString = _typeStrings[rightWeapon.Type];
+
+        if (!_typeAnimationNum.ContainsKey(leftString + rightString) &&
+           !_typeAnimationNum.ContainsKey(rightString + leftString)) { leftString = rightString = ""; }
 
         num = _typeAnimationNum.ContainsKey(leftString + rightString) ?
             _typeAnimationNum[leftString + rightString] :
@@ -666,11 +650,12 @@ public class UnitAnimationManager
             _typeStrings.Add(t + i + 1, typeName[i]);
         }
 
+        _typeStrings.Remove(GameItem.eItemType.Hammer);
+
         for (int i = 0; i < aniName.Count; ++i)
         {
             _typeAnimationNum.Add(aniName[i], i + 1);
         }
-
     } 
     #endregion
 }
