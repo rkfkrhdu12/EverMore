@@ -21,6 +21,7 @@ public class ItemList
         public const string Dagger = "단검";
         public const string Spear = "창";
         public const string Bow = "활";
+        public const string Hammer = "한손둔기";
     }
 
 
@@ -50,6 +51,7 @@ public class ItemList
             case ItemTypeList.Dagger:       i = new Dagger();       break;
             case ItemTypeList.Spear:        i = new Spear();        break;
             case ItemTypeList.Bow:          i = new Bow();          break;
+            case ItemTypeList.Hammer:       i = new Hammer();       break;
 
             // Armour
             case ItemTypeList.Helmet:       i = new Helmet();       break;
@@ -79,7 +81,7 @@ public class ItemList
     #endregion
 
     /// <summary>
-    /// Input int(아이템코드) | Item(아이템정보) return
+    /// 아이템 코드 넣으면 아이템 리턴
     /// </summary>
     /// <param name="index"> 아이템 코드 </param>
     /// <returns> 아이템 </returns>
@@ -107,8 +109,6 @@ public class ItemList
 
         return _codeList[tpye][index];
     }
-
-    public int GetCodeItemCount(eCodeType codeType) { return _codeList[(int)codeType].Count; }
 
     /// <summary>
     /// Input eCodeType, string | int(아이템코드) return
@@ -153,6 +153,8 @@ public class ItemList
                 AddList(splitDatas);
         }
     }
+
+    public int GetCodeItemCount(eCodeType codeType) { return _codeList[(int)codeType].Count; }
 }
 namespace GameItem
 {
@@ -173,6 +175,7 @@ namespace GameItem
         Spear,
         Bow,
         BFSword,
+        Hammer,
 
         LAST,
     }
@@ -315,6 +318,12 @@ namespace GameItem
     {
         public Bow()
             => _type = eItemType.Bow;
+    }
+
+    public class Hammer : Weapon
+    {
+        public Hammer()
+            => _type = eItemType.Hammer;
     }
 
     #endregion
