@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour
         _spawnKeyCode[i++] = KeyCode.Alpha3;
         _spawnKeyCode[i++] = KeyCode.Alpha4;
         _spawnKeyCode[i++] = KeyCode.Alpha5;
-
     }
 
     void Update()

@@ -67,6 +67,11 @@ public class SpawnManager : MonoBehaviour
             items[3] = 19;
             _teamUnits.SetEquipedItems(0, items);
 
+            items = new int[4];
+            items[0] = 5;
+            items[1] = 6;
+            items[3] = 17;
+            _teamUnits.SetEquipedItems(1, items);
         }
         else
             _teamUnits = Manager.Get<GameManager>().GetPlayerUnits();

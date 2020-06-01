@@ -66,6 +66,12 @@ public class InGameSystem : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        _victoryObject.SetActive(false);
+        _defeatObject.SetActive(false);
+    }
+
     private void Update()
     {
         UpdateTimer();
@@ -75,6 +81,19 @@ public class InGameSystem : MonoBehaviour
     #endregion
 
     #region Private Function
+
+    public GameObject _victoryObject;
+    public GameObject _defeatObject;
+
+    void Victory()
+    {
+        _victoryObject.SetActive(true);
+    }
+
+    void Defeat()
+    {
+        _defeatObject.SetActive(false);
+    }
 
     private void UpdateTimer()
     {
@@ -86,16 +105,18 @@ public class InGameSystem : MonoBehaviour
     private void UpdateBase()
     {
         _player1Bar.fillAmount = _player1Base.GetCurHealth() / _player1Base.GetMaxHealth();
+        if(_player1Base.GetCurHealth() <= 0)
+            Victory();
+
         _player2Bar.fillAmount = _player2Base.GetCurHealth() / _player2Base.GetMaxHealth();
+        if (_player2Base.GetCurHealth() <= 0)
+            Defeat();
     }
 
     private void UpdateGoldMana()
     {
         _curGold = Mathf.Clamp(_curGold + Time.deltaTime * _goldPerSecond, 0, _maxGold);
         _curMana = Mathf.Clamp(_curMana + Time.deltaTime * _manaPerSecond, 0, _maxMana);
-
-        // _goldText.text = ((int)_curGold).ToString();
-        // _manaText.text = ((int)_curMana).ToString();
 
         _goldImage.fillAmount = _curGold / _maxGold;
         _manaImage.fillAmount = _curMana / _maxMana;
