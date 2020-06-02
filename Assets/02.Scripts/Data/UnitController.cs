@@ -12,7 +12,7 @@ public enum eTeam
 
 public class UnitController : FieldObject
 {
-    public void Spawn()
+    public void Spawn() 
     {
         if (_aniPro == null)
             _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
@@ -30,21 +30,7 @@ public class UnitController : FieldObject
         UpdateTarget();
     }
 
-    private void OnEnable()
-    {
-        UpdateTarget();
-
-        _team = _status._team;
-        _curHp = _status._curhealth;
-        _maxHp = _status._maxhealth;
-
-        _navMeshAgent.stoppingDistance = _status._attackRange;
-        _navMeshAgent.speed = _status._moveSpeed;
-
-        UnitAnimationManager.Update(_status._equipedItems[2], _status._equipedItems[3], _aniPro);
-    }
-
-    public override void DamageReceive(float damage)
+    public override void DamageReceive(float damage) 
     {
         //데미지를 받습니다.
         _curHp -= damage;
@@ -165,7 +151,7 @@ public class UnitController : FieldObject
     #endregion
 
     #endregion
-
+    
     #region Monobehaviour Function
 
     private void FixedUpdate()
@@ -182,7 +168,19 @@ public class UnitController : FieldObject
         UpdateUnit();
     }
 
-    
+    private void OnEnable()
+    {
+        UpdateTarget();
+
+        _team = _status._team;
+        _curHp = _status._curhealth;
+        _maxHp = _status._maxhealth;
+
+        _navMeshAgent.stoppingDistance = _status._attackRange;
+        _navMeshAgent.speed = _status._moveSpeed;
+
+        UnitAnimationManager.Update(_status._equipedItems[2], _status._equipedItems[3], _aniPro);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -221,8 +219,6 @@ public class UnitController : FieldObject
 
         float remainingDistance = (transform.position - _curTarget.transform.position).magnitude; // _navMeshAgent.remainingDistance; //
 
-        // if(_team == eTeam.PLAYER) { Debug.Log("" + remainingDistance + "   " + _attackRange); }
-
         if (remainingDistance <= _attackRange)
         {
             _curState = eState.ATTACK;
@@ -235,8 +231,6 @@ public class UnitController : FieldObject
 
             //데미지 리시브
             _curTarget.DamageReceive(_attackDamage);
-
-            // if(_team == eTeam.PLAYER) { Debug.Log("Hit !"); }
 
             if (_curTarget.GetCurHealth() <= 0)
                 UpdateTarget();
@@ -503,7 +497,11 @@ public class UnitModelManager
 
 public class UnitIconManager
 {
-    public static void Update(int headItemNum, GameObject IconObject)
+    public static void Reset(GameObject IconObject)
+    {
+
+    }
+    public static void Update(GameObject IconObject, int headItemNum)
     {
         if (0 == _iconPoints.Count)
             Init();
@@ -563,7 +561,7 @@ public class UnitIconManager
 
 public class UnitAnimationManager
 {
-    public static void Update(int leftWeaponCode, int rightWeaponCode, Animator ani)
+    public static void Update(int leftWeaponCode, int rightWeaponCode, Animator ani) 
     {
         int num = -1;
 
@@ -573,7 +571,7 @@ public class UnitAnimationManager
             ani.SetInteger(_idWeaponType, num);
     }
 
-    public static void Update(int leftWeaponCode, int rightWeaponCode, AnimatorPro ani)
+    public static void Update(int leftWeaponCode, int rightWeaponCode, AnimatorPro ani) 
     {
         int num = -1;
 
