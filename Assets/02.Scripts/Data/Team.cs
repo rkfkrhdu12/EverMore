@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-using GameplayIngredients;
-
+﻿
 public class Team
 {
     public string Name { set; get; } = "";

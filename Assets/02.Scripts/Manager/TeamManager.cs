@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-using GameplayIngredients;
-
 using UnityEngine.UI;
 
 public class TeamManager : MonoBehaviour
@@ -16,6 +14,45 @@ public class TeamManager : MonoBehaviour
     } 
 
     public UnitPhoto GetUnitPhoto() { return _unitPhoto; }
+
+    #region OnClickEvent Function
+
+    public void OnSelectTeam(int teamIndex)
+    {
+        if (teamIndex >= _teamNameList.Count) { return; }
+
+        _curSelectTeamName = _teamNameList[teamIndex];
+
+        _choiceUnitTeamNameUI.text = _teams[_curSelectTeamName].Name;
+
+        UpdateChoiceUnitsUI();
+    }
+
+    public void OnUpdateChoiceUnitUI()
+    {
+        UpdateChoiceUnitUI();
+    }
+
+    public void OnSelectUnit(int index)
+    {
+        if (index >= _teams[_curSelectTeamName].Length || index < 0) { return; }
+
+        _curSelectUnitNum = index;
+
+        UnitStatus curSelectUnit = _teams[_curSelectTeamName].GetUnit(_curSelectUnitNum);
+
+        _itemInventory.SetEquipedItems(curSelectUnit._equipedItems);
+    }
+
+    public Team GetSelectTeam()
+    {
+        if (string.IsNullOrWhiteSpace(_curSelectTeamName)) { return null; }
+        if (_teams[_curSelectTeamName].Length == 0) { return null; }
+
+
+        return _teams[_curSelectTeamName];
+    }
+    #endregion
 
     #region Private Variable
 
@@ -80,46 +117,6 @@ public class TeamManager : MonoBehaviour
 
     #endregion
 
-    #region OnClickEvent Function
-
-    public void OnSelectTeam(int teamIndex)
-    {
-        if(teamIndex >= _teamNameList.Count) { return; }
-
-        _curSelectTeamName = _teamNameList[teamIndex];
-
-        _choiceUnitTeamNameUI.text = _teams[_curSelectTeamName].Name;
-
-        UpdateChoiceUnitsUI();
-    }
-
-    // SetUnit
-    public void OnUpdateChoiceUnitUI()
-    {
-        UpdateChoiceUnitUI();
-    }
-
-    public void OnSelectUnit(int index)
-    {
-        if (index >= _teams[_curSelectTeamName].Length || index < 0) { return; }
-
-        _curSelectUnitNum = index;
-
-        UnitStatus curSelectUnit = _teams[_curSelectTeamName].GetUnit(_curSelectUnitNum);
-
-        _itemInventory.SetEquipedItems(curSelectUnit._equipedItems);
-    }
-
-    public Team GetSelectTeam()
-    {
-        if (string.IsNullOrWhiteSpace(_curSelectTeamName))  { return null; }
-        if (_teams[_curSelectTeamName].Length == 0)         { return null; }
-
-
-        return _teams[_curSelectTeamName];
-    }
-    #endregion
-
     #region Private Function
 
     // ChoiceUnit
@@ -142,7 +139,7 @@ public class TeamManager : MonoBehaviour
         {
             _unitPhoto.UpdateTexture(ref rawImage, unit._equipedItems);
 
-            UnitIconManager.Update(unit._equipedItems[0], _unitSlots[selectUnitNum].transform.GetChild(1).gameObject);
+            UnitIconManager.Update(_unitSlots[selectUnitNum].transform.GetChild(1).gameObject, unit._equipedItems[0]);
 
             StartCoroutine(UnitTextureWaiting(rawImage));
         }

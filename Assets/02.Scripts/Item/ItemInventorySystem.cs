@@ -138,8 +138,8 @@ public class ItemInventorySystem : MonoBehaviour
     } 
     #endregion
 
-    public void TypeHelmet()        => Type = eCodeType.HELMET;
-    public void TypeBodyArmour()    => Type = eCodeType.BODYARMOUR;
+    public void TypeHelmet()        { Type = eCodeType.HELMET;     }
+    public void TypeBodyArmour()    { Type = eCodeType.BODYARMOUR; }
     public void TypeRightWeapon()   { Type = eCodeType.WEAPON; _isLeftWeapon = false; }
     public void TypeLeftWeapon()    { Type = eCodeType.WEAPON; _isLeftWeapon = true; }
 
@@ -246,10 +246,7 @@ public class ItemInventorySystem : MonoBehaviour
                 { // 창작한 아이템코드가 이번 아이템코드
                     _itemsButtonGroup.SelectButton(curSlot.GetComponent<ButtonPro>());
                 }
-                
             }
-
-            // _itemsButtonGroup.SelectedNumber = -1;
         }
 
         UpdateModel();

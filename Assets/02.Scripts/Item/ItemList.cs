@@ -6,80 +6,8 @@ using UnityEditor;
 
 using GameItem;
 
-
-
 public class ItemList
 {
-    #region Variable
-    // 파싱한 데이터는 string 이므로 const string 으로 비교하여 판단
-    private struct ItemTypeList
-    {
-        public const string Helmet = "모자";
-        public const string BodyArmour = "갑옷";
-        public const string OneHandSword = "한손검";
-        public const string Shield = "방패";
-        public const string Dagger = "단검";
-        public const string Spear = "창";
-        public const string Bow = "활";
-        public const string Hammer = "한손둔기";
-    }
-
-
-    // 아이템은 빨리 자주 찾으며, 키를 통해 찾을것이므로 map(Dictionary)을 이용
-    private Dictionary<int, Item> _itemList = new Dictionary<int, Item>();
-
-    // 종류를 번호순으로 정렬하여 저장, ex) _codeList[(int)eCodeType.Weapon][0] == Index와 상관없이 리스트중 첫번째 무기 리턴
-    private Dictionary<int, int>[] _codeList = new Dictionary<int, int>[3];
-
-    private bool _isInit;
-
-    #endregion
-
-    #region Private Fuction
-
-    private void AddList(IReadOnlyList<string> data)
-    {
-        if(string.IsNullOrEmpty(data[0])) { return; }
-
-        Item i = null;
-
-        switch (data[1])
-        {
-            // Weapon
-            case ItemTypeList.OneHandSword: i = new OneHandSword(); break;
-            case ItemTypeList.Shield:       i = new Shield();       break;
-            case ItemTypeList.Dagger:       i = new Dagger();       break;
-            case ItemTypeList.Spear:        i = new Spear();        break;
-            case ItemTypeList.Bow:          i = new Bow();          break;
-            case ItemTypeList.Hammer:       i = new Hammer();       break;
-
-            // Armour
-            case ItemTypeList.Helmet:       i = new Helmet();       break;
-            case ItemTypeList.BodyArmour:   i = new BodyArmour();   break;
-        }
-
-        if (i == null)
-            return;
-
-        if (i.Type == eItemType.NONE)
-            return;
-
-        int index = int.Parse(data[0]);
-
-        switch (i.Type)
-        {
-            case eItemType.NONE: Debug.LogError("Item Error" + i.Name); break;
-            case eItemType.HELMET:      _codeList[(int)eCodeType.HELMET].Add    (_codeList[(int)eCodeType.HELMET].Count, index);  break;
-            case eItemType.BODYARMOUR:  _codeList[(int)eCodeType.BODYARMOUR].Add(_codeList[(int)eCodeType.BODYARMOUR].Count, index); break;
-            default:                    _codeList[(int)eCodeType.WEAPON].Add    (_codeList[(int)eCodeType.WEAPON].Count, index); break;
-        }
-
-        i.Init(data);
-        _itemList.Add(index, i);
-    }
-
-    #endregion
-
     /// <summary>
     /// 아이템 코드 넣으면 아이템 리턴
     /// </summary>
@@ -101,7 +29,7 @@ public class ItemList
     /// <param name="codeType"> eCodeType 의 형태로 된 enum값 </param>
     /// <param name="index"> 원하는 아이템의 번호 </param>
     /// <returns> 아이템코드 </returns>
-    public int CodeSearch(eCodeType codeType, int index)
+    public int CodeSearch(eCodeType codeType, int index) 
     {
         int tpye = (int)codeType;
 
@@ -116,7 +44,7 @@ public class ItemList
     /// <param name="codeType"> eCodeType 의 형태로 된 enum값 </param>
     /// <param name="name"> 원하는 아이템의 Name </param>
     /// <returns> 아이템코드 </returns>
-    public int CodeSearch(eCodeType codeType, string name)
+    public int CodeSearch(eCodeType codeType, string name) 
     {
         int tpye = (int)codeType;
 
@@ -133,7 +61,7 @@ public class ItemList
     /// <summary>
     /// Initialize        | GameSystem 에서 해주고 있음 
     /// </summary>
-    public void Init()
+    public void Init() 
     {
         if (_isInit) return;
         _isInit = true;
@@ -155,6 +83,77 @@ public class ItemList
     }
 
     public int GetCodeItemCount(eCodeType codeType) { return _codeList[(int)codeType].Count; }
+
+    #region Variable
+
+    // 아이템은 빨리 자주 찾으며, 키를 통해 찾을것이므로 map(Dictionary)을 이용
+    private Dictionary<int, Item> _itemList = new Dictionary<int, Item>();
+
+    // 종류를 번호순으로 정렬하여 저장, ex) _codeList[(int)eCodeType.Weapon][0] == Index와 상관없이 리스트중 첫번째 무기 리턴
+    private Dictionary<int, int>[] _codeList = new Dictionary<int, int>[3];
+
+    // 파싱한 데이터는 string 이므로 const string 으로 비교하여 판단
+    private struct ItemTypeList
+    {
+        public const string Helmet          = "모자";
+        public const string BodyArmour      = "갑옷";
+        public const string OneHandSword    = "한손검";
+        public const string Shield          = "방패";
+        public const string Dagger          = "단검";
+        public const string Spear           = "창";
+        public const string Bow             = "활";
+        public const string Hammer          = "한손둔기";
+    }
+
+    // Init이 여러번 작동되지 않게끔 막음
+    private bool _isInit;
+
+    #endregion
+
+    #region Private Fuction
+
+    private void AddList(IReadOnlyList<string> data)
+    {
+        if (string.IsNullOrEmpty(data[0])) { return; }
+
+        Item i = null;
+
+        switch (data[1])
+        {
+            // Weapon
+            case ItemTypeList.OneHandSword: i = new OneHandSword(); break;
+            case ItemTypeList.Shield: i = new Shield(); break;
+            case ItemTypeList.Dagger: i = new Dagger(); break;
+            case ItemTypeList.Spear: i = new Spear(); break;
+            case ItemTypeList.Bow: i = new Bow(); break;
+            case ItemTypeList.Hammer: i = new Hammer(); break;
+
+            // Armour
+            case ItemTypeList.Helmet: i = new Helmet(); break;
+            case ItemTypeList.BodyArmour: i = new BodyArmour(); break;
+        }
+
+        if (i == null)
+            return;
+
+        if (i.Type == eItemType.NONE)
+            return;
+
+        int index = int.Parse(data[0]);
+
+        switch (i.Type)
+        {
+            case eItemType.NONE: Debug.LogError("Item Error" + i.Name); break;
+            case eItemType.HELMET: _codeList[(int)eCodeType.HELMET].Add(_codeList[(int)eCodeType.HELMET].Count, index); break;
+            case eItemType.BODYARMOUR: _codeList[(int)eCodeType.BODYARMOUR].Add(_codeList[(int)eCodeType.BODYARMOUR].Count, index); break;
+            default: _codeList[(int)eCodeType.WEAPON].Add(_codeList[(int)eCodeType.WEAPON].Count, index); break;
+        }
+
+        i.Init(data);
+        _itemList.Add(index, i);
+    }
+
+    #endregion
 }
 namespace GameItem
 {
@@ -189,7 +188,7 @@ namespace GameItem
 
     public delegate void ItemAbility();
 
-    public class Item
+    public class Item 
     {
         protected string _name;                         public string Name => _name;
 

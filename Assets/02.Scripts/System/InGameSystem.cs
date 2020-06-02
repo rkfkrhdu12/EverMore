@@ -7,13 +7,6 @@ using TMPro;
 
 public class InGameSystem : MonoBehaviour
 {
-    public void Spawn(int unitNum)
-    {
-        //=> _unitMgr.Spawn(unitNum, ref _curGold);
-
-
-    }
-
     #region Private Variable
     [SerializeField]
     private FieldObject _player1Base;
@@ -54,15 +47,15 @@ public class InGameSystem : MonoBehaviour
     {
         if (null == Manager.Get<GameManager>().GetPlayerUnits()) { return; }
 
-        _player1Base.GetComponent<SpawnManager>()._teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
+        _player1Base.GetComponent<SpawnManager>()._teamUnits 
+            = Manager.Get<GameManager>().GetPlayerUnits();
 
         _timerUITime = int.Parse(_timerText.text);
 
-        
         for (int i = 0; i < 6;++i)
         {
             int headNum = _player1Base.GetComponent<SpawnManager>()._teamUnits.GetUnit(i)._equipedItems[0];
-            UnitIconManager.Update(headNum, _iconObjects[i]);
+            UnitIconManager.Update(_iconObjects[i], headNum);
         }
     }
 
