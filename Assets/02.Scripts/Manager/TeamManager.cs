@@ -127,9 +127,13 @@ public class TeamManager : MonoBehaviour
         UnitStatus unit = _teams[_curSelectTeamName].GetUnit(selectUnitNum) ;
         RawImage rawImage = null;
 
+        GameObject iconObject = _unitSlots[selectUnitNum].transform.GetChild(1).gameObject;
+
         if ((rawImage = _unitSlots[selectUnitNum].transform.GetChild(0).GetChild(0).GetComponent<RawImage>())) { }
-        else { Debug.Log("UpdateChoiceUnitUI : Unit RawImage Load Error"); return; } 
-        
+        else { Debug.Log("UpdateChoiceUnitUI : Unit RawImage Load Error"); return; }
+
+        UnitIconManager.Reset(iconObject);
+
         if ((unit._equipedItems[0] == 0 && unit._equipedItems[1] == 0) || (unit._equipedItems[0] == 1 && unit._equipedItems[1] == 2))
         { // 알몸 상태 혹은 초기화가 안된상태 = _UnitAddImage.texture
             rawImage.texture = _UnitAddImage.texture;
@@ -139,7 +143,7 @@ public class TeamManager : MonoBehaviour
         {
             _unitPhoto.UpdateTexture(ref rawImage, unit._equipedItems);
 
-            UnitIconManager.Update(_unitSlots[selectUnitNum].transform.GetChild(1).gameObject, unit._equipedItems[0]);
+            UnitIconManager.Update(iconObject, unit._equipedItems[0]);
 
             StartCoroutine(UnitTextureWaiting(rawImage));
         }

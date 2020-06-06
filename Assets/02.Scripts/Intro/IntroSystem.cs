@@ -17,6 +17,12 @@ public class IntroSystem : MonoBehaviour
     [SerializeField, Tooltip("아무키나 누르라는 텍스트를 수록해주세요")]
     private GameObject GameStartText;
 
+    [SerializeField]
+    private GameObject _SetNickNameUI;
+
+    [SerializeField]
+    private Launcher _Launcher;
+
     #endregion
 
     #region Hide Inspector
@@ -29,10 +35,10 @@ public class IntroSystem : MonoBehaviour
     //라이팅이 다시 비치는 시간을 재기 위한 변수 입니다.
     private float LightRecycleTime;
 
-    private static readonly int ID_Light = Animator.StringToHash("Recycle"); 
+    private static readonly int ID_Light = Animator.StringToHash("Recycle");
     
     #endregion
-    
+
     private void Awake()
     {
         animatorPro = GetComponent<AnimatorPro>();
@@ -43,8 +49,10 @@ public class IntroSystem : MonoBehaviour
 
     private void Update()
     {
-        if(isGameStart && Input.anyKeyDown)
+        if (isGameStart && Input.anyKeyDown)
+        {
             Manager.Get<SceneManagerPro>().LoadScene(SceneManagerPro.eScene.LOBBY);
+        }
     }
 
     [AnimatorExit("Base Layer.MoveUp")]

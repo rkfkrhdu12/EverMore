@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AnimatorPro;
 using UnityEngine.AI;
 
+using UnityEngine.ParticleSystemJobs;
+
 public enum eTeam
 {
     PLAYER,
@@ -207,6 +209,7 @@ public class UnitController : FieldObject
 
     private void UpdateUnit()
     {
+        if (_navMeshAgent.pathPending) { return; }
         UpdateMonobehaviour();
 
         UpdateAnimation();
@@ -214,10 +217,10 @@ public class UnitController : FieldObject
 
     private void UpdateMonobehaviour()
     {
-        if (_curTarget == _enemyCastleObject || _curTarget.GetCurHealth() <= 0)
-            UpdateTarget();
+        UpdateTarget();
 
-        float remainingDistance = (transform.position - _curTarget.transform.position).magnitude; // _navMeshAgent.remainingDistance; //
+        if (_navMeshAgent.pathPending) { return; }
+        float remainingDistance =  _navMeshAgent.remainingDistance; //(transform.position - _curTarget.transform.position).magnitude;
 
         if (remainingDistance <= _attackRange)
         {
@@ -245,12 +248,19 @@ public class UnitController : FieldObject
     private void UpdateAnimation()
     {
         if (_aniPro == null) return;
-        
-        if (_navMeshAgent.velocity.sqrMagnitude >= .1f * .1f && _navMeshAgent.remainingDistance <= .1f)
+
+        if (_navMeshAgent.pathPending) { return; }
+
+        #region Move Animation
+        // https://www.youtube.com/watch?v=RmDRjoXUaTI&feature=youtu.be&app=desktop
+        float moveValue = 0.0f;
+
+        #region _navMeshAgent.updateRotation
+        if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f && _navMeshAgent.remainingDistance <= .1f)
         {
-            _aniPro.SetParam(_idMove, 0);
+            moveValue = 0.0f;
         }
-        else if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f* .1f)
+        else if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f)
         {
             Vector3 direction = _navMeshAgent.desiredVelocity;
 
@@ -260,36 +270,43 @@ public class UnitController : FieldObject
                                                   targetAngle,
                                                   Time.deltaTime * 8.0f);
         }
-        else
+        #endregion
+
+        if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f)
         {
-            transform.LookAt(_curTarget.transform);
+            moveValue = 1.0f;
+        }
+        else 
+        {
+            moveValue = 0.0f;
         }
 
-        if (_curState == eState.ATTACK)
-        {
-            _aniPro.SetParam(_idAttack, true);
-        }
-        else if (_curState == eState.MOVE) 
-        {
-            _aniPro.SetParam(_idAttack, false);
-
-            _aniPro.SetParam(_idMove, 1.0f);
-        }
+        _aniPro.SetParam(_idMove, moveValue); 
+        #endregion
     }
 
     void UpdateTarget()
     {
+        if (!gameObject.activeSelf) { return; }
+        
         if (_attackTargets.Count == 0)
         {
-            _curTarget = _enemyCastleObject;
+            if (_enemyCastleObject != _curTarget)
+            {
+                _curTarget = _enemyCastleObject;
+            }
+            else { return; }
         }
         else
         {
-            _curTarget = _attackTargets.Dequeue();
+            if (_curTarget.GetCurHealth() <= 0)
+            {
+                _curTarget = _attackTargets.Dequeue();
+            }
+            else { return; }
         }
 
-        if (gameObject.activeSelf)
-            _navMeshAgent.SetDestination(_curTarget.transform.position);
+        _navMeshAgent.SetDestination(_curTarget.transform.position);
     }
 
     #endregion
@@ -343,7 +360,7 @@ public class UnitModelManager
         }
     }
 
-    public static void Update(GameObject unit, in int[] equipedItems,int prevItem = 0)
+    public static void Update(GameObject unit, in int[] equipedItems, int prevItem = 0, int colorNum = 1)
     {
         if (0 == _modelItemPoint.Count)
             Init();
@@ -497,16 +514,27 @@ public class UnitModelManager
 
 public class UnitIconManager
 {
-    public static void Reset(GameObject IconObject)
+    public static void Reset(GameObject iconObject)
     {
+        if (_iconPoints.Count == 0)
+            Init();
 
+        if (!iconObject) return;
+
+        GameObject curIcon = null;
+        for (int i = 0; i < iconObject.transform.childCount; ++i)
+        {
+            curIcon = iconObject.transform.GetChild(i).gameObject;
+            if (curIcon.activeSelf) curIcon.SetActive(false);
+        }
     }
-    public static void Update(GameObject IconObject, int headItemNum)
+
+    public static void Update(GameObject iconObject, int headItemNum)
     {
         if (0 == _iconPoints.Count)
             Init();
 
-        if (!IconObject) return;
+        if (!iconObject) return;
 
         GameItem.Item headItem = null;
         if ((headItem = _itemList.ItemSearch(headItemNum)) == null) return;
@@ -516,7 +544,7 @@ public class UnitIconManager
         int iconPoint = _iconPoints[headItem.Name];
 
         GameObject headObject = null;
-        if ((headObject = IconObject.transform.GetChild(iconPoint).gameObject) == null) { return; }
+        if ((headObject = iconObject.transform.GetChild(iconPoint).gameObject) == null) { return; }
 
         headObject.SetActive(true);
     }
@@ -539,8 +567,6 @@ public class UnitIconManager
 
             iconNames.Add(_itemList.ItemSearch(code).Name);
         }
-
-        Debug.Log("");
     }
 
     private static void Init()

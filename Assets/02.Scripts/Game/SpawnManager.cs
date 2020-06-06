@@ -4,6 +4,8 @@ using UnityEngine;
 
 using GameplayIngredients;
 
+using UnityEngine.AI;
+
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
@@ -32,9 +34,11 @@ public class SpawnManager : MonoBehaviour
     /// </summary>
     public void Spawn()
     {
-        GameObject clone = Instantiate(_unitPrefabs, 
-            (_spawnPoint != Vector3.zero ? _spawnPoint: transform.position + new Vector3(3,0,0)),
-            Quaternion.identity, null);
+        GameObject clone = Instantiate(_unitPrefabs, (
+            _spawnPoint != Vector3.zero ? 
+            _spawnPoint :
+            transform.position + new Vector3(1, 0, Random.Range(.5f, 2.5f)
+            )), Quaternion.identity, null);
 
         UnitController unitCtrl = clone.GetComponent<UnitController>();
 
