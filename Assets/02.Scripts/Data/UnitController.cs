@@ -454,8 +454,8 @@ public class UnitModelManager
 
     private static void InitData(ref List<string> armourList, ref List<string> weaponList)
     {
-        GameItem.eCodeType helmet = GameItem.eCodeType.HELMET;
-        GameItem.eCodeType armour = GameItem.eCodeType.BODYARMOUR;
+        GameItem.eCodeType helmet = GameItem.eCodeType.Helmet;
+        GameItem.eCodeType armour = GameItem.eCodeType.Bodyarmour;
 
         for (int i = 0; i < _itemList.GetCodeItemCount(helmet); ++i)
         {
@@ -468,7 +468,7 @@ public class UnitModelManager
             armourList.Add(_itemList.ItemSearch(code).Name);
         }
 
-        GameItem.eCodeType weapon = GameItem.eCodeType.WEAPON;
+        GameItem.eCodeType weapon = GameItem.eCodeType.Weapon;
         for (int i = 0; i < _itemList.GetCodeItemCount(weapon); ++i)
         {
             int code = _itemList.CodeSearch(weapon, i);
@@ -560,7 +560,7 @@ public class UnitIconManager
     #region Private Function
     private static void InitData(ref List<string> iconNames)
     {
-        GameItem.eCodeType helmet = GameItem.eCodeType.HELMET;
+        GameItem.eCodeType helmet = GameItem.eCodeType.Helmet;
         for (int i = 0; i < _itemList.GetCodeItemCount(helmet); ++i)
         {
             int code = _itemList.CodeSearch(helmet, i);
@@ -631,26 +631,23 @@ public class UnitAnimationManager
         if (leftWeapon != null && _typeStrings.ContainsKey(leftWeapon.Type))    leftString = _typeStrings[leftWeapon.Type];
         if (rightWeapon != null && _typeStrings.ContainsKey(rightWeapon.Type))  rightString = _typeStrings[rightWeapon.Type];
 
-        if (!_typeAnimationNum.ContainsKey(leftString + rightString) &&
-           !_typeAnimationNum.ContainsKey(rightString + leftString)) { leftString = rightString = ""; }
+        if (!_typeAnimationNum.ContainsKey(leftString + "&" + rightString)) { leftString = rightString = ""; }
 
-        num = _typeAnimationNum.ContainsKey(leftString + rightString) ?
-            _typeAnimationNum[leftString + rightString] :
-            _typeAnimationNum[rightString + leftString];
+        num = _typeAnimationNum[leftString + "&" + rightString];
     }
 
     private static void InitData(ref List<string> aniName)
     {
-        aniName.Add("Bow");
-        aniName.Add("SwordShield");
-        aniName.Add("Spear");
-        aniName.Add("SwordSword");
-        aniName.Add("Sword");
-        aniName.Add("SpearShield");
-        aniName.Add("SwordSpear");
-        aniName.Add("SpearSpear");
+        aniName.Add("Bow&");
+        aniName.Add("Shield&Sword");
+        aniName.Add("&Spear");
+        aniName.Add("Sword&Sword");
+        aniName.Add("&Sword");
+        aniName.Add("Shield&Spear");
+        aniName.Add("Sword&Spear");
+        aniName.Add("Spear&Spear");
 
-        _typeAnimationNum.Add("", 5); // 아무 무기도 없을때 애니메이션은 Sword(제일 무난..)
+        _typeAnimationNum.Add("&", 5); // 아무 무기도 없을때 애니메이션은 Sword(제일 무난..)
     }
 
     private static void Init()
