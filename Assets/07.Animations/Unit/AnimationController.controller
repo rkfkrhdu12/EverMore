@@ -528,7 +528,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpearShield
+  m_Name: Shield&Spear
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -7782610752710975859}
@@ -692,7 +692,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpearSpear
+  m_Name: Spear&Spear
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1430746988907735259}
@@ -734,7 +734,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Bow
+  m_Name: Bow&
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 6634120509360465227}
@@ -1357,7 +1357,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword
+  m_Name: '&Sword'
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 8428898369003517680}
@@ -1536,7 +1536,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Spear
+  m_Name: '&Spear'
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 4917950257301749860}
@@ -1784,7 +1784,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SwordSpear
+  m_Name: Sword&Spear
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 912800851512396846}
@@ -1837,7 +1837,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SwordSword
+  m_Name: Sword&Sword
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -2380660059266470322}
@@ -1879,7 +1879,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SwordShield
+  m_Name: Shield&Sword
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -8864182821165996637}
