@@ -374,14 +374,14 @@ public class UnitModelManager
         Transform leftWeaponTrs = unit.transform.GetChild(_leftWeaponPoint);
         Transform rightWeaponTrs = unit.transform.GetChild(_rightWeaponPoint);
 
-        for (int i = 0; i < equipedItems.Length; ++i) 
-        {
-            if(equipedItems[i] == prevItem)
-            {
-                prevItem = 0;
-                break;
-            }
-        }
+        //for (int i = 0; i < equipedItems.Length; ++i) 
+        //{
+        //    if(equipedItems[i] == prevItem)
+        //    {
+        //        prevItem = 0;
+        //        break;
+        //    }
+        //}
 
         int[] index;
         // 이전무기 장착해제
@@ -648,6 +648,7 @@ public class UnitAnimationManager
         aniName.Add("Sword");
         aniName.Add("SpearShield");
         aniName.Add("SwordSpear");
+        aniName.Add("SpearSpear");
 
         _typeAnimationNum.Add("", 5); // 아무 무기도 없을때 애니메이션은 Sword(제일 무난..)
     }

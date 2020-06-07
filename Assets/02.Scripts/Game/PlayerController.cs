@@ -76,19 +76,25 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public int Range = 200;
+    public int rayDistance = 200;
     void UpdateSpawnPoint()
     {
         if (Input.GetMouseButtonUp(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Camera mainCamera = Camera.main;
+
+            rayDistance = (int)Mathf.Sqrt(mainCamera.transform.position.sqrMagnitude) + 30;
+
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hitInfo;
 
-            if (Physics.Raycast(ray, out hitInfo, Range))
+            if (Physics.Raycast(ray, out hitInfo, rayDistance))
             {
                 Vector3 dist = hitInfo.point - transform.position;
 
-                if (dist.sqrMagnitude < _spawnRange * _spawnRange && dist.sqrMagnitude > _spawnRange + _spawnRange)
+                Debug.Log(dist.sqrMagnitude + "   " + _spawnRange * _spawnRange);
+
+                if (dist.sqrMagnitude < _spawnRange * _spawnRange)
                 { // Spawn
                     _spawnManager.SetSpawnPoint(hitInfo.point);
 

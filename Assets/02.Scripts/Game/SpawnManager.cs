@@ -34,11 +34,21 @@ public class SpawnManager : MonoBehaviour
     /// </summary>
     public void Spawn()
     {
-        GameObject clone = Instantiate(_unitPrefabs, (
-            _spawnPoint != Vector3.zero ? 
-            _spawnPoint :
-            transform.position + new Vector3(1, 0, Random.Range(.5f, 2.5f)
-            )), Quaternion.identity, null);
+        Vector3 unitPos = _spawnPoint;
+
+        if(_spawnPoint == Vector3.zero)
+        {
+            int randVal = Random.Range(0, 2);
+            bool isDown = 0 == randVal ? true : false;
+
+            Debug.Log(randVal + "   " + isDown);
+
+            unitPos = isDown ?
+                transform.position + new Vector3(1, 0, 2.5f) :
+                transform.position + new Vector3(1, 0, .5f);
+        }
+
+        GameObject clone = Instantiate(_unitPrefabs, unitPos, Quaternion.identity, null);
 
         UnitController unitCtrl = clone.GetComponent<UnitController>();
 
