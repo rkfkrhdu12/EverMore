@@ -22,8 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UnitPhoto
-    m_mainAssetType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
   - m_GUID: 316ef8a0fb7fc1f4b9155247dbfe90b1
@@ -31,8 +29,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UnitPhoto
-    m_mainAssetType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
   - m_GUID: 37826f274fdafde469cf551315553f7e
@@ -40,8 +36,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UnitPhoto
-    m_mainAssetType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
   - m_GUID: 40ee32c519f5df44e8e17e7099c4b6cf
@@ -49,8 +43,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UnitPhoto
-    m_mainAssetType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
   - m_GUID: 41f1934d4164a1044a6ba5494b224cf3
@@ -58,8 +50,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UnitPhoto
-    m_mainAssetType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
   - m_GUID: 55b2b963c78aa5a4d92955420c736531
@@ -67,8 +57,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UnitPhoto
-    m_mainAssetType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
   - m_GUID: 9ddf54583b69df049b2a7f7314223393
@@ -76,8 +64,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UnitPhoto
-    m_mainAssetType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
   - m_GUID: b4276d1b999fc6242b4e1110712eee4a
@@ -85,8 +71,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UnitPhoto
-    m_mainAssetType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
   - m_GUID: b8c07e6b1639ad14f8d3573049212199
@@ -94,8 +78,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UnitPhoto
-    m_mainAssetType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
   - m_GUID: fbb388f0ee0e0b949bd9a39d752f5236
@@ -103,8 +85,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - UnitPhoto
-    m_mainAssetType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
     m_MainAsset: {fileID: 0}
     m_TargetAsset: {fileID: 0}
   m_ReadOnly: 0
