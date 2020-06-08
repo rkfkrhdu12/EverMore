@@ -41,8 +41,8 @@ public class ItemInventorySystem : MonoBehaviour
 
     #region Hide Inspector
 
-    private eCodeType _curType = eCodeType.HELMET;
-    private readonly List<int>[] _inventory = new List<int>[3];
+    private eCodeType _curType = eCodeType.Helmet;
+    private readonly List<int>[] _inventory = new List<int>[4];
 
     private ItemList _itemList;
 
@@ -66,21 +66,22 @@ public class ItemInventorySystem : MonoBehaviour
 
         _itemList = Manager.Get<GameManager>().itemList;
 
-        _inventory[(int)eCodeType.HELMET] = new List<int>();
+        _inventory[(int)eCodeType.Helmet]       = new List<int>();
 
-        _inventory[(int)eCodeType.BODYARMOUR] = new List<int>();
+        _inventory[(int)eCodeType.Bodyarmour]   = new List<int>();
 
-        _inventory[(int)eCodeType.WEAPON] = new List<int>();
+        _inventory[(int)eCodeType.LeftWeapon]   = new List<int>();
+
+        _inventory[(int)eCodeType.RightWeapon]  = new List<int>();
     }
 
     private void Start()
     {
         #region Test
-
         List<string> armourList = new List<string>();
 
-        GameItem.eCodeType helmet = GameItem.eCodeType.HELMET;
-        GameItem.eCodeType armour = GameItem.eCodeType.BODYARMOUR;
+        GameItem.eCodeType helmet = GameItem.eCodeType.Helmet;
+        GameItem.eCodeType armour = GameItem.eCodeType.Bodyarmour;
 
         for (int i = 0; i < _itemList.GetCodeItemCount(helmet); ++i)
         {
@@ -93,8 +94,8 @@ public class ItemInventorySystem : MonoBehaviour
         }
 
         eCodeType[] codes = new eCodeType[2];
-        codes[0] = eCodeType.HELMET;
-        codes[1] = eCodeType.BODYARMOUR;
+        codes[0] = eCodeType.Helmet;
+        codes[1] = eCodeType.Bodyarmour;
         int num;
         for (int i = 0; i < armourList.Count; ++i)
         {
@@ -105,7 +106,7 @@ public class ItemInventorySystem : MonoBehaviour
 
         List<string> weaponList = new List<string>();
 
-        GameItem.eCodeType weapon = GameItem.eCodeType.WEAPON;
+        GameItem.eCodeType weapon = GameItem.eCodeType.Weapon;
         for (int i = 0; i < _itemList.GetCodeItemCount(weapon); ++i)
         {
             int code = _itemList.CodeSearch(weapon, i);
@@ -117,14 +118,15 @@ public class ItemInventorySystem : MonoBehaviour
 
         for (int i = 0; i < weaponList.Count; ++i) 
         {
-            num = _itemList.CodeSearch(eCodeType.WEAPON, weaponList[i]);
+            num = _itemList.CodeSearch(eCodeType.Weapon, weaponList[i]);
 
-            _inventory[(int)eCodeType.WEAPON].Add(num);
+            _inventory[(int)eCodeType.LeftWeapon].Add(num);
+            _inventory[(int)eCodeType.RightWeapon].Add(num);
         }
 
         #endregion
 
-        Type = eCodeType.HELMET;
+        Type = eCodeType.Helmet;
 
         UpdateInventory();
     }
@@ -132,16 +134,16 @@ public class ItemInventorySystem : MonoBehaviour
     //매번 UI가 활성화 될 때, 호출됩니다.
     private void OnEnable()
     {
-        Type = eCodeType.HELMET;
+        Type = eCodeType.Helmet;
 
         UpdateInventory();
-    } 
+    }
     #endregion
 
-    public void TypeHelmet()        { Type = eCodeType.HELMET;     }
-    public void TypeBodyArmour()    { Type = eCodeType.BODYARMOUR; }
-    public void TypeRightWeapon()   { Type = eCodeType.WEAPON; _isLeftWeapon = false; }
-    public void TypeLeftWeapon()    { Type = eCodeType.WEAPON; _isLeftWeapon = true; }
+    public void TypeHelmet()        { Type = eCodeType.Helmet;     }
+    public void TypeBodyArmour()    { Type = eCodeType.Bodyarmour; }
+    public void TypeRightWeapon()   { Type = eCodeType.LeftWeapon; _isLeftWeapon = false; }
+    public void TypeLeftWeapon()    { Type = eCodeType.RightWeapon; _isLeftWeapon = true; }
 
     public void SetEquipedItems(int[] items)
     {
@@ -174,13 +176,13 @@ public class ItemInventorySystem : MonoBehaviour
             int partsNum = 0;
             switch (i.Type)
             {
-                case eItemType.NONE: Debug.Log("ItemInventorySystem : UpdateEquipedItem i.Type is Error"); return;
-                case eItemType.HELMET: partsNum = 0; break;
-                case eItemType.BODYARMOUR: partsNum = 1; break;
-                default: partsNum = (_isLeftWeapon ? 2 : 3); break;
+                case eItemType.NONE:        return;
+                case eItemType.HELMET:      partsNum = 0;                       break;
+                case eItemType.BODYARMOUR:  partsNum = 1;                       break;
+                default:                    partsNum = (_isLeftWeapon ? 2 : 3); break;
             }
 
-            if (partsNum >= _equipedItems.Length) { Debug.Log("ItemInventorySystem : UpdateEquipedItem partsNum is Error"); return; }
+            if (partsNum >= _equipedItems.Length) { return; }
 
             int prevItem = _equipedItems[partsNum];
             _equipedItems[partsNum] = itemCode;
@@ -189,7 +191,7 @@ public class ItemInventorySystem : MonoBehaviour
         }
 
         {
-            if (_curType != eCodeType.WEAPON) return;
+            if (!(_curType == eCodeType.LeftWeapon || _curType == eCodeType.RightWeapon)) return;
 
             UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelUI.GetComponent<Animator>());
         }

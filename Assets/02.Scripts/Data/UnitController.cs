@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AnimatorPro;
 using UnityEngine.AI;
 
+using UnityEngine.ParticleSystemJobs;
+
 public enum eTeam
 {
     PLAYER,
@@ -207,6 +209,7 @@ public class UnitController : FieldObject
 
     private void UpdateUnit()
     {
+        if (_navMeshAgent.pathPending) { return; }
         UpdateMonobehaviour();
 
         UpdateAnimation();
@@ -214,10 +217,10 @@ public class UnitController : FieldObject
 
     private void UpdateMonobehaviour()
     {
-        if (_curTarget == _enemyCastleObject || _curTarget.GetCurHealth() <= 0)
-            UpdateTarget();
+        UpdateTarget();
 
-        float remainingDistance = (transform.position - _curTarget.transform.position).magnitude; // _navMeshAgent.remainingDistance; //
+        if (_navMeshAgent.pathPending) { return; }
+        float remainingDistance =  _navMeshAgent.remainingDistance; //(transform.position - _curTarget.transform.position).magnitude;
 
         if (remainingDistance <= _attackRange)
         {
@@ -245,12 +248,19 @@ public class UnitController : FieldObject
     private void UpdateAnimation()
     {
         if (_aniPro == null) return;
-        
-        if (_navMeshAgent.velocity.sqrMagnitude >= .1f * .1f && _navMeshAgent.remainingDistance <= .1f)
+
+        if (_navMeshAgent.pathPending) { return; }
+
+        #region Move Animation
+        // https://www.youtube.com/watch?v=RmDRjoXUaTI&feature=youtu.be&app=desktop
+        float moveValue = 0.0f;
+
+        #region _navMeshAgent.updateRotation
+        if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f && _navMeshAgent.remainingDistance <= .1f)
         {
-            _aniPro.SetParam(_idMove, 0);
+            moveValue = 0.0f;
         }
-        else if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f* .1f)
+        else if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f)
         {
             Vector3 direction = _navMeshAgent.desiredVelocity;
 
@@ -260,36 +270,43 @@ public class UnitController : FieldObject
                                                   targetAngle,
                                                   Time.deltaTime * 8.0f);
         }
-        else
+        #endregion
+
+        if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f)
         {
-            transform.LookAt(_curTarget.transform);
+            moveValue = 1.0f;
+        }
+        else 
+        {
+            moveValue = 0.0f;
         }
 
-        if (_curState == eState.ATTACK)
-        {
-            _aniPro.SetParam(_idAttack, true);
-        }
-        else if (_curState == eState.MOVE) 
-        {
-            _aniPro.SetParam(_idAttack, false);
-
-            _aniPro.SetParam(_idMove, 1.0f);
-        }
+        _aniPro.SetParam(_idMove, moveValue); 
+        #endregion
     }
 
     void UpdateTarget()
     {
+        if (!gameObject.activeSelf) { return; }
+        
         if (_attackTargets.Count == 0)
         {
-            _curTarget = _enemyCastleObject;
+            if (_enemyCastleObject != _curTarget)
+            {
+                _curTarget = _enemyCastleObject;
+            }
+            else { return; }
         }
         else
         {
-            _curTarget = _attackTargets.Dequeue();
+            if (_curTarget.GetCurHealth() <= 0)
+            {
+                _curTarget = _attackTargets.Dequeue();
+            }
+            else { return; }
         }
 
-        if (gameObject.activeSelf)
-            _navMeshAgent.SetDestination(_curTarget.transform.position);
+        _navMeshAgent.SetDestination(_curTarget.transform.position);
     }
 
     #endregion
@@ -343,7 +360,7 @@ public class UnitModelManager
         }
     }
 
-    public static void Update(GameObject unit, in int[] equipedItems,int prevItem = 0)
+    public static void Update(GameObject unit, in int[] equipedItems, int prevItem = 0, int colorNum = 1)
     {
         if (0 == _modelItemPoint.Count)
             Init();
@@ -357,14 +374,14 @@ public class UnitModelManager
         Transform leftWeaponTrs = unit.transform.GetChild(_leftWeaponPoint);
         Transform rightWeaponTrs = unit.transform.GetChild(_rightWeaponPoint);
 
-        for (int i = 0; i < equipedItems.Length; ++i) 
-        {
-            if(equipedItems[i] == prevItem)
-            {
-                prevItem = 0;
-                break;
-            }
-        }
+        //for (int i = 0; i < equipedItems.Length; ++i) 
+        //{
+        //    if(equipedItems[i] == prevItem)
+        //    {
+        //        prevItem = 0;
+        //        break;
+        //    }
+        //}
 
         int[] index;
         // 이전무기 장착해제
@@ -437,8 +454,8 @@ public class UnitModelManager
 
     private static void InitData(ref List<string> armourList, ref List<string> weaponList)
     {
-        GameItem.eCodeType helmet = GameItem.eCodeType.HELMET;
-        GameItem.eCodeType armour = GameItem.eCodeType.BODYARMOUR;
+        GameItem.eCodeType helmet = GameItem.eCodeType.Helmet;
+        GameItem.eCodeType armour = GameItem.eCodeType.Bodyarmour;
 
         for (int i = 0; i < _itemList.GetCodeItemCount(helmet); ++i)
         {
@@ -451,7 +468,7 @@ public class UnitModelManager
             armourList.Add(_itemList.ItemSearch(code).Name);
         }
 
-        GameItem.eCodeType weapon = GameItem.eCodeType.WEAPON;
+        GameItem.eCodeType weapon = GameItem.eCodeType.Weapon;
         for (int i = 0; i < _itemList.GetCodeItemCount(weapon); ++i)
         {
             int code = _itemList.CodeSearch(weapon, i);
@@ -497,16 +514,27 @@ public class UnitModelManager
 
 public class UnitIconManager
 {
-    public static void Reset(GameObject IconObject)
+    public static void Reset(GameObject iconObject)
     {
+        if (_iconPoints.Count == 0)
+            Init();
 
+        if (!iconObject) return;
+
+        GameObject curIcon = null;
+        for (int i = 0; i < iconObject.transform.childCount; ++i)
+        {
+            curIcon = iconObject.transform.GetChild(i).gameObject;
+            if (curIcon.activeSelf) curIcon.SetActive(false);
+        }
     }
-    public static void Update(GameObject IconObject, int headItemNum)
+
+    public static void Update(GameObject iconObject, int headItemNum)
     {
         if (0 == _iconPoints.Count)
             Init();
 
-        if (!IconObject) return;
+        if (!iconObject) return;
 
         GameItem.Item headItem = null;
         if ((headItem = _itemList.ItemSearch(headItemNum)) == null) return;
@@ -516,7 +544,7 @@ public class UnitIconManager
         int iconPoint = _iconPoints[headItem.Name];
 
         GameObject headObject = null;
-        if ((headObject = IconObject.transform.GetChild(iconPoint).gameObject) == null) { return; }
+        if ((headObject = iconObject.transform.GetChild(iconPoint).gameObject) == null) { return; }
 
         headObject.SetActive(true);
     }
@@ -532,15 +560,13 @@ public class UnitIconManager
     #region Private Function
     private static void InitData(ref List<string> iconNames)
     {
-        GameItem.eCodeType helmet = GameItem.eCodeType.HELMET;
+        GameItem.eCodeType helmet = GameItem.eCodeType.Helmet;
         for (int i = 0; i < _itemList.GetCodeItemCount(helmet); ++i)
         {
             int code = _itemList.CodeSearch(helmet, i);
 
             iconNames.Add(_itemList.ItemSearch(code).Name);
         }
-
-        Debug.Log("");
     }
 
     private static void Init()
@@ -605,25 +631,23 @@ public class UnitAnimationManager
         if (leftWeapon != null && _typeStrings.ContainsKey(leftWeapon.Type))    leftString = _typeStrings[leftWeapon.Type];
         if (rightWeapon != null && _typeStrings.ContainsKey(rightWeapon.Type))  rightString = _typeStrings[rightWeapon.Type];
 
-        if (!_typeAnimationNum.ContainsKey(leftString + rightString) &&
-           !_typeAnimationNum.ContainsKey(rightString + leftString)) { leftString = rightString = ""; }
+        if (!_typeAnimationNum.ContainsKey(leftString + "&" + rightString)) { leftString = rightString = ""; }
 
-        num = _typeAnimationNum.ContainsKey(leftString + rightString) ?
-            _typeAnimationNum[leftString + rightString] :
-            _typeAnimationNum[rightString + leftString];
+        num = _typeAnimationNum[leftString + "&" + rightString];
     }
 
     private static void InitData(ref List<string> aniName)
     {
-        aniName.Add("Bow");
-        aniName.Add("SwordShield");
-        aniName.Add("Spear");
-        aniName.Add("SwordSword");
-        aniName.Add("Sword");
-        aniName.Add("SpearShield");
-        aniName.Add("SwordSpear");
+        aniName.Add("Bow&");
+        aniName.Add("Shield&Sword");
+        aniName.Add("&Spear");
+        aniName.Add("Sword&Sword");
+        aniName.Add("&Sword");
+        aniName.Add("Shield&Spear");
+        aniName.Add("Sword&Spear");
+        aniName.Add("Spear&Spear");
 
-        _typeAnimationNum.Add("", 5); // 아무 무기도 없을때 애니메이션은 Sword(제일 무난..)
+        _typeAnimationNum.Add("&", 5); // 아무 무기도 없을때 애니메이션은 Sword(제일 무난..)
     }
 
     private static void Init()

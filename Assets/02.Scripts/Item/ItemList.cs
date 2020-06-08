@@ -66,9 +66,9 @@ public class ItemList
         if (_isInit) return;
         _isInit = true;
 
-        _codeList[(int)eCodeType.HELMET] = new Dictionary<int, int>();
-        _codeList[(int)eCodeType.BODYARMOUR] = new Dictionary<int, int>();
-        _codeList[(int)eCodeType.WEAPON] = new Dictionary<int, int>();
+        _codeList[(int)eCodeType.Helmet] = new Dictionary<int, int>();
+        _codeList[(int)eCodeType.Bodyarmour] = new Dictionary<int, int>();
+        _codeList[(int)eCodeType.Weapon] = new Dictionary<int, int>();
 
         // CSV Parser
         {
@@ -144,9 +144,9 @@ public class ItemList
         switch (i.Type)
         {
             case eItemType.NONE: Debug.LogError("Item Error" + i.Name); break;
-            case eItemType.HELMET: _codeList[(int)eCodeType.HELMET].Add(_codeList[(int)eCodeType.HELMET].Count, index); break;
-            case eItemType.BODYARMOUR: _codeList[(int)eCodeType.BODYARMOUR].Add(_codeList[(int)eCodeType.BODYARMOUR].Count, index); break;
-            default: _codeList[(int)eCodeType.WEAPON].Add(_codeList[(int)eCodeType.WEAPON].Count, index); break;
+            case eItemType.HELMET: _codeList[(int)eCodeType.Helmet].Add(_codeList[(int)eCodeType.Helmet].Count, index); break;
+            case eItemType.BODYARMOUR: _codeList[(int)eCodeType.Bodyarmour].Add(_codeList[(int)eCodeType.Bodyarmour].Count, index); break;
+            default: _codeList[(int)eCodeType.Weapon].Add(_codeList[(int)eCodeType.Weapon].Count, index); break;
         }
 
         i.Init(data);
@@ -181,9 +181,11 @@ namespace GameItem
 
     public enum eCodeType
     {
-        HELMET,
-        BODYARMOUR,
-        WEAPON,
+        Helmet,
+        Bodyarmour,
+        LeftWeapon,
+        RightWeapon,
+        Weapon = 2,
     }
 
     public delegate void ItemAbility();
