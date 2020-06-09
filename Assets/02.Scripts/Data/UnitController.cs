@@ -19,6 +19,9 @@ public class UnitController : FieldObject
         if (_aniPro == null)
             _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
 
+        if (_navMeshAgent == null)
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+
         _aniPro.Init(transform.GetChild(0).GetComponent<Animator>());
 
         _navMeshAgent.updateRotation = false;
@@ -548,7 +551,24 @@ public class UnitIconManager
 
         headObject.SetActive(true);
     }
-    
+
+    public static void Update(GameObject iconObject, string headItemName)
+    {
+        if (0 == _iconPoints.Count)
+            Init();
+
+        if (!iconObject) return;
+
+        if (!_iconPoints.ContainsKey(headItemName)) return;
+
+        int iconPoint = _iconPoints[headItemName];
+
+        GameObject headObject = null;
+        if ((headObject = iconObject.transform.GetChild(iconPoint).gameObject) == null) { return; }
+
+        headObject.SetActive(true);
+    }
+
     #region Variable
 
     static Dictionary<string, int> _iconPoints = new Dictionary<string, int>();
@@ -563,9 +583,9 @@ public class UnitIconManager
         GameItem.eCodeType helmet = GameItem.eCodeType.Helmet;
         for (int i = 0; i < _itemList.GetCodeItemCount(helmet); ++i)
         {
-            int code = _itemList.CodeSearch(helmet, i);
+            int headcode = _itemList.CodeSearch(helmet, i);
 
-            iconNames.Add(_itemList.ItemSearch(code).Name);
+            iconNames.Add(_itemList.ItemSearch(headcode).Name);
         }
     }
 
