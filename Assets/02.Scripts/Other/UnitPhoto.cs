@@ -39,8 +39,6 @@ public class UnitPhoto : MonoBehaviour
         StartCoroutine(ISaveTexture(equipedItems));
     }
 
-    bool _isComplete = false;
-
     private IEnumerator ISaveTexture(int[] equipedItems)
     {
         Util.SaveRenderTextuerToPng(
@@ -49,8 +47,6 @@ public class UnitPhoto : MonoBehaviour
         
         //중간 텀
         yield return SideTime;
-
-        _isComplete = true;
     }
 
     private IEnumerator ILoadTexture(int[] equipedItems,RawImage rawImage)

@@ -16,11 +16,14 @@ public class UnitController : FieldObject
 {
     public void Spawn() 
     {
-        if (_aniPro == null)
+        if (_aniPro == null) 
             _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
 
-        if (_navMeshAgent == null)
+        if (_navMeshAgent == null) 
             _navMeshAgent = GetComponent<NavMeshAgent>();
+
+        if (_eye == null) 
+            _eye = GetComponentInChildren<UnitEye>();
 
         _aniPro.Init(transform.GetChild(0).GetComponent<Animator>());
 
@@ -29,8 +32,13 @@ public class UnitController : FieldObject
         _status.UpdateItems();
         _curState = eState.IDLE;
 
+        _curHp = _status._maxhealth;
+        _maxHp = _status._maxhealth;
+
         _aniPro.SetParam(_idAttackSpd, _attackSpeed);
         _aniPro.SetParam(_idAttack, false);
+
+        _eye.Init(this);
 
         UpdateTarget();
     }
@@ -76,12 +84,6 @@ public class UnitController : FieldObject
     [HideInInspector]
     private int _abilityNum;
 
-    // 공격 범위일듯.
-    // public SphereCollider _attackAreaCollider;
-
-    //공격 타겟에대한 큐
-    public Queue<FieldObject> _attackTargets = new Queue<FieldObject>();
-
     //공격 시간에 대한 변수
     private float _attackTime;
 
@@ -94,6 +96,9 @@ public class UnitController : FieldObject
 
     // 상대방 진영의 성
     public FieldObject _enemyCastleObject;
+
+    [SerializeField]
+    private UnitEye _eye;
 
     #endregion
 
@@ -178,32 +183,11 @@ public class UnitController : FieldObject
         UpdateTarget();
 
         _team = _status._team;
-        _curHp = _status._curhealth;
-        _maxHp = _status._maxhealth;
 
         _navMeshAgent.stoppingDistance = _status._attackRange;
         _navMeshAgent.speed = _status._moveSpeed;
 
         UnitAnimationManager.Update(_status._equipedItems[2], _status._equipedItems[3], _aniPro);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //닿은 생대가 유닛이 아니라면 : 아래 코드 구문 실행 X
-        if (!other.CompareTag("Unit") || other.isTrigger)
-            return;
-
-        //other의 필드 관점의 데이터를 가져옴.
-        var target = other.GetComponent<FieldObject>();
-
-        //공격할 타겟 큐에 해당 타겟이 있거나, 타겟의 팀이 우리 팀이라면,
-        if (_attackTargets.Contains(target) || target._team == _team)
-            return;
-
-        // if(_team == eTeam.PLAYER) { Debug.Log("Enemy Check !"); }
-
-        //공격 타겟에 해당 타겟을 넣어줍니다.
-        _attackTargets.Enqueue(target);
     }
 
     #endregion
@@ -213,6 +197,7 @@ public class UnitController : FieldObject
     private void UpdateUnit()
     {
         if (_navMeshAgent.pathPending) { return; }
+
         UpdateMonobehaviour();
 
         UpdateAnimation();
@@ -223,7 +208,7 @@ public class UnitController : FieldObject
         UpdateTarget();
 
         if (_navMeshAgent.pathPending) { return; }
-        float remainingDistance =  _navMeshAgent.remainingDistance; //(transform.position - _curTarget.transform.position).magnitude;
+        float remainingDistance =  (transform.position - _curTarget.transform.position).magnitude;
 
         if (remainingDistance <= _attackRange)
         {
@@ -291,25 +276,19 @@ public class UnitController : FieldObject
     void UpdateTarget()
     {
         if (!gameObject.activeSelf) { return; }
-        
-        if (_attackTargets.Count == 0)
-        {
-            if (_enemyCastleObject != _curTarget)
-            {
-                _curTarget = _enemyCastleObject;
-            }
-            else { return; }
-        }
-        else
-        {
-            if (_curTarget.GetCurHealth() <= 0)
-            {
-                _curTarget = _attackTargets.Dequeue();
-            }
-            else { return; }
-        }
 
-        _navMeshAgent.SetDestination(_curTarget.transform.position);
+        FieldObject newTarget = _eye.CurTarget;
+
+        if (_curTarget == _enemyCastleObject || (_curTarget != _enemyCastleObject && _curTarget.GetCurHealth() <= 0))
+        {
+            // 눈이 인식한 타겟과 몸이 인식한 타겟이 다른경우, 눈이 인식한 타겟이 없고 현재 타겟이 상대 성채가 아닐경우
+            if (newTarget != _curTarget || (newTarget == null && _curTarget != _enemyCastleObject))
+            { // 타겟을 바꾸는 경우
+                _curTarget = newTarget == null ? _enemyCastleObject : newTarget;
+
+                _navMeshAgent.SetDestination(_curTarget.transform.position);
+            }
+        }
     }
 
     #endregion

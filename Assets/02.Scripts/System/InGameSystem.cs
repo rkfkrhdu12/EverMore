@@ -9,30 +9,30 @@ public class InGameSystem : MonoBehaviour
 {
     #region Private Variable
     [SerializeField]
-    private FieldObject _player1Base;
+    private FieldObject _player1Base = null;
 
     [SerializeField]
-    private Image _player1Bar;
+    private Image _player1Bar = null;
 
     [SerializeField]
-    private FieldObject _player2Base;
+    private FieldObject _player2Base = null;
 
     [SerializeField]
-    private Image _player2Bar;
+    private Image _player2Bar = null;
 
     [SerializeField]
-    private TextMeshProUGUI _timerText;
+    private TextMeshProUGUI _timerText = null;
     private float _timerUITime;
 
     [SerializeField]
-    private Image _goldImage;
+    private Image _goldImage = null;
 
     private float _curGold;
     private const float _maxGold = 500;
     private const float _goldPerSecond = 10;
 
     [SerializeField]
-    private Image _manaImage;
+    private Image _manaImage = null;
 
     private float _curMana;
     private const float _maxMana = 100;

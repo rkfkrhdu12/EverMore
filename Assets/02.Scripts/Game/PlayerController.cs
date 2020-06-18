@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     private float _spawnRange = 7.0f;
 
     [SerializeField]
-    private SpawnManager _spawnManager;
+    private SpawnManager _spawnManager = null;
 
     KeyCode[] _spawnKeyCode = new KeyCode[5];
 

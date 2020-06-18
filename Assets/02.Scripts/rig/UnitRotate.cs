@@ -9,7 +9,7 @@ public class UnitRotate : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private float rotSpeed = 1f;
 
     [SerializeField, Tooltip("실제 유닛 오브젝트")]
-    private Transform Units;
+    private Transform Units = null;
 
     [SerializeField, Tooltip("원래 방향으로 되돌아오는 속도")]
     private float OriginalTurnSpeed = 1f;
