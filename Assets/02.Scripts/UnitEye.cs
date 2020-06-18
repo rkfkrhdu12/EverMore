@@ -2,19 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using InspectorGadgets.Editor;
 
 public class UnitEye : MonoBehaviour
 {
     [SerializeField]
-    private BoxCollider _collider = null;
+    private SphereCollider _collider = null;
 
     private UnitController _unitCtrl;
 
     private float _attackRange = -1;
-    private float _attackAngle = 75f;
-
-    private Vector3 _collideSize = new Vector3(3, 1, 1);
-    private Vector3 _collideCenter = new Vector3(0, 1, .5f);
+    private float _attackAngle = 180f;
 
     private bool _isCollision = false;
     private bool _isInit = false;
@@ -23,18 +21,21 @@ public class UnitEye : MonoBehaviour
     //공격 타겟에대한 큐
     public List<FieldObject> _targets = new List<FieldObject>();
 
+    private float _minRange = 3.2f;
+    private float _maxRange = 6.0f;
+
     public void Init(in UnitController unitCtrl)
     {
+        // Inspector 에서 드래그드롭 해줘야 할 오브젝트들
+        if (!_collider) { _collider = GetComponent<SphereCollider>(); Debug.Log("UnitEye Collider is Null"); }
+
+        // 나머지 데이터들 Init
         _unitCtrl = unitCtrl;
-        _attackRange = _unitCtrl._status._attackRange;
 
-        if (!_collider) _collider = GetComponent<BoxCollider>();
-        
-        _collideSize.z   = _attackRange;
-        _collideCenter.z = _attackRange * .5f;
+        float range = Mathf.Clamp(_unitCtrl._status._attackRange, _minRange, _maxRange);
 
-        _collider.size   = _collideSize;
-        _collider.center = _collideCenter;
+        _attackRange = range * 2;
+        _collider.radius = range * 2.5f;
 
         _isInit = true;
     }
@@ -48,7 +49,7 @@ public class UnitEye : MonoBehaviour
         {
             if (!_isCollision)
                 return null;
-            
+
             return _targets[0];
         }
     }
@@ -60,39 +61,50 @@ public class UnitEye : MonoBehaviour
         Color _red = new Color(1f, 0f, 0f, 0.2f);
 
         Handles.color = _isCollision ? _red : _blue;
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, _attackAngle / 2, _attackRange * 2);
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -_attackAngle / 2, _attackRange * 2);
+        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, _attackAngle / 2, _attackRange);
+        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -_attackAngle / 2, _attackRange);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if(!_isInit || (other.CompareTag("Unit") && other.isTrigger) || _unitCtrl == null) { return; }
+        // 아직 Init되지 않았거나, Unit이 아니거나 Collider가 몸이 아니거나, unitCtrl 이 Null일때
+        if (!_isInit || (other.CompareTag("Unit") && other.isTrigger) || _unitCtrl == null)  { return; }
 
         // 유닛들대상
         {
             var target = other.GetComponent<UnitController>();
 
+            // target이 UnitCtrl 일때
             if (target != null)
             {
+                // 범위 안에 있는지 체크
                 float dotValue = Mathf.Cos(Mathf.Deg2Rad * (_attackAngle / 2));
                 Vector3 direction = target.transform.position - transform.position;
 
-                if (direction.magnitude < _attackRange * 2)
+                // 길이 체크  너무 멀진 않은가 ?
+                if (direction.magnitude < _attackRange)
                 {
+                    // 각도 체크  정해진 각도를 넘진 않았는가 ?
                     if (Vector3.Dot(direction.normalized, transform.forward) > dotValue)
                     {
+                        // 이미 타겟들에 있으면
                         if (_targets.Contains(target)) return;
 
                         // 충돌 범위에 충돌함 !
                         _isCollision = true;
+                        // 아군인지 적군인지 체크
                         _isEnemy = target._team != _unitCtrl._team;
 
+                        // 타겟들 목록에 Add
                         _targets.Add(target);
+
+                        // UnitCtrl 업데이트
+                        _unitCtrl.UpdateTarget();
                     }
-                    else
+                    else // 충돌 안함
                         _isCollision = false;
                 }
-                else
+                else // 충돌 안함
                     _isCollision = false;
 
                 return;
@@ -111,29 +123,15 @@ public class UnitEye : MonoBehaviour
     {
         var target = other.GetComponent<FieldObject>();
 
-        if (_targets.Contains(target))
+        // FieldObject 가 있으면
+        if (target != null)
         {
-            _targets.Remove(target);
+            // 현재 타겟들에 존재하고 아군이면
+            if (_targets.Contains(target) || target._team == _unitCtrl._team)
+            {
+                // 뺀다.
+                _targets.Remove(target);
+            }
         }
     }
 }
-
-
-//private void OnTriggerEnter(Collider other)
-//{
-//    //닿은 생대가 유닛이 아니라면 : 아래 코드 구문 실행 X
-//    if (!other.CompareTag("Unit") || other.isTrigger)
-//        return;
-
-//    //other의 필드 관점의 데이터를 가져옴.
-//    var target = other.GetComponent<FieldObject>();
-
-//    //공격할 타겟 큐에 해당 타겟이 있거나, 타겟의 팀이 우리 팀이라면,
-//    if (_attackTargets.Contains(target) || target._team == _team)
-//        return;
-
-//    // if(_team == eTeam.PLAYER) { Debug.Log("Enemy Check !"); }
-
-//    //공격 타겟에 해당 타겟을 넣어줍니다.
-//    _attackTargets.Enqueue(target);
-//}

@@ -37,8 +37,6 @@ public class SpawnManager : MonoBehaviour
             int randVal = Random.Range(0, 2);
             bool isDown = 0 == randVal ? true : false;
 
-            //Debug.Log(randVal + "   " + isDown);
-
             unitPos = isDown ?
                 transform.position + new Vector3(1, 0, 2.5f) :
                 transform.position + new Vector3(1, 0, .5f);

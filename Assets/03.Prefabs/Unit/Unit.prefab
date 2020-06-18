@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7395287345924152887}
   - component: {fileID: 1048384256781551297}
-  - component: {fileID: 6734393621432624808}
+  - component: {fileID: 1291830932574697013}
   m_Layer: 0
   m_Name: Eye
   m_TagString: Untagged
@@ -44,9 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2209093e1f2b2e4e84e63a862c6db45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collider: {fileID: 0}
---- !u!65 &6734393621432624808
-BoxCollider:
+  _collider: {fileID: 1291830932574697013}
+  _isEnemy: 0
+  _targets: []
+--- !u!135 &1291830932574697013
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -56,8 +58,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 1, z: 1}
-  m_Center: {x: 0, y: 1, z: 0.5}
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &782888345441459461
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,10 +174,11 @@ MonoBehaviour:
   _maxHp: 0
   _team: 1
   _isDead: 0
+  _aniPro: {fileID: 3687731606868792455}
   _navMeshAgent: {fileID: 742625368975721143}
+  _eye: {fileID: 1048384256781551297}
   _enemyCastleObject: {fileID: 0}
   _curState: 0
-  _curTarget: {fileID: 0}
 --- !u!54 &-7527932486692371447
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -227,7 +230,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 3
 --- !u!1001 &7235463507704923946
 PrefabInstance:
   m_ObjectHideFlags: 0
