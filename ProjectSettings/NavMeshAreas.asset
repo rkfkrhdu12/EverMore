@@ -13,8 +13,8 @@ NavMeshProjectSettings:
     cost: 3
   - name: Bridge
     cost: 1
-  - name: 
-    cost: 1
+  - name: Tower
+    cost: 5
   - name: 
     cost: 4
   - name: 

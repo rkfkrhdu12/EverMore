@@ -44,17 +44,17 @@ namespace MainSceneUI
 
         #region Team UIs
         [SerializeField]
-        private GameObject _choiceUnitTeamUI;
+        private GameObject _choiceUnitTeamUI = null;
 
         [SerializeField, Tooltip("유닛을 세팅할 UI 오브젝트")]
-        private GameObject _setUnitUI;
+        private GameObject _setUnitUI = null;
 
         [SerializeField, Tooltip("매칭을 선택할 UI")]
-        private GameObject _MatchUI; 
+        private GameObject _MatchUI = null; 
         #endregion
 
         [Space, SerializeField]
-        private TeamManager _teamManager;
+        private TeamManager _teamManager = null;
 
         //[SerializeField]
         //private GameObject _canvas;
@@ -77,9 +77,6 @@ namespace MainSceneUI
             InitUI(UIDataKey.SetUnit, _setUnitUI);
             InitUI(UIDataKey.Matching, _MatchUI);
             InitUI(UIDataKey.ChoiceUnitTeam, _choiceUnitTeamUI);
-
-            Image[] images = FindObjectsOfType<Image>();
-
         }
         #endregion
 

@@ -4,23 +4,17 @@ using UnityEngine;
 
 using GameplayIngredients;
 
-using UnityEngine.AI;
-
 public class SpawnManager : MonoBehaviour
 {
+    [SerializeField]
+    private SpawnManager _enemySpawnManager = null;
+    public Team _teamUnits;
+
     [SerializeField]
     private GameObject _unitPrefabs = null;
 
     [SerializeField]
-    private eTeam _curSpawnTeam = eTeam.PLAYER;
-
-    [SerializeField]
     private Vector3 _spawnPoint;
-
-    public Team _teamUnits;
-
-    [SerializeField]
-    private SpawnManager _enemySpawnManager;
 
     int _curSpawnIndex = 0;
 
@@ -28,6 +22,8 @@ public class SpawnManager : MonoBehaviour
 
     public void SetSpawnPoint(Vector3 pos) => _spawnPoint = pos;
     public Castle GetCastle() { return GetComponent<Castle>(); }
+
+    int _spawnIndex = 0;
 
     /// <summary>
     /// UI의 버튼 혹은 설정된 키로 유닛을 스폰
@@ -41,14 +37,16 @@ public class SpawnManager : MonoBehaviour
             int randVal = Random.Range(0, 2);
             bool isDown = 0 == randVal ? true : false;
 
-            Debug.Log(randVal + "   " + isDown);
-
             unitPos = isDown ?
                 transform.position + new Vector3(1, 0, 2.5f) :
                 transform.position + new Vector3(1, 0, .5f);
         }
 
         GameObject clone = Instantiate(_unitPrefabs, unitPos, Quaternion.identity, null);
+
+        if (clone.activeSelf) clone.SetActive(false);
+
+        clone.name = (_isPlayer2 ? "Player2Unit " : "Player1Unit ") + _spawnIndex++.ToString();
 
         UnitController unitCtrl = clone.GetComponent<UnitController>();
 

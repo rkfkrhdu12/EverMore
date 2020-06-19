@@ -9,7 +9,6 @@ public struct UnitStatus
     public eTeam _team;
 
     public float _maxhealth;
-    public float _curhealth;
     public float _defensivePower;
 
     public float _attackDamage;

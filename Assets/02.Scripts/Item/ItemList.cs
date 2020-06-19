@@ -183,8 +183,8 @@ namespace GameItem
     {
         Helmet,
         Bodyarmour,
-        LeftWeapon,
         RightWeapon,
+        LeftWeapon,
         Weapon = 2,
     }
 
@@ -276,7 +276,6 @@ namespace GameItem
 
             us._defensivePower  += _defense;
             us._maxhealth       += _health;
-            us._curhealth       += _health;
         }
 
         public override void UnEquip(ref UnitStatus us)
@@ -285,7 +284,6 @@ namespace GameItem
 
             us._defensivePower  -= _defense;
             us._maxhealth       -= _health;
-            us._curhealth       -= _health;
         }
     }
 

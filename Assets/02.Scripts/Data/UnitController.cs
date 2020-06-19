@@ -5,6 +5,7 @@ using UnityEngine.AnimatorPro;
 using UnityEngine.AI;
 
 using UnityEngine.ParticleSystemJobs;
+using System.Collections;
 
 public enum eTeam
 {
@@ -14,22 +15,33 @@ public enum eTeam
 
 public class UnitController : FieldObject
 {
-    public void Spawn() 
-    {
-        if (_aniPro == null)
-            _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>();
+    public void Spawn()
+    { // Spawn() -> OnEnable() 순서
 
+        // Inspector 에서 드래그드롭 해줘야 할 오브젝트들
+        if (_IsAni)          { } // { _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>(); Debug.Log("UnitCtrl  AniPro is Null"); }
+        if (_IsNavMeshAgent) { } // { _navMeshAgent = GetComponent<NavMeshAgent>(); Debug.Log("UnitCtrl  NavAgent is Null"); }
+        if (_IsEye)          { } // { _eye = GetComponentInChildren<UnitEye>(); Debug.Log("UnitCtrl  Eye is Null"); }
+
+        // 나머지 데이터들 Init
         _aniPro.Init(transform.GetChild(0).GetComponent<Animator>());
 
         _navMeshAgent.updateRotation = false;
 
         _status.UpdateItems();
+        _status._attackRange += 1f;
+
         _curState = eState.IDLE;
+
+        _curHp = _status._maxhealth;
+        _maxHp = _status._maxhealth;
+
+        _attackTime = new WaitForSeconds(_attackSpeed);
 
         _aniPro.SetParam(_idAttackSpd, _attackSpeed);
         _aniPro.SetParam(_idAttack, false);
 
-        UpdateTarget();
+        _eye.Init(this);
     }
 
     public override void DamageReceive(float damage) 
@@ -47,17 +59,87 @@ public class UnitController : FieldObject
         DeleteObjectSystem.AddDeleteObject(gameObject);
     }
 
-    #region Show Inspector
+    #region Variable
+
+    #region Inspector
+
+    // 이 유닛의 애니메이션
+    [SerializeField]
+    private AnimatorPro _aniPro;
+    private bool _IsAni 
+    {
+        get 
+        {
+            if (_aniPro == null)
+            {
+                _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>(); Debug.Log("UnitCtrl  AniPro is Null");
+
+                if (_aniPro == null) { return false; }
+            }
+
+            return true;
+        }
+    }
+
+    // 이 유닛의 AI 
+    [SerializeField]
+    private NavMeshAgent _navMeshAgent = null;
+    private bool _IsNavMeshAgent 
+    {
+        get
+        {
+            if (_navMeshAgent == null)
+            {
+                _navMeshAgent = GetComponent<NavMeshAgent>(); Debug.Log("UnitCtrl  NavAgent is Null");
+
+                if (_navMeshAgent == null) { return false; }
+            }
+
+            return true;
+        }
+    }
+
+    // 이 유닛의 눈
+    [SerializeField]
+    private UnitEye _eye;
+    private bool _IsEye 
+    {
+        get
+        {
+            if (_eye == null)
+            {
+                _eye = GetComponentInChildren<UnitEye>(); Debug.Log("UnitCtrl  Eye is Null");
+
+                if (_eye == null) { return false; }
+            }
+
+            return true;
+        }
+    }
+
+    #endregion
+
+    // 아이템 능력 번호
+    [HideInInspector]
+    private int[] _abilityNum = new int[4];
+
+    // 상대방 진영의 성
+    public FieldObject _enemyCastleObject;
+
+    //필드 관점에서의 해당 유닛의 상태
+    private FieldObject _curTarget = null;
+
+    #region Animation Macro
+
+    private static readonly int _idAttack = Animator.StringToHash("Attack");
+    private static readonly int _idAttackSpd = Animator.StringToHash("AttackSpeed");
+    private static readonly int _idMove = Animator.StringToHash("Move");
+
+    #endregion
+
+    #region 유닛 상태
 
     #region Enum
-
-    public enum eEquipItem
-    {
-        HELMET,
-        ARMOUR,
-        WEAPON,
-        SUBWEAPON,
-    }
 
     public enum eState
     {
@@ -68,54 +150,17 @@ public class UnitController : FieldObject
     }
 
     #endregion
-
-    //능력 번후
-    [HideInInspector]
-    private int _abilityNum;
-
-    // 공격 범위일듯.
-    // public SphereCollider _attackAreaCollider;
-
-    //공격 타겟에대한 큐
-    public Queue<FieldObject> _attackTargets = new Queue<FieldObject>();
-
-    //공격 시간에 대한 변수
-    private float _attackTime;
-
-    //[Header("파일 파싱으로 아이디 가져온 후 적용시킬 예정")]
-    // 아이템 번호
-    public int[] _itemsNum => _status._equipedItems;
-
-    [SerializeField]
-    private NavMeshAgent _navMeshAgent = null;
-
-    // 상대방 진영의 성
-    public FieldObject _enemyCastleObject;
-
-    #endregion
-
-    #region Hide Inspector
-
-    #region Macro
-
-    private static readonly int _idAttack = Animator.StringToHash("Attack");
-    private static readonly int _idAttackSpd = Animator.StringToHash("AttackSpeed");
-    private static readonly int _idMove = Animator.StringToHash("Move");
-
-    #endregion
-
-    #region 유닛 상태
+    //유닛 상태에 대한 변수
+    public eState _curState = eState.NONE;
 
     public UnitStatus _status;
-
-    //방어력
-    // public float _defensivePower { get { return _status._defensivePower; } }
 
     //공격 데미지
     private float _attackDamage { get { return _status._attackDamage; } }
 
     //공격 속도
     private float _attackSpeed { get { return _status._attackSpeed; } }
+    WaitForSeconds _attackTime;
 
     //공격 범위
     private float _attackRange { get { return _status._attackRange; } }
@@ -131,76 +176,33 @@ public class UnitController : FieldObject
 
     #endregion
 
-    #region Other
-
-    //애니메이터 관련 변수
-    //private Animator _animator;
-    private AnimatorPro _aniPro;
-
-    //리지드 바디 변수
-    //private Rigidbody _rig;
-
-    //유닛 상태에 대한 변수
-    public eState _curState = eState.NONE;
-
-    //필드 관점에서의 해당 유닛의 상태
-    public FieldObject _curTarget = null;
-
-    //이동에 대한 파라미터
-    // private float moveParameter;
-
-    // bool _isSpawn = false;
-    #endregion
-
     #endregion
     
     #region Monobehaviour Function
 
     private void FixedUpdate()
     {
-        //if (!_isSpawn) return;
-
         //현재 상태가 비어 있거나, 죽었다면 : return
         if (_isDead) return;
         
-        //이동 <--> 공격, 상태 변환
-        // UpdateState();
-
         //상태 변수를 통한, 유닛 업데이트
         UpdateUnit();
     }
 
     private void OnEnable()
-    {
-        UpdateTarget();
+    { // Spawn() -> OnEnable() 순서
 
         _team = _status._team;
-        _curHp = _status._curhealth;
-        _maxHp = _status._maxhealth;
 
-        _navMeshAgent.stoppingDistance = _status._attackRange;
-        _navMeshAgent.speed = _status._moveSpeed;
+        _navMeshAgent.stoppingDistance = _attackRange;
+        _navMeshAgent.speed = _moveSpeed;
 
         UnitAnimationManager.Update(_status._equipedItems[2], _status._equipedItems[3], _aniPro);
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        //닿은 생대가 유닛이 아니라면 : 아래 코드 구문 실행 X
-        if (!other.CompareTag("Unit") || other.isTrigger)
-            return;
+        _curTarget = _enemyCastleObject;
+        _navMeshAgent.SetDestination(_curTarget.transform.position);
 
-        //other의 필드 관점의 데이터를 가져옴.
-        var target = other.GetComponent<FieldObject>();
-
-        //공격할 타겟 큐에 해당 타겟이 있거나, 타겟의 팀이 우리 팀이라면,
-        if (_attackTargets.Contains(target) || target._team == _team)
-            return;
-
-        // if(_team == eTeam.PLAYER) { Debug.Log("Enemy Check !"); }
-
-        //공격 타겟에 해당 타겟을 넣어줍니다.
-        _attackTargets.Enqueue(target);
+        StartCoroutine(UpdateAttack());
     }
 
     #endregion
@@ -209,7 +211,8 @@ public class UnitController : FieldObject
 
     private void UpdateUnit()
     {
-        if (_navMeshAgent.pathPending) { return; }
+        if (_navMeshAgent.pathPending || !gameObject.activeSelf) { return; }
+
         UpdateMonobehaviour();
 
         UpdateAnimation();
@@ -217,50 +220,101 @@ public class UnitController : FieldObject
 
     private void UpdateMonobehaviour()
     {
-        UpdateTarget();
+        if(!_IsNavMeshAgent) { return; }
 
-        if (_navMeshAgent.pathPending) { return; }
-        float remainingDistance =  _navMeshAgent.remainingDistance; //(transform.position - _curTarget.transform.position).magnitude;
+        float remainingDistance = (_curTarget.transform.position - transform.position).magnitude;
 
-        if (remainingDistance <= _attackRange)
+        _curState = eState.MOVE;
+
+        if (_eye._isEnemy)
         {
-            _curState = eState.ATTACK;
+            if (remainingDistance <= _attackRange)
+            {
+                _curState = eState.ATTACK;
+
+                //_navMeshAgent.isStopped = true;
+                //_navMeshAgent.velocity = Vector3.zero;
+
+
+                //if (_attackTime <= _attackSpeed) { _attackTime += Time.deltaTime; return; }
+
+                //_attackTime = 0f;
+
+                ////데미지 리시브
+                //_curTarget.DamageReceive(_attackDamage);
+
+                //if (_curTarget.GetCurHealth() <= 0)
+                //    UpdateTarget();
+            }
+            else
+            {
+                _navMeshAgent.isStopped = false;
+            }
+        }
+        else
+        {
+
+        }
+    }
+
+    WaitForSeconds _attackWaitTime = new WaitForSeconds(.25f);
+    IEnumerator UpdateAttack()
+    {
+        while(true)
+        {
+            if (!gameObject.activeSelf) { yield return null; }
+
+            while (_curState != eState.ATTACK) { yield return _attackWaitTime; }
+
             _navMeshAgent.isStopped = true;
-            _navMeshAgent.velocity = Vector3.zero;
 
-            if (_attackTime <= _attackSpeed) { _attackTime += Time.deltaTime; return; }
+            transform.LookAt(_curTarget.transform);
 
-            _attackTime = 0f;
-
-            //데미지 리시브
             _curTarget.DamageReceive(_attackDamage);
 
             if (_curTarget.GetCurHealth() <= 0)
                 UpdateTarget();
-        }
-        else
-        {
-            _navMeshAgent.isStopped = false;
-            _curState = eState.MOVE;
+
+            Debug.Log("Attack   " + _navMeshAgent.velocity);
+
+            yield return _attackTime;
         }
     }
 
     private void UpdateAnimation()
     {
-        if (_aniPro == null) return;
-
-        if (_navMeshAgent.pathPending) { return; }
+        if (!_IsAni) return;
 
         #region Move Animation
-        // https://www.youtube.com/watch?v=RmDRjoXUaTI&feature=youtu.be&app=desktop
-        float moveValue = 0.0f;
+        //// https://www.youtube.com/watch?v=RmDRjoXUaTI&feature=youtu.be&app=desktop
 
-        #region _navMeshAgent.updateRotation
-        if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f && _navMeshAgent.remainingDistance <= .1f)
-        {
-            moveValue = 0.0f;
-        }
-        else if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f)
+        //float moveValue = 0.0f;
+
+        //if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f && _navMeshAgent.remainingDistance <= .1f)
+        //{
+        //    moveValue = 0.0f;
+        //}
+        //else if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f)
+        //{
+        //    Vector3 direction = _navMeshAgent.desiredVelocity;
+
+        //    Quaternion targetAngle = Quaternion.LookRotation(direction);
+
+        //    transform.rotation = Quaternion.Slerp(transform.rotation,
+        //                                          targetAngle,
+        //                                          Time.deltaTime * 8.0f);
+
+        //    moveValue = 1.0f;
+        //}
+        //else
+        //{
+        //    moveValue = 0.0f;
+        //}
+
+        //_aniPro.SetParam(_idMove, moveValue); 
+        #endregion
+
+        if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f)
         {
             Vector3 direction = _navMeshAgent.desiredVelocity;
 
@@ -270,43 +324,30 @@ public class UnitController : FieldObject
                                                   targetAngle,
                                                   Time.deltaTime * 8.0f);
         }
-        #endregion
 
-        if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f)
-        {
-            moveValue = 1.0f;
-        }
-        else 
-        {
-            moveValue = 0.0f;
-        }
+        _aniPro.SetParam(_idMove    , _curState == eState.MOVE ? 1.0f : 0.0f);
+        _aniPro.SetParam(_idAttack  , _curState == eState.ATTACK ? true : false);
 
-        _aniPro.SetParam(_idMove, moveValue); 
-        #endregion
     }
 
-    void UpdateTarget()
+    public void UpdateTarget()
     {
-        if (!gameObject.activeSelf) { return; }
-        
-        if (_attackTargets.Count == 0)
-        {
-            if (_enemyCastleObject != _curTarget)
-            {
-                _curTarget = _enemyCastleObject;
-            }
-            else { return; }
-        }
-        else
-        {
-            if (_curTarget.GetCurHealth() <= 0)
-            {
-                _curTarget = _attackTargets.Dequeue();
-            }
-            else { return; }
-        }
+        if (!_IsEye) { return; }
 
-        _navMeshAgent.SetDestination(_curTarget.transform.position);
+        FieldObject newTarget = _eye.CurTarget;
+
+        if (newTarget == _curTarget) { return; }
+
+        if (_curTarget == _enemyCastleObject || (_curTarget != _enemyCastleObject && _curTarget.GetCurHealth() <= 0))
+        {
+            // 눈이 인식한 타겟과 몸이 인식한 타겟이 다른경우, 눈이 인식한 타겟이 없고 현재 타겟이 상대 성채가 아닐경우
+            // if (newTarget == null && _curTarget != _enemyCastleObject)
+            { // 타겟을 바꾸는 경우
+                _curTarget = newTarget == null ? _enemyCastleObject : newTarget;
+
+                _navMeshAgent.SetDestination(_curTarget.transform.position);
+            }
+        }
     }
 
     #endregion
@@ -373,15 +414,6 @@ public class UnitModelManager
 
         Transform leftWeaponTrs = unit.transform.GetChild(_leftWeaponPoint);
         Transform rightWeaponTrs = unit.transform.GetChild(_rightWeaponPoint);
-
-        //for (int i = 0; i < equipedItems.Length; ++i) 
-        //{
-        //    if(equipedItems[i] == prevItem)
-        //    {
-        //        prevItem = 0;
-        //        break;
-        //    }
-        //}
 
         int[] index;
         // 이전무기 장착해제
@@ -521,7 +553,7 @@ public class UnitIconManager
 
         if (!iconObject) return;
 
-        GameObject curIcon = null;
+        GameObject curIcon;
         for (int i = 0; i < iconObject.transform.childCount; ++i)
         {
             curIcon = iconObject.transform.GetChild(i).gameObject;
@@ -536,19 +568,36 @@ public class UnitIconManager
 
         if (!iconObject) return;
 
-        GameItem.Item headItem = null;
+        GameItem.Item headItem;
         if ((headItem = _itemList.ItemSearch(headItemNum)) == null) return;
 
         if (!_iconPoints.ContainsKey(headItem.Name)) return;
 
         int iconPoint = _iconPoints[headItem.Name];
 
-        GameObject headObject = null;
+        GameObject headObject;
         if ((headObject = iconObject.transform.GetChild(iconPoint).gameObject) == null) { return; }
 
         headObject.SetActive(true);
     }
-    
+
+    public static void Update(GameObject iconObject, string headItemName)
+    {
+        if (0 == _iconPoints.Count)
+            Init();
+
+        if (!iconObject) return;
+
+        if (!_iconPoints.ContainsKey(headItemName)) return;
+
+        int iconPoint = _iconPoints[headItemName];
+
+        GameObject headObject;
+        if ((headObject = iconObject.transform.GetChild(iconPoint).gameObject) == null) { return; }
+
+        headObject.SetActive(true);
+    }
+
     #region Variable
 
     static Dictionary<string, int> _iconPoints = new Dictionary<string, int>();
@@ -561,11 +610,16 @@ public class UnitIconManager
     private static void InitData(ref List<string> iconNames)
     {
         GameItem.eCodeType helmet = GameItem.eCodeType.Helmet;
+        GameItem.eCodeType armour = GameItem.eCodeType.Bodyarmour;
         for (int i = 0; i < _itemList.GetCodeItemCount(helmet); ++i)
         {
-            int code = _itemList.CodeSearch(helmet, i);
+            int headcode = _itemList.CodeSearch(helmet, i);
 
-            iconNames.Add(_itemList.ItemSearch(code).Name);
+            iconNames.Add(_itemList.ItemSearch(headcode).Name);
+
+            int bodycode = _itemList.CodeSearch(armour, i);
+
+            iconNames.Add(_itemList.ItemSearch(bodycode).Name);
         }
     }
 
@@ -577,9 +631,12 @@ public class UnitIconManager
 
         InitData(ref iconNames);
 
+        int j = 0;
         for (int i = 0; i < iconNames.Count; ++i)
         {
-            _iconPoints.Add(iconNames[i], i);
+            if (i != 0 && i % 2 == 0)  { ++j; }
+
+            _iconPoints.Add(iconNames[i], j);
         }
     } 
     #endregion
