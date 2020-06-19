@@ -41,7 +41,7 @@ public class ItemInventorySystem : MonoBehaviour
 
     #region Hide Inspector
 
-    private eCodeType _curType = eCodeType.Helmet;
+    private eCodeType _curType = eCodeType.Weapon;
     private readonly List<int>[] _inventory = new List<int>[4];
 
     private ItemList _itemList;
@@ -70,18 +70,19 @@ public class ItemInventorySystem : MonoBehaviour
 
         _inventory[(int)eCodeType.Bodyarmour]   = new List<int>();
 
-        _inventory[(int)eCodeType.LeftWeapon]   = new List<int>();
-
         _inventory[(int)eCodeType.RightWeapon]  = new List<int>();
+
+        _inventory[(int)eCodeType.LeftWeapon] = new List<int>();
     }
 
+    bool isTesting = false;
     private void Start()
     {
         #region Test
         List<string> armourList = new List<string>();
 
-        GameItem.eCodeType helmet = GameItem.eCodeType.Helmet;
-        GameItem.eCodeType armour = GameItem.eCodeType.Bodyarmour;
+        eCodeType helmet = eCodeType.Helmet;
+        eCodeType armour = eCodeType.Bodyarmour;
 
         for (int i = 0; i < _itemList.GetCodeItemCount(helmet); ++i)
         {
@@ -124,19 +125,18 @@ public class ItemInventorySystem : MonoBehaviour
             _inventory[(int)eCodeType.RightWeapon].Add(num);
         }
 
+        isTesting = true;
         #endregion
-
-        Type = eCodeType.Helmet;
-
-        UpdateInventory();
     }
 
     //매번 UI가 활성화 될 때, 호출됩니다.
     private void OnEnable()
     {
+        if (!isTesting) Start();
+
         Type = eCodeType.Helmet;
 
-        UpdateInventory();
+        // UpdateInventory();
     }
     #endregion
 
@@ -173,7 +173,7 @@ public class ItemInventorySystem : MonoBehaviour
 
         // 모델링 업데이트
         {
-            int partsNum = 0;
+            int partsNum;
             switch (i.Type)
             {
                 case eItemType.NONE:        return;

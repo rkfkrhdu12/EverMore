@@ -42,24 +42,24 @@ public class ItemSlot : MonoBehaviour
                 break;
         }
 
+        if (prevItemIconObject != -1)
+            UnitIconManager.Reset(transform.GetChild(prevItemIconObject).gameObject);
+
         if (childNum != -1)
         {
-            if(prevItemIconObject != -1)
-                transform.GetChild(prevItemIconObject).gameObject.SetActive(false);
-
             transform.GetChild(childNum).gameObject.SetActive(true);
 
             prevItemIconObject = childNum;
-
             IconUpdate(childNum, item.Name);
-
         }
+
         _text.text = item.Name;
     }
 
-    void IconUpdate(int iconObjChildCount, string headItemName)
+    void IconUpdate(int iconObjChildCount, string ItemName)
     {
         UnitIconManager.Reset(transform.GetChild(iconObjChildCount).gameObject);
-        UnitIconManager.Update(transform.GetChild(iconObjChildCount).gameObject, headItemName);
+
+        UnitIconManager.Update(transform.GetChild(iconObjChildCount).gameObject, ItemName);
     }
 }

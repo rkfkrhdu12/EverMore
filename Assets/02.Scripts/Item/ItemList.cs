@@ -183,8 +183,8 @@ namespace GameItem
     {
         Helmet,
         Bodyarmour,
-        LeftWeapon,
         RightWeapon,
+        LeftWeapon,
         Weapon = 2,
     }
 

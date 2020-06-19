@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1947036433871368484
 Transform:
   m_ObjectHideFlags: 0
@@ -678,6 +678,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 26c85ecb80bf23d40a2e5f4cb9b8abb0, type: 2}
+    - target: {fileID: -4739831211010606817, guid: 3eeba7ace05fb6340a7ff951f7400227,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4709628465606998492, guid: 3eeba7ace05fb6340a7ff951f7400227,
         type: 3}
       propertyPath: m_IsActive
@@ -818,6 +823,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -4108160055857358637, guid: 3eeba7ace05fb6340a7ff951f7400227,
+        type: 3}
+      propertyPath: m_Name
+      value: 15_Bride.
+      objectReference: {fileID: 0}
+    - target: {fileID: -3986223345331638348, guid: 3eeba7ace05fb6340a7ff951f7400227,
+        type: 3}
+      propertyPath: m_Name
+      value: 14_Dragon Killer.
+      objectReference: {fileID: 0}
     - target: {fileID: -3918478419348075543, guid: 3eeba7ace05fb6340a7ff951f7400227,
         type: 3}
       propertyPath: m_IsActive
@@ -889,6 +904,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 52f2a3a3c3b5564498b69f1045145e6d, type: 2}
     - target: {fileID: -3184823830436466506, guid: 3eeba7ace05fb6340a7ff951f7400227,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3046749705594401590, guid: 3eeba7ace05fb6340a7ff951f7400227,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1173,6 +1193,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 366267963717256679, guid: 3eeba7ace05fb6340a7ff951f7400227,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 430110464864532563, guid: 3eeba7ace05fb6340a7ff951f7400227,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1193,6 +1218,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 577071335869936539, guid: 3eeba7ace05fb6340a7ff951f7400227,
+        type: 3}
+      propertyPath: m_Name
+      value: 13_Doll.
+      objectReference: {fileID: 0}
     - target: {fileID: 717028229969410454, guid: 3eeba7ace05fb6340a7ff951f7400227,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1207,6 +1237,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 11.445647
+      objectReference: {fileID: 0}
+    - target: {fileID: 729770866600702230, guid: 3eeba7ace05fb6340a7ff951f7400227,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 733513646943342851, guid: 3eeba7ace05fb6340a7ff951f7400227,
         type: 3}
@@ -1478,6 +1513,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: eb943045be21a0347bc0c101036c5c1f, type: 2}
+    - target: {fileID: 4037884075772374918, guid: 3eeba7ace05fb6340a7ff951f7400227,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4078514712962349725, guid: 3eeba7ace05fb6340a7ff951f7400227,
         type: 3}
       propertyPath: m_IsActive
@@ -1519,6 +1559,11 @@ PrefabInstance:
       value: 57.898075
       objectReference: {fileID: 0}
     - target: {fileID: 4701671657467601236, guid: 3eeba7ace05fb6340a7ff951f7400227,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5293442194204345070, guid: 3eeba7ace05fb6340a7ff951f7400227,
         type: 3}
       propertyPath: m_IsActive
       value: 0
