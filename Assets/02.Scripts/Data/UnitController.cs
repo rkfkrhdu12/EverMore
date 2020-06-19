@@ -191,7 +191,6 @@ public class UnitController : FieldObject
 
     private void OnEnable()
     { // Spawn() -> OnEnable() 순서
-
         _team = _status._team;
 
         _navMeshAgent.stoppingDistance = _attackRange;
@@ -231,20 +230,6 @@ public class UnitController : FieldObject
             if (remainingDistance <= _attackRange)
             {
                 _curState = eState.ATTACK;
-
-                //_navMeshAgent.isStopped = true;
-                //_navMeshAgent.velocity = Vector3.zero;
-
-
-                //if (_attackTime <= _attackSpeed) { _attackTime += Time.deltaTime; return; }
-
-                //_attackTime = 0f;
-
-                ////데미지 리시브
-                //_curTarget.DamageReceive(_attackDamage);
-
-                //if (_curTarget.GetCurHealth() <= 0)
-                //    UpdateTarget();
             }
             else
             {
@@ -273,7 +258,7 @@ public class UnitController : FieldObject
             _curTarget.DamageReceive(_attackDamage);
 
             if (_curTarget.GetCurHealth() <= 0)
-                UpdateTarget();
+                _eye.UpdateTarget();
 
             Debug.Log("Attack   " + _navMeshAgent.velocity);
 
@@ -334,7 +319,7 @@ public class UnitController : FieldObject
     {
         if (!_IsEye) { return; }
 
-        FieldObject newTarget = _eye.CurTarget;
+        FieldObject newTarget = _eye.CurTarget == null ? _enemyCastleObject : _eye.CurTarget;
 
         if (newTarget == _curTarget) { return; }
 
@@ -343,7 +328,7 @@ public class UnitController : FieldObject
             // 눈이 인식한 타겟과 몸이 인식한 타겟이 다른경우, 눈이 인식한 타겟이 없고 현재 타겟이 상대 성채가 아닐경우
             // if (newTarget == null && _curTarget != _enemyCastleObject)
             { // 타겟을 바꾸는 경우
-                _curTarget = newTarget == null ? _enemyCastleObject : newTarget;
+                _curTarget = newTarget;
 
                 _navMeshAgent.SetDestination(_curTarget.transform.position);
             }

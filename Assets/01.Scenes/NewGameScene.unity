@@ -1740,13 +1740,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9796797947e350d46b63643b41ad1185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerBase: {fileID: 0}
-  _playerBar: {fileID: 887635030}
-  _enemyBase: {fileID: 0}
-  _enemyBar: {fileID: 1960386316}
+  _player1Base: {fileID: 0}
+  _player1Bar: {fileID: 0}
+  _player2Base: {fileID: 0}
+  _player2Bar: {fileID: 0}
   _timerText: {fileID: 935965281}
   _goldImage: {fileID: 1766893899}
   _manaImage: {fileID: 1306520984}
+  _iconObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _victoryObject: {fileID: 0}
+  _defeatObject: {fileID: 0}
 --- !u!1 &657735644
 GameObject:
   m_ObjectHideFlags: 0
@@ -5467,10 +5476,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76f30ca19ccc11438c12ddeec638649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _CMCams:
-  - {fileID: 374568640}
-  - {fileID: 1853332047}
-  _isMoveRightDrag: 1
+  _moveXSpeed: 15
+  _mouseSensitivity: 6
 --- !u!81 &2019170121
 AudioListener:
   m_ObjectHideFlags: 0
@@ -6231,14 +6238,12 @@ MonoBehaviour:
   _curHp: 0
   _maxHp: 0
   _team: 1
-  _isdead: 0
-  eteam: 0
-  _abilityNum: 0
-  _attackAreaCollider: {fileID: 0}
-  _attackTime: 0
   _isDead: 0
+  _aniPro: {fileID: 0}
   _navMeshAgent: {fileID: 0}
-  _enemyCastlePosition: {x: 0, y: 0, z: 0}
+  _eye: {fileID: 0}
+  _enemyCastleObject: {fileID: 0}
+  _curState: 0
 --- !u!136 &1947036433493470735
 CapsuleCollider:
   m_ObjectHideFlags: 0
