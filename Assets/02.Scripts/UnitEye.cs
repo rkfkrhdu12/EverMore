@@ -54,6 +54,25 @@ public class UnitEye : MonoBehaviour
         }
     }
 
+    public void UpdateTarget()
+    {
+        if(CurTarget.GetCurHealth() <= 0)
+        {
+            _targets.Remove(_targets[0]);
+
+            // UnitCtrl 업데이트
+            _unitCtrl.UpdateTarget();
+        }
+    }
+
+    #region Private Function
+
+    
+
+    #endregion
+
+    #region Monobehaviour Function
+
     // Test
     private void OnDrawGizmos()
     {
@@ -68,7 +87,7 @@ public class UnitEye : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         // 아직 Init되지 않았거나, Unit이 아니거나 Collider가 몸이 아니거나, unitCtrl 이 Null일때
-        if (!_isInit || (other.CompareTag("Unit") && other.isTrigger) || _unitCtrl == null)  { return; }
+        if (!_isInit || (other.CompareTag("Unit") && other.isTrigger) || _unitCtrl == null) { return; }
 
         // 유닛들대상
         {
@@ -129,9 +148,17 @@ public class UnitEye : MonoBehaviour
             // 현재 타겟들에 존재하고 아군이면
             if (_targets.Contains(target) || target._team == _unitCtrl._team)
             {
+                // 현재 타겟이 유닛의 타겟인지 체크
+                bool isUpdate = target == _targets[0] ? true : false;
+
                 // 뺀다.
                 _targets.Remove(target);
+
+                // 현재 타겟이 유닛의 타겟이면 UnitCtrl 업데이트
+                if (isUpdate)
+                    _unitCtrl.UpdateTarget();
             }
         }
-    }
+    } 
+    #endregion
 }
