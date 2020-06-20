@@ -40,6 +40,8 @@ public class InGameSystem : MonoBehaviour
 
     public GameObject[] _iconObjects = new GameObject[6];
 
+    bool _isGameEnd = false;
+
     #endregion
 
     #region Monobehaviour Function
@@ -67,6 +69,8 @@ public class InGameSystem : MonoBehaviour
 
     private void Update()
     {
+        if (_isGameEnd) return;
+
         UpdateTimer();
         UpdateBase();
         UpdateGoldMana();
@@ -80,19 +84,29 @@ public class InGameSystem : MonoBehaviour
 
     void Victory()
     {
+        _isGameEnd = true;
+
+        _player1Base.GetComponent<SpawnManager>()._isGameEnd = _isGameEnd;
+        _player2Base.GetComponent<SpawnManager>()._isGameEnd = _isGameEnd;
+
         _victoryObject.SetActive(true);
     }
 
     void Defeat()
     {
-        _defeatObject.SetActive(false);
+        _isGameEnd = true;
+
+        _player1Base.GetComponent<SpawnManager>()._isGameEnd = _isGameEnd;
+        _player2Base.GetComponent<SpawnManager>()._isGameEnd = _isGameEnd;
+
+        _defeatObject.SetActive(true);
     }
 
     private void UpdateTimer()
     {
         _timerUITime -= Time.deltaTime;
 
-        _timerText.text = $"{(int)_timerUITime}";
+        _timerText.text = "" + ((int)_timerUITime).ToString();
     }
 
     private void UpdateBase()

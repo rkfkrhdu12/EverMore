@@ -9,14 +9,14 @@ public class UnitEye : MonoBehaviour
     [SerializeField]
     private SphereCollider _collider = null;
 
-    private UnitController _unitCtrl;
+    [SerializeField]
+    private UnitController _unitCtrl = null;
 
     private float _attackRange = -1;
     private float _attackAngle = 180f;
 
     private bool _isCollision = false;
-    private bool _isInit = false;
-    public bool _isEnemy = false;
+    public bool _isEnemy = true;
 
     //공격 타겟에대한 큐
     public List<FieldObject> _targets = new List<FieldObject>();
@@ -24,20 +24,17 @@ public class UnitEye : MonoBehaviour
     private float _minRange = 3.2f;
     private float _maxRange = 6.0f;
 
-    public void Init(in UnitController unitCtrl)
+    //public void Init(in UnitController unitCtrl)
+    private void OnEnable()
     {
         // Inspector 에서 드래그드롭 해줘야 할 오브젝트들
-        if (!_collider) { _collider = GetComponent<SphereCollider>(); Debug.Log("UnitEye Collider is Null"); }
-
-        // 나머지 데이터들 Init
-        _unitCtrl = unitCtrl;
+        if (!_collider) { _collider = GetComponent<SphereCollider>(); ErrorLogSystem.Log("UnitEye : Collider is NULL"); }
+        if (!_unitCtrl) { _unitCtrl = transform.parent.GetComponent<UnitController>(); ErrorLogSystem.Log("UnitEye : UnitCtrl is NULL"); }
 
         float range = Mathf.Clamp(_unitCtrl._status._attackRange, _minRange, _maxRange);
 
         _attackRange = range * 2;
         _collider.radius = range * 2.5f;
-
-        _isInit = true;
     }
 
     /// <summary>
@@ -47,16 +44,20 @@ public class UnitEye : MonoBehaviour
     {
         get
         {
-            if (!_isCollision)
+            if (!_isCollision || _targets.Count == 0)
+            {
+                _isEnemy = true;
                 return null;
-
+            }
             return _targets[0];
         }
     }
 
     public void UpdateTarget()
     {
-        if(CurTarget.GetCurHealth() <= 0)
+        if (_targets.Count <= 0 || CurTarget == null) { return; }
+
+        if (CurTarget.GetCurHealth() <= 0 || !_isEnemy) 
         {
             _targets.Remove(_targets[0]);
 
@@ -87,7 +88,7 @@ public class UnitEye : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         // 아직 Init되지 않았거나, Unit이 아니거나 Collider가 몸이 아니거나, unitCtrl 이 Null일때
-        if (!_isInit || (other.CompareTag("Unit") && other.isTrigger) || _unitCtrl == null) { return; }
+        if ((other.CompareTag("Unit") && other.isTrigger) || _unitCtrl == null) { return; }
 
         // 유닛들대상
         {
@@ -140,13 +141,13 @@ public class UnitEye : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        var target = other.GetComponent<FieldObject>();
+        var target = other.GetComponent<UnitController>();
 
         // FieldObject 가 있으면
         if (target != null)
         {
             // 현재 타겟들에 존재하고 아군이면
-            if (_targets.Contains(target) || target._team == _unitCtrl._team)
+            if (_targets.Contains(target) && target._team == _unitCtrl._team)
             {
                 // 현재 타겟이 유닛의 타겟인지 체크
                 bool isUpdate = target == _targets[0] ? true : false;

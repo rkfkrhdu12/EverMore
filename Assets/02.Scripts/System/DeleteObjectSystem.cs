@@ -17,7 +17,7 @@ public class DeleteObjectSystem
     /// Input GameObject(삭제할 오브젝트) 
     /// </summary>
     /// <param name="gObject">삭제할 오브젝트</param>
-    // GameObject를 넣어두면 SetActive(false), SetParent(null) 실행 후, LateUpdate() 에서 삭제
+    // GameObject를 넣어두면 SetActive(false), SetParent(null) 실행 후 실제로 삭제하진 않음.
     public static void AddDeleteObject(GameObject gObject)
     {
         gObject?.transform.SetParent(null);
@@ -25,17 +25,6 @@ public class DeleteObjectSystem
 
         if (gObject != null) _deleteObjList.Enqueue(gObject);
     }
-
-    /// <summary>
-    /// 삭제 예정인 오브젝트 수 return
-    /// </summary>
-    /// <returns></returns>
-    public static int getCount() => //삭제해야할 오브젝트의 개수 return
-        _deleteObjList.Count;
-    
-    //GameManager에서만 사용
-    public static GameObject getDequeue() => //오브젝트를 제거하고 리턴합니다.
-        _deleteObjList.Count <= 0 ? null : _deleteObjList.Dequeue();
     
     #endregion
 }

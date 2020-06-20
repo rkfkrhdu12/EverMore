@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using GameplayIngredients;
+using System.Runtime.Remoting.Messaging;
 
 public struct UnitStatus
 {
@@ -11,7 +12,31 @@ public struct UnitStatus
     public float _maxhealth;
     public float _defensivePower;
 
-    public float _attackDamage;
+    private int _damageIndex;
+    public float[] _attackDamages;
+    public float _attackDamage 
+    {
+        get 
+        {
+            if(_attackDamages == null) { return 0; }
+
+            float returnVal = _attackDamages.Length <= _damageIndex ? 
+                _attackDamages[0] + _attackDamages[1] : 
+                _attackDamages[_damageIndex];
+
+            return returnVal;
+        }
+
+        set
+        {
+            if (_attackDamages == null) { return; }
+
+            if (_attackDamages.Length > _damageIndex)
+            {
+                _attackDamages[_damageIndex++] = value;
+            }
+        }
+    }
     public float _attackSpeed;
     public float _attackRange;
 
@@ -49,8 +74,8 @@ public struct UnitStatus
             _cost = 0;
             _coolTime = 0f;
             _weight = 0;
-            _attackDamage = 0f;
-            _attackRange = 1f;
+            _attackDamages = new float[2];
+            _attackRange = 2f;
             _attackSpeed = 1f;
         }
 
@@ -58,9 +83,10 @@ public struct UnitStatus
 
         for (int i = 0; i < _equipedItems.Length; ++i)
         {
-            if(_equipedItems[i] == 0) { continue; }
+            if(_equipedItems[i] == 0) { if (i == 2 || i == 3) { ++_damageIndex; } continue; }
 
             itemList.ItemSearch(_equipedItems[i]).Equip(ref this);
+
         }
     }
 

@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 1291830932574697013}
-  _isEnemy: 0
+  _unitCtrl: {fileID: 1947036433871368487}
+  _isEnemy: 1
   _targets: []
 --- !u!135 &1291830932574697013
 SphereCollider:
@@ -109,7 +110,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3687731606868792455
+--- !u!114 &2129772663236398556
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,9 +119,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1677708164470054435}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdbe6214af1be004eb083ef2424b490d, type: 3}
+  m_Script: {fileID: 11500000, guid: 11f56b6668def3b41a4c0cdc6cbbdb21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ani: {fileID: 1875249095436106431}
+  _unitCtrl: {fileID: 1947036433871368487}
 --- !u!1 &1947036433871368482
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,7 +177,7 @@ MonoBehaviour:
   _maxHp: 0
   _team: 1
   _isDead: 0
-  _aniPro: {fileID: 3687731606868792455}
+  _ani: {fileID: 2129772663236398556}
   _navMeshAgent: {fileID: 742625368975721143}
   _eye: {fileID: 1048384256781551297}
   _enemyCastleObject: {fileID: 0}

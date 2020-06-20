@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using GameplayIngredients;
 using UnityEngine;
-using UnityEngine.AnimatorPro;
+// using UnityEngine.AnimatorPro;
 using UnityEngine.AI;
 
 using UnityEngine.ParticleSystemJobs;
@@ -19,29 +19,20 @@ public class UnitController : FieldObject
     { // Spawn() -> OnEnable() 순서
 
         // Inspector 에서 드래그드롭 해줘야 할 오브젝트들
-        if (_IsAni)          { } // { _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>(); Debug.Log("UnitCtrl  AniPro is Null"); }
+        if (_ani == null)    { _ani = GetComponentInChildren<UnitAnimation>(); ErrorLogSystem.Log("UnitCtrl : AniPro is Null"); }
         if (_IsNavMeshAgent) { } // { _navMeshAgent = GetComponent<NavMeshAgent>(); Debug.Log("UnitCtrl  NavAgent is Null"); }
-        if (_IsEye)          { } // { _eye = GetComponentInChildren<UnitEye>(); Debug.Log("UnitCtrl  Eye is Null"); }
+        if (_eye == null)    { _eye = GetComponentInChildren<UnitEye>(); ErrorLogSystem.Log("UnitCtrl : Eye is Null"); }
 
         // 나머지 데이터들 Init
-        _aniPro.Init(transform.GetChild(0).GetComponent<Animator>());
-
         _navMeshAgent.updateRotation = false;
 
-        _status.UpdateItems();
-        _status._attackRange += 1f;
+        //_status.UpdateItems();
+        ++_status._attackRange;
 
-        _curState = eState.IDLE;
+        CurState = eAni.IDLE;
 
         _curHp = _status._maxhealth;
         _maxHp = _status._maxhealth;
-
-        _attackTime = new WaitForSeconds(_attackSpeed);
-
-        _aniPro.SetParam(_idAttackSpd, _attackSpeed);
-        _aniPro.SetParam(_idAttack, false);
-
-        _eye.Init(this);
     }
 
     public override void DamageReceive(float damage) 
@@ -65,23 +56,10 @@ public class UnitController : FieldObject
 
     // 이 유닛의 애니메이션
     [SerializeField]
-    private AnimatorPro _aniPro;
-    private bool _IsAni 
-    {
-        get 
-        {
-            if (_aniPro == null)
-            {
-                _aniPro = transform.GetChild(0).GetComponent<AnimatorPro>(); Debug.Log("UnitCtrl  AniPro is Null");
-
-                if (_aniPro == null) { return false; }
-            }
-
-            return true;
-        }
-    }
+    private UnitAnimation _ani;
 
     // 이 유닛의 AI 
+
     [SerializeField]
     private NavMeshAgent _navMeshAgent = null;
     private bool _IsNavMeshAgent 
@@ -102,20 +80,6 @@ public class UnitController : FieldObject
     // 이 유닛의 눈
     [SerializeField]
     private UnitEye _eye;
-    private bool _IsEye 
-    {
-        get
-        {
-            if (_eye == null)
-            {
-                _eye = GetComponentInChildren<UnitEye>(); Debug.Log("UnitCtrl  Eye is Null");
-
-                if (_eye == null) { return false; }
-            }
-
-            return true;
-        }
-    }
 
     #endregion
 
@@ -129,19 +93,11 @@ public class UnitController : FieldObject
     //필드 관점에서의 해당 유닛의 상태
     private FieldObject _curTarget = null;
 
-    #region Animation Macro
-
-    private static readonly int _idAttack = Animator.StringToHash("Attack");
-    private static readonly int _idAttackSpd = Animator.StringToHash("AttackSpeed");
-    private static readonly int _idMove = Animator.StringToHash("Move");
-
-    #endregion
-
     #region 유닛 상태
 
     #region Enum
 
-    public enum eState
+    public enum eAni
     {
         NONE,
         IDLE,
@@ -151,22 +107,48 @@ public class UnitController : FieldObject
 
     #endregion
     //유닛 상태에 대한 변수
-    public eState _curState = eState.NONE;
+    public eAni _curState = eAni.NONE;
+    public eAni CurState
+    {
+        get { return _curState; }
+        set
+        {
+            if(_curState != value && gameObject.activeSelf)
+            {
+                if (!_navMeshAgent.pathPending)
+                {
+                    switch (value)
+                    {
+                        case eAni.IDLE: _navMeshAgent.isStopped = true; break;
+                        case eAni.MOVE: _navMeshAgent.isStopped = false;
+                            if (_curState == eAni.IDLE && !_eye._isEnemy) { _eye.UpdateTarget(); }
+                            break;
+                        case eAni.ATTACK: _navMeshAgent.isStopped = true; break;
+                    }
+                }
+
+                _ani.Update(value);
+            }
+
+            _curState = value;
+        }
+    }
 
     public UnitStatus _status;
 
     //공격 데미지
-    private float _attackDamage { get { return _status._attackDamage; } }
+    public float _attackDamage { get { return _status._attackDamage; } }
+    public float _leftAttackDamage { get { return _status._attackDamages[0]; } }
+    public float _rightAttackDamage { get { return _status._attackDamages[1]; } }
 
     //공격 속도
-    private float _attackSpeed { get { return _status._attackSpeed; } }
-    WaitForSeconds _attackTime;
+    public float _attackSpeed { get { return _status._attackSpeed; } }
 
     //공격 범위
-    private float _attackRange { get { return _status._attackRange; } }
+    public float _attackRange { get { return _status._attackRange; } }
 
     //이동 속도
-    private float _moveSpeed { get { return _status._moveSpeed; } }
+    public float _moveSpeed { get { return _status._moveSpeed; } }
 
     // 유닛 코스트
     public int _cost { get { return _status._cost; } }
@@ -196,12 +178,8 @@ public class UnitController : FieldObject
         _navMeshAgent.stoppingDistance = _attackRange;
         _navMeshAgent.speed = _moveSpeed;
 
-        UnitAnimationManager.Update(_status._equipedItems[2], _status._equipedItems[3], _aniPro);
-
         _curTarget = _enemyCastleObject;
         _navMeshAgent.SetDestination(_curTarget.transform.position);
-
-        StartCoroutine(UpdateAttack());
     }
 
     #endregion
@@ -213,91 +191,11 @@ public class UnitController : FieldObject
         if (_navMeshAgent.pathPending || !gameObject.activeSelf) { return; }
 
         UpdateMonobehaviour();
-
-        UpdateAnimation();
     }
 
     private void UpdateMonobehaviour()
     {
         if(!_IsNavMeshAgent) { return; }
-
-        float remainingDistance = (_curTarget.transform.position - transform.position).magnitude;
-
-        _curState = eState.MOVE;
-
-        if (_eye._isEnemy)
-        {
-            if (remainingDistance <= _attackRange)
-            {
-                _curState = eState.ATTACK;
-            }
-            else
-            {
-                _navMeshAgent.isStopped = false;
-            }
-        }
-        else
-        {
-
-        }
-    }
-
-    WaitForSeconds _attackWaitTime = new WaitForSeconds(.25f);
-    IEnumerator UpdateAttack()
-    {
-        while(true)
-        {
-            if (!gameObject.activeSelf) { yield return null; }
-
-            while (_curState != eState.ATTACK) { yield return _attackWaitTime; }
-
-            _navMeshAgent.isStopped = true;
-
-            transform.LookAt(_curTarget.transform);
-
-            _curTarget.DamageReceive(_attackDamage);
-
-            if (_curTarget.GetCurHealth() <= 0)
-                _eye.UpdateTarget();
-
-            Debug.Log("Attack   " + _navMeshAgent.velocity);
-
-            yield return _attackTime;
-        }
-    }
-
-    private void UpdateAnimation()
-    {
-        if (!_IsAni) return;
-
-        #region Move Animation
-        //// https://www.youtube.com/watch?v=RmDRjoXUaTI&feature=youtu.be&app=desktop
-
-        //float moveValue = 0.0f;
-
-        //if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f && _navMeshAgent.remainingDistance <= .1f)
-        //{
-        //    moveValue = 0.0f;
-        //}
-        //else if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f)
-        //{
-        //    Vector3 direction = _navMeshAgent.desiredVelocity;
-
-        //    Quaternion targetAngle = Quaternion.LookRotation(direction);
-
-        //    transform.rotation = Quaternion.Slerp(transform.rotation,
-        //                                          targetAngle,
-        //                                          Time.deltaTime * 8.0f);
-
-        //    moveValue = 1.0f;
-        //}
-        //else
-        //{
-        //    moveValue = 0.0f;
-        //}
-
-        //_aniPro.SetParam(_idMove, moveValue); 
-        #endregion
 
         if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f)
         {
@@ -310,28 +208,63 @@ public class UnitController : FieldObject
                                                   Time.deltaTime * 8.0f);
         }
 
-        _aniPro.SetParam(_idMove    , _curState == eState.MOVE ? 1.0f : 0.0f);
-        _aniPro.SetParam(_idAttack  , _curState == eState.ATTACK ? true : false);
+        float remainingDistance = (_curTarget.transform.position - transform.position).magnitude;
 
+        if (remainingDistance <= _attackRange)
+        {
+            if (_eye._isEnemy)
+            {
+                transform.LookAt(_curTarget.transform);
+
+                CurState = eAni.ATTACK;
+            }
+            else
+            {
+                CurState = eAni.IDLE;
+            }
+        }
+        else
+        {
+            CurState = eAni.MOVE;
+        }
+    }
+
+    public void OnEffect()
+    {
+
+    }
+
+    public void AttackRight()
+    {
+        if (_rightAttackDamage == 0) { return; }
+
+        _curTarget.DamageReceive(_rightAttackDamage);
+
+        if (_curTarget.GetCurHealth() <= 0)
+            _eye.UpdateTarget();
+    }
+
+    public void AttackLeft()
+    {
+        if(_leftAttackDamage == 0) { return; }
+
+        _curTarget.DamageReceive(_leftAttackDamage);
+
+        if (_curTarget.GetCurHealth() <= 0)
+            _eye.UpdateTarget();
     }
 
     public void UpdateTarget()
     {
-        if (!_IsEye) { return; }
-
         FieldObject newTarget = _eye.CurTarget == null ? _enemyCastleObject : _eye.CurTarget;
 
         if (newTarget == _curTarget) { return; }
 
-        if (_curTarget == _enemyCastleObject || (_curTarget != _enemyCastleObject && _curTarget.GetCurHealth() <= 0))
-        {
-            // 눈이 인식한 타겟과 몸이 인식한 타겟이 다른경우, 눈이 인식한 타겟이 없고 현재 타겟이 상대 성채가 아닐경우
-            // if (newTarget == null && _curTarget != _enemyCastleObject)
-            { // 타겟을 바꾸는 경우
-                _curTarget = newTarget;
+        {   // 타겟을 바꾸는 경우
+            _curTarget = newTarget;
 
-                _navMeshAgent.SetDestination(_curTarget.transform.position);
-            }
+            _navMeshAgent.SetDestination(_curTarget.transform.position);
+
         }
     }
 
@@ -637,16 +570,6 @@ public class UnitAnimationManager
 
         if (num != -1)
             ani.SetInteger(_idWeaponType, num);
-    }
-
-    public static void Update(int leftWeaponCode, int rightWeaponCode, AnimatorPro ani) 
-    {
-        int num = -1;
-
-        FindNum(leftWeaponCode, rightWeaponCode,ref num);
-
-        if (num != -1)
-            ani.SetParam(_idWeaponType, num);
     }
     
     #region Variable

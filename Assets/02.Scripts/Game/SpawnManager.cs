@@ -23,7 +23,11 @@ public class SpawnManager : MonoBehaviour
     public void SetSpawnPoint(Vector3 pos) => _spawnPoint = pos;
     public Castle GetCastle() { return GetComponent<Castle>(); }
 
-    int _spawnIndex = 0;
+    public bool _isPlayer2 = false;
+
+    List<GameObject> _unitList = new List<GameObject>();
+
+    GameObject _curSpawnObject = null;
 
     /// <summary>
     /// UI의 버튼 혹은 설정된 키로 유닛을 스폰
@@ -42,31 +46,89 @@ public class SpawnManager : MonoBehaviour
                 transform.position + new Vector3(1, 0, .5f);
         }
 
-        GameObject clone = Instantiate(_unitPrefabs, unitPos, Quaternion.identity, null);
+        //GameObject clone = Instantiate(_unitPrefabs, unitPos, Quaternion.identity, null);
 
-        if (clone.activeSelf) clone.SetActive(false);
+        _curSpawnObject.transform.position = unitPos;
 
-        clone.name = (_isPlayer2 ? "Player2Unit " : "Player1Unit ") + _spawnIndex++.ToString();
+        // clone.name = (_isPlayer2 ? "Player2Unit " : "Player1Unit ") + _spawnIndex++.ToString();
 
-        UnitController unitCtrl = clone.GetComponent<UnitController>();
-
+        UnitController unitCtrl = _curSpawnObject.GetComponent<UnitController>();
+        
         unitCtrl._enemyCastleObject = _enemySpawnManager.GetCastle();
 
-        unitCtrl._status = _teamUnits.GetUnit(_curSpawnIndex);
+        if (unitCtrl._status._equipedItems != null)
+            UnitModelManager.Reset(_curSpawnObject.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
 
-        UnitModelManager.Update(clone.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
+        unitCtrl._status = _teamUnits.GetUnit(_curSpawnIndex);
+        unitCtrl._status.UpdateItems();
+
+        UnitModelManager.Update(_curSpawnObject.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
 
         unitCtrl.Spawn();
 
-        clone.SetActive(true);
+        _curSpawnObject.SetActive(true);
+
+        _curSpawnObject = null;
     }
-    
+
+    public bool _isGameEnd = false;
+    WaitForSeconds ObjectUpdateWaitTime = new WaitForSeconds(.25f);
+    IEnumerator UpdateSpawnObject()
+    {
+        while (!_isGameEnd)
+        {
+            if (_curSpawnObject == null)
+            {
+                for (int i = 0; i < _unitList.Count; ++i)
+                {
+                    if (!_unitList[i].activeSelf)
+                    {
+                        _curSpawnObject = _unitList[i];
+                        break;
+                    }
+                }
+
+                if (_curSpawnObject == null)
+                {
+                    for (int j = 0; j < 3; ++j)
+                    {
+                        GameObject clone = Instantiate(_unitPrefabs, Vector3.zero, Quaternion.identity, null);
+
+                        clone.name = (_isPlayer2 ? "Player2Unit " : "Player1Unit ") + _unitList.Count.ToString();
+
+                        _unitList.Add(clone);
+                    }
+
+                    for (int i = 0; i < _unitList.Count; ++i)
+                    {
+                        if (!_unitList[i].activeSelf)
+                        {
+                            _curSpawnObject = _unitList[i]; break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                yield return ObjectUpdateWaitTime;
+            }
+        }
+
+        for (int i = 0; i < _unitList.Count; ++i)
+        {
+            _unitList[i].GetComponent<UnitController>()._isDead = true;
+        }
+    }
+
     #region Monobehaviour Function
 
     private void Awake()
     {
         GetComponent<FieldObject>()._team = _isPlayer2 ? eTeam.ENEMY : eTeam.PLAYER;
 
+        StartCoroutine(UpdateSpawnObject());
+
+        // Test
         if (_isPlayer2)
         {
             // Test
@@ -89,10 +151,10 @@ public class SpawnManager : MonoBehaviour
             _teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
     }
 
-    public bool _isPlayer2 = false;
 
     private void Update()
     {
+        // Test
         if (_isPlayer2)
         {
             if (Input.GetKeyDown(KeyCode.Q))

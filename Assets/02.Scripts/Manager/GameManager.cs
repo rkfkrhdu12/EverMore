@@ -77,9 +77,6 @@ public class GameManager : Manager
         DontDestroyOnLoad(gameObject);
     }
 
-    private void LateUpdate() =>
-        objectToDelete();
-
     #endregion
 
     #region Private Function
@@ -102,16 +99,5 @@ public class GameManager : Manager
     //        Addressables.Release(texture2d);
     //}
 
-    private void objectToDelete()
-    {
-        //삭제해야하는 오브젝트 목록이 0이라면, 아래 코드 구문 실행 X
-        if (DeleteObjectSystem.getCount() <= 0) return;
-
-        //오브젝트를 제거하고, 제거된 오브젝트를 return합니다.
-        var deleteObj = DeleteObjectSystem.getDequeue();
-
-        //삭제
-        Destroy(deleteObj);
-    } 
     #endregion
 }
