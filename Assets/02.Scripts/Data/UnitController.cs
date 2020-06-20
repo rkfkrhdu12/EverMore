@@ -137,9 +137,9 @@ public class UnitController : FieldObject
     public UnitStatus _status;
 
     //공격 데미지
-    public float _attackDamage { get { return _status._attackDamage; } }
-    public float _leftAttackDamage { get { return _status._attackDamages[0]; } }
-    public float _rightAttackDamage { get { return _status._attackDamages[1]; } }
+    public float _attackDamage          { get { return _status._attackDamage; } }
+    public float _leftAttackDamage      { get { return _status._leftAttackDamage; } }
+    public float _rightAttackDamage     { get { return _status._rightAttackDamage; } }
 
     //공격 속도
     public float _attackSpeed { get { return _status._attackSpeed; } }
@@ -341,7 +341,7 @@ public class UnitModelManager
             index = _modelItemPoint[i.Name];
 
             // true 면 무기 false 면 방어구
-            if (i.Type > GameItem.eItemType.WEAPONS)
+            if (i.AniType > GameItem.eItemType.WEAPONS)
             {
                 if (leftWeaponTrs.GetChild(index[1]).gameObject.activeSelf)
                     leftWeaponTrs.GetChild(index[1]).gameObject.SetActive(false);
@@ -593,8 +593,8 @@ public class UnitAnimationManager
         GameItem.Item rightWeapon = _itemList.ItemSearch(rightWeaponCode);
 
         string leftString = "", rightString = "";
-        if (leftWeapon != null && _typeStrings.ContainsKey(leftWeapon.Type))    leftString = _typeStrings[leftWeapon.Type];
-        if (rightWeapon != null && _typeStrings.ContainsKey(rightWeapon.Type))  rightString = _typeStrings[rightWeapon.Type];
+        if (leftWeapon != null && _typeStrings.ContainsKey(leftWeapon.AniType))    leftString = _typeStrings[leftWeapon.AniType];
+        if (rightWeapon != null && _typeStrings.ContainsKey(rightWeapon.AniType))  rightString = _typeStrings[rightWeapon.AniType];
 
         if (!_typeAnimationNum.ContainsKey(leftString + "&" + rightString)) { leftString = rightString = ""; }
 
@@ -635,8 +635,6 @@ public class UnitAnimationManager
         {
             _typeStrings.Add(t + i + 1, typeName[i]);
         }
-
-        _typeStrings.Remove(GameItem.eItemType.Hammer);
 
         for (int i = 0; i < aniName.Count; ++i)
         {

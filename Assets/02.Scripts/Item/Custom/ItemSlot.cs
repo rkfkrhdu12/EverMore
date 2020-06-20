@@ -32,12 +32,12 @@ public class ItemSlot : MonoBehaviour
             _text = transform.GetChild(transform.childCount - 1).GetComponent<TMP_Text>();
 
         int childNum = -1;
-        switch (item.Type)
+        switch (item.AniType)
         {
-            case GameItem.eItemType.HELMET:
+            case GameItem.eItemType.Helmet:
                 childNum = 0;
                 break;
-            case GameItem.eItemType.BODYARMOUR:
+            case GameItem.eItemType.BodyArmour:
                 childNum = 1;
                 break;
         }

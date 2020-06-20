@@ -6,8 +6,15 @@ public class ErrorLogSystem
 {
     public static void Log(string str)
     {
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         Debug.Log(str);
-#endif
+        #endif
+    }
+
+    public static void LogError(string str)
+    {
+        #if UNITY_EDITOR
+        Debug.LogError(str);
+        #endif
     }
 }

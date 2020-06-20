@@ -56,10 +56,6 @@ public class ItemInventorySystem : MonoBehaviour
 
     private void Awake()
     {
-        _equipedItems[0] = 1;
-        _equipedItems[1] = 2;
-        _equipedItems[2] = 0;
-        _equipedItems[3] = 0;
 
         _unitPhoto = _teamManager.GetUnitPhoto();
         if (null == _unitPhoto) { Debug.LogError("ItemInventorySystem : _unitPhoto is null"); }
@@ -73,6 +69,11 @@ public class ItemInventorySystem : MonoBehaviour
         _inventory[(int)eCodeType.RightWeapon]  = new List<int>();
 
         _inventory[(int)eCodeType.LeftWeapon] = new List<int>();
+
+        _equipedItems[0] = _itemList.CodeSearch(GameItem.eCodeType.Helmet, 0);
+        _equipedItems[1] = _itemList.CodeSearch(GameItem.eCodeType.Bodyarmour, 0);
+        _equipedItems[2] = 0;
+        _equipedItems[3] = 0;
     }
 
     bool isTesting = false;
@@ -174,11 +175,11 @@ public class ItemInventorySystem : MonoBehaviour
         // 모델링 업데이트
         {
             int partsNum;
-            switch (i.Type)
+            switch (i.AniType)
             {
-                case eItemType.NONE:        return;
-                case eItemType.HELMET:      partsNum = 0;                       break;
-                case eItemType.BODYARMOUR:  partsNum = 1;                       break;
+                case eItemType.None:        return;
+                case eItemType.Helmet:      partsNum = 0;                       break;
+                case eItemType.BodyArmour:  partsNum = 1;                       break;
                 default:                    partsNum = (_isLeftWeapon ? 2 : 3); break;
             }
 

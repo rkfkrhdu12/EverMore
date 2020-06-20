@@ -97,6 +97,7 @@ public class ItemList
     {
         public const string Helmet          = "모자";
         public const string BodyArmour      = "갑옷";
+
         public const string OneHandSword    = "한손검";
         public const string Shield          = "방패";
         public const string Dagger          = "단검";
@@ -117,39 +118,39 @@ public class ItemList
         if (string.IsNullOrEmpty(data[0])) { return; }
 
         Item i = null;
-
-        switch (data[1])
+        
+        switch ((eItemType)int.Parse(data[1]))
         {
             // Weapon
-            case ItemTypeList.OneHandSword: i = new OneHandSword(); break;
-            case ItemTypeList.Shield: i = new Shield(); break;
-            case ItemTypeList.Dagger: i = new Dagger(); break;
-            case ItemTypeList.Spear: i = new Spear(); break;
-            case ItemTypeList.Bow: i = new Bow(); break;
-            case ItemTypeList.Hammer: i = new Hammer(); break;
+            case eItemType.Sword:                   i = new OneHandSword(); break;
+            case eItemType.TwoHandSword:            i = new TwoHandSword(); break;
+            case eItemType.Spear:                   i = new Spear();        break;
+            case eItemType.Shield:                  i = new Shield();       break;
+            case eItemType.Bow:                     i = new Bow();          break;
 
             // Armour
-            case ItemTypeList.Helmet: i = new Helmet(); break;
-            case ItemTypeList.BodyArmour: i = new BodyArmour(); break;
+            case eItemType.Helmet:                  i = new Helmet();       break;
+            case eItemType.BodyArmour:              i = new BodyArmour();   break;
         }
 
         if (i == null)
             return;
 
-        if (i.Type == eItemType.NONE)
+        if (i.AniType == eItemType.None)
             return;
 
         int index = int.Parse(data[0]);
 
-        switch (i.Type)
+        switch (i.AniType)
         {
-            case eItemType.NONE: Debug.LogError("Item Error" + i.Name); break;
-            case eItemType.HELMET: _codeList[(int)eCodeType.Helmet].Add(_codeList[(int)eCodeType.Helmet].Count, index); break;
-            case eItemType.BODYARMOUR: _codeList[(int)eCodeType.Bodyarmour].Add(_codeList[(int)eCodeType.Bodyarmour].Count, index); break;
-            default: _codeList[(int)eCodeType.Weapon].Add(_codeList[(int)eCodeType.Weapon].Count, index); break;
+            case eItemType.None:        ErrorLogSystem.LogError("Item Error" + i.Name); break;
+            case eItemType.Helmet:      _codeList[(int)eCodeType.Helmet].Add(_codeList[(int)eCodeType.Helmet].Count, index); break;
+            case eItemType.BodyArmour:  _codeList[(int)eCodeType.Bodyarmour].Add(_codeList[(int)eCodeType.Bodyarmour].Count, index); break;
+            default:                    _codeList[(int)eCodeType.Weapon].Add(_codeList[(int)eCodeType.Weapon].Count, index); break;
         }
 
         i.Init(data);
+
         _itemList.Add(index, i);
     }
 
@@ -159,22 +160,20 @@ namespace GameItem
 {
     public enum eItemType
     {
-        NONE,
+        None,
 
         // Armour
-        HELMET,
-        BODYARMOUR,
+        Helmet,
+        BodyArmour,
 
         WEAPONS,
 
         // Weapon
-        Sword,
-        Shield,
-        Dagger,
+        Sword = 3,
+        TwoHandSword,
         Spear,
+        Shield,
         Bow,
-        BFSword,
-        Hammer,
 
         LAST,
     }
@@ -193,8 +192,8 @@ namespace GameItem
     public class Item 
     {
         protected string _name;                         public string Name => _name;
-
-        protected eItemType _type = eItemType.NONE;     public eItemType Type => _type;
+        protected string _itemTypeName;                 public string ItemType => _itemTypeName;
+        protected eItemType _type = eItemType.None;     public eItemType AniType => _type;
 
         protected int _cost;                            // public int Cost => _cost;
 
@@ -206,10 +205,11 @@ namespace GameItem
         {
             if (null == datas[0]) { return; }
 
-            _name = datas[2];
-            int.TryParse(datas[3], out _cost);
-            float.TryParse(datas[4], out _coolTime);
-            int.TryParse(datas[10], out _weight);
+            _itemTypeName       = datas[2];
+            _name               = datas[3];
+            int.TryParse(datas[4], out _cost);
+            float.TryParse(datas[5], out _coolTime);
+            int.TryParse(datas[11], out _weight);
         }
 
         public virtual void Equip(ref UnitStatus us)
@@ -230,60 +230,64 @@ namespace GameItem
     public class Weapon : Item
     {
         protected float _range;
-        protected float _damage;
+        protected float _minDamage;
+        protected float _maxDamage;
 
         public override void Init(IReadOnlyList<string> datas)
         {
             base.Init(datas);
 
-            float.TryParse(datas[9], out _range);
-            float.TryParse(datas[7], out _damage);
+            float.TryParse(datas[8], out _range);
+            float.TryParse(datas[9], out _maxDamage);
+            float.TryParse(datas[10], out _minDamage);
         }
 
         public override void Equip(ref UnitStatus us)
         {
             base.Equip(ref us);
 
-            us._attackRange += _range;
-            us._attackDamage += _damage;
-        }
+            us._attackRange     += _range;
+            us._minAttackDamage += _minDamage;
+            us._maxAttackDamage += _maxDamage;
+        }      
 
         public override void UnEquip(ref UnitStatus us)
         {
             base.Equip(ref us);
 
-            us._attackRange  -= _range;
-            us._attackDamage -= _damage;
+            us._attackRange     -= _range;
+            us._minAttackDamage -= _minDamage;
+            us._maxAttackDamage -= _maxDamage;
         }
     }
 
     public class Armour : Item
     {
-        protected float _defense;
         protected float _health;
+        protected float _defense;
 
         public override void Init(IReadOnlyList<string> datas)
         {
             base.Init(datas);
 
-            float.TryParse(datas[6], out _defense);
-            float.TryParse(datas[8], out _health);
+            float.TryParse(datas[6], out _health);
+            float.TryParse(datas[7], out _defense);
         }
 
         public override void Equip(ref UnitStatus us)
         {
             base.Equip(ref us);
 
-            us._defensivePower  += _defense;
             us._maxhealth       += _health;
+            us._defensivePower  += _defense;
         }
 
         public override void UnEquip(ref UnitStatus us)
         {
             base.Equip(ref us);
 
-            us._defensivePower  -= _defense;
             us._maxhealth       -= _health;
+            us._defensivePower  -= _defense;
         }
     }
 
@@ -295,16 +299,10 @@ namespace GameItem
             => _type = eItemType.Sword;
     }
 
-    public class Shield : Weapon
+    public class TwoHandSword : Weapon
     {
-        public Shield()
-            => _type = eItemType.Shield;
-    }
-
-    public class Dagger : Weapon
-    {
-        public Dagger()
-            => _type = eItemType.Dagger;
+        public TwoHandSword()
+            => _type = eItemType.TwoHandSword;
     }
 
     public class Spear : Weapon
@@ -313,16 +311,16 @@ namespace GameItem
             => _type = eItemType.Spear;
     }
 
+    public class Shield : Weapon
+    {
+        public Shield()
+            => _type = eItemType.Shield;
+    }
+
     public class Bow : Weapon
     {
         public Bow()
             => _type = eItemType.Bow;
-    }
-
-    public class Hammer : Weapon
-    {
-        public Hammer()
-            => _type = eItemType.Hammer;
     }
 
     #endregion
@@ -332,13 +330,13 @@ namespace GameItem
     public class Helmet : Armour
     {
         public Helmet()
-            => _type = eItemType.HELMET;
+            => _type = eItemType.Helmet;
     }
 
     public class BodyArmour : Armour
     {
         public BodyArmour()
-            => _type = eItemType.BODYARMOUR;
+            => _type = eItemType.BodyArmour;
     }
 
     #endregion

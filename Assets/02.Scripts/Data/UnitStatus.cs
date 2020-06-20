@@ -5,6 +5,8 @@ using UnityEngine;
 using GameplayIngredients;
 using System.Runtime.Remoting.Messaging;
 
+
+
 public struct UnitStatus
 {
     public eTeam _team;
@@ -12,31 +14,66 @@ public struct UnitStatus
     public float _maxhealth;
     public float _defensivePower;
 
-    private int _damageIndex;
-    public float[] _attackDamages;
-    public float _attackDamage 
-    {
-        get 
-        {
-            if(_attackDamages == null) { return 0; }
+    #region Set AttackDamage
 
-            float returnVal = _attackDamages.Length <= _damageIndex ? 
-                _attackDamages[0] + _attackDamages[1] : 
-                _attackDamages[_damageIndex];
+    private int _maxDamageIndex;
+    public float[] _maxAttackDamages;
+
+    private int _minDamageIndex;
+    public float[] _minAttackDamages;
+
+    public float _minAttackDamage
+    {
+        get
+        {
+            if (_minAttackDamages == null) { return 0; }
+
+            float returnVal = _minAttackDamages.Length <= _minDamageIndex ?
+                _minAttackDamages[0] + _minAttackDamages[1] :
+                _minAttackDamages[_minDamageIndex];
 
             return returnVal;
         }
 
         set
         {
-            if (_attackDamages == null) { return; }
+            if (_minAttackDamages == null) { return; }
 
-            if (_attackDamages.Length > _damageIndex)
+            if (_minAttackDamages.Length > _minDamageIndex)
             {
-                _attackDamages[_damageIndex++] = value;
+                _minAttackDamages[_minDamageIndex++] = value;
             }
         }
     }
+    public float _maxAttackDamage
+    {
+        get
+        {
+            if (_maxAttackDamages == null) { return 0; }
+
+            float returnVal = _maxAttackDamages.Length <= _maxDamageIndex ?
+                _maxAttackDamages[0] + _maxAttackDamages[1] :
+                _maxAttackDamages[_maxDamageIndex];
+
+            return returnVal;
+        }
+
+        set
+        {
+            if (_maxAttackDamages == null) { return; }
+
+            if (_maxAttackDamages.Length > _maxDamageIndex)
+            {
+                _maxAttackDamages[_maxDamageIndex++] = value;
+            }
+        }
+    }
+    #endregion
+
+    public float _attackDamage          { get { return _leftAttackDamage + _rightAttackDamage; } }
+    public float _leftAttackDamage      { get { return Random.Range(_minAttackDamages[0], _maxAttackDamages[0]); } }
+    public float _rightAttackDamage     { get { return Random.Range(_minAttackDamages[1], _maxAttackDamages[1]); } }
+
     public float _attackSpeed;
     public float _attackRange;
 
@@ -51,6 +88,8 @@ public struct UnitStatus
     {
         ItemList itemList = Manager.Get<GameManager>().itemList;
 
+        _minDamageIndex = 0;
+        _maxDamageIndex = 0;
         for (int i = 0; i < 4; ++i)
         {
             if (curCode == _equipedItems[i])
@@ -74,7 +113,10 @@ public struct UnitStatus
             _cost = 0;
             _coolTime = 0f;
             _weight = 0;
-            _attackDamages = new float[2];
+            _minDamageIndex = 0;
+            _maxDamageIndex = 0;
+            _maxAttackDamages = new float[2];
+            _minAttackDamages = new float[2];
             _attackRange = 2f;
             _attackSpeed = 1f;
         }
@@ -83,7 +125,7 @@ public struct UnitStatus
 
         for (int i = 0; i < _equipedItems.Length; ++i)
         {
-            if(_equipedItems[i] == 0) { if (i == 2 || i == 3) { ++_damageIndex; } continue; }
+            if(_equipedItems[i] == 0) { if (i == 2 || i == 3) { ++_maxDamageIndex; ++_minDamageIndex; } continue; }
 
             itemList.ItemSearch(_equipedItems[i]).Equip(ref this);
 
@@ -95,16 +137,20 @@ public struct UnitStatus
         _team = team;
         _maxhealth = 0f;
         _defensivePower = 0f;
-        _moveSpeed = 0f;
+        _moveSpeed = 3.5f;
         _cost = 0;
         _coolTime = 0f;
         _weight = 0;
-        _attackDamage = 0f;
-        _attackRange = 1f;
+        _maxAttackDamages = new float[2];
+        _minAttackDamages = new float[2];
+        _attackRange = 2f;
         _attackSpeed = 1f;
 
         _equipedItems = new int[4];
-        _equipedItems[0] = 1;
-        _equipedItems[1] = 2;
+
+        ItemList itemList = Manager.Get<GameManager>().itemList;
+
+        _equipedItems[0] = itemList.CodeSearch(GameItem.eCodeType.Helmet,0);
+        _equipedItems[1] = itemList.CodeSearch(GameItem.eCodeType.Bodyarmour, 0);
     }
 }
