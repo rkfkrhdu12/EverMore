@@ -34,12 +34,8 @@ public class ItemSlot : MonoBehaviour
         int childNum = -1;
         switch (item.AniType)
         {
-            case GameItem.eItemType.Helmet:
-                childNum = 0;
-                break;
-            case GameItem.eItemType.BodyArmour:
-                childNum = 1;
-                break;
+            case GameItem.eItemType.Helmet:     childNum = 0; break;
+            case GameItem.eItemType.BodyArmour: childNum = 1; break;
         }
 
         if (prevItemIconObject != -1)

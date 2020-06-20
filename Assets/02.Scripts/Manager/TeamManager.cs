@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using GameplayIngredients;
 using UnityEngine.UI;
 
 public class TeamManager : MonoBehaviour
@@ -125,16 +125,18 @@ public class TeamManager : MonoBehaviour
         int selectUnitNum = index == -1 ? _curSelectUnitNum : index;
 
         UnitStatus unit = _teams[_curSelectTeamName].GetUnit(selectUnitNum) ;
-        RawImage rawImage = null;
-
         GameObject iconObject = _unitSlots[selectUnitNum].transform.GetChild(1).gameObject;
 
+        RawImage rawImage;
         if ((rawImage = _unitSlots[selectUnitNum].transform.GetChild(0).GetChild(0).GetComponent<RawImage>())) { }
         else { Debug.Log("UpdateChoiceUnitUI : Unit RawImage Load Error"); return; }
 
         UnitIconManager.Reset(iconObject);
 
-        if ((unit._equipedItems[0] == 0 && unit._equipedItems[1] == 0) || (unit._equipedItems[0] == 1 && unit._equipedItems[1] == 2))
+        ItemList itemList = Manager.Get<GameManager>().itemList;
+
+        if ((unit._equipedItems[0] == 0 && unit._equipedItems[1] == 0)
+            || (unit._equipedItems[0] == itemList.CodeSearch(GameItem.eCodeType.Helmet, 0) && unit._equipedItems[1] == itemList.CodeSearch(GameItem.eCodeType.Bodyarmour, 0)))
         { // 알몸 상태 혹은 초기화가 안된상태 = _UnitAddImage.texture
             rawImage.texture = _UnitAddImage.texture;
             rawImage.SetNativeSize();

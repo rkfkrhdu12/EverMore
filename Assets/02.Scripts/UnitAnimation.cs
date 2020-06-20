@@ -14,12 +14,10 @@ public class UnitAnimation : MonoBehaviour
     [SerializeField]
     private UnitController _unitCtrl = null;
 
-
-
     private void OnEnable()
     {
-        if(_unitCtrl == null)  { _unitCtrl = transform.parent.GetComponent<UnitController>(); ErrorLogSystem.Log("UnitAnimation : UnitCtrl is NULL"); } 
-        if(_ani == null)       { _ani = GetComponent<Animator>();                             ErrorLogSystem.Log("UnitAnimation : Ani is NULL"); }
+        if(_unitCtrl == null)  { _unitCtrl = transform.parent.GetComponent<UnitController>(); LogMassage.Log("UnitAnimation : UnitCtrl is NULL"); } 
+        if(_ani == null)       { _ani = GetComponent<Animator>();                             LogMassage.Log("UnitAnimation : Ani is NULL"); }
 
         _ani.SetFloat(_idAttackSpd, _unitCtrl._attackSpeed);
         _ani.SetBool(_idAttack, false);

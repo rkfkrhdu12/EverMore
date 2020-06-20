@@ -28,8 +28,8 @@ public class UnitEye : MonoBehaviour
     private void OnEnable()
     {
         // Inspector 에서 드래그드롭 해줘야 할 오브젝트들
-        if (!_collider) { _collider = GetComponent<SphereCollider>(); ErrorLogSystem.Log("UnitEye : Collider is NULL"); }
-        if (!_unitCtrl) { _unitCtrl = transform.parent.GetComponent<UnitController>(); ErrorLogSystem.Log("UnitEye : UnitCtrl is NULL"); }
+        if (!_collider) { _collider = GetComponent<SphereCollider>(); LogMassage.Log("UnitEye : Collider is NULL"); }
+        if (!_unitCtrl) { _unitCtrl = transform.parent.GetComponent<UnitController>(); LogMassage.Log("UnitEye : UnitCtrl is NULL"); }
 
         float range = Mathf.Clamp(_unitCtrl._status._attackRange, _minRange, _maxRange);
 

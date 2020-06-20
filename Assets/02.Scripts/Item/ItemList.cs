@@ -143,7 +143,7 @@ public class ItemList
 
         switch (i.AniType)
         {
-            case eItemType.None:        ErrorLogSystem.LogError("Item Error" + i.Name); break;
+            case eItemType.None:        LogMassage.LogError("Item Error" + i.Name); break;
             case eItemType.Helmet:      _codeList[(int)eCodeType.Helmet].Add(_codeList[(int)eCodeType.Helmet].Count, index); break;
             case eItemType.BodyArmour:  _codeList[(int)eCodeType.Bodyarmour].Add(_codeList[(int)eCodeType.Bodyarmour].Count, index); break;
             default:                    _codeList[(int)eCodeType.Weapon].Add(_codeList[(int)eCodeType.Weapon].Count, index); break;
@@ -165,8 +165,6 @@ namespace GameItem
         // Armour
         Helmet,
         BodyArmour,
-
-        WEAPONS,
 
         // Weapon
         Sword = 3,

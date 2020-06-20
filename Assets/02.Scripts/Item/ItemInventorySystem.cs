@@ -56,8 +56,8 @@ public class ItemInventorySystem : MonoBehaviour
 
     private void Awake()
     {
-
         _unitPhoto = _teamManager.GetUnitPhoto();
+
         if (null == _unitPhoto) { Debug.LogError("ItemInventorySystem : _unitPhoto is null"); }
 
         _itemList = Manager.Get<GameManager>().itemList;
@@ -157,6 +157,10 @@ public class ItemInventorySystem : MonoBehaviour
             _equipedItems[i] = items[i];
 
         UpdateInventory();
+
+        UpdateModel();
+
+        UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelUI.GetComponent<Animator>());
     }
 
     public void OnSave()
@@ -252,9 +256,6 @@ public class ItemInventorySystem : MonoBehaviour
             }
         }
 
-        UpdateModel();
-
-        UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelUI.GetComponent<Animator>());
     }
 
     void UpdateModel(in int prevItem = 0)

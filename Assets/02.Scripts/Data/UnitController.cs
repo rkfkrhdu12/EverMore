@@ -19,9 +19,9 @@ public class UnitController : FieldObject
     { // Spawn() -> OnEnable() 순서
 
         // Inspector 에서 드래그드롭 해줘야 할 오브젝트들
-        if (_ani == null)    { _ani = GetComponentInChildren<UnitAnimation>(); ErrorLogSystem.Log("UnitCtrl : AniPro is Null"); }
+        if (_ani == null)    { _ani = GetComponentInChildren<UnitAnimation>(); LogMassage.Log("UnitCtrl : AniPro is Null"); }
         if (_IsNavMeshAgent) { } // { _navMeshAgent = GetComponent<NavMeshAgent>(); Debug.Log("UnitCtrl  NavAgent is Null"); }
-        if (_eye == null)    { _eye = GetComponentInChildren<UnitEye>(); ErrorLogSystem.Log("UnitCtrl : Eye is Null"); }
+        if (_eye == null)    { _eye = GetComponentInChildren<UnitEye>(); LogMassage.Log("UnitCtrl : Eye is Null"); }
 
         // 나머지 데이터들 Init
         _navMeshAgent.updateRotation = false;
@@ -319,6 +319,47 @@ public class UnitModelManager
         }
     }
 
+    public static void Reset(GameObject unit)
+    {
+        if (0 == _modelItemPoint.Count)
+            Init();
+
+        if (null == unit) { return; }
+
+        if (!unit.activeSelf) { unit.SetActive(true); }
+
+        _weaponFindPoint = unit.transform.childCount;
+
+        Transform leftWeaponTrs = unit.transform.GetChild(_leftWeaponPoint);
+        Transform rightWeaponTrs = unit.transform.GetChild(_rightWeaponPoint);
+
+        // 방어구 장착 해제
+        for (int i = 0; i < _leftWeaponPoint - 1; ++i)
+        {
+            for (int j = 0; j < 2; ++j) 
+            {
+                unit.transform.GetChild(i).GetChild(j).gameObject.SetActive(false);
+            }
+        }
+
+        GameObject curWeapons;
+        for (int i = 0; i < leftWeaponTrs.childCount; ++i)
+        {
+            curWeapons = leftWeaponTrs.GetChild(i).gameObject;
+
+            if (curWeapons.activeSelf)
+                curWeapons.SetActive(false);
+        }
+
+        for (int i = 0; i < rightWeaponTrs.childCount; ++i)
+        {
+            curWeapons = rightWeaponTrs.GetChild(i).gameObject;
+
+            if (curWeapons.activeSelf)
+                curWeapons.SetActive(false);
+        }
+    }
+
     public static void Update(GameObject unit, in int[] equipedItems, int prevItem = 0, int colorNum = 1)
     {
         if (0 == _modelItemPoint.Count)
@@ -341,7 +382,7 @@ public class UnitModelManager
             index = _modelItemPoint[i.Name];
 
             // true 면 무기 false 면 방어구
-            if (i.AniType > GameItem.eItemType.WEAPONS)
+            if (i.AniType > GameItem.eItemType.Sword)
             {
                 if (leftWeaponTrs.GetChild(index[1]).gameObject.activeSelf)
                     leftWeaponTrs.GetChild(index[1]).gameObject.SetActive(false);
@@ -431,9 +472,8 @@ public class UnitModelManager
     {
         _itemList = Manager.Get<GameManager>().itemList;
 
-        List<string> armourList = new List<string>();
-
         List<string> weaponList = new List<string>();
+        List<string> armourList = new List<string>();
 
         InitData(ref armourList, ref weaponList);
 
@@ -452,6 +492,7 @@ public class UnitModelManager
         for (int i = 0; i < weaponList.Count; ++i)
         {
             v = new int[equipmentCount];
+
             v[0] = 0;
             v[1] = i;
 
@@ -621,19 +662,20 @@ public class UnitAnimationManager
 
         List<string> typeName = new List<string>();
 
-        for (int i = 1; i < GameItem.eItemType.LAST - GameItem.eItemType.WEAPONS; ++i)
+        int weaponCount = (GameItem.eItemType.LAST - GameItem.eItemType.Sword);
+        for (int i = 0; i < weaponCount; ++i)
         {
-            typeName.Add((GameItem.eItemType.WEAPONS + i).ToString());
+            typeName.Add((GameItem.eItemType.Sword + i).ToString());
         }
 
         List<string> aniName = new List<string>();
 
         InitData(ref aniName);
 
-        GameItem.eItemType t = GameItem.eItemType.WEAPONS;
+        GameItem.eItemType t = GameItem.eItemType.Sword;
         for (int i = 0; i < typeName.Count; ++i)
         {
-            _typeStrings.Add(t + i + 1, typeName[i]);
+            _typeStrings.Add(t + i, typeName[i]);
         }
 
         for (int i = 0; i < aniName.Count; ++i)

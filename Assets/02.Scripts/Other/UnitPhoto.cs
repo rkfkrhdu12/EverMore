@@ -15,14 +15,17 @@ public class UnitPhoto : MonoBehaviour
     private RenderTexture renderTexture;
 
     [SerializeField]
-    private RawImage _rawimage = null;
+    private GameObject _modelObject;
+
+    [SerializeField]
+    private RawImage _rawimage;
 
     private string _path;
 
     private void Start()
     {
         _path = $"{Application.persistentDataPath}";
-        Debug.Log(_path);
+        LogMassage.Log(_path);
     }
 
     public void UpdateTexture(ref RawImage rawImage,in int[] equipedItems)
@@ -64,23 +67,8 @@ public class UnitPhoto : MonoBehaviour
             var texture = DownloadHandlerTexture.GetContent(uwr);
 
             rawImage.texture = texture;
-
-            //if (uwr.isNetworkError || uwr.isHttpError)
-            //{
-            //    Util.SaveRenderTextuerToPng(
-            //        $"{_path}/{partNameToObj.HeadName}-head,{partNameToObj.BodyName}-body,{partNameToObj.LeftWeaponName}-leftWeapon,{partNameToObj.RightWeaponName}-rightWeapon.png",
-            //        renderTexture);
-
-            //    //중간 텀
-            //    yield return SideTime;
-            //    //StartCoroutine(Iphoto(_path));
-            //}
-
-            //var texture = DownloadHandlerTexture.GetContent(uwr);
-
-            //_rawimage.texture = texture;
         }
     }
 
-    private readonly WaitForSeconds SideTime = new WaitForSeconds(0.1f);
+    private readonly WaitForSeconds SideTime = new WaitForSeconds(0.25f);
 }
