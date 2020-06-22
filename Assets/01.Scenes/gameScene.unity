@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.183
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.05353588, g: 0.13441509, b: 0.17975023, a: 0.183}
+  m_IndirectSpecularColor: {r: 0.053537086, g: 0.13440984, b: 0.17973256, a: 0.183}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -267,6 +267,55 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7867381}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7867384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7867383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  reachImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  pressImage: {fileID: 0}
+  selectImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
+    onDown:
+      m_PersistentCalls:
+        m_Calls: []
+    onPress:
+      m_PersistentCalls:
+        m_Calls: []
+    onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 657735649}
+          m_MethodName: Spawn
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 5
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  _isDefaultImageAlpha: 0
+  _buttonGroup: {fileID: 0}
+  isSelected: 0
 --- !u!1 &97676224
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,7 +874,7 @@ GameObject:
   - component: {fileID: 335219461}
   - component: {fileID: 335219460}
   - component: {fileID: 335219459}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player2
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -877,7 +926,7 @@ MonoBehaviour:
   _unitPrefabs: {fileID: 1947036433871368482, guid: feffe836ca19cfd419adf021d1d71cfa,
     type: 3}
   _spawnPoint: {x: 0, y: 0, z: 0}
-  _isPlayer2: 1
+  _isPlayer: 0
   _inGameSystem: {fileID: 657735649}
   _isGameEnd: 0
 --- !u!4 &335219462
@@ -1643,13 +1692,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: bfa8ec13996fdd74d809b0f15f2a4cac, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &730805014
@@ -1843,6 +1892,55 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 846874529}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &846874532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846874531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  reachImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  pressImage: {fileID: 0}
+  selectImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
+    onDown:
+      m_PersistentCalls:
+        m_Calls: []
+    onPress:
+      m_PersistentCalls:
+        m_Calls: []
+    onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 657735649}
+          m_MethodName: Spawn
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  _isDefaultImageAlpha: 0
+  _buttonGroup: {fileID: 0}
+  isSelected: 0
 --- !u!1 &850332703
 GameObject:
   m_ObjectHideFlags: 0
@@ -2096,6 +2194,55 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 852197556}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &852197559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852197558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  reachImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  pressImage: {fileID: 0}
+  selectImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
+    onDown:
+      m_PersistentCalls:
+        m_Calls: []
+    onPress:
+      m_PersistentCalls:
+        m_Calls: []
+    onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 657735649}
+          m_MethodName: Spawn
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 2
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  _isDefaultImageAlpha: 0
+  _buttonGroup: {fileID: 0}
+  isSelected: 0
 --- !u!1 &864042212
 GameObject:
   m_ObjectHideFlags: 0
@@ -2652,6 +2799,55 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1259237831}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1259237834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1259237833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  reachImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  pressImage: {fileID: 0}
+  selectImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
+    onDown:
+      m_PersistentCalls:
+        m_Calls: []
+    onPress:
+      m_PersistentCalls:
+        m_Calls: []
+    onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 657735649}
+          m_MethodName: Spawn
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 3
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  _isDefaultImageAlpha: 0
+  _buttonGroup: {fileID: 0}
+  isSelected: 0
 --- !u!1 &1283898651
 GameObject:
   m_ObjectHideFlags: 0
@@ -2853,6 +3049,55 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1324981187}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1324981190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324981189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  reachImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  pressImage: {fileID: 0}
+  selectImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
+    onDown:
+      m_PersistentCalls:
+        m_Calls: []
+    onPress:
+      m_PersistentCalls:
+        m_Calls: []
+    onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 657735649}
+          m_MethodName: Spawn
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  _isDefaultImageAlpha: 0
+  _buttonGroup: {fileID: 0}
+  isSelected: 0
 --- !u!1 &1378979396
 GameObject:
   m_ObjectHideFlags: 0
@@ -3506,7 +3751,7 @@ GameObject:
   - component: {fileID: 1700119473}
   - component: {fileID: 1700119472}
   - component: {fileID: 1700119475}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player1
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -3529,7 +3774,7 @@ MonoBehaviour:
   _unitPrefabs: {fileID: 1947036433871368482, guid: feffe836ca19cfd419adf021d1d71cfa,
     type: 3}
   _spawnPoint: {x: 0, y: 0, z: 0}
-  _isPlayer2: 0
+  _isPlayer: 1
   _inGameSystem: {fileID: 657735649}
   _isGameEnd: 0
 --- !u!65 &1700119472
@@ -3860,10 +4105,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 686438193f9027444a9dc179a7419cee, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -4223,10 +4468,32 @@ MonoBehaviour:
         m_Calls: []
     onPress:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 1870762962}
+          m_MethodName: OnButtonDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onUp:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 1870762962}
+          m_MethodName: OnButtonUp
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onClick:
       m_PersistentCalls:
         m_Calls:
@@ -4487,6 +4754,55 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1893110972}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1893110975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893110974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  reachImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  pressImage: {fileID: 0}
+  selectImage: {fileID: 21300000, guid: 662173ca122f99842976e534d3dd41f3, type: 3}
+  onButtonEvent:
+    onEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    onExit:
+      m_PersistentCalls:
+        m_Calls: []
+    onDown:
+      m_PersistentCalls:
+        m_Calls: []
+    onPress:
+      m_PersistentCalls:
+        m_Calls: []
+    onUp:
+      m_PersistentCalls:
+        m_Calls: []
+    onClick:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 657735649}
+          m_MethodName: Spawn
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 4
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  _isDefaultImageAlpha: 0
+  _buttonGroup: {fileID: 0}
+  isSelected: 0
 --- !u!1 &1939970627
 GameObject:
   m_ObjectHideFlags: 0
@@ -6355,9 +6671,9 @@ GameObject:
   - component: {fileID: 4386992813890394660}
   - component: {fileID: 9145839890343337067}
   - component: {fileID: 1314994556}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpawnArea
-  m_TagString: Untagged
+  m_TagString: SpawnArea
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -8582,7 +8898,8 @@ GameObject:
   - component: {fileID: 7094910830611172631}
   - component: {fileID: 429487534001130376}
   - component: {fileID: 2350272277200149577}
-  m_Layer: 0
+  - component: {fileID: 2350272277200149578}
+  m_Layer: 9
   m_Name: WatchTowerRed2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8603,6 +8920,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1326604363900235600, guid: 81f7665112b110942994e3854db6d2b9, type: 3}
+--- !u!114 &2350272277200149578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2350272277200149576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b3c7f84b7d21949a6d0cdcc562abde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curHp: 0
+  _maxHp: 0
+  _team: 0
+  _isDead: 0
 --- !u!4 &2356478297559890961
 Transform:
   m_ObjectHideFlags: 0
@@ -8708,7 +9041,8 @@ GameObject:
   - component: {fileID: 6250044225845024018}
   - component: {fileID: 3108225801821275881}
   - component: {fileID: 2400265079769221135}
-  m_Layer: 0
+  - component: {fileID: 2400265079769221136}
+  m_Layer: 9
   m_Name: WatchTowerBlue2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8729,6 +9063,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3193836936907397828, guid: 81f7665112b110942994e3854db6d2b9, type: 3}
+--- !u!114 &2400265079769221136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2400265079769221134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b3c7f84b7d21949a6d0cdcc562abde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curHp: 0
+  _maxHp: 0
+  _team: 0
+  _isDead: 0
 --- !u!33 &2402449385522940445
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -14506,7 +14856,8 @@ GameObject:
   - component: {fileID: 2402449385522940445}
   - component: {fileID: 1451728098071087651}
   - component: {fileID: 6461592590262711641}
-  m_Layer: 0
+  - component: {fileID: 6461592590262711642}
+  m_Layer: 9
   m_Name: WatchTowerRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14527,6 +14878,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3279689969012078854, guid: 81f7665112b110942994e3854db6d2b9, type: 3}
+--- !u!114 &6461592590262711642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461592590262711640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b3c7f84b7d21949a6d0cdcc562abde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curHp: 0
+  _maxHp: 0
+  _team: 0
+  _isDead: 0
 --- !u!33 &6470562834255076896
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -17119,7 +17486,8 @@ GameObject:
   - component: {fileID: 786557384945941632}
   - component: {fileID: 3645876411213293849}
   - component: {fileID: 8525736987841216972}
-  m_Layer: 0
+  - component: {fileID: 8525736987841216973}
+  m_Layer: 9
   m_Name: WatchTowerBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17140,6 +17508,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7897998592092248639, guid: 81f7665112b110942994e3854db6d2b9, type: 3}
+--- !u!114 &8525736987841216973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8525736987841216971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b3c7f84b7d21949a6d0cdcc562abde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _curHp: 0
+  _maxHp: 0
+  _team: 0
+  _isDead: 0
 --- !u!4 &8535010807375873718
 Transform:
   m_ObjectHideFlags: 0

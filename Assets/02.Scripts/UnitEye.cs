@@ -21,21 +21,8 @@ public class UnitEye : MonoBehaviour
     //공격 타겟에대한 큐
     public List<FieldObject> _targets = new List<FieldObject>();
 
-    private float _minRange = 3.2f;
-    private float _maxRange = 6.0f;
-
-    //public void Init(in UnitController unitCtrl)
-    private void OnEnable()
-    {
-        // Inspector 에서 드래그드롭 해줘야 할 오브젝트들
-        if (!_collider) { _collider = GetComponent<SphereCollider>(); LogMassage.Log("UnitEye : Collider is NULL"); }
-        if (!_unitCtrl) { _unitCtrl = transform.parent.GetComponent<UnitController>(); LogMassage.Log("UnitEye : UnitCtrl is NULL"); }
-
-        float range = Mathf.Clamp(_unitCtrl._status._attackRange, _minRange, _maxRange);
-
-        _attackRange = range * 2;
-        _collider.radius = range * 2.5f;
-    }
+    private float _minRange = 1.6f;
+    private float _maxRange = 3.0f;
 
     /// <summary>
     /// 충돌하지 않고 있으면 Null
@@ -68,27 +55,39 @@ public class UnitEye : MonoBehaviour
 
     #region Private Function
 
-    
+
 
     #endregion
 
     #region Monobehaviour Function
 
-    // Test
-    private void OnDrawGizmos()
+    private void OnEnable()
     {
-        Color _blue = new Color(0f, 0f, 1f, 0.2f);
-        Color _red = new Color(1f, 0f, 0f, 0.2f);
+        // Inspector 에서 드래그드롭 해줘야 할 오브젝트들
+        if (!_collider) { _collider = GetComponent<SphereCollider>(); LogMassage.Log("UnitEye : Collider is NULL"); }
+        if (!_unitCtrl) { _unitCtrl = transform.parent.GetComponent<UnitController>(); LogMassage.Log("UnitEye : UnitCtrl is NULL"); }
 
-        Handles.color = _isCollision ? _red : _blue;
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, _attackAngle / 2, _attackRange);
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -_attackAngle / 2, _attackRange);
+        float range = Mathf.Clamp(_unitCtrl._status._attackRange, _minRange, _maxRange);
+
+        _attackRange = range * 2;
+        _collider.radius = range * 2.5f;
     }
+
+    //// Test
+    //private void OnDrawGizmos()
+    //{
+    //    Color _blue = new Color(0f, 0f, 1f, 0.2f);
+    //    Color _red  = new Color(1f, 0f, 0f, 0.2f);
+
+    //    Handles.color = _isCollision ? _red : _blue;
+    //    Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, _attackAngle / 2, _attackRange);
+    //    Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -_attackAngle / 2, _attackRange);
+    //}
 
     private void OnTriggerStay(Collider other)
     {
         // 아직 Init되지 않았거나, Unit이 아니거나 Collider가 몸이 아니거나, unitCtrl 이 Null일때
-        if ((other.CompareTag("Unit") && other.isTrigger) || _unitCtrl == null) { return; }
+        if ((other.isTrigger) || _unitCtrl == null) { return; }
 
         // 유닛들대상
         {
@@ -97,6 +96,8 @@ public class UnitEye : MonoBehaviour
             // target이 UnitCtrl 일때
             if (target != null)
             {
+                if(target._team == _unitCtrl._team) { return; }
+
                 // 범위 안에 있는지 체크
                 float dotValue = Mathf.Cos(Mathf.Deg2Rad * (_attackAngle / 2));
                 Vector3 direction = target.transform.position - transform.position;
@@ -112,8 +113,6 @@ public class UnitEye : MonoBehaviour
 
                         // 충돌 범위에 충돌함 !
                         _isCollision = true;
-                        // 아군인지 적군인지 체크
-                        _isEnemy = target._team != _unitCtrl._team;
 
                         // 타겟들 목록에 Add
                         _targets.Add(target);

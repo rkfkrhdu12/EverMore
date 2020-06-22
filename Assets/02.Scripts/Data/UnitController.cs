@@ -6,6 +6,9 @@ using UnityEngine.AI;
 
 using UnityEngine.ParticleSystemJobs;
 using System.Collections;
+using TMPro.EditorUtilities;
+using System.Text;
+using UnityEngine.UI;
 
 public enum eTeam
 {
@@ -33,6 +36,7 @@ public class UnitController : FieldObject
 
         _curHp = _status._maxhealth;
         _maxHp = _status._maxhealth;
+        _isDead = false;
     }
 
     public override void DamageReceive(float damage) 
@@ -165,7 +169,7 @@ public class UnitController : FieldObject
     private void FixedUpdate()
     {
         //현재 상태가 비어 있거나, 죽었다면 : return
-        if (_isDead) return;
+        if (_isDead) { CurState = eAni.IDLE; return; }
         
         //상태 변수를 통한, 유닛 업데이트
         UpdateUnit();
@@ -210,9 +214,9 @@ public class UnitController : FieldObject
 
         float remainingDistance = (_curTarget.transform.position - transform.position).magnitude;
 
-        if (remainingDistance <= _attackRange)
+        if (_eye._isEnemy)
         {
-            if (_eye._isEnemy)
+            if (remainingDistance <= _navMeshAgent.stoppingDistance)
             {
                 transform.LookAt(_curTarget.transform);
 
@@ -220,15 +224,40 @@ public class UnitController : FieldObject
             }
             else
             {
-                CurState = eAni.IDLE;
+                CurState = eAni.MOVE;
             }
         }
         else
         {
-            if (_navMeshAgent.velocity == Vector3.zero) CurState = eAni.IDLE;
-
-            CurState = eAni.MOVE;
+            if(remainingDistance <= _navMeshAgent.stoppingDistance)
+            {
+                CurState = eAni.IDLE;
+            }
+            else
+            {
+                CurState = eAni.MOVE;
+            }
         }
+
+        //if (remainingDistance <= _attackRange)
+        //{
+        //    if (_eye._isEnemy)
+        //    {
+        //        transform.LookAt(_curTarget.transform);
+
+        //        CurState = eAni.ATTACK;
+        //    }
+        //    else
+        //    {
+        //        CurState = eAni.IDLE;
+        //    }
+        //}
+        //else 
+        //{
+        //    if (_navMeshAgent.velocity == Vector3.zero) CurState = eAni.IDLE;
+
+        //    CurState = eAni.MOVE;
+        //}
     }
 
     public void OnEffect()
@@ -267,6 +296,7 @@ public class UnitController : FieldObject
 
             _navMeshAgent.SetDestination(_curTarget.transform.position);
 
+            _navMeshAgent.stoppingDistance = _attackRange;
         }
     }
 
@@ -559,6 +589,20 @@ public class UnitIconManager
         headObject.SetActive(true);
     }
 
+    public static void SetColor(GameObject iconObject, Color color)
+    {
+        iconObject.GetComponent<Image>().color = color;
+
+        for (int i = 0; i < iconObject.transform.childCount; ++i)
+        {
+            if (iconObject.transform.GetChild(i).gameObject.activeSelf)
+            {
+                iconObject.transform.GetChild(i).GetComponent<Image>().color = color;
+                break;
+            }
+        }
+    }
+
     #region Variable
 
     static Dictionary<string, int> _iconPoints = new Dictionary<string, int>();
@@ -639,9 +683,12 @@ public class UnitAnimationManager
         if (leftWeapon != null && _typeStrings.ContainsKey(leftWeapon.AniType))    leftString = _typeStrings[leftWeapon.AniType];
         if (rightWeapon != null && _typeStrings.ContainsKey(rightWeapon.AniType))  rightString = _typeStrings[rightWeapon.AniType];
 
-        if (!_typeAnimationNum.ContainsKey(leftString + "&" + rightString)) { leftString = rightString = ""; }
+        StringBuilder sb = new StringBuilder(leftString);
+        sb.Append("&").Append(rightString);
 
-        num = _typeAnimationNum[leftString + "&" + rightString];
+        if (!_typeAnimationNum.ContainsKey(sb.ToString())) { num = _typeAnimationNum["&"]; return; }
+
+        num = _typeAnimationNum[sb.ToString()];
     }
 
     private static void InitData(ref List<string> aniName)

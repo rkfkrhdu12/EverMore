@@ -63,6 +63,8 @@ public class GameManager : Manager
 
     private void OnAwake()
     {
+        Application.targetFrameRate = 60;
+
         //itemList : 초기화
         itemList = new ItemList();
         itemList.Init();

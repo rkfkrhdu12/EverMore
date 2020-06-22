@@ -17,6 +17,7 @@ public struct Base
 
 public class InGameSystem : MonoBehaviour
 {
+    public void Spawn(int index) { _playerCtrl.Spawn(index); }
     public bool CostConsumption(int consumCost) { return _costMgr.CostConsumption(consumCost); }
     public void OnLevelUp() { _levelMgr.OnLevelUp(); }
 
@@ -45,6 +46,8 @@ public class InGameSystem : MonoBehaviour
 
     // private
 
+    PlayerController _playerCtrl;
+
     private float _timerUITime;
 
     bool _isGameEnd = false;
@@ -65,24 +68,30 @@ public class InGameSystem : MonoBehaviour
     #region Monobehaviour Function
     private void Awake()
     {
-        SpawnManager playerSpawnMgr = RedSpawnMgr._isPlayer2 ? BlueSpawnMgr : RedSpawnMgr;
+        _isPlayerRed = RedSpawnMgr._isPlayer;
+
+        SpawnManager playerSpawnMgr = _isPlayerRed ? RedSpawnMgr: BlueSpawnMgr;
+        playerSpawnMgr._teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
+
+        _playerCtrl = playerSpawnMgr.GetComponent<PlayerController>();
 
         playerSpawnMgr._teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
 
         _levelMgr.Init(_costMgr);
-        _costMgr.Init(playerSpawnMgr, _levelMgr);
+        _costMgr.Init(_levelMgr);
     }
 
     private void OnEnable()
     {
-        if (null == Manager.Get<GameManager>().GetPlayerUnits()) { return; }
-
         _victoryObject.SetActive(false);
         _defeatObject.SetActive(false);
 
         _timerUITime = int.Parse(_timerText.text);
 
-        _costMgr.Enable();
+        SpawnManager playerSpawnMgr = _isPlayerRed ? RedSpawnMgr : BlueSpawnMgr;
+
+        playerSpawnMgr.Enable(_costMgr);
+        _costMgr.Enable(playerSpawnMgr);
         _levelMgr.Enable();
     }
 

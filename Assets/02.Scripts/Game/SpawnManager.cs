@@ -24,9 +24,12 @@ public class SpawnManager : MonoBehaviour
     public void SetSpawnPoint(Vector3 pos) => _spawnPoint = pos;
     public Castle GetCastle() { return GetComponent<Castle>(); }
 
-    public bool _isPlayer2 = false;
+    public bool _isPlayer = false;
 
     List<GameObject> _unitList = new List<GameObject>();
+
+    bool[] _isUnitSpawn = new bool[6];
+    WaitForSeconds[] _unitCoolTimes = new WaitForSeconds[6];
 
     GameObject _curSpawnObject = null;
 
@@ -39,7 +42,14 @@ public class SpawnManager : MonoBehaviour
     {
         UnitStatus uStatus = _teamUnits.GetUnit(_curSpawnIndex);
 
-        if(!_inGameSystem.CostConsumption(uStatus._cost)) { return; }
+        if (_isPlayer)
+        {
+            if (_isUnitSpawn[_curSpawnIndex]) { return; }
+            if (!_inGameSystem.CostConsumption(uStatus._cost)) { return; }
+
+            _isUnitSpawn[_curSpawnIndex] = true;
+            _costMgr.UpdateIcon(_curSpawnIndex, true);
+        }
 
         Vector3 unitPos = _spawnPoint;
 
@@ -75,7 +85,7 @@ public class SpawnManager : MonoBehaviour
     }
 
     public bool _isGameEnd = false;
-    WaitForSeconds ObjectUpdateWaitTime = new WaitForSeconds(.25f);
+    WaitForSeconds UpdateWaitTime = new WaitForSeconds(.25f);
     IEnumerator UpdateSpawnObject()
     {
         while (!_isGameEnd)
@@ -93,13 +103,13 @@ public class SpawnManager : MonoBehaviour
 
                 if (_curSpawnObject == null)
                 {
-                    for (int j = 0; j < 3; ++j)
+                    for (int j = 0; j < 6; ++j)
                     {
                         GameObject clone = Instantiate(_unitPrefabs, Vector3.zero, Quaternion.identity, null);
 
                         if(clone.activeSelf) { yield return null; }
 
-                        clone.name = (_isPlayer2 ? "Player2Unit " : "Player1Unit ") + _unitList.Count.ToString();
+                        clone.name = (_isPlayer ? "Player1Unit " : "Player2Unit ") + _unitList.Count.ToString();
 
                         _unitList.Add(clone);
                     }
@@ -115,7 +125,7 @@ public class SpawnManager : MonoBehaviour
             }
             else
             {
-                yield return ObjectUpdateWaitTime;
+                yield return UpdateWaitTime;
             }
         }
 
@@ -125,16 +135,32 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    IEnumerator UpdateUnitCoolTime(int index)
+    {
+        while(!_isGameEnd)
+        {
+            if (_isUnitSpawn[index])
+            {
+                yield return _unitCoolTimes[index];
+
+                _isUnitSpawn[index] = false;
+                _costMgr.UpdateIcon(index , false);
+            }
+            else
+                yield return UpdateWaitTime;
+        }
+    }
+
     #region Monobehaviour Function
 
     private void Awake()
     {
-        GetComponent<FieldObject>()._team = _isPlayer2 ? eTeam.ENEMY : eTeam.PLAYER;
+        GetComponent<FieldObject>()._team = _isPlayer ? eTeam.PLAYER : eTeam.ENEMY;
 
         StartCoroutine(UpdateSpawnObject());
 
         // Test
-        if (_isPlayer2)
+        if (!_isPlayer)
         {
             ItemList itemList = Manager.Get<GameManager>().itemList;
 
@@ -147,20 +173,38 @@ public class SpawnManager : MonoBehaviour
             items[1] = itemList.CodeSearch(GameItem.eCodeType.Bodyarmour, 1);
             items[3] = itemList.CodeSearch(GameItem.eCodeType.Weapon, 3);
             _teamUnits.SetEquipedItems(0, items);
+            _teamUnits.GetUnit(0).UpdateItems();
 
             items = new int[4];
             items[0] = itemList.CodeSearch(GameItem.eCodeType.Helmet, 2);
             items[1] = itemList.CodeSearch(GameItem.eCodeType.Bodyarmour, 2);
             items[3] = itemList.CodeSearch(GameItem.eCodeType.Weapon, 4);
             _teamUnits.SetEquipedItems(1, items);
-        }
+            _teamUnits.GetUnit(1).UpdateItems();
 
-        if(_teamUnits == null)
-            _teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
+            items = new int[4];
+            items[0] = itemList.CodeSearch(GameItem.eCodeType.Helmet, 3);
+            items[1] = itemList.CodeSearch(GameItem.eCodeType.Bodyarmour, 3);
+            items[2] = 303;
+            items[3] = 303;
+            _teamUnits.SetEquipedItems(2, items);
+            _teamUnits.GetUnit(2).UpdateItems();
+        }
+    }
+
+    CostManager _costMgr;
+    public void Enable(CostManager costMgr)
+    {
+        _costMgr = costMgr;
 
         for (int i = 0; i < _teamUnits.Length; ++i)
         {
-            _teamUnits.GetUnit(i).UpdateItems();
+            UnitStatus us = _teamUnits.GetUnit(i);
+            us.UpdateItems();
+
+            _isUnitSpawn[i] = false;
+            _unitCoolTimes[i] = new WaitForSeconds(us._coolTime);
+            StartCoroutine(UpdateUnitCoolTime(i));
         }
     }
 
@@ -168,7 +212,7 @@ public class SpawnManager : MonoBehaviour
     private void Update()
     {
         // Test
-        if (_isPlayer2)
+        if (!_isPlayer)
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {

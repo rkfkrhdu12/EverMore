@@ -237,6 +237,7 @@ namespace GameItem
         protected float _range;
         protected float _minDamage;
         protected float _maxDamage;
+        protected float _speed;
 
         public override void Init(IReadOnlyList<string> datas)
         {
@@ -245,6 +246,7 @@ namespace GameItem
             float.TryParse(datas[8], out _range);
             float.TryParse(datas[9], out _maxDamage);
             float.TryParse(datas[10], out _minDamage);
+            float.TryParse(datas[12], out _speed);
         }
 
         public override void Equip(ref UnitStatus us)
@@ -254,6 +256,8 @@ namespace GameItem
             us._attackRange     += _range;
             us._minAttackDamage += _minDamage;
             us._maxAttackDamage += _maxDamage;
+            if (_speed != -1)
+                us._attackSpeed = (us._attackSpeed + _speed) / 2;
         }      
 
         public override void UnEquip(ref UnitStatus us)
@@ -263,6 +267,8 @@ namespace GameItem
             us._attackRange     -= _range;
             us._minAttackDamage -= _minDamage;
             us._maxAttackDamage -= _maxDamage;
+            if (_speed != -1)
+                us._attackSpeed = (us._attackSpeed * 2) - _speed;
         }
     }
 

@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
 {
     public void OnLevelUp()
     {
+        if (_curLevel >= _levelDataList.Count) { return; }
         if (!_costMgr.CostConsumption(_curLevelData._upgradeCost)) { return; } //  && _curLevel != 0
 
         if (_curLevel < 0) { _curLevel = 0; }
@@ -30,6 +31,18 @@ public class LevelManager : MonoBehaviour
             _levelText.text = " " + _curLevel.ToString();
             _levelUpCostText.text = _upgradeCost.ToString();
         }
+    }
+
+    public void OnButtonDown()
+    {
+        _levelText.transform.localScale = new Vector3(.88f, .88f, .88f);
+        _levelUpCostText.transform.localScale = new Vector3(.88f, .88f, .88f);
+    }
+
+    public void OnButtonUp()
+    {
+        _levelText.transform.localScale = Vector3.one;
+        _levelUpCostText.transform.localScale = Vector3.one;
     }
 
     public void Init(CostManager costMgr)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Text;
 
 public class CostManager : MonoBehaviour
 {
@@ -18,27 +19,35 @@ public class CostManager : MonoBehaviour
         return true;
     }
 
-    public void Init(SpawnManager spawnMgr, LevelManager levelData)
+    public void Init(LevelManager levelData)
     {
-        _spawnMgr = spawnMgr;
         _levelMgr = levelData;
     }
-
-    public void Enable()
+    public void Enable(SpawnManager spawnMgr)
     {
-        _curCost = 0;
+        _curCost = 100;
 
-        for (int i = 0; i < _spawnMgr._teamUnits.Length; ++i)
+        for (int i = 0; i < spawnMgr._teamUnits.Length; ++i)
         {
-            int headNum = _spawnMgr._teamUnits.GetUnit(i)._equipedItems[0];
+            int headNum = spawnMgr._teamUnits.GetUnit(i)._equipedItems[0];
 
             UnitIconManager.Update(_iconObjects[i], headNum);
 
-            UnitStatus uStatus = _spawnMgr._teamUnits.GetUnit(i);
-
-            uStatus.UpdateItems();
+            UnitStatus uStatus = spawnMgr._teamUnits.GetUnit(i);
 
             _unitCostTexts[i].text = uStatus._cost.ToString();
+        }
+    }
+
+    public void UpdateIcon(int index, bool isCoolDown)
+    {
+        if(isCoolDown)
+        { // 쿨타임 중
+            UnitIconManager.SetColor(_iconObjects[index], Color.gray);
+        }
+        else
+        { // 이 아님
+            UnitIconManager.SetColor(_iconObjects[index], Color.white);
         }
     }
 
@@ -51,6 +60,7 @@ public class CostManager : MonoBehaviour
     private TMP_Text _costText;
 
     public GameObject[] _iconObjects;
+    
     public TMP_Text[] _unitCostTexts;
 
     private SpawnManager _spawnMgr;
@@ -68,7 +78,10 @@ public class CostManager : MonoBehaviour
             int maxCost = _levelMgr._maxCost;
 
             _costImage.fillAmount = _curCost / maxCost;
-            _costText.text = ((int)_curCost).ToString() + " / " + maxCost.ToString();
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append((int)_curCost).Append(" / ").Append(maxCost);
+            _costText.text = sb.ToString();
         }
     }
     #endregion
