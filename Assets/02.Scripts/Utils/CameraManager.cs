@@ -6,19 +6,35 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
 {
     private float _maxXPos = 15.0f;
     [SerializeField]
-    private float _moveXSpeed = 15.0f;
+    private float _moveXSpeed = 5.0f;
 
     [SerializeField]
-    private float _mouseSensitivity = 6.0f;
-
-    private void Update()
+    private float _mouseSensitivity = 0.3f;
+    
+    public void OnCameraMoveLeft()
     {
-        float moveMouseX = Input.GetAxis("Mouse X");
-        if (0 == moveMouseX) { return; }
+        moveDirection = -1;
+    }
 
-        float moveDirection = -moveMouseX;
+    public void OnCameraMoveRight()
+    {
+        moveDirection = 1;
+    }
 
-        if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
+    public void OnCameraMoveExit()
+    {
+        moveDirection = 0;
+    }
+
+    float moveDirection = 0;
+    private void FixedUpdate()
+    {
+        // float moveMouseX = Input.GetAxis("Mouse X");
+        if (0 == moveDirection) { return; }
+
+        //float moveDirection = -moveMouseX;
+
+        //if (Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
         {
             float x = transform.localPosition.x + moveDirection * _moveXSpeed;
             x = Mathf.Clamp(x, -_maxXPos, _maxXPos);

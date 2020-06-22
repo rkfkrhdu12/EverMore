@@ -90,8 +90,25 @@ public class InGameSystem : MonoBehaviour
     {
         if (_isGameEnd) return;
 
-        UpdateTimer();
-        UpdateBase();
+        _timerUITime -= Time.deltaTime;
+
+        _timerText.text = "" + ((int)_timerUITime).ToString();
+
+        RedHealthBar.fillAmount = RedBase.RemainHealth;
+
+        if (RedBase.IsDead)
+        {
+            if (!_isPlayerRed)  Victory();
+            else                Defeat();
+        }
+
+        BlueHealthBar.fillAmount = BlueBase.RemainHealth;
+
+        if (BlueBase.IsDead)
+        {
+            if (_isPlayerRed)   Victory();
+            else                Defeat();
+        }
     }
     #endregion
 
@@ -119,28 +136,10 @@ public class InGameSystem : MonoBehaviour
 
     private void UpdateTimer()
     {
-        _timerUITime -= Time.deltaTime;
-
-        _timerText.text = "" + ((int)_timerUITime).ToString();
     }
 
     private void UpdateBase()
     {
-        RedHealthBar.fillAmount = RedBase.GetCurHealth() / RedBase.GetMaxHealth();
-
-        if (RedBase.IsDead)
-        {
-            if (!_isPlayerRed)  Victory();
-            else                Defeat();
-        }
-
-        BlueHealthBar.fillAmount = BlueBase.GetCurHealth() / BlueBase.GetMaxHealth();
-
-        if (BlueBase.IsDead)
-        {
-            if (_isPlayerRed)   Victory();
-            else                Defeat();
-        }
     }
 
     #endregion

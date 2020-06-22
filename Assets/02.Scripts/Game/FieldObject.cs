@@ -14,8 +14,9 @@ public class FieldObject : MonoBehaviour
     public bool _isDead;
 
     public virtual void DamageReceive(float damage) { }
-    public float GetCurHealth() { return _curHp; }
-    public float GetMaxHealth() { return _maxHp; }
+    public float CurHealth => _curHp; 
+    public float MaxHealth => _maxHp;
+    public float RemainHealth => _curHp / _maxHp;
 
     public bool IsDead
     {

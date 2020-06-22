@@ -242,7 +242,7 @@ public class UnitController : FieldObject
 
         _curTarget.DamageReceive(_rightAttackDamage);
 
-        if (_curTarget.GetCurHealth() <= 0)
+        if (_curTarget.CurHealth <= 0)
             _eye.UpdateTarget();
     }
 
@@ -252,7 +252,7 @@ public class UnitController : FieldObject
 
         _curTarget.DamageReceive(_leftAttackDamage);
 
-        if (_curTarget.GetCurHealth() <= 0)
+        if (_curTarget.CurHealth <= 0)
             _eye.UpdateTarget();
     }
 

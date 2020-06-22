@@ -57,7 +57,7 @@ public class UnitEye : MonoBehaviour
     {
         if (_targets.Count <= 0 || CurTarget == null) { return; }
 
-        if (CurTarget.GetCurHealth() <= 0 || !_isEnemy) 
+        if (CurTarget.CurHealth <= 0 || !_isEnemy) 
         {
             _targets.Remove(_targets[0]);
 

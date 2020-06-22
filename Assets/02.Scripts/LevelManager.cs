@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
 {
     public void OnLevelUp()
     {
-        if(!_costMgr.CostConsumption(_curLevelData._upgradeCost)) { return; }
+        if(!_costMgr.CostConsumption(_curLevelData._upgradeCost) && _curLevel != 0) { return; }
 
         if (_curLevel < 0) { _curLevel = 0; }
 
@@ -40,10 +40,8 @@ public class LevelManager : MonoBehaviour
 
     public void Enable()
     {
-        if (_curLevel <= 0)
-        {
-            OnLevelUp();
-        }
+        _levelText.text = " " + _curLevel.ToString();
+        _levelUpCostText.text = _upgradeCost.ToString();
     }
 
     #region Variable
@@ -58,7 +56,7 @@ public class LevelManager : MonoBehaviour
 
     CostManager _costMgr;
 
-    private int _curLevel = 0;
+    private int _curLevel = 1;
 
     public int _maxCost { get { return _curLevelData._maxCost; } }
     public float _costRegen { get { return _curLevelData._costRegen; } }
