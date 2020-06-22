@@ -78,7 +78,14 @@ public class ItemList
 
             //itemDatas에서 ','으로 나뉘어진 것을 선택하여 가져온다는 Linq구문이다.
             foreach (var splitDatas in itemDatas.Select(t => t.Split(',')))
+            {
+                for (int i = 0; i < splitDatas.Length - 1; ++i) 
+                {
+                    splitDatas[i] = splitDatas[i + 1];
+                }
+
                 AddList(splitDatas);
+            }
         }
     }
 

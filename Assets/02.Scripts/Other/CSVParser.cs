@@ -26,15 +26,6 @@ public class CSVParser
 
     //}
 
-    public async static void LoadList(string fileName, UnityAction<TextAsset> ppap)
-    {
-        var returnVal = await Addressables.LoadAssetAsync<TextAsset>(fileName).Task;
-
-        Debug.Log(returnVal);
-
-        ppap(returnVal);
-    }
-
     public static List<string> Read(string fileName)
     {
         var list = new List<string>();

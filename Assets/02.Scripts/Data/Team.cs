@@ -16,11 +16,11 @@ public class Team
         }
     }
 
-    public UnitStatus GetUnit(int index)
+    public ref UnitStatus GetUnit(int index)
     {
         if(_units[index]._equipedItems == null) { _units[index].Init(); }
 
-        return _units[index];
+        return ref _units[index];
     }
 
     public void SetEquipedItems(int index, int[] items)

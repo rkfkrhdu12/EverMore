@@ -29,11 +29,17 @@ public class SpawnManager : MonoBehaviour
 
     GameObject _curSpawnObject = null;
 
+    public InGameSystem _inGameSystem;
+
     /// <summary>
     /// UI의 버튼 혹은 설정된 키로 유닛을 스폰
     /// </summary>
     public void Spawn()
     {
+        UnitStatus uStatus = _teamUnits.GetUnit(_curSpawnIndex);
+
+        if(!_inGameSystem.CostConsumption(uStatus._cost)) { return; }
+
         Vector3 unitPos = _spawnPoint;
 
         if(_spawnPoint == Vector3.zero)
@@ -46,11 +52,7 @@ public class SpawnManager : MonoBehaviour
                 transform.position + new Vector3(1, 0, .5f);
         }
 
-        //GameObject clone = Instantiate(_unitPrefabs, unitPos, Quaternion.identity, null);
-
         _curSpawnObject.transform.position = unitPos;
-
-        // clone.name = (_isPlayer2 ? "Player2Unit " : "Player1Unit ") + _spawnIndex++.ToString();
 
         UnitController unitCtrl = _curSpawnObject.GetComponent<UnitController>();
         
@@ -59,8 +61,7 @@ public class SpawnManager : MonoBehaviour
         if (unitCtrl._status._equipedItems != null)
             UnitModelManager.Reset(_curSpawnObject.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
 
-        unitCtrl._status = _teamUnits.GetUnit(_curSpawnIndex);
-        unitCtrl._status.UpdateItems();
+        unitCtrl._status = uStatus;
 
         UnitModelManager.Update(_curSpawnObject.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
 
@@ -68,6 +69,7 @@ public class SpawnManager : MonoBehaviour
 
         _curSpawnObject.SetActive(true);
 
+        // 새로운 유닛 오브젝트를 오브젝트풀에서 찾음
         _curSpawnObject = null;
     }
 
@@ -131,24 +133,32 @@ public class SpawnManager : MonoBehaviour
         // Test
         if (_isPlayer2)
         {
+            ItemList itemList = Manager.Get<GameManager>().itemList;
+
             // Test
             _teamUnits = new Team();
             _teamUnits.Init(eTeam.ENEMY);
 
             int[] items = new int[4];
-            items[0] = 3;
-            items[1] = 4;
-            items[3] = 19;
+            items[0] = itemList.CodeSearch(GameItem.eCodeType.Helmet, 1);
+            items[1] = itemList.CodeSearch(GameItem.eCodeType.Bodyarmour, 1);
+            items[3] = itemList.CodeSearch(GameItem.eCodeType.Weapon, 3);
             _teamUnits.SetEquipedItems(0, items);
 
             items = new int[4];
-            items[0] = 5;
-            items[1] = 6;
-            items[3] = 17;
+            items[0] = itemList.CodeSearch(GameItem.eCodeType.Helmet, 2);
+            items[1] = itemList.CodeSearch(GameItem.eCodeType.Bodyarmour, 2);
+            items[3] = itemList.CodeSearch(GameItem.eCodeType.Weapon, 4);
             _teamUnits.SetEquipedItems(1, items);
         }
-        else
+
+        if(_teamUnits == null)
             _teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
+
+        for (int i = 0; i < _teamUnits.Length; ++i)
+        {
+            _teamUnits.GetUnit(i).UpdateItems();
+        }
     }
 
 

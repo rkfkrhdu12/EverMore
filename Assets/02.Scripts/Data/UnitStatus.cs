@@ -128,7 +128,6 @@ public struct UnitStatus
             if(_equipedItems[i] == 0) { if (i == 2 || i == 3) { ++_maxDamageIndex; ++_minDamageIndex; } continue; }
 
             itemList.ItemSearch(_equipedItems[i]).Equip(ref this);
-
         }
     }
 

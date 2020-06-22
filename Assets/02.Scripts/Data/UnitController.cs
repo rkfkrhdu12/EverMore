@@ -225,6 +225,8 @@ public class UnitController : FieldObject
         }
         else
         {
+            if (_navMeshAgent.velocity == Vector3.zero) CurState = eAni.IDLE;
+
             CurState = eAni.MOVE;
         }
     }

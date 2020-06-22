@@ -4,67 +4,86 @@ using GameplayIngredients;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+
+[Serializable]
+public struct Base
+{
+    public FieldObject _baseObject;
+    public SpawnManager _spawnMgr;
+
+    public Image _healthBar;
+}
 
 public class InGameSystem : MonoBehaviour
 {
+    public bool CostConsumption(int consumCost) { return _costMgr.CostConsumption(consumCost); }
+    public void OnLevelUp() { _levelMgr.OnLevelUp(); }
+
     #region Private Variable
-    [SerializeField]
-    private FieldObject _player1Base = null;
+    // SerializeField / public
 
     [SerializeField]
-    private Image _player1Bar = null;
+    private Base _red;
 
     [SerializeField]
-    private FieldObject _player2Base = null;
+    private Base _blue;
+
+    [Space]
 
     [SerializeField]
-    private Image _player2Bar = null;
+    private LevelManager _levelMgr;
+
+    [SerializeField]
+    private CostManager _costMgr;
 
     [SerializeField]
     private TextMeshProUGUI _timerText = null;
+
+    public GameObject _victoryObject;
+    public GameObject _defeatObject;
+
+    // private
+
     private float _timerUITime;
 
-    [SerializeField]
-    private Image _goldImage = null;
-
-    private float _curGold;
-    private const float _maxGold = 500;
-    private const float _goldPerSecond = 10;
-
-    [SerializeField]
-    private Image _manaImage = null;
-
-    private float _curMana;
-    private const float _maxMana = 100;
-    private const float _manaPerSecond = 0.5f;
-
-    public GameObject[] _iconObjects = new GameObject[6];
-
     bool _isGameEnd = false;
+    bool _isPlayerRed = true;
+
+    #region Get BaseData 
+    private FieldObject RedBase { get { return _red._baseObject; } }
+    private SpawnManager RedSpawnMgr { get { return _red._spawnMgr; } }
+    private Image RedHealthBar { get { return _red._healthBar; } }
+
+    private FieldObject BlueBase { get { return _blue._baseObject; } }
+    private SpawnManager BlueSpawnMgr { get { return _blue._spawnMgr; } }
+    private Image BlueHealthBar { get { return _blue._healthBar; } }
+    #endregion
 
     #endregion
 
     #region Monobehaviour Function
     private void Awake()
     {
-        if (null == Manager.Get<GameManager>().GetPlayerUnits()) { return; }
+        SpawnManager playerSpawnMgr = RedSpawnMgr._isPlayer2 ? BlueSpawnMgr : RedSpawnMgr;
 
-        _player1Base.GetComponent<SpawnManager>()._teamUnits 
-            = Manager.Get<GameManager>().GetPlayerUnits();
+        playerSpawnMgr._teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
 
-        _timerUITime = int.Parse(_timerText.text);
-
-        for (int i = 0; i < 6;++i)
-        {
-            int headNum = _player1Base.GetComponent<SpawnManager>()._teamUnits.GetUnit(i)._equipedItems[0];
-            UnitIconManager.Update(_iconObjects[i], headNum);
-        }
+        _levelMgr.Init(_costMgr);
+        _costMgr.Init(playerSpawnMgr, _levelMgr._curLevelData);
     }
 
     private void OnEnable()
     {
+        if (null == Manager.Get<GameManager>().GetPlayerUnits()) { return; }
+
         _victoryObject.SetActive(false);
         _defeatObject.SetActive(false);
+
+        _timerUITime = int.Parse(_timerText.text);
+
+        _costMgr.Enable();
+        _levelMgr.Enable();
     }
 
     private void Update()
@@ -73,21 +92,17 @@ public class InGameSystem : MonoBehaviour
 
         UpdateTimer();
         UpdateBase();
-        UpdateGoldMana();
     }
     #endregion
 
     #region Private Function
 
-    public GameObject _victoryObject;
-    public GameObject _defeatObject;
-
     void Victory()
     {
         _isGameEnd = true;
 
-        _player1Base.GetComponent<SpawnManager>()._isGameEnd = _isGameEnd;
-        _player2Base.GetComponent<SpawnManager>()._isGameEnd = _isGameEnd;
+        RedSpawnMgr._isGameEnd = _isGameEnd;
+        BlueSpawnMgr._isGameEnd = _isGameEnd;
 
         _victoryObject.SetActive(true);
     }
@@ -96,8 +111,8 @@ public class InGameSystem : MonoBehaviour
     {
         _isGameEnd = true;
 
-        _player1Base.GetComponent<SpawnManager>()._isGameEnd = _isGameEnd;
-        _player2Base.GetComponent<SpawnManager>()._isGameEnd = _isGameEnd;
+        RedSpawnMgr._isGameEnd = _isGameEnd;
+        BlueSpawnMgr._isGameEnd = _isGameEnd;
 
         _defeatObject.SetActive(true);
     }
@@ -111,22 +126,22 @@ public class InGameSystem : MonoBehaviour
 
     private void UpdateBase()
     {
-        _player1Bar.fillAmount = _player1Base.GetCurHealth() / _player1Base.GetMaxHealth();
-        if(_player1Base.GetCurHealth() <= 0)
-            Victory();
+        RedHealthBar.fillAmount = RedBase.GetCurHealth() / RedBase.GetMaxHealth();
 
-        _player2Bar.fillAmount = _player2Base.GetCurHealth() / _player2Base.GetMaxHealth();
-        if (_player2Base.GetCurHealth() <= 0)
-            Defeat();
+        if (RedBase.IsDead)
+        {
+            if (!_isPlayerRed)  Victory();
+            else                Defeat();
+        }
+
+        BlueHealthBar.fillAmount = BlueBase.GetCurHealth() / BlueBase.GetMaxHealth();
+
+        if (BlueBase.IsDead)
+        {
+            if (_isPlayerRed)   Victory();
+            else                Defeat();
+        }
     }
 
-    private void UpdateGoldMana()
-    {
-        _curGold = Mathf.Clamp(_curGold + Time.deltaTime * _goldPerSecond, 0, _maxGold);
-        _curMana = Mathf.Clamp(_curMana + Time.deltaTime * _manaPerSecond, 0, _maxMana);
-
-        _goldImage.fillAmount = _curGold / _maxGold;
-        _manaImage.fillAmount = _curMana / _maxMana;
-    } 
     #endregion
 }
