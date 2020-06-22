@@ -26,6 +26,8 @@ public class CostManager : MonoBehaviour
 
     public void Enable()
     {
+        _curCost = 0;
+
         for (int i = 0; i < _spawnMgr._teamUnits.Length; ++i)
         {
             int headNum = _spawnMgr._teamUnits.GetUnit(i)._equipedItems[0];
@@ -73,6 +75,6 @@ public class CostManager : MonoBehaviour
 
     private void Update()
     {
-        CurCost = Mathf.Clamp(CurCost + Time.deltaTime * _levelData._costRegen, 0, _levelData._maxCost);
+        CurCost = Mathf.Min(CurCost + Time.deltaTime * _levelData._costRegen, _levelData._maxCost);
     }
 }

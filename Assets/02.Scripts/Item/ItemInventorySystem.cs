@@ -70,8 +70,8 @@ public class ItemInventorySystem : MonoBehaviour
 
         _inventory[(int)eCodeType.LeftWeapon] = new List<int>();
 
-        _equipedItems[0] = _itemList.CodeSearch(GameItem.eCodeType.Helmet, 0);
-        _equipedItems[1] = _itemList.CodeSearch(GameItem.eCodeType.Bodyarmour, 0);
+        _equipedItems[0] = _itemList.CodeSearch(eCodeType.Helmet, 0);
+        _equipedItems[1] = _itemList.CodeSearch(eCodeType.Bodyarmour, 0);
         _equipedItems[2] = 0;
         _equipedItems[3] = 0;
     }
@@ -190,7 +190,24 @@ public class ItemInventorySystem : MonoBehaviour
             if (partsNum >= _equipedItems.Length) { return; }
 
             int prevItem = _equipedItems[partsNum];
-            _equipedItems[partsNum] = itemCode;
+
+            // _equipedItems[partsNum] = _equipedItems[partsNum] == itemCode ? 0 : itemCode;
+
+            if (_equipedItems[partsNum] == itemCode)
+            { // 이미 장착했음 > 장착해제
+                int defaultItemCode = 0;
+                switch(partsNum)
+                {
+                    case 0: defaultItemCode = _itemList.CodeSearch(eCodeType.Helmet, 0);      break;
+                    case 1: defaultItemCode = _itemList.CodeSearch(eCodeType.Bodyarmour, 0);  break;
+                }
+
+                _equipedItems[partsNum] = defaultItemCode;
+            }
+            else
+            { // 장착
+                _equipedItems[partsNum] = itemCode;
+            }
 
             UpdateModel(prevItem);
         }

@@ -384,7 +384,7 @@ public class UnitModelManager
             index = _modelItemPoint[i.Name];
 
             // true 면 무기 false 면 방어구
-            if (i.AniType > GameItem.eItemType.Sword)
+            if (i.AniType >= GameItem.eItemType.Sword)
             {
                 if (leftWeaponTrs.GetChild(index[1]).gameObject.activeSelf)
                     leftWeaponTrs.GetChild(index[1]).gameObject.SetActive(false);
