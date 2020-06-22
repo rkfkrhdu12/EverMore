@@ -33,6 +33,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_BAD414CF:
+        m_Texture: {fileID: 2800000, guid: 29ebccdcaa02fbe4db9c35ac9e4e64be, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C62A5115:
+        m_Texture: {fileID: 2800000, guid: d2e062ebdd805bc4bb067984df20be39, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: 29ebccdcaa02fbe4db9c35ac9e4e64be, type: 3}
         m_Scale: {x: 1, y: 1}
