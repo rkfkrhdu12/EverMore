@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
 {
     public void OnLevelUp()
     {
-        if(!_costMgr.CostConsumption(_curLevelData._upgradeCost) && _curLevel != 0) { return; }
+        if (!_costMgr.CostConsumption(_curLevelData._upgradeCost)) { return; } //  && _curLevel != 0
 
         if (_curLevel < 0) { _curLevel = 0; }
 

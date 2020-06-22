@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using GameplayIngredients;
+using UnityEditorInternal;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -95,6 +96,8 @@ public class SpawnManager : MonoBehaviour
                     for (int j = 0; j < 3; ++j)
                     {
                         GameObject clone = Instantiate(_unitPrefabs, Vector3.zero, Quaternion.identity, null);
+
+                        if(clone.activeSelf) { yield return null; }
 
                         clone.name = (_isPlayer2 ? "Player2Unit " : "Player1Unit ") + _unitList.Count.ToString();
 

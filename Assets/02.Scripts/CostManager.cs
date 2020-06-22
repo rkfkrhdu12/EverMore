@@ -18,10 +18,10 @@ public class CostManager : MonoBehaviour
         return true;
     }
 
-    public void Init(SpawnManager spawnMgr, in LevelManager.LevelData levelData)
+    public void Init(SpawnManager spawnMgr, LevelManager levelData)
     {
         _spawnMgr = spawnMgr;
-        _levelData = levelData;
+        _levelMgr = levelData;
     }
 
     public void Enable()
@@ -55,17 +55,17 @@ public class CostManager : MonoBehaviour
 
     private SpawnManager _spawnMgr;
 
-    private LevelManager.LevelData _levelData;
+    private LevelManager _levelMgr;
 
     private float _curCost;
-    private float CurCost
+    public float CurCost
     {
         get { return _curCost; }
         set
         {
             _curCost = value;
 
-            int maxCost = _levelData._maxCost;
+            int maxCost = _levelMgr._maxCost;
 
             _costImage.fillAmount = _curCost / maxCost;
             _costText.text = ((int)_curCost).ToString() + " / " + maxCost.ToString();
@@ -75,6 +75,6 @@ public class CostManager : MonoBehaviour
 
     private void Update()
     {
-        CurCost = Mathf.Min(CurCost + Time.deltaTime * _levelData._costRegen, _levelData._maxCost);
+        CurCost = Mathf.Min(CurCost + Time.deltaTime * _levelMgr._costRegen, _levelMgr._maxCost);
     }
 }

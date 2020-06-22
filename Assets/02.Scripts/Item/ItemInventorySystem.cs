@@ -79,6 +79,8 @@ public class ItemInventorySystem : MonoBehaviour
     bool isTesting = false;
     private void Start()
     {
+        if (isTesting) { return; }
+
         #region Test
         List<string> armourList = new List<string>();
 
@@ -118,7 +120,7 @@ public class ItemInventorySystem : MonoBehaviour
 
         weaponList.Remove("빛의 포크");
 
-        for (int i = 0; i < weaponList.Count; ++i) 
+        for (int i = 0; i < weaponList.Count; ++i)
         {
             num = _itemList.CodeSearch(eCodeType.Weapon, weaponList[i]);
 
@@ -133,11 +135,9 @@ public class ItemInventorySystem : MonoBehaviour
     //매번 UI가 활성화 될 때, 호출됩니다.
     private void OnEnable()
     {
-        if (!isTesting) Start();
-
         Type = eCodeType.Helmet;
 
-        // UpdateInventory();
+        Start();
     }
     #endregion
 

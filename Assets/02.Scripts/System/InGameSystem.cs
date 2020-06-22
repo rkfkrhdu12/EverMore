@@ -70,7 +70,7 @@ public class InGameSystem : MonoBehaviour
         playerSpawnMgr._teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
 
         _levelMgr.Init(_costMgr);
-        _costMgr.Init(playerSpawnMgr, _levelMgr._curLevelData);
+        _costMgr.Init(playerSpawnMgr, _levelMgr);
     }
 
     private void OnEnable()
@@ -132,14 +132,6 @@ public class InGameSystem : MonoBehaviour
         BlueSpawnMgr._isGameEnd = _isGameEnd;
 
         _defeatObject.SetActive(true);
-    }
-
-    private void UpdateTimer()
-    {
-    }
-
-    private void UpdateBase()
-    {
     }
 
     #endregion
