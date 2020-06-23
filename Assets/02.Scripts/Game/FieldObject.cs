@@ -5,8 +5,8 @@ public class FieldObject : MonoBehaviour
     public float _curHp;
     public float _maxHp;
 
-    //아군인지 적군인지에 대한 변수
-    [HideInInspector]
+    // 아군인지 적군인지에 대한 변수
+    // [HideInInspector]
     public eTeam _team = eTeam.PLAYER;
 
     //죽었는지 살았는지에 대한 변수

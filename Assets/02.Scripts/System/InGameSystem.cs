@@ -44,6 +44,8 @@ public class InGameSystem : MonoBehaviour
     public GameObject _victoryObject;
     public GameObject _defeatObject;
 
+    public Canvas _canvas;
+
     // private
 
     PlayerController _playerCtrl;
@@ -72,6 +74,8 @@ public class InGameSystem : MonoBehaviour
 
         SpawnManager playerSpawnMgr = _isPlayerRed ? RedSpawnMgr: BlueSpawnMgr;
         playerSpawnMgr._teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
+
+        playerSpawnMgr._canvas = _canvas;
 
         _playerCtrl = playerSpawnMgr.GetComponent<PlayerController>();
 

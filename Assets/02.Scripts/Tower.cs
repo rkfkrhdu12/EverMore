@@ -1,18 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Tower : MonoBehaviour
+﻿
+public class Tower : FieldObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+
+    public override void DamageReceive(float damage)
     {
-        
+        _curHp -= damage;
+
+        if (_curHp <= 0)
+            _isDead = true;
     }
 }

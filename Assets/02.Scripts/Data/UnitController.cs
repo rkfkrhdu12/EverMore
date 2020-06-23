@@ -9,6 +9,7 @@ using System.Collections;
 using TMPro.EditorUtilities;
 using System.Text;
 using UnityEngine.UI;
+using UnityEngine.SocialPlatforms;
 
 public enum eTeam
 {
@@ -58,9 +59,13 @@ public class UnitController : FieldObject
         DeleteObjectSystem.AddDeleteObject(gameObject);
     }
 
+
     #region Variable
 
     #region Inspector
+
+    [SerializeField]
+    bool _isTest = false;
 
     // 이 유닛의 애니메이션
     [SerializeField]
@@ -174,6 +179,16 @@ public class UnitController : FieldObject
 
     #region Monobehaviour Function
 
+    private void Awake()
+    {
+        if(_isTest)
+        {
+            _status = new UnitStatus();
+            _status.Init();
+
+        }
+    }
+
     private void FixedUpdate()
     {
         //현재 상태가 비어 있거나, 죽었다면 : return
@@ -183,13 +198,36 @@ public class UnitController : FieldObject
         UpdateUnit();
     }
 
+    public Canvas _canvas;
+
+    private RectTransform _canvasRectTrs;
+    private Camera _hpCamera;
+
+    private void LateUpdate()
+    {
+        var screenPos = Camera.main.WorldToScreenPoint(transform.position);
+
+        if(screenPos.z < 0.0f)
+        {
+            screenPos *= -1.0f;
+        }
+
+        Vector2 localPos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvasRectTrs, screenPos, _hpCamera, out localPos);
+
+        localPos.x += 3;
+        localPos.y += 80;
+
+        _healthBarObject.transform.localPosition = localPos;
+    }
+
     private void OnEnable()
     { // Spawn() -> OnEnable() 순서
-
         if (!_healthBarObject.activeSelf)
             _healthBarObject.SetActive(true);
 
         _healthBarImage = _healthBarObject.transform.GetChild(0).GetComponent<Image>();
+        _healthBarImage.fillAmount = RemainHealth;
 
         _team = _status._team;
 
@@ -198,6 +236,9 @@ public class UnitController : FieldObject
 
         _curTarget = _enemyCastleObject;
         _navMeshAgent.SetDestination(_curTarget.transform.position);
+
+        _canvasRectTrs = _canvas.GetComponent<RectTransform>();
+        _hpCamera = _canvas.worldCamera;
     }
 
     #endregion
@@ -261,7 +302,7 @@ public class UnitController : FieldObject
 
     public void AttackRight()
     {
-        if (_rightAttackDamage == 0) { return; }
+        if (_rightAttackDamage == 0 || _isTest) { return; }
 
         _curTarget.DamageReceive(_rightAttackDamage);
 
@@ -271,7 +312,7 @@ public class UnitController : FieldObject
 
     public void AttackLeft()
     {
-        if(_leftAttackDamage == 0) { return; }
+        if(_leftAttackDamage == 0 || _isTest) { return; }
 
         _curTarget.DamageReceive(_leftAttackDamage);
 
@@ -669,7 +710,27 @@ public class UnitAnimationManager
         if (num != -1)
             ani.SetInteger(_idWeaponType, num);
     }
-    
+
+    public static void FindNum(int leftWeaponCode, int rightWeaponCode, ref int num)
+    {
+        if (_typeStrings.Count == 0)
+            Init();
+
+        GameItem.Item leftWeapon = _itemList.ItemSearch(leftWeaponCode);
+        GameItem.Item rightWeapon = _itemList.ItemSearch(rightWeaponCode);
+
+        string leftString = "", rightString = "";
+        if (leftWeapon != null && _typeStrings.ContainsKey(leftWeapon.AniType)) leftString = _typeStrings[leftWeapon.AniType];
+        if (rightWeapon != null && _typeStrings.ContainsKey(rightWeapon.AniType)) rightString = _typeStrings[rightWeapon.AniType];
+
+        StringBuilder sb = new StringBuilder(leftString);
+        sb.Append("&").Append(rightString);
+
+        if (!_typeAnimationNum.ContainsKey(sb.ToString())) { num = _typeAnimationNum["&"]; return; }
+
+        num = _typeAnimationNum[sb.ToString()];
+    }
+
     #region Variable
 
     static Dictionary<GameItem.eItemType, string> _typeStrings = new Dictionary<GameItem.eItemType, string>();
@@ -681,26 +742,6 @@ public class UnitAnimationManager
     #endregion
 
     #region Private Function
-
-    private static void FindNum(int leftWeaponCode,int rightWeaponCode,ref int num)
-    {
-        if (_typeStrings.Count == 0)
-            Init();
-
-        GameItem.Item leftWeapon = _itemList.ItemSearch(leftWeaponCode);
-        GameItem.Item rightWeapon = _itemList.ItemSearch(rightWeaponCode);
-
-        string leftString = "", rightString = "";
-        if (leftWeapon != null && _typeStrings.ContainsKey(leftWeapon.AniType))    leftString = _typeStrings[leftWeapon.AniType];
-        if (rightWeapon != null && _typeStrings.ContainsKey(rightWeapon.AniType))  rightString = _typeStrings[rightWeapon.AniType];
-
-        StringBuilder sb = new StringBuilder(leftString);
-        sb.Append("&").Append(rightString);
-
-        if (!_typeAnimationNum.ContainsKey(sb.ToString())) { num = _typeAnimationNum["&"]; return; }
-
-        num = _typeAnimationNum[sb.ToString()];
-    }
 
     private static void InitData(ref List<string> aniName)
     {
@@ -744,4 +785,21 @@ public class UnitAnimationManager
         }
     } 
     #endregion
+}
+
+public class UnitEffectManager
+{
+    public static void Update(int leftWeaponCode, int rightWeaponCode, ref ParticleSystem ps,ref GameObject EffectObject)
+    {
+        if(EffectObject is null || leftWeaponCode + rightWeaponCode == 0) { return; }
+        
+        int n = 0;
+        UnitAnimationManager.FindNum(leftWeaponCode, rightWeaponCode, ref n);
+        --n;
+
+        if (EffectObject.transform.childCount <= n)
+        {
+            ps = EffectObject.transform.GetChild(n).GetComponent<ParticleSystem>();
+        }
+    }
 }

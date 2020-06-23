@@ -35,14 +35,12 @@ public class LevelManager : MonoBehaviour
 
     public void OnButtonDown()
     {
-        _levelText.transform.localScale = new Vector3(.88f, .88f, .88f);
-        _levelUpCostText.transform.localScale = new Vector3(.88f, .88f, .88f);
+        transform.localScale = new Vector3(.88f, .88f, .88f);
     }
 
     public void OnButtonUp()
     {
-        _levelText.transform.localScale = Vector3.one;
-        _levelUpCostText.transform.localScale = Vector3.one;
+        transform.localScale = Vector3.one;
     }
 
     public void Init(CostManager costMgr)

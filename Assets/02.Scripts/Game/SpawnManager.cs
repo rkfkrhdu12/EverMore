@@ -88,6 +88,8 @@ public class SpawnManager : MonoBehaviour
     public Transform _unitHealthBarList;
     public GameObject _unitHealthBarObject;
 
+    public Canvas _canvas;
+
     public bool _isGameEnd = false;
     WaitForSeconds UpdateWaitTime = new WaitForSeconds(.25f);
     IEnumerator UpdateSpawnObject()
@@ -115,7 +117,10 @@ public class SpawnManager : MonoBehaviour
 
                         GameObject healthBar = Instantiate(_unitHealthBarObject, Vector3.zero, Quaternion.identity, _unitHealthBarList);
 
-                        clone.GetComponent<UnitController>()._healthBarObject = healthBar;
+                        UnitController uc = clone.GetComponent<UnitController>();
+                        uc._healthBarObject = healthBar;
+                        uc._canvas = _canvas;
+
                         clone.name = (_isPlayer ? "Player1Unit " : "Player2Unit ") + _unitList.Count.ToString();
 
                         _unitList.Add(clone);
