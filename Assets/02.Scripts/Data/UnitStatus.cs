@@ -117,7 +117,7 @@ public struct UnitStatus
             _maxDamageIndex = 0;
             _maxAttackDamages = new float[2];
             _minAttackDamages = new float[2];
-            _attackRange = 2f;
+            _attackRange = 1f;
             _attackSpeed = 1f;
         }
 
@@ -142,7 +142,7 @@ public struct UnitStatus
         _weight = 0;
         _maxAttackDamages = new float[2];
         _minAttackDamages = new float[2];
-        _attackRange = 2f;
+        _attackRange = 1f;
         _attackSpeed = 1f;
 
         _equipedItems = new int[4];

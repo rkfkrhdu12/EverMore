@@ -94,6 +94,9 @@ public class UnitController : FieldObject
     [SerializeField]
     private UnitEye _eye;
 
+    [SerializeField]
+    private GameObject effectObject;
+
     #endregion
 
     // 아이템 능력 번호
@@ -231,7 +234,7 @@ public class UnitController : FieldObject
 
         _team = _status._team;
 
-        _navMeshAgent.stoppingDistance = _attackRange;
+        _navMeshAgent.stoppingDistance = _attackRange >= 3 ? _attackRange : 3;
         _navMeshAgent.speed = _moveSpeed;
 
         _curTarget = _enemyCastleObject;
@@ -239,6 +242,14 @@ public class UnitController : FieldObject
 
         _canvasRectTrs = _canvas.GetComponent<RectTransform>();
         _hpCamera = _canvas.worldCamera;
+
+        UnitEffectManager.Update(_status._equipedItems[2], _status._equipedItems[3], ref particle, ref effectObject);
+
+        particle.playbackSpeed = 1 * _attackSpeed;
+        for (int i = 0; i < particle.transform.childCount; ++i)
+        {
+            particle.transform.GetChild(i).GetComponent<ParticleSystem>().playbackSpeed = 1 * _attackSpeed;
+        }
     }
 
     #endregion
@@ -271,7 +282,8 @@ public class UnitController : FieldObject
 
         if (_eye._isEnemy)
         {
-            if (remainingDistance <= _navMeshAgent.stoppingDistance)
+            if (remainingDistance <= _navMeshAgent.stoppingDistance * 2
+                || (_navMeshAgent.velocity == Vector3.zero && remainingDistance <= _navMeshAgent.stoppingDistance * 2))
             {
                 transform.LookAt(_curTarget.transform);
 
@@ -295,14 +307,16 @@ public class UnitController : FieldObject
         }
     }
 
+    ParticleSystem particle;
+
     public void OnEffect()
     {
-
+        particle.Play();
     }
 
     public void AttackRight()
     {
-        if (_rightAttackDamage == 0 || _isTest) { return; }
+        if (_rightAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
 
         _curTarget.DamageReceive(_rightAttackDamage);
 
@@ -312,7 +326,7 @@ public class UnitController : FieldObject
 
     public void AttackLeft()
     {
-        if(_leftAttackDamage == 0 || _isTest) { return; }
+        if(_leftAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
 
         _curTarget.DamageReceive(_leftAttackDamage);
 
@@ -797,9 +811,14 @@ public class UnitEffectManager
         UnitAnimationManager.FindNum(leftWeaponCode, rightWeaponCode, ref n);
         --n;
 
-        if (EffectObject.transform.childCount <= n)
+        if (EffectObject.transform.childCount > n)
         {
-            ps = EffectObject.transform.GetChild(n).GetComponent<ParticleSystem>();
+            GameObject curObject = EffectObject.transform.GetChild(n).gameObject;
+
+            if (!curObject.activeSelf)
+                curObject.SetActive(true);
+
+            ps = curObject.GetComponent<ParticleSystem>();
         }
     }
 }

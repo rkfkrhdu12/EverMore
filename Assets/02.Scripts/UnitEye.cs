@@ -109,7 +109,7 @@ public class UnitEye : MonoBehaviour
                     if (Vector3.Dot(direction.normalized, transform.forward) > dotValue)
                     {
                         // 이미 타겟들에 있으면
-                        if (_targets.Contains(target)) return;
+                        if (_targets.Contains(target) || target.IsDead) return;
 
                         // 충돌 범위에 충돌함 !
                         _isCollision = true;

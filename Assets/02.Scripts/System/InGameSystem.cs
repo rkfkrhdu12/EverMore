@@ -21,6 +21,11 @@ public class InGameSystem : MonoBehaviour
     public bool CostConsumption(int consumCost) { return _costMgr.CostConsumption(consumCost); }
     public void OnLevelUp() { _levelMgr.OnLevelUp(); }
 
+    public void OnGameEnd()
+    {
+        Manager.Get<SceneManagerPro>().LoadScene("MainScene");
+    }
+
     #region Private Variable
     // SerializeField / public
 

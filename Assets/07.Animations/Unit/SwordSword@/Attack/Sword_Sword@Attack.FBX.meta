@@ -59,6 +59,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.4392857
+        functionName: OnEffect
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 85e941b89bf330347b6495d51b2604f6,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.45245454
         functionName: AttackRight
         data: 
@@ -79,14 +87,6 @@ ModelImporter:
         functionName: AttackLeft
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 11f56b6668def3b41a4c0cdc6cbbdb21,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
-        functionName: OnEffect
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 85e941b89bf330347b6495d51b2604f6,
           type: 3}
         floatParameter: 0
         intParameter: 0

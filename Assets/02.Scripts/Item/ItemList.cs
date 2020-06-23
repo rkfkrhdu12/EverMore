@@ -253,7 +253,8 @@ namespace GameItem
         {
             base.Equip(ref us);
 
-            us._attackRange     += _range;
+            if (_range != -1)
+                us._attackRange = (us._attackRange + _range) / 2;
             us._minAttackDamage += _minDamage;
             us._maxAttackDamage += _maxDamage;
             if (_speed != -1)
