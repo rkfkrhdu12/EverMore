@@ -767,6 +767,7 @@ public class UnitAnimationManager
         aniName.Add("Shield&Spear");
         aniName.Add("Sword&Spear");
         aniName.Add("Spear&Spear");
+        aniName.Add("Shield&Shield");
 
         _typeAnimationNum.Add("&", 5); // 아무 무기도 없을때 애니메이션은 Sword(제일 무난..)
     }
