@@ -4,6 +4,7 @@ using UnityEngine;
 
 using GameplayIngredients;
 using UnityEditorInternal;
+using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -84,6 +85,9 @@ public class SpawnManager : MonoBehaviour
         _curSpawnObject = null;
     }
 
+    public Transform _unitHealthBarList;
+    public GameObject _unitHealthBarObject;
+
     public bool _isGameEnd = false;
     WaitForSeconds UpdateWaitTime = new WaitForSeconds(.25f);
     IEnumerator UpdateSpawnObject()
@@ -109,6 +113,9 @@ public class SpawnManager : MonoBehaviour
 
                         if(clone.activeSelf) { yield return null; }
 
+                        GameObject healthBar = Instantiate(_unitHealthBarObject, Vector3.zero, Quaternion.identity, _unitHealthBarList);
+
+                        clone.GetComponent<UnitController>()._healthBarObject = healthBar;
                         clone.name = (_isPlayer ? "Player1Unit " : "Player2Unit ") + _unitList.Count.ToString();
 
                         _unitList.Add(clone);

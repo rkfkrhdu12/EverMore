@@ -31,17 +31,18 @@ public class ItemSlot : MonoBehaviour
         if (_text == null)
             _text = transform.GetChild(transform.childCount - 1).GetComponent<TMP_Text>();
 
-        int childNum = -1;
+        int childNum;
         switch (item.AniType)
         {
             case GameItem.eItemType.Helmet:     childNum = 0; break;
             case GameItem.eItemType.BodyArmour: childNum = 1; break;
+            default: childNum = 2; break;
         }
 
         if (prevItemIconObject != -1)
             UnitIconManager.Reset(transform.GetChild(prevItemIconObject).gameObject);
 
-        if (childNum != -1)
+        // if (childNum != -1)
         {
             transform.GetChild(childNum).gameObject.SetActive(true);
 

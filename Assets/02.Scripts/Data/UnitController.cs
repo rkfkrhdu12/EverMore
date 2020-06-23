@@ -44,13 +44,17 @@ public class UnitController : FieldObject
         //데미지를 받습니다.
         _curHp -= damage;
 
+        _healthBarImage.fillAmount = RemainHealth;
+
         //체력이 0 초과라면 : 아래 코드 구문 실행 x
         if (_curHp > 0) return;
 
         //사망 처리 한다.
         _isDead = true;
 
-        //해당 유닛을 삭제 목록에 올립니다.
+        _healthBarObject.SetActive(false);
+
+        //해당 유닛과 체력바를 삭제 목록에 올립니다.
         DeleteObjectSystem.AddDeleteObject(gameObject);
     }
 
@@ -110,6 +114,10 @@ public class UnitController : FieldObject
     }
 
     #endregion
+
+    public GameObject _healthBarObject;
+    public Image _healthBarImage;
+
     //유닛 상태에 대한 변수
     public eAni _curState = eAni.NONE;
     public eAni CurState
@@ -163,7 +171,7 @@ public class UnitController : FieldObject
     #endregion
 
     #endregion
-    
+
     #region Monobehaviour Function
 
     private void FixedUpdate()
@@ -177,6 +185,12 @@ public class UnitController : FieldObject
 
     private void OnEnable()
     { // Spawn() -> OnEnable() 순서
+
+        if (!_healthBarObject.activeSelf)
+            _healthBarObject.SetActive(true);
+
+        _healthBarImage = _healthBarObject.transform.GetChild(0).GetComponent<Image>();
+
         _team = _status._team;
 
         _navMeshAgent.stoppingDistance = _attackRange;
@@ -238,26 +252,6 @@ public class UnitController : FieldObject
                 CurState = eAni.MOVE;
             }
         }
-
-        //if (remainingDistance <= _attackRange)
-        //{
-        //    if (_eye._isEnemy)
-        //    {
-        //        transform.LookAt(_curTarget.transform);
-
-        //        CurState = eAni.ATTACK;
-        //    }
-        //    else
-        //    {
-        //        CurState = eAni.IDLE;
-        //    }
-        //}
-        //else 
-        //{
-        //    if (_navMeshAgent.velocity == Vector3.zero) CurState = eAni.IDLE;
-
-        //    CurState = eAni.MOVE;
-        //}
     }
 
     public void OnEffect()
@@ -552,7 +546,7 @@ public class UnitIconManager
         }
     }
 
-    public static void Update(GameObject iconObject, int headItemNum)
+    public static void Update(GameObject iconObject, int ItemNum)
     {
         if (0 == _iconPoints.Count)
             Init();
@@ -560,7 +554,7 @@ public class UnitIconManager
         if (!iconObject) return;
 
         GameItem.Item headItem;
-        if ((headItem = _itemList.ItemSearch(headItemNum)) == null) return;
+        if ((headItem = _itemList.ItemSearch(ItemNum)) == null) return;
 
         if (!_iconPoints.ContainsKey(headItem.Name)) return;
 
@@ -572,16 +566,16 @@ public class UnitIconManager
         headObject.SetActive(true);
     }
 
-    public static void Update(GameObject iconObject, string headItemName)
+    public static void Update(GameObject iconObject, string ItemName)
     {
         if (0 == _iconPoints.Count)
             Init();
 
         if (!iconObject) return;
 
-        if (!_iconPoints.ContainsKey(headItemName)) return;
+        if (!_iconPoints.ContainsKey(ItemName)) return;
 
-        int iconPoint = _iconPoints[headItemName];
+        int iconPoint = _iconPoints[ItemName];
 
         GameObject headObject;
         if ((headObject = iconObject.transform.GetChild(iconPoint).gameObject) == null) { return; }
@@ -616,7 +610,8 @@ public class UnitIconManager
     {
         GameItem.eCodeType helmet = GameItem.eCodeType.Helmet;
         GameItem.eCodeType armour = GameItem.eCodeType.Bodyarmour;
-        for (int i = 0; i < _itemList.GetCodeItemCount(helmet); ++i)
+        int count = _itemList.GetCodeItemCount(helmet);
+        for (int i = 0; i < count; ++i)
         {
             int headcode = _itemList.CodeSearch(helmet, i);
 
@@ -625,6 +620,14 @@ public class UnitIconManager
             int bodycode = _itemList.CodeSearch(armour, i);
 
             iconNames.Add(_itemList.ItemSearch(bodycode).Name);
+        }
+
+        count = _itemList.GetCodeItemCount(GameItem.eCodeType.Weapon);
+        for (int i = 0; i < count; ++i) 
+        {
+            int code = _itemList.CodeSearch(GameItem.eCodeType.Weapon, i);
+
+            iconNames.Add(_itemList.ItemSearch(code).Name);
         }
     }
 
@@ -637,11 +640,19 @@ public class UnitIconManager
         InitData(ref iconNames);
 
         int j = 0;
-        for (int i = 0; i < iconNames.Count; ++i)
+        int armourCount = _itemList.GetCodeItemCount(GameItem.eCodeType.Helmet) * 2;
+        for (int i = 0; i < armourCount; ++i)
         {
             if (i != 0 && i % 2 == 0)  { ++j; }
 
             _iconPoints.Add(iconNames[i], j);
+        }
+
+        // 방어구는 머리 몸 2가지
+        int weaponCount = _itemList.GetCodeItemCount(GameItem.eCodeType.Weapon);
+        for (int i = 0; i < weaponCount; ++i)
+        {
+            _iconPoints.Add(iconNames[armourCount + i], i);
         }
     } 
     #endregion

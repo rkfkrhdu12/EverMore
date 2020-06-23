@@ -16,77 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 14b0e90e885e10d4ca0df7499b04be41
-  m_SerializeEntries:
-  - m_GUID: 13c1be6c11258ba46869c2d33939a97e
-    m_Address: Naked-head:Naked-body
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnitPhoto
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: 316ef8a0fb7fc1f4b9155247dbfe90b1
-    m_Address: Sharwood-head:Sharwood-body
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnitPhoto
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: 37826f274fdafde469cf551315553f7e
-    m_Address: Sharwood-head:Knight-body
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnitPhoto
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: 40ee32c519f5df44e8e17e7099c4b6cf
-    m_Address: Knight-head:Knight-body
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnitPhoto
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: 41f1934d4164a1044a6ba5494b224cf3
-    m_Address: SnowWhite-head:Knight-body
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnitPhoto
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: 55b2b963c78aa5a4d92955420c736531
-    m_Address: SnowWhite-head:SnowWhite-body
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnitPhoto
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: 9ddf54583b69df049b2a7f7314223393
-    m_Address: SnowWhite-head:Sharwood-body
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnitPhoto
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: b4276d1b999fc6242b4e1110712eee4a
-    m_Address: Knight-head:SnowWhite-body
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnitPhoto
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: b8c07e6b1639ad14f8d3573049212199
-    m_Address: Knight-head:Sharwood-body
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnitPhoto
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: fbb388f0ee0e0b949bd9a39d752f5236
-    m_Address: Sharwood-head:SnowWhite-body
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UnitPhoto
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ddf4880eb3220ce429040ccce683f3a5, type: 2}
   m_SchemaSet:
