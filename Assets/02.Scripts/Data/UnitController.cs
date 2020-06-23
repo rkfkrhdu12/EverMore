@@ -234,7 +234,7 @@ public class UnitController : FieldObject
 
         _team = _status._team;
 
-        _navMeshAgent.stoppingDistance = _attackRange >= 3 ? _attackRange : 3;
+        _navMeshAgent.stoppingDistance = Mathf.Max(1.8f, _attackRange);
         _navMeshAgent.speed = _moveSpeed;
 
         _curTarget = _enemyCastleObject;

@@ -31,7 +31,7 @@ public class UnitEye : MonoBehaviour
     {
         get
         {
-            if (!_isCollision || _targets.Count == 0)
+            if (_targets.Count == 0)
             {
                 _isEnemy = true;
                 return null;
@@ -42,7 +42,7 @@ public class UnitEye : MonoBehaviour
 
     public void UpdateTarget()
     {
-        if (_targets.Count <= 0 || CurTarget == null) { return; }
+        if (_targets.Count <= 0) { return; }
 
         if (CurTarget.CurHealth <= 0 || !_isEnemy) 
         {
@@ -140,7 +140,7 @@ public class UnitEye : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        var target = other.GetComponent<UnitController>();
+        var target = other.GetComponent<FieldObject>();
 
         // FieldObject 가 있으면
         if (target != null)
