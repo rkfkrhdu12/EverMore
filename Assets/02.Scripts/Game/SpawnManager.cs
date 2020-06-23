@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using GameplayIngredients;
-using UnityEditorInternal;
-using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -120,7 +118,6 @@ public class SpawnManager : MonoBehaviour
                         UnitController uc = clone.GetComponent<UnitController>();
                         uc._healthBarObject = healthBar;
                         uc._canvas = _canvas;
-
                         clone.name = (_isPlayer ? "Player1Unit " : "Player2Unit ") + _unitList.Count.ToString();
 
                         _unitList.Add(clone);

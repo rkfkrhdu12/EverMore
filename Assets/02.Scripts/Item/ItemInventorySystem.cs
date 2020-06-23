@@ -163,10 +163,14 @@ public class ItemInventorySystem : MonoBehaviour
         UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelUI.GetComponent<Animator>());
     }
 
+    public Animator _saveAnimator;
+
     public void OnSave()
     {
         _unitPhoto.SaveTexture(_equipedItems);
         _teamManager.SetSelectUnitEquipedItems(_equipedItems);
+
+        _saveAnimator.SetTrigger("OnAnimation");
     }
 
     public void OnEquiped(ItemSlot curSlot)

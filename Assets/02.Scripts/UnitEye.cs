@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-using InspectorGadgets.Editor;
+// using UnityEditor;
 
 public class UnitEye : MonoBehaviour
 {
@@ -73,16 +71,16 @@ public class UnitEye : MonoBehaviour
         _collider.radius = range * 2.5f;
     }
 
-    // Test
-    private void OnDrawGizmos()
-    {
-        Color _blue = new Color(0f, 0f, 1f, 0.2f);
-        Color _red = new Color(1f, 0f, 0f, 0.2f);
+    //// Test
+    //private void OnDrawGizmos()
+    //{
+    //    Color _blue = new Color(0f, 0f, 1f, 0.2f);
+    //    Color _red = new Color(1f, 0f, 0f, 0.2f);
 
-        Handles.color = _isCollision ? _red : _blue;
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, _attackAngle / 2, _attackRange);
-        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -_attackAngle / 2, _attackRange);
-    }
+    //    Handles.color = _isCollision ? _red : _blue;
+    //    Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, _attackAngle / 2, _attackRange);
+    //    Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -_attackAngle / 2, _attackRange);
+    //}
 
     private void OnTriggerStay(Collider other)
     {

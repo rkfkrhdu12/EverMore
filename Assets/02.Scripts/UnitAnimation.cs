@@ -25,22 +25,22 @@ public class UnitAnimation : MonoBehaviour
         UnitAnimationManager.Update(_unitCtrl._status._equipedItems[2], _unitCtrl._status._equipedItems[3], _ani);
     }
 
-    public void Update(UnitController.eAni curState)
+    public void UpdateAni(eAni curState)
     {
-        UnitController.eAni prevState = _unitCtrl.CurState;
+        eAni prevState = _unitCtrl.CurState;
         if (prevState == curState) { return; }
 
         switch (prevState)
         {
-            case UnitController.eAni.MOVE:    _ani.SetFloat(_idMove, 0.0f); break;
-            case UnitController.eAni.ATTACK:  _ani.SetBool(_idAttack, false); break;
+            case eAni.MOVE:    _ani.SetFloat(_idMove, 0.0f); break;
+            case eAni.ATTACK:  _ani.SetBool(_idAttack, false); break;
         }
 
         switch (curState)
         {
-            case UnitController.eAni.IDLE:    _ani.SetFloat(_idMove, 0.0f); _ani.SetBool(_idAttack, false); break;
-            case UnitController.eAni.MOVE:    _ani.SetFloat(_idMove, 1.0f);  break;
-            case UnitController.eAni.ATTACK:  _ani.SetBool(_idAttack, true); break;
+            case eAni.IDLE:    _ani.SetFloat(_idMove, 0.0f); _ani.SetBool(_idAttack, false); break;
+            case eAni.MOVE:    _ani.SetFloat(_idMove, 1.0f);  break;
+            case eAni.ATTACK:  _ani.SetBool(_idAttack, true); break;
         }
     }
 

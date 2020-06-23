@@ -36,15 +36,19 @@ public class IntroSystem : MonoBehaviour
     private float LightRecycleTime;
 
     private static readonly int ID_Light = Animator.StringToHash("Recycle");
-    
+
+    private FullScreenFadeManager _fadeMgr;
     #endregion
 
     private void Awake()
     {
         animatorPro = GetComponent<AnimatorPro>();
         animatorPro.Init(anim);
-        
-        Manager.Get<FullScreenFadeManager>().Fade(1.3f,FullScreenFadeManager.FadeMode.FadeOut,Color.black);
+
+        _fadeMgr = Manager.Get<FullScreenFadeManager>();
+
+        if (_fadeMgr != null)
+            _fadeMgr.Fade(1.3f, FullScreenFadeManager.FadeMode.FadeOut, Color.black);
     }
 
     private void Update()

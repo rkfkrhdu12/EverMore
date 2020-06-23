@@ -3,18 +3,21 @@ using GameplayIngredients;
 using UnityEngine;
 // using UnityEngine.AnimatorPro;
 using UnityEngine.AI;
-
-using UnityEngine.ParticleSystemJobs;
-using System.Collections;
-using TMPro.EditorUtilities;
 using System.Text;
 using UnityEngine.UI;
-using UnityEngine.SocialPlatforms;
 
 public enum eTeam
 {
     PLAYER,
     ENEMY
+}
+
+public enum eAni
+{
+    NONE,
+    IDLE,
+    MOVE,
+    ATTACK,
 }
 
 public class UnitController : FieldObject
@@ -111,18 +114,6 @@ public class UnitController : FieldObject
 
     #region 유닛 상태
 
-    #region Enum
-
-    public enum eAni
-    {
-        NONE,
-        IDLE,
-        MOVE,
-        ATTACK,
-    }
-
-    #endregion
-
     public GameObject _healthBarObject;
     public Image _healthBarImage;
 
@@ -147,7 +138,7 @@ public class UnitController : FieldObject
                     }
                 }
 
-                _ani.Update(value);
+                _ani.UpdateAni(value);
             }
 
             _curState = value;
@@ -245,6 +236,8 @@ public class UnitController : FieldObject
 
         UnitEffectManager.Update(_status._equipedItems[2], _status._equipedItems[3], ref particle, ref effectObject);
 
+        if (particle == null) return;
+
         particle.playbackSpeed = 1 * _attackSpeed;
         for (int i = 0; i < particle.transform.childCount; ++i)
         {
@@ -311,6 +304,8 @@ public class UnitController : FieldObject
 
     public void OnEffect()
     {
+        if (particle == null) return;
+
         particle.Play();
     }
 

@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.IO;
 using System.Linq;
-using UnityEditor;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 // 여러 기능을 하는 유틸 클래스
 public static class Util
 {
@@ -22,8 +24,10 @@ public static class Util
 
         //렌더 텍스쳐 가로 X 세로 사이즈로 읽을 수 있는 픽셀을 처리합니다.
         tex.ReadPixels(new Rect(0, 0, rTex.width, rTex.height), 0, 0);
-        
+
+#if UNITY_EDITOR
         if (PlayerSettings.colorSpace == ColorSpace.Linear)
+#endif
         {
             var color = tex.GetPixels();
             
