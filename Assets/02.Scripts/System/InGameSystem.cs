@@ -26,6 +26,16 @@ public class InGameSystem : MonoBehaviour
         Manager.Get<SceneManagerPro>().LoadScene("MainScene");
     }
 
+    public void OnUnitSpawnDown(GameObject obj)
+    {
+        obj.transform.localScale = new Vector3(.8f, .8f, .8f);
+    }
+
+    public void OnUnitSpawnUp(GameObject obj)
+    {
+        obj.transform.localScale = new Vector3(.9f, .9f, .9f);
+    }
+
     #region Private Variable
     // SerializeField / public
 
