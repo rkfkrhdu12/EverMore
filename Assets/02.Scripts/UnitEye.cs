@@ -19,8 +19,7 @@ public class UnitEye : MonoBehaviour
     //공격 타겟에대한 큐
     public List<FieldObject> _targets = new List<FieldObject>();
 
-    private float _minRange = 1.6f;
-    private float _maxRange = 3.0f;
+    private float _minRange = 3f;
 
     /// <summary>
     /// 충돌하지 않고 있으면 Null
@@ -65,7 +64,7 @@ public class UnitEye : MonoBehaviour
         if (!_collider) { _collider = GetComponent<SphereCollider>(); LogMassage.Log("UnitEye : Collider is NULL"); }
         if (!_unitCtrl) { _unitCtrl = transform.parent.GetComponent<UnitController>(); LogMassage.Log("UnitEye : UnitCtrl is NULL"); }
 
-        float range = Mathf.Clamp(_unitCtrl._status._attackRange, _minRange, _maxRange);
+        float range = Mathf.Max(_unitCtrl._status._attackRange, _minRange);
 
         _attackRange = range * 2;
         _collider.radius = range * 2.5f;
