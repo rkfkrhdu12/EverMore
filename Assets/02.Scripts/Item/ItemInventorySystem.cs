@@ -12,6 +12,7 @@ public class ItemInventorySystem : MonoBehaviour
     public GameObject _itemPrefab = null;
 
     private UnitPhoto _unitPhoto;
+    public Animator _saveAnimator;
 
     [SerializeField]
     private TeamManager _teamManager = null;
@@ -163,8 +164,6 @@ public class ItemInventorySystem : MonoBehaviour
         UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelUI.GetComponent<Animator>());
     }
 
-    public Animator _saveAnimator;
-
     public void OnSave()
     {
         _unitPhoto.SaveTexture(_equipedItems);
@@ -173,54 +172,30 @@ public class ItemInventorySystem : MonoBehaviour
         _saveAnimator.SetTrigger("OnAnimation");
     }
 
+    ItemSlot _prevSlot;
+
     public void OnEquiped(ItemSlot curSlot)
     {
+        if (_prevSlot != null)
+        {
+            _prevSlot.OffSelect();
+        }
+
+        curSlot.OnSelect();
+
         int itemCode = curSlot.ItemNumber;
 
         Item i = _itemList.ItemSearch(itemCode);
-        if (i == null) { Debug.Log("ItemInventorySystem : UpdateEquipedItem i is Error"); return; }
+        if (i == null) { LogMassage.Log("ItemInventorySystem : UpdateEquipedItem i is Error"); return; }
 
         // 모델링 업데이트
-        {
-            int partsNum;
-            switch (i.AniType)
-            {
-                case eItemType.None:        return;
-                case eItemType.Helmet:      partsNum = 0;                       break;
-                case eItemType.BodyArmour:  partsNum = 1;                       break;
-                default:                    partsNum = (_isLeftWeapon ? 2 : 3); break;
-            }
 
-            if (partsNum >= _equipedItems.Length) { return; }
+        UpdateModel(i.AniType, itemCode);
 
-            int prevItem = _equipedItems[partsNum];
+        if ((_curType == eCodeType.LeftWeapon || _curType == eCodeType.RightWeapon))
+        { UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelUI.GetComponent<Animator>()); }
 
-            // _equipedItems[partsNum] = _equipedItems[partsNum] == itemCode ? 0 : itemCode;
-
-            if (_equipedItems[partsNum] == itemCode)
-            { // 이미 장착했음 > 장착해제
-                int defaultItemCode = 0;
-                switch(partsNum)
-                {
-                    case 0: defaultItemCode = _itemList.CodeSearch(eCodeType.Helmet, 0);      break;
-                    case 1: defaultItemCode = _itemList.CodeSearch(eCodeType.Bodyarmour, 0);  break;
-                }
-
-                _equipedItems[partsNum] = defaultItemCode;
-            }
-            else
-            { // 장착
-                _equipedItems[partsNum] = itemCode;
-            }
-
-            UpdateModel(prevItem);
-        }
-
-        {
-            if (!(_curType == eCodeType.LeftWeapon || _curType == eCodeType.RightWeapon)) return;
-
-            UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelUI.GetComponent<Animator>());
-        }
+        _prevSlot = curSlot;
     }
 
     #region Private Function
@@ -266,24 +241,67 @@ public class ItemInventorySystem : MonoBehaviour
             for (int i = 0; i < curUseItemSlotCount; ++i)
             {
                 GameObject curSlot = _contentObject.transform.GetChild(i).gameObject;
+                curSlot.SetActive(false);
 
-                curSlot.GetComponent<ItemSlot>().ItemNumber = _inventory[curType][i];
+                ItemSlot slot = curSlot.GetComponent<ItemSlot>();
+                slot.ItemNumber = _inventory[curType][i];
                 _itemsButtonGroup.AddButton(curSlot.GetComponent<ButtonPro>());
+
+                curSlot.SetActive(true);
 
                 if (_inventory[curType][i] == _equipedItems[curType])
                 { // 창작한 아이템코드가 이번 아이템코드
                     _itemsButtonGroup.SelectButton(curSlot.GetComponent<ButtonPro>());
+
+                    slot.OnSelect();
                 }
             }
         }
 
     }
 
-    void UpdateModel(in int prevItem = 0)
+    private void UpdateModel()
     {
         if (_equipedItems == null && _unitModelUI == null) { return; }
         if (_equipedItems.Length == 0) { return; }
 
+        UnitModelManager.Update(_unitModelUI, _equipedItems);
+    }
+
+    private void UpdateModel(eItemType itemType, int itemCode)
+    {
+        if (_equipedItems == null && _unitModelUI == null) { return; }
+        if (_equipedItems.Length == 0) { return; }
+
+        int partsNum;
+        switch (itemType)
+        {
+            case eItemType.None: return;
+            case eItemType.Helmet: partsNum = 0; break;
+            case eItemType.BodyArmour: partsNum = 1; break;
+            default: partsNum = (_isLeftWeapon ? 2 : 3); break;
+        }
+
+        if (partsNum >= _equipedItems.Length) { return; }
+
+        int prevItem = _equipedItems[partsNum];
+
+        if (_equipedItems[partsNum] == itemCode)
+        { // 이미 장착했음 > 장착해제
+            int defaultItemCode = 0;
+            switch (partsNum)
+            {
+                case 0: defaultItemCode = _itemList.CodeSearch(eCodeType.Helmet, 0); break;
+                case 1: defaultItemCode = _itemList.CodeSearch(eCodeType.Bodyarmour, 0); break;
+            }
+
+            _equipedItems[partsNum] = defaultItemCode;
+        }
+        else
+        { // 장착
+            _equipedItems[partsNum] = itemCode;
+        }
+        
         UnitModelManager.Update(_unitModelUI, _equipedItems, prevItem);
     }
 

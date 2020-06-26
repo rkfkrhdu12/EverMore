@@ -160,6 +160,7 @@ public class ItemList
 
     #endregion
 }
+
 namespace GameItem
 {
     public enum eItemType
@@ -193,15 +194,21 @@ namespace GameItem
 
     public class Item 
     {
-        protected string _name;                         public string Name => _name;
-        protected string _itemTypeName;                 public string ItemType => _itemTypeName;
-        protected eItemType _type = eItemType.None;     public eItemType AniType => _type;
+        protected string _name;                         public string Name          => _name;
+        protected string _itemTypeName;                 public string ItemType      => _itemTypeName;
+        protected eItemType _type = eItemType.None;     public eItemType AniType    => _type;
 
-        protected int _cost;                            // public int Cost => _cost;
-
-        protected float _coolTime;                      // public float CoolTime { get => _coolTime; }
+        protected int _cost;                            public int Cost             => _cost;
+        protected float _coolTime;                      public float CoolTime       => _coolTime;
         protected int _weight;
-        protected ItemAbility _ability;                 public ItemAbility Ability => _ability;
+        protected ItemAbility _ability;                 public ItemAbility Ability  => _ability;
+
+        protected float _range;                         public float AttackRange    => _range;
+        protected float _minDamage;                     public float MinDamage      => _minDamage;
+        protected float _maxDamage;                     public float MaxDamage      => _maxDamage;
+        protected float _speed;                         public float AttackSpeed    => _speed;
+        protected float _health;                        public float Health         => _health;
+        protected float _defense;                       public float DefensePower   => _defense;
 
         public virtual void Init(IReadOnlyList<string> datas)
         {
@@ -212,33 +219,9 @@ namespace GameItem
             int.TryParse(datas[4], out _cost);
             float.TryParse(datas[5], out _coolTime);
             int.TryParse(datas[11], out _weight);
-        }
 
-        public virtual void Equip(ref UnitStatus us)
-        {
-            us._cost        += _cost;
-            us._coolTime    += _coolTime;
-            us._weight      += _weight;
-        }
-
-        public virtual void UnEquip(ref UnitStatus us)
-        {
-            us._cost        -= _cost;
-            us._coolTime    -= _coolTime;
-            us._weight      -= _weight;
-        }
-    }
-
-    public class Weapon : Item
-    {
-        protected float _range;
-        protected float _minDamage;
-        protected float _maxDamage;
-        protected float _speed;
-
-        public override void Init(IReadOnlyList<string> datas)
-        {
-            base.Init(datas);
+            float.TryParse(datas[6], out _health);
+            float.TryParse(datas[7], out _defense);
 
             float.TryParse(datas[8], out _range);
             float.TryParse(datas[9], out _maxDamage);
@@ -246,57 +229,77 @@ namespace GameItem
             float.TryParse(datas[12], out _speed);
         }
 
+        public virtual void Equip(ref UnitStatus us)
+        {
+            us._cost        += _cost;
+            us._coolTime    += _coolTime;
+            us._weight      += _weight;
+
+            us._maxhealth += _health;
+            us._defensivePower += _defense;
+
+            if (_range != -1) us._attackRange = (us._attackRange + _range) / 2;
+            us._minAttackDamage += _minDamage;
+            us._maxAttackDamage += _maxDamage;
+            if (_speed != -1) us._attackSpeed = (us._attackSpeed + _speed) / 2;
+        }
+
+        public virtual void UnEquip(ref UnitStatus us)
+        {
+            us._cost        -= _cost;
+            us._coolTime    -= _coolTime;
+            us._weight      -= _weight;
+
+            us._maxhealth -= _health;
+            us._defensivePower -= _defense;
+
+            if (_range != -1) us._attackRange = (us._attackRange * 2) - _range;
+            us._minAttackDamage -= _minDamage;
+            us._maxAttackDamage -= _maxDamage;
+            if (_speed != -1) us._attackSpeed = (us._attackSpeed * 2) - _speed;
+        }
+    }
+
+    public class Weapon : Item
+    {
+
+        public override void Init(IReadOnlyList<string> datas)
+        {
+            base.Init(datas);
+
+        }
+
         public override void Equip(ref UnitStatus us)
         {
             base.Equip(ref us);
 
-            if (_range != -1)
-                us._attackRange = (us._attackRange + _range) / 2;
-            us._minAttackDamage += _minDamage;
-            us._maxAttackDamage += _maxDamage;
-            if (_speed != -1)
-                us._attackSpeed = (us._attackSpeed + _speed) / 2;
         }      
 
         public override void UnEquip(ref UnitStatus us)
         {
             base.Equip(ref us);
 
-            us._attackRange     -= _range;
-            us._minAttackDamage -= _minDamage;
-            us._maxAttackDamage -= _maxDamage;
-            if (_speed != -1)
-                us._attackSpeed = (us._attackSpeed * 2) - _speed;
         }
     }
 
     public class Armour : Item
     {
-        protected float _health;
-        protected float _defense;
 
         public override void Init(IReadOnlyList<string> datas)
         {
             base.Init(datas);
 
-            float.TryParse(datas[6], out _health);
-            float.TryParse(datas[7], out _defense);
         }
 
         public override void Equip(ref UnitStatus us)
         {
             base.Equip(ref us);
-
-            us._maxhealth       += _health;
-            us._defensivePower  += _defense;
         }
 
         public override void UnEquip(ref UnitStatus us)
         {
             base.Equip(ref us);
 
-            us._maxhealth       -= _health;
-            us._defensivePower  -= _defense;
         }
     }
 

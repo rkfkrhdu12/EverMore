@@ -117,8 +117,8 @@ public struct UnitStatus
             _maxDamageIndex = 0;
             _maxAttackDamages = new float[2];
             _minAttackDamages = new float[2];
-            _attackRange = 1f;
-            _attackSpeed = 1f;
+            _attackRange = 0f;
+            _attackSpeed = 0f;
         }
 
         ItemList itemList = Manager.Get<GameManager>().itemList;
@@ -129,6 +129,9 @@ public struct UnitStatus
 
             itemList.ItemSearch(_equipedItems[i]).Equip(ref this);
         }
+
+        if(_attackRange == 0) { _attackRange = 1f; }
+        if(_attackSpeed == 0) { _attackSpeed = 1f; }
     }
 
     public void Init(eTeam team = eTeam.PLAYER)

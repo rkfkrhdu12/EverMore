@@ -7,7 +7,11 @@ public class DeleteObjectSystem
 {
     #region init
 
-    private static readonly Queue<GameObject> _deleteObjList = new Queue<GameObject>();
+    private static readonly Dictionary<string, GameObject> _deleteObjList = new Dictionary<string, GameObject>();
+
+    private static GameObject _trashCan;
+
+    private static int _count = 0;
 
     #endregion
 
@@ -18,13 +22,15 @@ public class DeleteObjectSystem
     /// </summary>
     /// <param name="gObject">삭제할 오브젝트</param>
     // GameObject를 넣어두면 SetActive(false), SetParent(null) 실행 후 실제로 삭제하진 않음.
-    public static void AddDeleteObject(GameObject gObject)
+    public static void AddDeleteObject(GameObject gObject, string name = "")
     {
-        gObject?.transform.SetParent(null);
+        if (_trashCan == null) { _trashCan = new GameObject(); }
+
+        gObject?.transform.SetParent(_trashCan != null ? _trashCan.transform : null);
         gObject?.SetActive(false);
 
-        if (gObject != null) _deleteObjList.Enqueue(gObject);
+        if (gObject != null) _deleteObjList.Add(name + (++_count).ToString(), gObject);
     }
-    
+
     #endregion
 }
