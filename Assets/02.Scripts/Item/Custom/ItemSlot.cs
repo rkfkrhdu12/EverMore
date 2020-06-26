@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using GameplayIngredients;
 using TMPro;
+using GameItem;
 
 public class ItemSlot : MonoBehaviour
 {
@@ -15,48 +16,86 @@ public class ItemSlot : MonoBehaviour
         }
     }
 
-    public TMP_Text _text;
+    [SerializeField]
+    ItemSlotDefault _defaultObject;
+    [SerializeField]
+    ItemSlotInfo _infoObject;
 
-    int prevItemIconObject = -1;
+    bool _isSelect = false;
 
-    private void Awake() => UpdateText();
+    public void OffSelect()
+    {
+        _isSelect = false;
+
+        if (!_isSelect)
+        { // Default
+            _infoObject.gameObject.SetActive(false);
+            _defaultObject.gameObject.SetActive(true);
+        }
+
+        UpdateText();
+    }
+
+    public void OnSelect()
+    {
+        _isSelect = true;
+
+        if (_isSelect)
+        { // Info
+            _infoObject.gameObject.SetActive(true);
+            _defaultObject.gameObject.SetActive(false);
+        }
+
+        UpdateText();
+    }
+
+    private void Awake()
+    {
+        _defaultObject._slot = this;
+        _infoObject._slot = this;
+    }
+
+    private void OnEnable()
+    {
+        _isSelect = false;
+
+        _infoObject.gameObject.SetActive(false);
+        _defaultObject.gameObject.SetActive(true);
+
+        UpdateText();
+    }
+
+    private void Start()
+    {
+
+        if (_isSelect)
+        { // Info
+            _infoObject.gameObject.SetActive(true);
+            _defaultObject.gameObject.SetActive(false);
+        }
+        else
+        { // Default
+            _infoObject.gameObject.SetActive(false);
+            _defaultObject.gameObject.SetActive(true);
+        }
+
+        UpdateText();
+    }
 
     private void UpdateText()
     {
-        GameItem.Item item = Manager.Get<GameManager>().itemList.ItemSearch(_itemNum);
-        
-        if (item == null)
-            return;
-
-        if (_text == null)
-            _text = transform.GetChild(transform.childCount - 1).GetComponent<TMP_Text>();
-
-        int childNum;
-        switch (item.AniType)
+        if (!_isSelect)
         {
-            case GameItem.eItemType.Helmet:     childNum = 0; break;
-            case GameItem.eItemType.BodyArmour: childNum = 1; break;
-            default: childNum = 2; break;
+            _defaultObject.UpdateText();
         }
-
-        if (prevItemIconObject != -1)
-            UnitIconManager.Reset(transform.GetChild(prevItemIconObject).gameObject);
-
-        // if (childNum != -1)
+        else
         {
-            transform.GetChild(childNum).gameObject.SetActive(true);
+            _infoObject.UpdateText();
 
-            prevItemIconObject = childNum;
-            IconUpdate(childNum, item.Name);
         }
-
-        _text.text = item.Name;
     }
 
-    void IconUpdate(int iconObjChildCount, string ItemName)
+    void UpdateIcon()
     {
-        UnitIconManager.Reset(transform.GetChild(iconObjChildCount).gameObject);
-
-        UnitIconManager.Update(transform.GetChild(iconObjChildCount).gameObject, ItemName);
     }
 }
