@@ -46,7 +46,7 @@ public class UnitController : FieldObject
     public override void DamageReceive(float damage) 
     {
         //데미지를 받습니다.
-        _curHp -= Mathf.Min(damage - _status._defensivePower, 0);
+        _curHp -= Mathf.Max(damage - _status._defensivePower, 0);
 
         _healthBarImage.fillAmount = RemainHealth;
 
