@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LogMassage
+public class LogMessage
 {
     public static void Log(string str)
     {

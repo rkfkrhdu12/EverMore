@@ -7,9 +7,20 @@ public class Launcher : MonoBehaviourPunCallbacks
 {
     public void Connect()
     {
+        if (PhotonNetwork.IsConnected) { Debug.Log("Is Connected True"); return; }
+
         if (!string.IsNullOrWhiteSpace(PlayerPrefs.GetString(_playerNamePrefKey)))
         {
             PhotonNetwork.ConnectUsingSettings();
+        }
+        else
+        {
+            SetPlayerName("Player");
+
+            if (!string.IsNullOrWhiteSpace(PlayerPrefs.GetString(_playerNamePrefKey)))
+            {
+                PhotonNetwork.ConnectUsingSettings();
+            }
         }
     }
 
@@ -46,9 +57,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
         PhotonNetwork.AutomaticallySyncScene = true;
 
-        // Screen.SetResolution(960, 540, false);
-
-        Connect();
+        // Connect();
     }
 
     public void Update()
@@ -65,27 +74,16 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Server Connected");
+        LogMessage.Log("Server Connected");
 
         PhotonNetwork.LocalPlayer.NickName = PlayerPrefs.GetString(_playerNamePrefKey);
+
+        PhotonNetwork.LoadLevel("MainScene");
     }
-
-    public override void OnDisconnected(DisconnectCause cause)
-    {
-        Debug.Log("Server Disconnected");
-
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-        }
-    }
-
+    
     public override void OnJoinedRoom()
     {
-        Debug.Log("OnJoinedRoom()");
+        LogMessage.Log("OnJoinedRoom()");
 
         PhotonNetwork.LoadLevel("GameScene");
     }

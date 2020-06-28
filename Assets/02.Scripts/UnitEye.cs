@@ -13,7 +13,6 @@ public class UnitEye : MonoBehaviour
     private float _attackRange = -1;
     private float _attackAngle = 180f;
 
-    private bool _isCollision = false;
     public bool _isEnemy = true;
 
     //공격 타겟에대한 큐
@@ -61,8 +60,8 @@ public class UnitEye : MonoBehaviour
     private void OnEnable()
     {
         // Inspector 에서 드래그드롭 해줘야 할 오브젝트들
-        if (!_collider) { _collider = GetComponent<SphereCollider>(); LogMassage.Log("UnitEye : Collider is NULL"); }
-        if (!_unitCtrl) { _unitCtrl = transform.parent.GetComponent<UnitController>(); LogMassage.Log("UnitEye : UnitCtrl is NULL"); }
+        if (!_collider) { _collider = GetComponent<SphereCollider>(); LogMessage.Log("UnitEye : Collider is NULL"); }
+        if (!_unitCtrl) { _unitCtrl = transform.parent.GetComponent<UnitController>(); LogMessage.Log("UnitEye : UnitCtrl is NULL"); }
 
         float range = Mathf.Max(_unitCtrl._status._attackRange, _minRange);
 
@@ -108,21 +107,13 @@ public class UnitEye : MonoBehaviour
                         // 이미 타겟들에 있으면
                         if (_targets.Contains(target) || target.IsDead) return;
 
-                        // 충돌 범위에 충돌함 !
-                        _isCollision = true;
-
                         // 타겟들 목록에 Add
                         _targets.Add(target);
 
                         // UnitCtrl 업데이트
                         _unitCtrl.UpdateTarget();
                     }
-                    else // 충돌 안함
-                        _isCollision = false;
                 }
-                else // 충돌 안함
-                    _isCollision = false;
-
                 return;
             }
         }

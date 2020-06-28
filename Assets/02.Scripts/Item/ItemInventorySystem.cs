@@ -111,15 +111,13 @@ public class ItemInventorySystem : MonoBehaviour
 
         List<string> weaponList = new List<string>();
 
-        GameItem.eCodeType weapon = GameItem.eCodeType.Weapon;
+        eCodeType weapon = eCodeType.Weapon;
         for (int i = 0; i < _itemList.GetCodeItemCount(weapon); ++i)
         {
             int code = _itemList.CodeSearch(weapon, i);
 
             weaponList.Add(_itemList.ItemSearch(code).Name);
         }
-
-        weaponList.Remove("빛의 포크");
 
         for (int i = 0; i < weaponList.Count; ++i)
         {
@@ -186,7 +184,7 @@ public class ItemInventorySystem : MonoBehaviour
         int itemCode = curSlot.ItemNumber;
 
         Item i = _itemList.ItemSearch(itemCode);
-        if (i == null) { LogMassage.Log("ItemInventorySystem : UpdateEquipedItem i is Error"); return; }
+        if (i == null) { LogMessage.Log("ItemInventorySystem : UpdateEquipedItem i is Error"); return; }
 
         // 모델링 업데이트
 

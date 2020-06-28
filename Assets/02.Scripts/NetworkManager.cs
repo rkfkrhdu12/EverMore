@@ -11,53 +11,58 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void LeaveRoom() => PhotonNetwork.LeaveRoom();
 
     #region Private Variable
-    [SerializeField]
-    private GameObject _respawnButton;
 
     #endregion
 
     #region Photon Callback Function
 
+    // AnyTime
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        LogMessage.Log("DisConnected");
+    }
+
+    // InGame
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.Log("new Player Entered");
+        LogMessage.Log("new Player Entered");
 
-        _respawnButton.SetActive(true);
     }
 
     public override void OnLeftRoom()
     {
-        Debug.Log("OnLeftRoom()");
+        LogMessage.Log("OnLeftRoom()");
 
-        SceneManager.LoadScene(0);
+        PhotonNetwork.LoadLevel("MainScene");
     }
     #endregion
 
     #region Monobehaviour Function
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            LeaveRoom();
+            if (PhotonNetwork.IsConnected)
+                PhotonNetwork.Disconnect();
+
+
         }
 
-        if (_respawnButton.activeSelf && Input.GetKeyDown(KeyCode.R))
-        {
-            Spawn();
-        }
     }
 
-    #endregion
-
-    #region Private Function
-
-    public void Spawn()
+    private void OnApplicationQuit()
     {
-        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
-
-        _respawnButton.SetActive(false);
+        if (PhotonNetwork.IsConnected)
+            PhotonNetwork.Disconnect();
     }
 
     #endregion
+
 }

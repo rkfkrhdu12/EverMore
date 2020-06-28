@@ -51,10 +51,12 @@ public class ButtonPro : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
     [SerializeField, Tooltip("선택되었을 때")]
     private Sprite selectImage;
 
+    public bool _isDefaultImageAlpha = false;
+    public bool _isSetNativeSize = false;
+
     [Space]
     public FuncEvent onButtonEvent;
 
-    public bool _isDefaultImageAlpha = false;
     #endregion
 
     #region Hide Inspector
@@ -98,8 +100,11 @@ public class ButtonPro : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
     {
         if (normalImage != null)
         {
-            image.sprite = normalImage;
-            image.SetNativeSize();
+            UpdateImage(normalImage);
+
+            //image.sprite = normalImage;
+            //if (!_isDefaultImageAlpha)
+            //    image.SetNativeSize();
         }
     }
 
@@ -131,8 +136,9 @@ public class ButtonPro : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
                 if (isButtonReach)
                     if (reachImage != null)
                     {
-                        image.sprite = reachImage;
-                        image.SetNativeSize();
+                        UpdateImage(reachImage);
+                        //image.sprite = reachImage;
+                        //image.SetNativeSize();
                     }
             }
         }
@@ -147,8 +153,9 @@ public class ButtonPro : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
                 {
                     if (selectImage != null)
                     {
-                        image.sprite = selectImage;
-                        image.SetNativeSize();
+                        UpdateImage(selectImage);
+                        //image.sprite = selectImage;
+                        //image.SetNativeSize();
                     }
                 }
             }
@@ -197,8 +204,9 @@ public class ButtonPro : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
 
             if (selectImage != null)
             {
-                image.sprite = selectImage;
-                image.SetNativeSize();
+                UpdateImage(selectImage);
+                //image.sprite = selectImage;
+                //image.SetNativeSize();
             }
         }
 
@@ -227,8 +235,9 @@ public class ButtonPro : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
     {
         if (pressImage != null)
         {
-            image.sprite = pressImage;
-            image.SetNativeSize();
+            UpdateImage(pressImage);
+            //image.sprite = pressImage;
+            //image.SetNativeSize();
         }
         _btnState = BtnState.PRESS;
     }
@@ -239,8 +248,9 @@ public class ButtonPro : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
 
         if (selectImage != null)
         {
-            image.sprite = selectImage;
-            image.SetNativeSize();
+            UpdateImage(selectImage);
+            //image.sprite = selectImage;
+            //image.SetNativeSize();
         }
         _btnState = BtnState.SELECT;
     }
@@ -253,14 +263,23 @@ public class ButtonPro : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
         //풀림
         if (normalImage != null)
         {
-            image.sprite = normalImage;
-            image.SetNativeSize();
+            UpdateImage(normalImage);
+            //image.sprite = normalImage;
+            //if (!_isDefaultImageAlpha)
+            //    image.SetNativeSize();
         }
         _btnState = BtnState.NORMAL;
 
         //버튼 그룹이 할당됬을 시 : Not Select
         if (_buttonGroup != null)
             isSelected = false;
+    }
+
+    void UpdateImage(Sprite changedSprite)
+    {
+        image.sprite = changedSprite;
+        if (!_isSetNativeSize)
+            image.SetNativeSize();
     }
 
 }

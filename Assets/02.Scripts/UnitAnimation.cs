@@ -16,10 +16,10 @@ public class UnitAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        if(_unitCtrl == null)  { _unitCtrl = transform.parent.GetComponent<UnitController>(); LogMassage.Log("UnitAnimation : UnitCtrl is NULL"); } 
-        if(_ani == null)       { _ani = GetComponent<Animator>();                             LogMassage.Log("UnitAnimation : Ani is NULL"); }
+        if(_unitCtrl == null)  { _unitCtrl = transform.parent.GetComponent<UnitController>(); LogMessage.Log("UnitAnimation : UnitCtrl is NULL"); } 
+        if(_ani == null)       { _ani = GetComponent<Animator>();                             LogMessage.Log("UnitAnimation : Ani is NULL"); }
 
-        _ani.SetFloat(_idAttackSpd, _unitCtrl._attackSpeed);
+        _ani.SetFloat(_idAttackSpd, _unitCtrl.AttackSpeed);
         _ani.SetBool(_idAttack, false);
 
         UnitAnimationManager.Update(_unitCtrl._status._equipedItems[2], _unitCtrl._status._equipedItems[3], _ani);

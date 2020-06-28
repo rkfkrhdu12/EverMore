@@ -26,9 +26,9 @@ public class UnitController : FieldObject
     { // Spawn() -> OnEnable() 순서
 
         // Inspector 에서 드래그드롭 해줘야 할 오브젝트들
-        if (_ani == null)    { _ani = GetComponentInChildren<UnitAnimation>(); LogMassage.Log("UnitCtrl : AniPro is Null"); }
+        if (_ani == null)    { _ani = GetComponentInChildren<UnitAnimation>(); LogMessage.Log("UnitCtrl : AniPro is Null"); }
         if (_IsNavMeshAgent) { } // { _navMeshAgent = GetComponent<NavMeshAgent>(); Debug.Log("UnitCtrl  NavAgent is Null"); }
-        if (_eye == null)    { _eye = GetComponentInChildren<UnitEye>(); LogMassage.Log("UnitCtrl : Eye is Null"); }
+        if (_eye == null)    { _eye = GetComponentInChildren<UnitEye>(); LogMessage.Log("UnitCtrl : Eye is Null"); }
 
         // 나머지 데이터들 Init
         _navMeshAgent.updateRotation = false;
@@ -38,10 +38,11 @@ public class UnitController : FieldObject
 
         CurState = eAni.IDLE;
 
-        _curHp = _status._maxhealth;
-        _maxHp = _status._maxhealth;
+        SetHp(ref _status._maxhealth);
+        SetMaxHp(ref _status._maxhealth);
         _isDead = false;
     }
+
 
     public override void DamageReceive(float damage) 
     {
@@ -148,24 +149,24 @@ public class UnitController : FieldObject
     public UnitStatus _status;
 
     //공격 데미지
-    public float _attackDamage          { get { return _status._attackDamage; } }
-    public float _leftAttackDamage      { get { return _status._leftAttackDamage; } }
-    public float _rightAttackDamage     { get { return _status._rightAttackDamage; } }
+    public float AttackDamage          { get { return _status.AttackDamage; } }
+    public float LeftAttackDamage      { get { return _status.LeftAttackDamage; } }
+    public float RightAttackDamage     { get { return _status.RightAttackDamage; } }
 
     //공격 속도
-    public float _attackSpeed { get { return _status._attackSpeed; } }
+    public float AttackSpeed { get { return _status.AttackSpeed; } }
 
     //공격 범위
-    public float _attackRange { get { return _status._attackRange; } }
+    public float AttackRange { get { return _status._attackRange; } }
 
     //이동 속도
-    public float _moveSpeed { get { return _status._moveSpeed; } }
+    public float MoveSpeed { get { return _status._moveSpeed; } }
 
     // 유닛 코스트
-    public int _cost { get { return _status._cost; } }
+    public int Cost { get { return _status._cost; } }
 
     // second
-    public float _coolTime { get { return _status._coolTime; } }
+    public float CoolTime { get { return _status._coolTime; } }
 
     #endregion
 
@@ -225,8 +226,8 @@ public class UnitController : FieldObject
 
         _team = _status._team;
 
-        _navMeshAgent.stoppingDistance = Mathf.Max(1.8f, _attackRange);
-        _navMeshAgent.speed = _moveSpeed;
+        _navMeshAgent.stoppingDistance = Mathf.Max(1.8f, AttackRange);
+        _navMeshAgent.speed = MoveSpeed;
 
         _curTarget = _enemyCastleObject;
         _navMeshAgent.SetDestination(_curTarget.transform.position);
@@ -238,10 +239,10 @@ public class UnitController : FieldObject
 
         if (particle == null) return;
 
-        particle.playbackSpeed = 1 * _attackSpeed;
+        particle.playbackSpeed = 1 * AttackSpeed;
         for (int i = 0; i < particle.transform.childCount; ++i)
         {
-            particle.transform.GetChild(i).GetComponent<ParticleSystem>().playbackSpeed = 1 * _attackSpeed;
+            particle.transform.GetChild(i).GetComponent<ParticleSystem>().playbackSpeed = 1 * AttackSpeed;
         }
     }
 
@@ -311,9 +312,9 @@ public class UnitController : FieldObject
 
     public void AttackRight()
     {
-        if (_rightAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
+        if (RightAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
 
-        _curTarget.DamageReceive(_rightAttackDamage);
+        _curTarget.DamageReceive(RightAttackDamage);
 
         if (_curTarget.CurHealth <= 0)
             _eye.UpdateTarget();
@@ -321,9 +322,9 @@ public class UnitController : FieldObject
 
     public void AttackLeft()
     {
-        if(_leftAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
+        if(LeftAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
 
-        _curTarget.DamageReceive(_leftAttackDamage);
+        _curTarget.DamageReceive(LeftAttackDamage);
 
         if (_curTarget.CurHealth <= 0)
             _eye.UpdateTarget();
@@ -340,9 +341,12 @@ public class UnitController : FieldObject
 
             _navMeshAgent.SetDestination(_curTarget.transform.position);
 
-            _navMeshAgent.stoppingDistance = _attackRange;
+            _navMeshAgent.stoppingDistance = AttackRange;
         }
     }
+
+    void SetHp(ref float health) { _curHp = health; }
+    void SetMaxHp(ref float maxhealth) { _maxHp = maxhealth; }
 
     #endregion
 }
@@ -763,6 +767,8 @@ public class UnitAnimationManager
         aniName.Add("Sword&Spear");
         aniName.Add("Spear&Spear");
         aniName.Add("Shield&Shield");
+        aniName.Add("&TwoHandSword");
+        aniName.Add("TwoHandSword&TwoHandSword");
 
         _typeAnimationNum.Add("&", 5); // 아무 무기도 없을때 애니메이션은 Sword(제일 무난..)
     }

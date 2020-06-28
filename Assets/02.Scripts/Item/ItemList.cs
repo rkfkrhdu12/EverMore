@@ -147,7 +147,7 @@ public class ItemList
 
         switch (i.AniType)
         {
-            case eItemType.None:        LogMassage.LogError("Item Error" + i.Name); break;
+            case eItemType.None:        LogMessage.LogError("Item Error" + i.Name); break;
             case eItemType.Helmet:      _codeList[(int)eCodeType.Helmet].Add(_codeList[(int)eCodeType.Helmet].Count, index); break;
             case eItemType.BodyArmour:  _codeList[(int)eCodeType.Bodyarmour].Add(_codeList[(int)eCodeType.Bodyarmour].Count, index); break;
             default:                    _codeList[(int)eCodeType.Weapon].Add(_codeList[(int)eCodeType.Weapon].Count, index); break;
@@ -189,8 +189,6 @@ namespace GameItem
         LeftWeapon,
         Weapon = 2,
     }
-
-    public delegate void ItemAbility();
 
     public class Item 
     {
@@ -239,8 +237,13 @@ namespace GameItem
             us._defensivePower += _defense;
 
             if (_range != -1) us._attackRange = (us._attackRange + _range) / 2;
-            us._minAttackDamage += _minDamage;
-            us._maxAttackDamage += _maxDamage;
+
+            if (_type <= eItemType.BodyArmour && _type != eItemType.None)
+            {
+                us._minAttackDamages[0] += _minDamage;
+                us._maxAttackDamages[0] += _maxDamage;
+            }
+
             if (_speed != -1) us._attackSpeed = (us._attackSpeed + _speed) / 2;
         }
 
@@ -250,12 +253,17 @@ namespace GameItem
             us._coolTime    -= _coolTime;
             us._weight      -= _weight;
 
+            // Armour
             us._maxhealth -= _health;
             us._defensivePower -= _defense;
 
+            // Weapon
             if (_range != -1) us._attackRange = (us._attackRange * 2) - _range;
-            us._minAttackDamage -= _minDamage;
-            us._maxAttackDamage -= _maxDamage;
+            if (_type <= eItemType.BodyArmour && _type != eItemType.None)
+            {
+                us._minAttackDamages[2] -= _minDamage;
+                us._maxAttackDamages[2] -= _maxDamage;
+            }
             if (_speed != -1) us._attackSpeed = (us._attackSpeed * 2) - _speed;
         }
     }
@@ -273,12 +281,16 @@ namespace GameItem
         {
             base.Equip(ref us);
 
+            us._minAttackDamage += _minDamage;
+            us._maxAttackDamage += _maxDamage;
         }      
 
         public override void UnEquip(ref UnitStatus us)
         {
             base.Equip(ref us);
 
+            us._minAttackDamage -= _minDamage;
+            us._maxAttackDamage -= _maxDamage;
         }
     }
 
@@ -352,4 +364,6 @@ namespace GameItem
     }
 
     #endregion
+
+
 }

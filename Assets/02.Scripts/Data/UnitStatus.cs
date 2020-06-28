@@ -11,28 +11,29 @@ public struct UnitStatus
 {
     public eTeam _team;
 
+    public float _curhealth;
     public float _maxhealth;
     public float _defensivePower;
+
+    public float[] _maxAttackDamages;    public float AttackDamage { get { return LeftAttackDamage + RightAttackDamage; } }
+    public float[] _minAttackDamages;    public float LeftAttackDamage      { get { return Random.Range(_minAttackDamages[0], _maxAttackDamages[0]) + (RightAttackDamage == 0 ? _minAttackDamages[2] : _minAttackDamages[2] / 2.0f); } }
+                                         public float RightAttackDamage     { get { return Random.Range(_minAttackDamages[1], _maxAttackDamages[1]) + (LeftAttackDamage == 0 ? _minAttackDamages[2] : _minAttackDamages[2] / 2.0f); } }
 
     #region Set AttackDamage
 
     private int _maxDamageIndex;
-    public float[] _maxAttackDamages;
-
     private int _minDamageIndex;
-    public float[] _minAttackDamages;
 
     public float _minAttackDamage
     {
         get
         {
-            if (_minAttackDamages == null) { return 0; }
+            if (_minAttackDamages.Length - 1 > _minDamageIndex)
+            {
+                return _minAttackDamages[_minDamageIndex];
+            }
 
-            float returnVal = _minAttackDamages.Length <= _minDamageIndex ?
-                _minAttackDamages[0] + _minAttackDamages[1] :
-                _minAttackDamages[_minDamageIndex];
-
-            return returnVal;
+            return 0.0f;
         }
 
         set
@@ -49,13 +50,12 @@ public struct UnitStatus
     {
         get
         {
-            if (_maxAttackDamages == null) { return 0; }
+            if (_minAttackDamages.Length - 1 > _maxDamageIndex)
+            {
+                return _minAttackDamages[_maxDamageIndex];
+            }
 
-            float returnVal = _maxAttackDamages.Length <= _maxDamageIndex ?
-                _maxAttackDamages[0] + _maxAttackDamages[1] :
-                _maxAttackDamages[_maxDamageIndex];
-
-            return returnVal;
+            return 0.0f;
         }
 
         set
@@ -70,12 +70,22 @@ public struct UnitStatus
     }
     #endregion
 
-    public float _attackDamage          { get { return _leftAttackDamage + _rightAttackDamage; } }
-    public float _leftAttackDamage      { get { return Random.Range(_minAttackDamages[0], _maxAttackDamages[0]); } }
-    public float _rightAttackDamage     { get { return Random.Range(_minAttackDamages[1], _maxAttackDamages[1]); } }
+    public ItemAbility[] _abilities;     public ItemAbility[] Abilities { get { return _abilities; }  }
+        
+    #region Set Ability
 
-    public float _attackSpeed;
-    public float _attackRange;
+    private int _abilIndex;
+    public void SetAbility(ItemAbility abil)
+    {
+        if (_abilities == null) { return; }
+        if (_abilities.Length <= _abilIndex + 1) { return; }
+
+        _abilities[_abilIndex++] = abil;
+    }
+    #endregion
+
+    public float _attackSpeed;      public float AttackSpeed => _attackSpeed;
+    public float _attackRange;      
 
     public float _moveSpeed;
     public int _cost;
@@ -83,26 +93,6 @@ public struct UnitStatus
     public int _weight;
 
     public int[] _equipedItems;
-
-    public void ChangeItem(int curCode, int changeCode)
-    {
-        ItemList itemList = Manager.Get<GameManager>().itemList;
-
-        _minDamageIndex = 0;
-        _maxDamageIndex = 0;
-        for (int i = 0; i < 4; ++i)
-        {
-            if (curCode == _equipedItems[i])
-            {
-                itemList.ItemSearch(_equipedItems[i]).UnEquip(ref this);
-
-                _equipedItems[i] = changeCode;
-
-                itemList.ItemSearch(_equipedItems[i]).Equip(ref this);
-                return;
-            }
-        }
-    }
 
     public void UpdateItems()
     {
@@ -115,8 +105,10 @@ public struct UnitStatus
             _weight = 0;
             _minDamageIndex = 0;
             _maxDamageIndex = 0;
-            _maxAttackDamages = new float[2];
-            _minAttackDamages = new float[2];
+            _maxAttackDamages = new float[3];
+            _minAttackDamages = new float[3];
+            _abilIndex = 0;
+            _abilities = new ItemAbility[4];
             _attackRange = 0f;
             _attackSpeed = 0f;
         }
@@ -130,8 +122,15 @@ public struct UnitStatus
             itemList.ItemSearch(_equipedItems[i]).Equip(ref this);
         }
 
-        if(_attackRange == 0) { _attackRange = 1f; }
-        if(_attackSpeed == 0) { _attackSpeed = 1f; }
+        _curhealth = _maxhealth;
+
+        if (_attackRange == 0) { _attackRange = 1f; }
+        if (_attackSpeed == 0) { _attackSpeed = 1f; }
+
+        for (int i = 0; i < 4; ++i)
+        {
+            if (_abilities[i] != null) { _abilities[i].UpdateStatus(this); }
+        }
     }
 
     public void Init(eTeam team = eTeam.PLAYER)

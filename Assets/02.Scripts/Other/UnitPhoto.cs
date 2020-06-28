@@ -25,7 +25,7 @@ public class UnitPhoto : MonoBehaviour
     private void Start()
     {
         _path = $"{Application.persistentDataPath}";
-        LogMassage.Log(_path);
+        LogMessage.Log(_path);
     }
 
     public void UpdateTexture(ref RawImage rawImage,in int[] equipedItems)

@@ -100,7 +100,7 @@ public class LevelManager : MonoBehaviour
         if (_levelDataList.Count != 0) { return; }
 
         List<string> levelDatas = CSVParser.Read("CostTable");
-        if (null == levelDatas) { LogMassage.Log("CostTable.csv is Error"); return; }
+        if (null == levelDatas) { LogMessage.Log("CostTable.csv is Error"); return; }
 
         // using System.Linq;
         foreach (var splitDatas in levelDatas.Select(t => t.Split(',')))
