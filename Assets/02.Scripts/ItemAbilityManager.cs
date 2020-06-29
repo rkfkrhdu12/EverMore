@@ -31,9 +31,12 @@ public class ItemAbilityManager
             abilityList[index]._name            = splitDatas[1];
             abilityList[index]._range           = float.Parse(splitDatas[2]);
             abilityList[index]._time            = int.Parse(splitDatas[3]);
+            if (abilityList[index].Time != -1)
+                abilityList[index].WaitTime = new WaitForSeconds(abilityList[index].Time);
             abilityList[index]._condition       = float.Parse(splitDatas[4]);
 
             float var;
+
             var = float.Parse(splitDatas[5]);
             if (var != 0)
                 abilityList[index]._variables.Add(var);
@@ -52,12 +55,13 @@ public class ItemAbility
     public string _name;                    public string Name      => _name;
     public float _range;                    public float Range      => _range;
     public int _time;                       public int Time         => _time;
+    public WaitForSeconds WaitTime; // = _time;
 
     public float _condition;                public float Condition  => _condition;
 
     public List<float> _variables;          public List<float> Var  => _variables;
 
-    virtual public void UpdateStatus(UnitStatus us) { }
-    virtual public void StartSpawn(UnitStatus us) { }
-    virtual public void AttackStart(UnitStatus us, UnitStatus[] enemyUs) { }
+    virtual public void UpdateStatus(ref UnitController unit) { }
+    virtual public void StartSpawn(ref UnitController unit) { }
+    virtual public IEnumerator UpdateAttack(UnitController unit, FieldObject enemyUnits) { yield return null; }
 }

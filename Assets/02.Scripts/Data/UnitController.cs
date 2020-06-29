@@ -30,6 +30,12 @@ public class UnitController : FieldObject
         if (_IsNavMeshAgent) { } // { _navMeshAgent = GetComponent<NavMeshAgent>(); Debug.Log("UnitCtrl  NavAgent is Null"); }
         if (_eye == null)    { _eye = GetComponentInChildren<UnitEye>(); LogMessage.Log("UnitCtrl : Eye is Null"); }
 
+        UnitController uc = this;
+        for (int i = 0; i < 4; ++i)
+        {
+            if (_status._abilities[i] != null) { _status._abilities[i].UpdateStatus(ref uc); }
+        }
+
         // 나머지 데이터들 Init
         _navMeshAgent.updateRotation = false;
 
