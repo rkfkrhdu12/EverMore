@@ -7,11 +7,11 @@ public class Launcher : MonoBehaviourPunCallbacks
 {
     public void Connect()
     {
-        if (PhotonNetwork.IsConnected) { Debug.Log("Is Connected True"); return; }
+        if (PhotonNetwork.IsConnected) { LogMessage.Log("Is Connected True"); return; }
 
         if (!string.IsNullOrWhiteSpace(PlayerPrefs.GetString(_playerNamePrefKey)))
         {
-            PhotonNetwork.ConnectUsingSettings();
+            if (!PhotonNetwork.ConnectUsingSettings()) { LogMessage.Log("Connected Error"); }
         }
         else
         {
@@ -50,8 +50,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     #region Monobehaviour Function
     private void Awake()
     {
-        int i = PhotonNetwork.IsConnected == false ? 0 : 0;
-
         if (PhotonNetwork.GameVersion != _gameVersion)
             PhotonNetwork.GameVersion = _gameVersion;
 

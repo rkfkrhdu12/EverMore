@@ -49,12 +49,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (PhotonNetwork.IsConnected)
-                PhotonNetwork.Disconnect();
-
-
+            Application.Quit();
         }
-
     }
 
     private void OnApplicationQuit()
