@@ -3,7 +3,7 @@
     private void Awake() =>
         _curHp = _maxHp = 100;
 
-    public override void DamageReceive(float damage)
+    public override void DamageReceive(float damage, FieldObject receiveObject)
     {
         _curHp -= damage;
 

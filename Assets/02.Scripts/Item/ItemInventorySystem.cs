@@ -252,6 +252,8 @@ public class ItemInventorySystem : MonoBehaviour
                     _itemsButtonGroup.SelectButton(curSlot.GetComponent<ButtonPro>());
 
                     slot.OnSelect();
+
+                    _prevSlot = slot;
                 }
             }
         }

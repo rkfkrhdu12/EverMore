@@ -5,34 +5,36 @@ using UnityEngine;
 public class ItemAbilityFrostyFeet : ItemAbility
 {
     bool _isUpdate = false;
-    public override IEnumerator UpdateAttack(UnitController unit, FieldObject enemyUnits)
+
+    float _defaultAtkSpd  = -1;      
+    float _defaultMoveSpd = -1;
+    UnitController _curTarget;
+
+    public override void Hit(FieldObject enemyUnit)
     {
-        UnitController curTarget = (UnitController)enemyUnits;
-        if (curTarget == null || _isUpdate) { yield return null; }
+        _curTarget = (UnitController)enemyUnit;
+        if (_curTarget == null) { return; }
 
-        _isUpdate = true;
+        if (!_isUpdate)
+        {
+            _isUpdate = true;
 
-        float defaultAtkSpd = curTarget._status._attackSpeed;
-        float defaultMoveSpd = curTarget._status._moveSpeed;
+            _defaultAtkSpd = _curTarget._status._attackSpeed;
+            _defaultMoveSpd = _curTarget._status._moveSpeed;
 
-        curTarget._status._attackSpeed = defaultAtkSpd / _variables[0];
-        curTarget._status._moveSpeed = defaultMoveSpd / _variables[0];
+            _curTarget._status._attackSpeed = _defaultAtkSpd / _variables[0];
+            _curTarget._status._moveSpeed = _defaultMoveSpd / _variables[1];
+        }
 
-        yield return WaitTime;
+        _time = _timeInterval;
+    }
 
-        curTarget._status._attackSpeed = defaultAtkSpd;
-        curTarget._status._moveSpeed = defaultMoveSpd;
-
+    public override void TimeOver()
+    {
         _isUpdate = false;
-        yield return null;
-    }
 
-    public override void StartSpawn(ref UnitController unit)
-    {
-    }
-
-    public override void UpdateStatus(ref UnitController unit)
-    {
+        _curTarget._status._attackSpeed = _defaultAtkSpd;
+        _curTarget._status._moveSpeed = _defaultMoveSpd;
     }
 }
 

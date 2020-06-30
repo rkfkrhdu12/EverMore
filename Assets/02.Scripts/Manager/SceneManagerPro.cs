@@ -20,6 +20,7 @@ public class SceneManagerPro : Manager
         GAMESEARCH,
         INGAME,
         GAMERESULT,
+        MainScene,
     }
 
     #endregion

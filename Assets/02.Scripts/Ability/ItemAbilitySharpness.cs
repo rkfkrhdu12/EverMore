@@ -2,18 +2,16 @@
 using System.Collections;
 
 public class ItemAbilitySharpness : ItemAbility
-{
-    public override IEnumerator UpdateAttack(UnitController unit, FieldObject enemyUnits)
-    {
-        yield return null;
-    }
+{ // 날카로움 1 +
+    override public void Hit(FieldObject enemyUnit) { LogMessage.Log("Hit"); }
+    override public void Beaten(FieldObject enemyUnit) { LogMessage.Log("Beaten"); }
 
-    public override void StartSpawn(ref UnitController unit)
+    override public void Init(UnitController unit)
     {
-    }
+        LogMessage.Log("UpdateStatus");
 
-    public override void UpdateStatus(ref UnitController unit)
-    {
+        base.Init(unit);
+
         UnitStatus us = unit._status;
 
         us._minAttackDamages[0] *= us._minAttackDamages[0] / _variables[0];

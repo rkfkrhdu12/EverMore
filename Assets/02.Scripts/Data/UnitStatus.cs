@@ -16,8 +16,8 @@ public struct UnitStatus
     public float _defensivePower;
 
     public float[] _maxAttackDamages;    public float AttackDamage { get { return LeftAttackDamage + RightAttackDamage; } }
-    public float[] _minAttackDamages;    public float LeftAttackDamage      { get { return Random.Range(_minAttackDamages[0], _maxAttackDamages[0]) + (RightAttackDamage == 0 ? _minAttackDamages[2] : _minAttackDamages[2] / 2.0f); } }
-                                         public float RightAttackDamage     { get { return Random.Range(_minAttackDamages[1], _maxAttackDamages[1]) + (LeftAttackDamage == 0 ? _minAttackDamages[2] : _minAttackDamages[2] / 2.0f); } }
+    public float[] _minAttackDamages;    public float LeftAttackDamage      { get { return Random.Range(_minAttackDamages[0], _maxAttackDamages[0]) + ((_minAttackDamages[1] == 0 && _maxAttackDamages[1] == 0) ? _minAttackDamages[2] : _minAttackDamages[2] / 2.0f); } }
+                                         public float RightAttackDamage     { get { return Random.Range(_minAttackDamages[1], _maxAttackDamages[1]) + ((_minAttackDamages[0] == 0 && _maxAttackDamages[0] == 0) ? _minAttackDamages[2] : _minAttackDamages[2] / 2.0f); } }
 
     #region Set AttackDamage
 
@@ -78,9 +78,20 @@ public struct UnitStatus
     public void SetAbility(ItemAbility abil)
     {
         if (_abilities == null) { return; }
-        if (_abilities.Length <= _abilIndex + 1) { return; }
+        if (_abilities.Length <= _abilIndex) { return; }
 
         _abilities[_abilIndex++] = abil;
+    }
+
+    public void RemoveAbility(ItemAbility abil)
+    {
+        if (_abilities == null) { return; }
+        for (int i = 0; i < 4; ++i)
+        {
+            if (_abilities[i] == null) { continue; }
+
+            if( _abilities[i].Code == abil.Code) { _abilities[i] = null; }
+        }
     }
     #endregion
 

@@ -6,6 +6,9 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
+using Photon.Pun;
+using Photon.Realtime;
+
 [Serializable]
 public struct Base
 {
@@ -23,7 +26,12 @@ public class InGameSystem : MonoBehaviour
 
     public void OnGameEnd()
     {
-        Manager.Get<SceneManagerPro>().LoadScene("MainScene");
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.LoadLevel("MainScene");
+        }
+        else
+            Manager.Get<SceneManagerPro>().LoadScene("MainScene");
     }
 
     public void OnUnitSpawnDown(GameObject obj)

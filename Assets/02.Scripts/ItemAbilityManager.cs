@@ -9,6 +9,7 @@ public class ItemAbilityManager
 
     public ItemAbility GetAbility(int Code)
     {
+        if (_abilityList.Count == 0) { Init(); }
         if (!_abilityList.ContainsKey(Code)) { return null; }
 
         return _abilityList[Code];
@@ -22,46 +23,79 @@ public class ItemAbilityManager
 
         abilityList.Add(new ItemAbilitySharpness());
         abilityList.Add(new ItemAbilitySharpness());
+        abilityList.Add(new ItemAbilityFrostyFeet());
 
         int index = 0;
         foreach (var splitDatas in abilityDatas.Select(t => t.Split(',')))
         {
-            if(index >= abilityList.Count) { break; }
+            if (string.IsNullOrWhiteSpace(splitDatas[0])) { break; }
+            if (index >= abilityList.Count) { break; }
 
-            abilityList[index]._name            = splitDatas[1];
-            abilityList[index]._range           = float.Parse(splitDatas[2]);
-            abilityList[index]._time            = int.Parse(splitDatas[3]);
-            if (abilityList[index].Time != -1)
-                abilityList[index].WaitTime = new WaitForSeconds(abilityList[index].Time);
-            abilityList[index]._condition       = float.Parse(splitDatas[4]);
+            int     .TryParse(splitDatas[0], out abilityList[index]._code);
+            abilityList[index]._name = splitDatas[1];
+            float   .TryParse(splitDatas[2], out abilityList[index]._range);
+            float   .TryParse(splitDatas[3], out abilityList[index]._time);
+            float   .TryParse(splitDatas[4], out abilityList[index]._condition);
 
             float var;
 
-            var = float.Parse(splitDatas[5]);
-            if (var != 0)
-                abilityList[index]._variables.Add(var);
+            float   .TryParse(splitDatas[5], out var);
+            if (var != 0) abilityList[index]._variables.Add(var);
 
-            var = float.Parse(splitDatas[6]);
-            if (var != 0)
-                abilityList[index]._variables.Add(var);
+            float   .TryParse(splitDatas[6], out var);
+            if (var != 0) abilityList[index]._variables.Add(var);
 
-            ++index;
+            _abilityList.Add(int.Parse(splitDatas[0]), abilityList[index++]);
         }
     }
 }
 
 public class ItemAbility
 {
-    public string _name;                    public string Name      => _name;
-    public float _range;                    public float Range      => _range;
-    public int _time;                       public int Time         => _time;
-    public WaitForSeconds WaitTime; // = _time;
+    // Public
 
-    public float _condition;                public float Condition  => _condition;
+    public int _code;                                   public int Code => _code;
 
-    public List<float> _variables;          public List<float> Var  => _variables;
+    public string _name;                                public string Name => _name;
 
-    virtual public void UpdateStatus(ref UnitController unit) { }
-    virtual public void StartSpawn(ref UnitController unit) { }
-    virtual public IEnumerator UpdateAttack(UnitController unit, FieldObject enemyUnits) { yield return null; }
+    public float _range;                                public float Range => _range;
+    public float _time;                                 public float Time => _time;
+    public float _condition;                            public float Condition => _condition;
+    public List<float> _variables = new List<float>();  public List<float> Var => _variables;
+
+    // Private
+
+    protected UnitController _unit;
+    protected float _timeInterval;
+
+    // Function
+
+    /// <summary>
+    /// 시작하면 작동
+    /// </summary>
+    virtual public void Init(UnitController unit)
+    {
+        _unit = unit;
+
+        _timeInterval = Time;
+    }
+
+    /// <summary>
+    /// 공격했을 때 작동
+    /// </summary>
+    virtual public void Hit(FieldObject enemyUnit) {  }
+    /// <summary>
+    /// 데미지를 받았을 때 작동
+    /// </summary>
+    virtual public void Beaten(FieldObject enemyUnit) {  }
+
+    virtual public void TimeOver() { }
+
+    public void Update(float dt)
+    {
+        if (_time <= 0) { return; }
+
+        _time -= dt;
+        if (_time <= 0) { TimeOver(); }
+    }
 }

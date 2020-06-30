@@ -76,11 +76,6 @@ public class ItemList
             //itemDatas에서 ','으로 나뉘어진 것을 선택하여 가져온다는 Linq구문이다.
             foreach (var splitDatas in itemDatas.Select(t => t.Split(',')))
             {
-                for (int i = 0; i < splitDatas.Length - 1; ++i) 
-                {
-                    splitDatas[i] = splitDatas[i + 1];
-                }
-
                 AddList(splitDatas);
             }
         }
@@ -96,19 +91,7 @@ public class ItemList
     // 종류를 번호순으로 정렬하여 저장, ex) _codeList[(int)eCodeType.Weapon][0] == Index와 상관없이 리스트중 첫번째 무기 리턴
     private Dictionary<int, int>[] _codeList = new Dictionary<int, int>[3];
 
-    // 파싱한 데이터는 string 이므로 const string 으로 비교하여 판단
-    private struct ItemTypeList
-    {
-        public const string Helmet          = "모자";
-        public const string BodyArmour      = "갑옷";
-
-        public const string OneHandSword    = "한손검";
-        public const string Shield          = "방패";
-        public const string Dagger          = "단검";
-        public const string Spear           = "창";
-        public const string Bow             = "활";
-        public const string Hammer          = "한손둔기";
-    }
+    private ItemAbilityManager _abilMgr = new ItemAbilityManager();
 
     // Init이 여러번 작동되지 않게끔 막음
     private bool _isInit;
@@ -119,11 +102,11 @@ public class ItemList
 
     private void AddList(IReadOnlyList<string> data)
     {
-        if (string.IsNullOrEmpty(data[0])) { return; }
+        if (string.IsNullOrEmpty(data[1])) { return; }
 
         Item i = null;
         
-        switch ((eItemType)int.Parse(data[1]))
+        switch ((eItemType)int.Parse(data[2]))
         {
             // Weapon
             case eItemType.Sword:                   i = new OneHandSword(); break;
@@ -143,7 +126,7 @@ public class ItemList
         if (i.AniType == eItemType.None)
             return;
 
-        int index = int.Parse(data[0]);
+        int index = int.Parse(data[1]);
 
         switch (i.AniType)
         {
@@ -154,6 +137,12 @@ public class ItemList
         }
 
         i.Init(data);
+
+        int abilNum;
+        int.TryParse(data[14],out abilNum);
+
+        if (abilNum != 0)
+            i.Ability = _abilMgr.GetAbility(abilNum);
 
         _itemList.Add(index, i);
     }
@@ -199,7 +188,7 @@ namespace GameItem
         protected int _cost;                            public int Cost             => _cost;
         protected float _coolTime;                      public float CoolTime       => _coolTime;
         protected int _weight;
-        protected ItemAbility _ability;                 public ItemAbility Ability  => _ability;
+        protected ItemAbility _ability;                 public ItemAbility Ability { get => _ability; set => _ability = value; }
 
         protected float _range;                         public float AttackRange    => _range;
         protected float _minDamage;                     public float MinDamage      => _minDamage;
@@ -210,21 +199,21 @@ namespace GameItem
 
         public virtual void Init(IReadOnlyList<string> datas)
         {
-            if (null == datas[0]) { return; }
+            if (null == datas[1]) { return; }
 
-            _itemTypeName       = datas[2];
-            _name               = datas[3];
-            int.TryParse(datas[4], out _cost);
-            float.TryParse(datas[5], out _coolTime);
-            int.TryParse(datas[11], out _weight);
+            _itemTypeName       = datas[3];
+            _name               = datas[4];
+            int.TryParse(datas[5], out _cost);
+            float.TryParse(datas[6], out _coolTime);
+            int.TryParse(datas[12], out _weight);
 
-            float.TryParse(datas[6], out _health);
-            float.TryParse(datas[7], out _defense);
+            float.TryParse(datas[7], out _health);
+            float.TryParse(datas[8], out _defense);
 
-            float.TryParse(datas[8], out _range);
-            float.TryParse(datas[9], out _maxDamage);
-            float.TryParse(datas[10], out _minDamage);
-            float.TryParse(datas[12], out _speed);
+            float.TryParse(datas[9], out _range);
+            float.TryParse(datas[10], out _maxDamage);
+            float.TryParse(datas[11], out _minDamage);
+            float.TryParse(datas[13], out _speed);
         }
 
         public virtual void Equip(ref UnitStatus us)
@@ -245,6 +234,8 @@ namespace GameItem
             }
 
             if (_speed != -1) us._attackSpeed = (us._attackSpeed + _speed) / 2;
+
+            us.SetAbility(_ability);
         }
 
         public virtual void UnEquip(ref UnitStatus us)
@@ -265,6 +256,8 @@ namespace GameItem
                 us._maxAttackDamages[2] -= _maxDamage;
             }
             if (_speed != -1) us._attackSpeed = (us._attackSpeed * 2) - _speed;
+
+            us.RemoveAbility(_ability);
         }
     }
 

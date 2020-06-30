@@ -13,7 +13,7 @@ public class FieldObject : MonoBehaviour
     [HideInInspector]
     public bool _isDead;
 
-    public virtual void DamageReceive(float damage) { }
+    public virtual void DamageReceive(float damage, FieldObject receiveObject) { }
     public float CurHealth => _curHp; 
     public float MaxHealth => _maxHp;
     public float RemainHealth => _curHp / _maxHp;

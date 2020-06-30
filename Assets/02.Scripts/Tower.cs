@@ -12,7 +12,7 @@ public class Tower : FieldObject
         _hpCamera = _canvas.worldCamera;
     }
 
-    public override void DamageReceive(float damage)
+    public override void DamageReceive(float damage, FieldObject receiveObject)
     {
         _curHp -= damage;
 
@@ -20,8 +20,6 @@ public class Tower : FieldObject
 
         if (_curHp <= 0)
             _isDead = true;
-
-
     }
 
     public Canvas _canvas;

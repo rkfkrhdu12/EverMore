@@ -30,10 +30,11 @@ public class UnitController : FieldObject
         if (_IsNavMeshAgent) { } // { _navMeshAgent = GetComponent<NavMeshAgent>(); Debug.Log("UnitCtrl  NavAgent is Null"); }
         if (_eye == null)    { _eye = GetComponentInChildren<UnitEye>(); LogMessage.Log("UnitCtrl : Eye is Null"); }
 
-        UnitController uc = this;
         for (int i = 0; i < 4; ++i)
         {
-            if (_status._abilities[i] != null) { _status._abilities[i].UpdateStatus(ref uc); }
+            if (_status._abilities[i] == null) { continue; }
+
+            Ability[i].Init(this);
         }
 
         // 나머지 데이터들 Init
@@ -48,10 +49,16 @@ public class UnitController : FieldObject
         SetMaxHp(ref _status._maxhealth);
         _isDead = false;
     }
-
-
-    public override void DamageReceive(float damage) 
+    
+    public override void DamageReceive(float damage, FieldObject receiveObject)
     {
+        for (int i = 0; i < 4; ++i)
+        {
+            if (_status._abilities[i] == null) { continue; }
+
+            Ability[i].Beaten(_curTarget);
+        }
+
         //데미지를 받습니다.
         _curHp -= Mathf.Max(damage - _status._defensivePower, 0);
 
@@ -68,7 +75,6 @@ public class UnitController : FieldObject
         //해당 유닛과 체력바를 삭제 목록에 올립니다.
         DeleteObjectSystem.AddDeleteObject(gameObject);
     }
-
 
     #region Variable
 
@@ -154,25 +160,15 @@ public class UnitController : FieldObject
 
     public UnitStatus _status;
 
-    //공격 데미지
-    public float AttackDamage          { get { return _status.AttackDamage; } }
-    public float LeftAttackDamage      { get { return _status.LeftAttackDamage; } }
-    public float RightAttackDamage     { get { return _status.RightAttackDamage; } }
-
-    //공격 속도
-    public float AttackSpeed { get { return _status.AttackSpeed; } }
-
-    //공격 범위
-    public float AttackRange { get { return _status._attackRange; } }
-
-    //이동 속도
-    public float MoveSpeed { get { return _status._moveSpeed; } }
-
-    // 유닛 코스트
-    public int Cost { get { return _status._cost; } }
-
-    // second
-    public float CoolTime { get { return _status._coolTime; } }
+    public float AttackDamage           => _status.AttackDamage;
+    public float LeftAttackDamage       => _status.LeftAttackDamage;
+    public float RightAttackDamage      => _status.RightAttackDamage;
+    public float AttackSpeed            => _status.AttackSpeed;
+    public float AttackRange            => _status._attackRange;
+    public float MoveSpeed              => _status._moveSpeed;
+    public int Cost                     => _status._cost;
+    public float CoolTime               => _status._coolTime;
+    public ItemAbility[] Ability        => _status.Abilities;
 
     #endregion
 
@@ -197,6 +193,13 @@ public class UnitController : FieldObject
         
         //상태 변수를 통한, 유닛 업데이트
         UpdateUnit();
+
+        for (int i = 0; i < 4; ++i)
+        {
+            if (_status._abilities[i] == null) { continue; }
+
+            Ability[i].Update(Time.fixedDeltaTime);
+        }
     }
 
     public Canvas _canvas;
@@ -307,6 +310,11 @@ public class UnitController : FieldObject
         }
     }
 
+    void SetHp(ref float health) { _curHp = health; }
+    void SetMaxHp(ref float maxhealth) { _maxHp = maxhealth; }
+
+    #endregion
+
     ParticleSystem particle;
 
     public void OnEffect()
@@ -320,7 +328,12 @@ public class UnitController : FieldObject
     {
         if (RightAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
 
-        _curTarget.DamageReceive(RightAttackDamage);
+        int weaponIndex = (int)GameItem.eCodeType.RightWeapon;
+        ItemAbility abil = _status._abilities[weaponIndex];
+        if (abil != null)
+            abil.Hit(_curTarget);
+
+        _curTarget.DamageReceive(RightAttackDamage,this);
 
         if (_curTarget.CurHealth <= 0)
             _eye.UpdateTarget();
@@ -330,7 +343,12 @@ public class UnitController : FieldObject
     {
         if(LeftAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
 
-        _curTarget.DamageReceive(LeftAttackDamage);
+        int weaponIndex = (int)GameItem.eCodeType.LeftWeapon;
+        ItemAbility abil = _status._abilities[weaponIndex];
+        if (abil != null)
+            abil.Hit(_curTarget);
+
+        _curTarget.DamageReceive(LeftAttackDamage,this);
 
         if (_curTarget.CurHealth <= 0)
             _eye.UpdateTarget();
@@ -351,10 +369,7 @@ public class UnitController : FieldObject
         }
     }
 
-    void SetHp(ref float health) { _curHp = health; }
-    void SetMaxHp(ref float maxhealth) { _maxHp = maxhealth; }
 
-    #endregion
 }
 
 public class UnitModelManager

@@ -27,7 +27,7 @@ public class ItemSlot : MonoBehaviour
     {
         _isSelect = false;
 
-        if (!_isSelect)
+        //if (!_isSelect)
         { // Default
             _infoObject.gameObject.SetActive(false);
             _defaultObject.gameObject.SetActive(true);
@@ -40,7 +40,7 @@ public class ItemSlot : MonoBehaviour
     {
         _isSelect = true;
 
-        if (_isSelect)
+        //if (_isSelect)
         { // Info
             _infoObject.gameObject.SetActive(true);
             _defaultObject.gameObject.SetActive(false);
@@ -57,17 +57,11 @@ public class ItemSlot : MonoBehaviour
 
     private void OnEnable()
     {
-        _isSelect = false;
-
-        _infoObject.gameObject.SetActive(false);
-        _defaultObject.gameObject.SetActive(true);
-
-        UpdateText();
+        OffSelect();
     }
 
     private void Start()
     {
-
         if (_isSelect)
         { // Info
             _infoObject.gameObject.SetActive(true);
