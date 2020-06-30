@@ -187,7 +187,7 @@ namespace GameItem
 
         protected int _cost;                            public int Cost             => _cost;
         protected float _coolTime;                      public float CoolTime       => _coolTime;
-        protected int _weight;
+        protected int _weight;                          public int Weight           => _weight;
         protected ItemAbility _ability;                 public ItemAbility Ability { get => _ability; set => _ability = value; }
 
         protected float _range;                         public float AttackRange    => _range;

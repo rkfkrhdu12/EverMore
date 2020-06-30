@@ -12,7 +12,7 @@ public class ItemSlotInfo : MonoBehaviour
 {
     GameObject _prevSlot;
 
-    private ItemList _itemList;
+    public ItemList _itemList;
 
     [HideInInspector]
     public ItemSlot _slot;
@@ -23,11 +23,15 @@ public class ItemSlotInfo : MonoBehaviour
     private TMP_Text[] _statusTexts;
     enum eStatusState   
     {
+        Name,
         Health,
         Attack,
         Defence,
-        CoolDown,
+        Range,
         Cost,
+        CoolDown,
+        AtkSpeed,
+        Weight,
     }
 
     public void UpdateText()
@@ -38,11 +42,15 @@ public class ItemSlotInfo : MonoBehaviour
 
         if (i == null) { return; }
 
+        _statusTexts[(int)eStatusState.Name].text       = i.Name;
         _statusTexts[(int)eStatusState.Health].text     = i.Health.ToString();
         _statusTexts[(int)eStatusState.Attack].text     = i.MinDamage.ToString() + "~" + i.MaxDamage.ToString();
         _statusTexts[(int)eStatusState.Defence].text    = i.DefensePower.ToString();
-        _statusTexts[(int)eStatusState.CoolDown].text   = i.CoolTime.ToString();
+        _statusTexts[(int)eStatusState.Range].text      = i.AttackRange.ToString();
         _statusTexts[(int)eStatusState.Cost].text       = i.Cost.ToString();
+        _statusTexts[(int)eStatusState.CoolDown].text   = i.CoolTime.ToString();
+        _statusTexts[(int)eStatusState.AtkSpeed].text   = i.AttackSpeed.ToString();
+        _statusTexts[(int)eStatusState.Weight].text     = i.Weight.ToString();
 
         UpdateIcon(i);
     }

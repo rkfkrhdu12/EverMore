@@ -17,9 +17,12 @@ public class ItemSlot : MonoBehaviour
     }
 
     [SerializeField]
-    ItemSlotDefault _defaultObject;
+    ItemSlotDefault _defaultSlot;
     [SerializeField]
-    ItemSlotInfo _infoObject;
+    ItemSlotInfo _infoSlot;
+
+    [SerializeField]
+    ItemInventorySystem _invenSystem;
 
     bool _isSelect = false;
 
@@ -29,8 +32,8 @@ public class ItemSlot : MonoBehaviour
 
         //if (!_isSelect)
         { // Default
-            _infoObject.gameObject.SetActive(false);
-            _defaultObject.gameObject.SetActive(true);
+            _infoSlot.gameObject.SetActive(false);
+            _defaultSlot.gameObject.SetActive(true);
         }
 
         UpdateText();
@@ -42,8 +45,8 @@ public class ItemSlot : MonoBehaviour
 
         //if (_isSelect)
         { // Info
-            _infoObject.gameObject.SetActive(true);
-            _defaultObject.gameObject.SetActive(false);
+            _infoSlot.gameObject.SetActive(true);
+            _defaultSlot.gameObject.SetActive(false);
         }
 
         UpdateText();
@@ -51,8 +54,8 @@ public class ItemSlot : MonoBehaviour
 
     private void Awake()
     {
-        _defaultObject._slot = this;
-        _infoObject._slot = this;
+        _defaultSlot._slot = this;
+        _infoSlot._slot = this;
     }
 
     private void OnEnable()
@@ -62,29 +65,19 @@ public class ItemSlot : MonoBehaviour
 
     private void Start()
     {
-        if (_isSelect)
-        { // Info
-            _infoObject.gameObject.SetActive(true);
-            _defaultObject.gameObject.SetActive(false);
-        }
-        else
-        { // Default
-            _infoObject.gameObject.SetActive(false);
-            _defaultObject.gameObject.SetActive(true);
-        }
-
-        UpdateText();
+        _defaultSlot._itemList = _invenSystem._itemList;
+        _infoSlot._itemList = _invenSystem._itemList;
     }
 
     private void UpdateText()
     {
         if (!_isSelect)
         {
-            _defaultObject.UpdateText();
+            _defaultSlot.UpdateText();
         }
         else
         {
-            _infoObject.UpdateText();
+            _infoSlot.UpdateText();
 
         }
     }

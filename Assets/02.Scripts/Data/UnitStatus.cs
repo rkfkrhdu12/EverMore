@@ -110,7 +110,7 @@ public struct UnitStatus
         {
             _maxhealth = 0f;
             _defensivePower = 0f;
-            _moveSpeed = 3.5f;
+            _moveSpeed = 0;
             _cost = 0;
             _coolTime = 0f;
             _weight = 0;
@@ -138,6 +138,9 @@ public struct UnitStatus
         if (_attackRange == 0) { _attackRange = 1f; }
         if (_attackSpeed == 0) { _attackSpeed = 1f; }
 
+        int stability = 100 - _weight;
+        _attackSpeed *= UnitStability.GetStabilityPerAttackSpeed(stability);
+        _moveSpeed = UnitStability.GetStabilityPerMoveSpeed(stability);
 
         for (int i = 0; i < 4; ++i)
         {

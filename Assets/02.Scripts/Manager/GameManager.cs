@@ -76,7 +76,6 @@ public class GameManager : Manager
         _playerTeam = new Team();
         //_playerTeam.InitTest();
 
-        UnitStability.Init();
         _deleteObjectSystem = new DeleteObjectSystem();
 
         DontDestroyOnLoad(gameObject);

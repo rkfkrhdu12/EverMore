@@ -12,7 +12,7 @@ public class ItemSlotDefault : MonoBehaviour
     [SerializeField]
     private TMP_Text _text;
 
-    ItemList _itemList;
+    public ItemList _itemList;
 
     [HideInInspector]
     public ItemSlot _slot;

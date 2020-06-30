@@ -45,7 +45,7 @@ public class ItemInventorySystem : MonoBehaviour
     private eCodeType _curType = eCodeType.Weapon;
     private readonly List<int>[] _inventory = new List<int>[4];
 
-    private ItemList _itemList;
+    public ItemList _itemList;
 
     private int[] _equipedItems = new int[4];
 
@@ -264,7 +264,7 @@ public class ItemInventorySystem : MonoBehaviour
     {
         if (_equipedItems == null && _unitModelUI == null) { return; }
         if (_equipedItems.Length == 0) { return; }
-
+        
         UnitModelManager.Update(_unitModelUI, _equipedItems);
     }
 
