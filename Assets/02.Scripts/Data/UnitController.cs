@@ -34,7 +34,7 @@ public class UnitController : FieldObject
         {
             if (_status._abilities[i] == null) { continue; }
 
-            Ability[i].Init(this);
+            Ability[i].Start();
         }
 
         // 나머지 데이터들 Init

@@ -65,20 +65,25 @@ public class ItemAbility
 
     // Private
 
-    protected UnitController _unit;
+    protected UnitStatus _unit;
     protected float _timeInterval;
 
     // Function
 
     /// <summary>
-    /// 시작하면 작동
+    /// 스폰되기전에 작동
     /// </summary>
-    virtual public void Init(UnitController unit)
+    virtual public void Init(UnitStatus unit)
     {
         _unit = unit;
 
         _timeInterval = Time;
     }
+
+    /// <summary>
+    /// 스폰되고 출발할때 작동
+    /// </summary>
+    virtual public void Start() { }
 
     /// <summary>
     /// 공격했을 때 작동

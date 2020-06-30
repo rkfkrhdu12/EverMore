@@ -138,6 +138,13 @@ public struct UnitStatus
         if (_attackRange == 0) { _attackRange = 1f; }
         if (_attackSpeed == 0) { _attackSpeed = 1f; }
 
+
+        for (int i = 0; i < 4; ++i)
+        {
+            if (_abilities[i] == null) { continue; }
+
+            _abilities[i].Init(this);
+        }
     }
 
     public void Init(eTeam team = eTeam.PLAYER)
