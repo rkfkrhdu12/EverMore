@@ -21,9 +21,7 @@ MonoBehaviour:
     FixedRegion: 
     Server: 
     Port: 0
-    ProxyServer: 
     Protocol: 0
-    EnableProtocolFallback: 1
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
@@ -32,7 +30,12 @@ MonoBehaviour:
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
-  RpcList: []
+  RpcList:
+  - ClickRpc
+  - DestroyRpc
+  - DestroySpaceship
+  - Fire
+  - RespawnSpaceship
   DisableAutoOpenWizard: 0
   ShowSettings: 0
   DevRegionSetOnce: 0
