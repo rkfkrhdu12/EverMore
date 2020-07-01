@@ -11,7 +11,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
         if (!string.IsNullOrWhiteSpace(PlayerPrefs.GetString(_playerNamePrefKey)))
         {
-            if (!PhotonNetwork.ConnectUsingSettings()) { LogMessage.Log("Connected Error"); }
+            if (PhotonNetwork.ConnectUsingSettings()) { LogMessage.Log("Connected Error"); }
         }
         else
         {
