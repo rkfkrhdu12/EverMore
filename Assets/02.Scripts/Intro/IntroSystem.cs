@@ -55,8 +55,10 @@ public class IntroSystem : MonoBehaviour
     {
         if (isGameStart && Input.anyKeyDown)
         {
-            Connect();
-            // Manager.Get<SceneManagerPro>().LoadScene(SceneManagerPro.eScene.LOBBY);
+            if(_Launcher.gameObject.activeSelf)
+                Connect();
+            else
+                Manager.Get<SceneManagerPro>().LoadScene(SceneManagerPro.eScene.LOBBY);
         }
     }
 
