@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using GameplayIngredients;
 using UnityEngine;
-// using UnityEngine.AnimatorPro;
+using UnityEngine.UI;
 using UnityEngine.AI;
 using System.Text;
-using UnityEngine.UI;
+
+#region Public Enum
 
 public enum eTeam
 {
@@ -20,27 +21,39 @@ public enum eAni
     ATTACK,
 }
 
+#endregion
+
 public class UnitController : FieldObject
 {
+    #region Public Function
+    #region Unit Reset
+
     public void Spawn()
     { // Spawn() -> OnEnable() 순서
 
         // Inspector 에서 드래그드롭 해줘야 할 오브젝트들
-        if (_ani == null)    { _ani = GetComponentInChildren<UnitAnimation>(); LogMessage.Log("UnitCtrl : AniPro is Null"); }
+        #region Null Check
+
+        if (_ani == null) { _ani = GetComponentInChildren<UnitAnimation>(); LogMessage.Log("UnitCtrl : AniPro is Null"); }
         if (_IsNavMeshAgent) { } // { _navMeshAgent = GetComponent<NavMeshAgent>(); Debug.Log("UnitCtrl  NavAgent is Null"); }
-        if (_eye == null)    { _eye = GetComponentInChildren<UnitEye>(); LogMessage.Log("UnitCtrl : Eye is Null"); }
+        if (_eye == null) { _eye = GetComponentInChildren<UnitEye>(); LogMessage.Log("UnitCtrl : Eye is Null"); }
+        #endregion
 
-        for (int i = 0; i < 4; ++i)
-        {
-            if (_status._abilities[i] == null) { continue; }
-
-            Ability[i].Start();
-        }
+        #region AI Awake
 
         // 나머지 데이터들 Init
         _navMeshAgent.updateRotation = false;
 
-        //_status.UpdateItems();
+        #endregion
+
+        #region Status Awake
+        for (int i = 0; i < 4; ++i)
+        {
+            if (_status._abilities[i] == null) { continue; }
+
+            Ability[i].Awake();
+        }
+
         ++_status._attackRange;
 
         CurState = eAni.IDLE;
@@ -48,8 +61,13 @@ public class UnitController : FieldObject
         SetHp(ref _status._maxhealth);
         SetMaxHp(ref _status._maxhealth);
         _isDead = false;
+        #endregion
     }
-    
+
+    #endregion
+
+    #region Unit Interaction
+
     public override void DamageReceive(float damage, FieldObject receiveObject)
     {
         for (int i = 0; i < 4; ++i)
@@ -75,6 +93,68 @@ public class UnitController : FieldObject
         //해당 유닛과 체력바를 삭제 목록에 올립니다.
         DeleteObjectSystem.AddDeleteObject(gameObject);
     }
+
+    #endregion
+
+    #region Unit Animation Action
+
+    public void OnEffect()
+    {
+        if (particle == null) return;
+
+        particle.Play();
+    }
+
+    public void AttackRight()
+    {
+        if (RightAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
+
+        int weaponIndex = (int)GameItem.eCodeType.RightWeapon;
+        ItemAbility abil = _status._abilities[weaponIndex];
+        if (abil != null)
+            abil.Hit(_curTarget);
+
+        _curTarget.DamageReceive(RightAttackDamage, this);
+
+        if (_curTarget.CurHealth <= 0)
+            _eye.UpdateTarget();
+    }
+
+    public void AttackLeft()
+    {
+        if (LeftAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
+
+        int weaponIndex = (int)GameItem.eCodeType.LeftWeapon;
+        ItemAbility abil = _status._abilities[weaponIndex];
+        if (abil != null)
+            abil.Hit(_curTarget);
+
+        _curTarget.DamageReceive(LeftAttackDamage, this);
+
+        if (_curTarget.CurHealth <= 0)
+            _eye.UpdateTarget();
+    }
+    #endregion
+
+    #region Unit Eye
+
+    public void UpdateTarget()
+    {
+        FieldObject newTarget = _eye.CurTarget == null ? _enemyCastleObject : _eye.CurTarget;
+
+        if (newTarget == _curTarget) { return; }
+
+        {   // 타겟을 바꾸는 경우
+            _curTarget = newTarget;
+
+            _navMeshAgent.SetDestination(_curTarget.transform.position);
+
+            _navMeshAgent.stoppingDistance = AttackRange;
+        }
+    }
+    #endregion 
+
+    #endregion
 
     #region Variable
 
@@ -107,8 +187,7 @@ public class UnitController : FieldObject
     }
 
     // 이 유닛의 눈
-    [SerializeField]
-    private UnitEye _eye;
+    public UnitEye _eye;
 
     [SerializeField]
     private GameObject effectObject;
@@ -124,6 +203,8 @@ public class UnitController : FieldObject
 
     //필드 관점에서의 해당 유닛의 상태
     private FieldObject _curTarget = null;
+
+    ParticleSystem particle;
 
     #region 유닛 상태
 
@@ -182,8 +263,57 @@ public class UnitController : FieldObject
         {
             _status = new UnitStatus();
             _status.Init();
-
         }
+    }
+
+    private void OnEnable()
+    { // Spawn() -> OnEnable() 순서
+
+        #region UI Enable
+        if (!_healthBarObject.activeSelf)
+            _healthBarObject.SetActive(true);
+
+        _healthBarImage = _healthBarObject.transform.GetChild(0).GetComponent<Image>();
+        _healthBarImage.fillAmount = RemainHealth;
+
+        _canvasRectTrs = _canvas.GetComponent<RectTransform>();
+        _hpCamera = _canvas.worldCamera;
+        #endregion
+
+        #region AI Enable
+        _team = _status._team;
+
+        _navMeshAgent.stoppingDistance = Mathf.Max(1.8f, AttackRange);
+        _navMeshAgent.speed = MoveSpeed;
+
+        _curTarget = _enemyCastleObject;
+        _navMeshAgent.SetDestination(_curTarget.transform.position);
+        #endregion
+
+        #region Status Enable
+
+        for (int i = 0; i < 4; ++i)
+        {
+            if (_status._abilities[i] == null) { continue; }
+
+            Ability[i].Enable(this);
+        }
+
+        #endregion
+
+        #region Effect Enable
+
+        UnitEffectManager.Update(_status._equipedItems[2], _status._equipedItems[3], ref particle, ref effectObject);
+
+        if (particle != null)
+        {
+            particle.playbackSpeed = 1 * AttackSpeed;
+            for (int i = 0; i < particle.transform.childCount; ++i)
+            {
+                particle.transform.GetChild(i).GetComponent<ParticleSystem>().playbackSpeed = 1 * AttackSpeed;
+            }
+        }
+        #endregion
     }
 
     private void FixedUpdate()
@@ -223,36 +353,6 @@ public class UnitController : FieldObject
         localPos.y += 80;
 
         _healthBarObject.transform.localPosition = localPos;
-    }
-
-    private void OnEnable()
-    { // Spawn() -> OnEnable() 순서
-        if (!_healthBarObject.activeSelf)
-            _healthBarObject.SetActive(true);
-
-        _healthBarImage = _healthBarObject.transform.GetChild(0).GetComponent<Image>();
-        _healthBarImage.fillAmount = RemainHealth;
-
-        _team = _status._team;
-
-        _navMeshAgent.stoppingDistance = Mathf.Max(1.8f, AttackRange);
-        _navMeshAgent.speed = MoveSpeed;
-
-        _curTarget = _enemyCastleObject;
-        _navMeshAgent.SetDestination(_curTarget.transform.position);
-
-        _canvasRectTrs = _canvas.GetComponent<RectTransform>();
-        _hpCamera = _canvas.worldCamera;
-
-        UnitEffectManager.Update(_status._equipedItems[2], _status._equipedItems[3], ref particle, ref effectObject);
-
-        if (particle == null) return;
-
-        particle.playbackSpeed = 1 * AttackSpeed;
-        for (int i = 0; i < particle.transform.childCount; ++i)
-        {
-            particle.transform.GetChild(i).GetComponent<ParticleSystem>().playbackSpeed = 1 * AttackSpeed;
-        }
     }
 
     #endregion
@@ -314,67 +414,12 @@ public class UnitController : FieldObject
     void SetMaxHp(ref float maxhealth) { _maxHp = maxhealth; }
 
     #endregion
-
-    ParticleSystem particle;
-
-    public void OnEffect()
-    {
-        if (particle == null) return;
-
-        particle.Play();
-    }
-
-    public void AttackRight()
-    {
-        if (RightAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
-
-        int weaponIndex = (int)GameItem.eCodeType.RightWeapon;
-        ItemAbility abil = _status._abilities[weaponIndex];
-        if (abil != null)
-            abil.Hit(_curTarget);
-
-        _curTarget.DamageReceive(RightAttackDamage,this);
-
-        if (_curTarget.CurHealth <= 0)
-            _eye.UpdateTarget();
-    }
-
-    public void AttackLeft()
-    {
-        if(LeftAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
-
-        int weaponIndex = (int)GameItem.eCodeType.LeftWeapon;
-        ItemAbility abil = _status._abilities[weaponIndex];
-        if (abil != null)
-            abil.Hit(_curTarget);
-
-        _curTarget.DamageReceive(LeftAttackDamage,this);
-
-        if (_curTarget.CurHealth <= 0)
-            _eye.UpdateTarget();
-    }
-
-    public void UpdateTarget()
-    {
-        FieldObject newTarget = _eye.CurTarget == null ? _enemyCastleObject : _eye.CurTarget;
-
-        if (newTarget == _curTarget) { return; }
-
-        {   // 타겟을 바꾸는 경우
-            _curTarget = newTarget;
-
-            _navMeshAgent.SetDestination(_curTarget.transform.position);
-
-            _navMeshAgent.stoppingDistance = AttackRange;
-        }
-    }
-
-
 }
 
 public class UnitModelManager
 {
-    public static void Reset(GameObject unit, in int[] equipedItems)
+    public static void Reset(GameObject unit, in int[] equipedItems) 
+    #region Function Content
     {
         if (0 == _modelItemPoint.Count)
             Init();
@@ -391,7 +436,7 @@ public class UnitModelManager
         // 방어구 장착 해제
         for (int i = 0; i < 2; ++i)
         {
-            if(0 == equipedItems[i]) { continue; }
+            if (0 == equipedItems[i]) { continue; }
             string itemName = _itemList.ItemSearch(equipedItems[i]).Name;
 
             int[] index = _modelItemPoint?[itemName];
@@ -419,8 +464,10 @@ public class UnitModelManager
             rightWeaponTrs.GetChild(index[1]).gameObject.SetActive(false);
         }
     }
+    #endregion
 
     public static void Reset(GameObject unit)
+    #region Function Content
     {
         if (0 == _modelItemPoint.Count)
             Init();
@@ -437,7 +484,7 @@ public class UnitModelManager
         // 방어구 장착 해제
         for (int i = 0; i < _leftWeaponPoint - 1; ++i)
         {
-            for (int j = 0; j < 2; ++j) 
+            for (int j = 0; j < 2; ++j)
             {
                 unit.transform.GetChild(i).GetChild(j).gameObject.SetActive(false);
             }
@@ -461,7 +508,10 @@ public class UnitModelManager
         }
     }
 
+    #endregion
+
     public static void Update(GameObject unit, in int[] equipedItems, int prevItem = 0, int colorNum = 1)
+    #region Function Content
     {
         if (0 == _modelItemPoint.Count)
             Init();
@@ -529,6 +579,8 @@ public class UnitModelManager
             rightWeaponTrs.GetChild(index[1]).gameObject.SetActive(true);
         }
     }
+
+    #endregion
 
     #region Variable
 
@@ -607,6 +659,7 @@ public class UnitModelManager
 public class UnitIconManager
 {
     public static void Reset(GameObject iconObject)
+    #region Function Content
     {
         if (_iconPoints.Count == 0)
             Init();
@@ -619,9 +672,11 @@ public class UnitIconManager
             curIcon = iconObject.transform.GetChild(i).gameObject;
             if (curIcon.activeSelf) curIcon.SetActive(false);
         }
-    }
+    } 
+    #endregion
 
     public static void Update(GameObject iconObject, int ItemNum)
+    #region Function Content
     {
         if (0 == _iconPoints.Count)
             Init();
@@ -641,7 +696,10 @@ public class UnitIconManager
         headObject.SetActive(true);
     }
 
+    #endregion
+
     public static void Update(GameObject iconObject, string ItemName)
+    #region Function Content
     {
         if (0 == _iconPoints.Count)
             Init();
@@ -656,9 +714,11 @@ public class UnitIconManager
         if ((headObject = iconObject.transform.GetChild(iconPoint).gameObject) == null) { return; }
 
         headObject.SetActive(true);
-    }
+    } 
+    #endregion
 
     public static void SetColor(GameObject iconObject, Color color)
+    #region Function Content
     {
         iconObject.GetComponent<Image>().color = color;
 
@@ -670,7 +730,8 @@ public class UnitIconManager
                 break;
             }
         }
-    }
+    } 
+    #endregion
 
     #region Variable
 
@@ -735,17 +796,23 @@ public class UnitIconManager
 
 public class UnitAnimationManager
 {
-    public static void Update(int leftWeaponCode, int rightWeaponCode, Animator ani) 
+    public static void Update(int leftWeaponCode, int rightWeaponCode, Animator ani)
+    #region Function Content
+
     {
         int num = -1;
 
-        FindNum(leftWeaponCode, rightWeaponCode,ref num);
+        FindNum(leftWeaponCode, rightWeaponCode, ref num);
 
         if (num != -1)
             ani.SetInteger(_idWeaponType, num);
     }
 
+    #endregion
+
     public static void FindNum(int leftWeaponCode, int rightWeaponCode, ref int num)
+    #region Function Content
+
     {
         if (_typeStrings.Count == 0)
             Init();
@@ -764,6 +831,8 @@ public class UnitAnimationManager
 
         num = _typeAnimationNum[sb.ToString()];
     }
+
+    #endregion
 
     #region Variable
 
@@ -827,9 +896,10 @@ public class UnitAnimationManager
 public class UnitEffectManager
 {
     public static void Update(int leftWeaponCode, int rightWeaponCode, ref ParticleSystem ps,ref GameObject EffectObject)
+    #region Function Content
     {
-        if(EffectObject is null || leftWeaponCode + rightWeaponCode == 0) { return; }
-        
+        if (EffectObject is null || leftWeaponCode + rightWeaponCode == 0) { return; }
+
         int n = 0;
         UnitAnimationManager.FindNum(leftWeaponCode, rightWeaponCode, ref n);
         --n;
@@ -843,5 +913,6 @@ public class UnitEffectManager
 
             ps = curObject.GetComponent<ParticleSystem>();
         }
-    }
+    } 
+    #endregion
 }

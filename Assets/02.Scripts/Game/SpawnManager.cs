@@ -18,9 +18,15 @@ public class SpawnManager : MonoBehaviour
 
     int _curSpawnIndex = 0;
 
-    public void SetSpawnIndex(int index) => _curSpawnIndex = index;
+    public void SetSpawnIndex(int index)
+    {
+
+
+        _curSpawnIndex = index;
+    }
 
     public void SetSpawnPoint(Vector3 pos) => _spawnPoint = pos;
+
     public Castle GetCastle() { return GetComponent<Castle>(); }
 
     public bool _isPlayer = false;

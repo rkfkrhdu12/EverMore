@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public class ItemAbilityFrostyFeet : ItemAbility
-{
+{ // 서릿발
     bool _isUpdate = false;
 
     float _defaultAtkSpd  = -1;      

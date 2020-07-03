@@ -248,7 +248,7 @@ public class ItemInventorySystem : MonoBehaviour
                 curSlot.SetActive(true);
 
                 if (_inventory[curType][i] == _equipedItems[curType])
-                { // 창작한 아이템코드가 이번 아이템코드
+                { 
                     _itemsButtonGroup.SelectButton(curSlot.GetComponent<ButtonPro>());
 
                     slot.OnSelect();
@@ -257,7 +257,6 @@ public class ItemInventorySystem : MonoBehaviour
                 }
             }
         }
-
     }
 
     private void UpdateModel()

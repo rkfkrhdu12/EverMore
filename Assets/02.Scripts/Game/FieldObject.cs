@@ -1,5 +1,14 @@
 ﻿using UnityEngine;
 
+public enum eCrowdControl
+{
+    Freezing,
+    Burn,
+    Addicte,
+
+    Last
+}
+
 public class FieldObject : MonoBehaviour
 {
     public float _curHp;
@@ -18,9 +27,11 @@ public class FieldObject : MonoBehaviour
     public float MaxHealth => _maxHp;
     public float RemainHealth => _curHp / _maxHp;
 
-    public bool IsDead
+    public bool IsDead  
     {
         get => _isDead;
         set {  }
     }
+
+    public bool[] _crowdControls = new bool[(int)eCrowdControl.Last];
 }

@@ -65,25 +65,47 @@ public class ItemAbility
 
     // Private
 
-    protected UnitStatus _unit;
+    protected UnitStatus _us;
+    protected UnitController _uCtrl;
     protected float _timeInterval;
 
     // Function
 
     /// <summary>
-    /// 스폰되기전에 작동
+    /// 스폰되기 전에 작동
     /// </summary>
-    virtual public void Init(UnitStatus unit)
+    virtual public void Init(UnitStatus us)
     {
-        _unit = unit;
+        _us = us;
 
         _timeInterval = Time;
     }
 
     /// <summary>
+    /// 다시 시작될 때 마다 작동
+    /// </summary>
+    /// <param name="uCtrl"></param>
+    virtual public void Enable(UnitController uCtrl)
+    {
+        _uCtrl = uCtrl;
+    }
+
+    /// <summary>
+    /// 매 프레임 업데이트 될 때 마다 작동
+    /// </summary>
+    /// <param name="dt"></param>
+    virtual public void Update(float dt)
+    {
+        if (_time <= 0) { return; }
+
+        _time -= dt;
+        if (_time <= 0) { TimeOver(); }
+    }
+
+    /// <summary>
     /// 스폰되고 출발할때 작동
     /// </summary>
-    virtual public void Start() { }
+    virtual public void Awake() { }
 
     /// <summary>
     /// 공격했을 때 작동
@@ -96,11 +118,4 @@ public class ItemAbility
 
     virtual public void TimeOver() { }
 
-    public void Update(float dt)
-    {
-        if (_time <= 0) { return; }
-
-        _time -= dt;
-        if (_time <= 0) { TimeOver(); }
-    }
 }

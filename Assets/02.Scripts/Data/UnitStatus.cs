@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 using GameplayIngredients;
-using System.Runtime.Remoting.Messaging;
-
 
 
 public struct UnitStatus
@@ -17,7 +13,7 @@ public struct UnitStatus
 
     public float[] _maxAttackDamages;    public float AttackDamage { get { return LeftAttackDamage + RightAttackDamage; } }
     public float[] _minAttackDamages;    public float LeftAttackDamage      { get { return Random.Range(_minAttackDamages[0], _maxAttackDamages[0]) + ((_minAttackDamages[1] == 0 && _maxAttackDamages[1] == 0) ? _minAttackDamages[2] : _minAttackDamages[2] / 2.0f); } }
-                                         public float RightAttackDamage     { get { return Random.Range(_minAttackDamages[1], _maxAttackDamages[1]) + ((_minAttackDamages[0] == 0 && _maxAttackDamages[0] == 0) ? _minAttackDamages[2] : _minAttackDamages[2] / 2.0f); } }
+    /*                             */    public float RightAttackDamage     { get { return Random.Range(_minAttackDamages[1], _maxAttackDamages[1]) + ((_minAttackDamages[0] == 0 && _maxAttackDamages[0] == 0) ? _minAttackDamages[2] : _minAttackDamages[2] / 2.0f); } }
 
     #region Set AttackDamage
 
@@ -104,6 +100,7 @@ public struct UnitStatus
     public int _weight;
 
     public int[] _equipedItems;
+
 
     public void UpdateItems()
     {
