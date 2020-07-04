@@ -90,7 +90,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_11E40D1A: {r: 2.2180123, g: 3.6622994, b: 5.029214, a: 0.5058824}
+    - Color_11E40D1A: {r: 0.66222835, g: 1.5851723, b: 2.463025, a: 0.3137255}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: 0, b: 0, a: 0}
