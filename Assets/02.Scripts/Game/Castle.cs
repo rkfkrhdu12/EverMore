@@ -1,9 +1,7 @@
 ﻿public class Castle : FieldObject
 {
-    override protected void Awake()
+    void Awake()
     {
-        base.Awake();
-
         _curHp = _maxHp = 100;
     }
 

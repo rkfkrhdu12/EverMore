@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public class ItemAbilityWisdom : ItemAbility
 { // 지혜
     override public void Awake(UnitStatus us)

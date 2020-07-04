@@ -1,22 +1,20 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum eCrowdControl
 {
     FrostyFeet,
     Freezing,
     Burn,
-    Addicte,
+    Poisoned,
     Inspire,
     Wither,
+    DefensiveSpiral,
 
     Last
 }
 
 public class FieldObject : MonoBehaviour
 {
-    public float _curHp;
-    public float _maxHp;
 
     // 아군인지 적군인지에 대한 변수
     // [HideInInspector]
@@ -27,19 +25,21 @@ public class FieldObject : MonoBehaviour
     public bool _isDead;
 
     public virtual void DamageReceive(float damage, FieldObject receiveObject) { }
-   
-    public float DefaultCurHealth   = 0;            public virtual float CurHealth { get { return _curHp; } set { } }
-    public float DefaultMaxHealth   = 0;            public virtual float MaxHealth { get { return _maxHp; } set { } }
-    public float DefaultAttackSpeed = 0;            public virtual float AttackSpeed { get { return 0; } set { } }
-    public float DefaultMoveSpeed   = 0;            public virtual float MoveSpeed { get { return 0; } set { } }
-    public float DefaultDefensiveCleavage = 0;      public virtual float DefensiveCleavage { get { return 0.0f; } set { } }
+
+    public float _curHp;
+    public float _maxHp;
+
+    public float _defenseCleavage = 0.0f;
+
+    public float DefaultCurHealth   = 0;            public virtual float CurHealth              { get { return _curHp; }        set { } }
+    public float DefaultMaxHealth   = 0;            public virtual float MaxHealth              { get { return _maxHp; }        set { } }
+    public float DefaultDefencePower = 0;           public virtual float DefencePower           { get { return 0.0f; }          set { } }
+    public float DefaultAttackSpeed = 0;            public virtual float AttackSpeed            { get { return 0.0f; }          set { } }
+    public float DefaultMoveSpeed   = 0;            public virtual float MoveSpeed              { get { return 0.0f; }          set { } }
+    public float DefaultDefensiveCleavage = 0;      public virtual float DefensiveCleavage      { get { return _defenseCleavage; }      set { _defenseCleavage = value; } }
     public float RemainHealth => CurHealth / MaxHealth;
 
-    public bool IsDead  
-    {
-        get => _isDead;
-        set {  }
-    }
+    public bool IsDead { get => _isDead; }
 
     public bool[] _isCrowdControls = new bool[(int)eCrowdControl.Last];
     public float[] _CCTimes = new float[(int)eCrowdControl.Last];
@@ -53,12 +53,14 @@ public class FieldObject : MonoBehaviour
         _CCTimes[(int)curCC] = time;
     }
 
-    virtual protected void Awake()
+    virtual protected void OnEnable()
     {
         DefaultCurHealth    = CurHealth;
         DefaultMaxHealth    = MaxHealth;
+        DefaultDefencePower = DefencePower;
         DefaultAttackSpeed  = AttackSpeed;
         DefaultMoveSpeed    = MoveSpeed;
+        DefaultDefensiveCleavage = DefensiveCleavage;
     }
 
     virtual protected void FixedUpdate()

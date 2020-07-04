@@ -1,23 +1,19 @@
 ﻿
-using System.Collections;
-using System.Collections.Generic;
-
 public class ItemAbilityFrostyFeet : ItemAbility
 { // 서릿발
-    eCrowdControl curCC = eCrowdControl.FrostyFeet;
+    readonly eCrowdControl _curType = eCrowdControl.FrostyFeet;
 
-    public override void Attack(FieldObject enemyUnit)
+    public override void Attack(FieldObject enemyUnit, ref float damage)
     {
         if (enemyUnit._team == _uCtrl._team) { return; }
 
-
-        if (!enemyUnit._isCrowdControls[(int)curCC])
+        if (!enemyUnit._isCrowdControls[(int)_curType])
         {
             enemyUnit.AttackSpeed   -= enemyUnit.DefaultAttackSpeed / Var[0];
             enemyUnit.MoveSpeed     -= enemyUnit.DefaultMoveSpeed / Var[0];
         }
 
-        enemyUnit.CrowdControl(curCC, Time);
+        enemyUnit.CrowdControl(_curType, Time);
         enemyUnit.ExitCCFunction += ExitCC;
     }
 
@@ -25,7 +21,7 @@ public class ItemAbilityFrostyFeet : ItemAbility
     {
         if(enemyUnit._team == _uCtrl._team) { return; }
 
-        if(type == curCC)
+        if(type == _curType)
         {
             enemyUnit.AttackSpeed -= enemyUnit.DefaultAttackSpeed / Var[0];
             enemyUnit.MoveSpeed -= enemyUnit.DefaultMoveSpeed / Var[0];

@@ -67,6 +67,7 @@ public class UnitController : FieldObject
     #region Unit Interaction
 
     public override void DamageReceive(float statDamage, FieldObject receiveObject)
+    #region Function Content
     {
         for (int i = 0; i < 4; ++i)
         {
@@ -103,6 +104,14 @@ public class UnitController : FieldObject
         //해당 유닛과 체력바를 삭제 목록에 올립니다.
         DeleteObjectSystem.AddDeleteObject(gameObject);
     }
+    #endregion
+
+    public void Heal(float heal)
+    #region Function Content
+    {
+        CurHealth = Mathf.Min(CurHealth + heal, MaxHealth);
+    }
+    #endregion
 
     #endregion
 
@@ -119,12 +128,14 @@ public class UnitController : FieldObject
     {
         if (RightAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
 
+        float curDamage = RightAttackDamage;
+
         int weaponIndex = (int)GameItem.eCodeType.RightWeapon;
         ItemAbility abil = _status._abilities[weaponIndex];
         if (abil != null)
-            abil.Attack(_curTarget);
+            abil.Attack(_curTarget, ref curDamage);
 
-        _curTarget.DamageReceive(RightAttackDamage, this);
+        _curTarget.DamageReceive(curDamage, this);
 
         if (_curTarget.CurHealth <= 0)
             _eye.UpdateTarget();
@@ -134,12 +145,14 @@ public class UnitController : FieldObject
     {
         if (LeftAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
 
+        float curDamage = LeftAttackDamage;
+
         int weaponIndex = (int)GameItem.eCodeType.LeftWeapon;
         ItemAbility abil = _status._abilities[weaponIndex];
         if (abil != null)
-            abil.Attack(_curTarget);
+            abil.Attack(_curTarget, ref curDamage);
 
-        _curTarget.DamageReceive(LeftAttackDamage, this);
+        _curTarget.DamageReceive(curDamage, this);
 
         if (_curTarget.CurHealth <= 0)
             _eye.UpdateTarget();
@@ -186,7 +199,7 @@ public class UnitController : FieldObject
 
     [SerializeField]
     private NavMeshAgent _navMeshAgent = null;
-    private bool _IsNavMeshAgent 
+    private bool _IsNavMeshAgent
     {
         get
         {
@@ -233,14 +246,15 @@ public class UnitController : FieldObject
         get { return _curState; }
         set
         {
-            if(_curState != value && gameObject.activeSelf)
+            if (_curState != value && gameObject.activeSelf)
             {
                 if (!_navMeshAgent.pathPending)
                 {
                     switch (value)
                     {
                         case eAni.IDLE: _navMeshAgent.isStopped = true; break;
-                        case eAni.MOVE: _navMeshAgent.isStopped = false;
+                        case eAni.MOVE:
+                            _navMeshAgent.isStopped = false;
                             if (_curState == eAni.IDLE && !_eye._isEnemy) { _eye.UpdateTarget(); }
                             break;
                         case eAni.ATTACK: _navMeshAgent.isStopped = true; break;
@@ -256,17 +270,18 @@ public class UnitController : FieldObject
 
     public UnitStatus _status;
 
-    public override float CurHealth { get => _status._curhealth; set => _status._curhealth = value; }
-    public override float MaxHealth { get => _status._maxhealth; set => _status._maxhealth = value; }
-    public float AttackDamage           => _status.AttackDamage;
-    public float LeftAttackDamage       => _status.LeftAttackDamage;
-    public float RightAttackDamage      => _status.RightAttackDamage;
-    public override float AttackSpeed   { get { return _status.AttackSpeed; } set { _status._attackSpeed = value; } }
-    public float AttackRange            => _status._attackRange;
-    public override float MoveSpeed     { get { return _status._moveSpeed; } set { _status._moveSpeed = value; } }
-    public int Cost                     => _status._cost;
-    public float CoolTime               => _status._coolTime;
-    public ItemAbility[] Ability        => _status.Abilities;
+    public override float   CurHealth         { get => _status._curhealth; set => _status._curhealth = value; }
+    public override float   MaxHealth         { get => _status._maxhealth; set => _status._maxhealth = value; }
+    public override float   DefencePower      { get => _status._defensivePower; set => _status._defensivePower = value; }
+    public float            AttackDamage      { get => _status.AttackDamage; }
+    public float            LeftAttackDamage  { get => _status.LeftAttackDamage; }
+    public float            RightAttackDamage { get => _status.RightAttackDamage; }
+    public override float   AttackSpeed       { get { return _status.AttackSpeed; } set { _status._attackSpeed = value; } }
+    public float            AttackRange       => _status._attackRange;
+    public override float   MoveSpeed         { get { return _status._moveSpeed; } set { _status._moveSpeed = value; } }
+    public int              Cost              => _status._cost;
+    public float            CoolTime          => _status._coolTime;
+    public ItemAbility[]    Ability           => _status.Abilities;
 
     #endregion
 
@@ -274,19 +289,19 @@ public class UnitController : FieldObject
 
     #region Monobehaviour Function
 
-    override protected void Awake()
+    void Awake()
     {
-        base.Awake();
 
-        if(_isTest)
+        if (_isTest)
         {
             _status = new UnitStatus();
             _status.Init();
         }
     }
 
-    private void OnEnable()
+    override protected void OnEnable()
     { // Spawn() -> OnEnable() 순서
+        base.OnEnable();
 
         #region UI Enable
         if (!_healthBarObject.activeSelf)
@@ -341,7 +356,7 @@ public class UnitController : FieldObject
 
         //현재 상태가 비어 있거나, 죽었다면 : return
         if (_isDead) { CurState = eAni.IDLE; return; }
-        
+
         //상태 변수를 통한, 유닛 업데이트
         UpdateUnit();
 
@@ -357,7 +372,7 @@ public class UnitController : FieldObject
     {
         var screenPos = Camera.main.WorldToScreenPoint(transform.position);
 
-        if(screenPos.z < 0.0f)
+        if (screenPos.z < 0.0f)
         {
             screenPos *= -1.0f;
         }
@@ -384,7 +399,7 @@ public class UnitController : FieldObject
 
     private void UpdateMonobehaviour()
     {
-        if(!_IsNavMeshAgent) { return; }
+        if (!_IsNavMeshAgent) { return; }
 
         if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f)
         {
@@ -415,7 +430,7 @@ public class UnitController : FieldObject
         }
         else
         {
-            if(remainingDistance <= _navMeshAgent.stoppingDistance)
+            if (remainingDistance <= _navMeshAgent.stoppingDistance)
             {
                 CurState = eAni.IDLE;
             }
@@ -431,7 +446,7 @@ public class UnitController : FieldObject
 
 public class UnitModelManager
 {
-    public static void Reset(GameObject unit, in int[] equipedItems) 
+    public static void Reset(GameObject unit, in int[] equipedItems)
     #region Function Content
     {
         if (0 == _modelItemPoint.Count)
@@ -634,7 +649,7 @@ public class UnitModelManager
         }
     }
 
-    private static void Init() 
+    private static void Init()
     {
         _itemList = Manager.Get<GameManager>().itemList;
 
@@ -685,7 +700,7 @@ public class UnitIconManager
             curIcon = iconObject.transform.GetChild(i).gameObject;
             if (curIcon.activeSelf) curIcon.SetActive(false);
         }
-    } 
+    }
     #endregion
 
     public static void Update(GameObject iconObject, int ItemNum)
@@ -727,7 +742,7 @@ public class UnitIconManager
         if ((headObject = iconObject.transform.GetChild(iconPoint).gameObject) == null) { return; }
 
         headObject.SetActive(true);
-    } 
+    }
     #endregion
 
     public static void SetColor(GameObject iconObject, Color color)
@@ -743,7 +758,7 @@ public class UnitIconManager
                 break;
             }
         }
-    } 
+    }
     #endregion
 
     #region Variable
@@ -772,7 +787,7 @@ public class UnitIconManager
         }
 
         count = _itemList.GetCodeItemCount(GameItem.eCodeType.Weapon);
-        for (int i = 0; i < count; ++i) 
+        for (int i = 0; i < count; ++i)
         {
             int code = _itemList.CodeSearch(GameItem.eCodeType.Weapon, i);
 
@@ -792,7 +807,7 @@ public class UnitIconManager
         int armourCount = _itemList.GetCodeItemCount(GameItem.eCodeType.Helmet) * 2;
         for (int i = 0; i < armourCount; ++i)
         {
-            if (i != 0 && i % 2 == 0)  { ++j; }
+            if (i != 0 && i % 2 == 0) { ++j; }
 
             _iconPoints.Add(iconNames[i], j);
         }
@@ -803,7 +818,7 @@ public class UnitIconManager
         {
             _iconPoints.Add(iconNames[armourCount + i], i);
         }
-    } 
+    }
     #endregion
 }
 
@@ -902,13 +917,13 @@ public class UnitAnimationManager
         {
             _typeAnimationNum.Add(aniName[i], i + 1);
         }
-    } 
+    }
     #endregion
 }
 
 public class UnitEffectManager
 {
-    public static void Update(int leftWeaponCode, int rightWeaponCode, ref ParticleSystem ps,ref GameObject EffectObject)
+    public static void Update(int leftWeaponCode, int rightWeaponCode, ref ParticleSystem ps, ref GameObject EffectObject)
     #region Function Content
     {
         if (EffectObject is null || leftWeaponCode + rightWeaponCode == 0) { return; }
@@ -926,6 +941,6 @@ public class UnitEffectManager
 
             ps = curObject.GetComponent<ParticleSystem>();
         }
-    } 
+    }
     #endregion
 }

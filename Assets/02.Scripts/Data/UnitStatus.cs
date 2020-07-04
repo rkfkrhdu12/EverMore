@@ -9,7 +9,7 @@ public struct UnitStatus
 
     public float _curhealth;             public float Health => _curhealth;
     public float _maxhealth;
-    public float _defensivePower;
+    public float _defensivePower;       
 
     public float _defensiveCleavage;
 

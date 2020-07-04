@@ -102,7 +102,7 @@ public class ItemAbility
     /// <summary>
     /// 공격했을 때 작동
     /// </summary>
-    virtual public void Attack(FieldObject enemyUnit) {  }
+    virtual public void Attack(FieldObject enemyUnit, ref float damage) {  }
 
     /// <summary>
     /// 공격한 후 작동

@@ -1,13 +1,11 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemAbilityChill : ItemAbility
 { // 한기
-
     List<FieldObject> _objectList = new List<FieldObject>();
 
-    int curCCType = (int)eCrowdControl.Freezing;
+    readonly int _curType = (int)eCrowdControl.Freezing;
 
     public override void Update(float dt)
     {
@@ -15,7 +13,7 @@ public class ItemAbilityChill : ItemAbility
         {
             if (!_uCtrl._eye._enemyTargets.Contains(_objectList[i]))
             {
-                _objectList[i]._isCrowdControls[curCCType] = false;
+                _objectList[i]._isCrowdControls[_curType] = false;
 
                 _objectList[i].AttackSpeed += _objectList[i].AttackSpeed / Var[0];
             }
@@ -31,9 +29,9 @@ public class ItemAbilityChill : ItemAbility
             if (direction.magnitude < _range)
             {
                 // 이미 빙결상태거나 죽은 상대면 패스
-                if (_objectList[i]._isCrowdControls[curCCType] || _objectList[i].IsDead) return;
+                if (_objectList[i]._isCrowdControls[_curType] || _objectList[i].IsDead) return;
 
-                _objectList[i]._isCrowdControls[curCCType] = true;
+                _objectList[i]._isCrowdControls[_curType] = true;
 
                 _objectList[i].AttackSpeed -= _objectList[i].AttackSpeed / Var[0];
             }

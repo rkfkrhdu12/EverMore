@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public class ItemAbilityLife : ItemAbility
 { // 생명
     override public void Awake(UnitStatus us)

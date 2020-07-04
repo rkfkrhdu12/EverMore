@@ -1,18 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ItemAbilityLifesteal : ItemAbility
-{
-    public override void Attack(FieldObject enemyUnit)
+{ // 흡혈
+    public override void Attack(FieldObject enemyUnit, ref float damage)
     {
-        HitTarget = enemyUnit;
+        if (_target != enemyUnit)
+            _target = enemyUnit;
     }
 
-    FieldObject HitTarget;
+    FieldObject _target;
 
     public override void Hit(ref float damage)
     {
-        HitTarget.CurHealth
+        float overDamage = Mathf.Min(_target.CurHealth - damage, 0);
+        float heal = damage - overDamage;
+
+        _uCtrl.Heal(heal);
     }
 }

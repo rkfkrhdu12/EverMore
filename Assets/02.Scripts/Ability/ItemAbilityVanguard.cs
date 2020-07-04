@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public class ItemAbilityVanguard : ItemAbility
 { // 선봉
     public bool _isActive = false;

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public class ItemAbilityParvenu : ItemAbility
 { // 졸부
     override public void Awake(UnitStatus us)
