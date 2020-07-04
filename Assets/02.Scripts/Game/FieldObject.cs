@@ -5,6 +5,7 @@ public enum eCrowdControl
     Freezing,
     Burn,
     Addicte,
+    Inspire,
 
     Last
 }
@@ -23,9 +24,11 @@ public class FieldObject : MonoBehaviour
     public bool _isDead;
 
     public virtual void DamageReceive(float damage, FieldObject receiveObject) { }
+
     public float CurHealth => _curHp; 
     public float MaxHealth => _maxHp;
     public float RemainHealth => _curHp / _maxHp;
+    public virtual float AttackSpeed { get { return 0; } set { } }
 
     public bool IsDead  
     {

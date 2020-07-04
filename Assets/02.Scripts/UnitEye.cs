@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 // using UnityEditor;
 
@@ -16,7 +17,9 @@ public class UnitEye : MonoBehaviour
     public bool _isEnemy = true;
 
     //공격 타겟에대한 큐
-    public List<FieldObject> _targets = new List<FieldObject>();
+    public List<FieldObject> _allTargets    = new List<FieldObject>();
+    public List<FieldObject> _enemyTargets  = new List<FieldObject>();
+    public List<FieldObject> _friendTargets = new List<FieldObject>();
 
     private float _minRange = 3f;
 
@@ -27,22 +30,22 @@ public class UnitEye : MonoBehaviour
     {
         get
         {
-            if (_targets.Count == 0)
+            if (_enemyTargets.Count == 0)
             {
                 _isEnemy = true;
                 return null;
             }
-            return _targets[0];
+            return _enemyTargets[0];
         }
     }
 
     public void UpdateTarget()
     {
-        if (_targets.Count <= 0) { return; }
+        if (_enemyTargets.Count <= 0) { return; }
 
         if (CurTarget.CurHealth <= 0 || !_isEnemy) 
         {
-            _targets.Remove(_targets[0]);
+            _enemyTargets.Remove(_enemyTargets[0]);
 
             // UnitCtrl 업데이트
             _unitCtrl.UpdateTarget();
@@ -67,6 +70,52 @@ public class UnitEye : MonoBehaviour
         _collider.radius = range * 2.5f;
     }
 
+    WaitForSeconds _sortTime = new WaitForSeconds(.5f);
+    IEnumerator SortTarget()
+    {
+        while (gameObject.activeSelf)
+        {
+            for (int i = 0; i < _allTargets.Count; ++i)
+            {
+                FieldObject curTarget = _allTargets[i];
+
+                if (curTarget._team == _unitCtrl._team)
+                { // 아군일때
+                    if (_friendTargets.Contains(curTarget)) { continue; }
+
+                    _friendTargets.Add(curTarget);
+                }
+                else
+                { // 적군일때
+                    if (_enemyTargets.Contains(curTarget)) { continue; }
+
+                    // 범위 안에 있는지 체크
+                    float dotValue = Mathf.Cos(Mathf.Deg2Rad * (_attackAngle / 2));
+                    Vector3 direction = curTarget.transform.position - transform.position;
+
+                    // 길이 체크  너무 멀진 않은가 ?
+                    if (direction.magnitude < _attackRange)
+                    {
+                        // 각도 체크  정해진 각도를 넘진 않았는가 ?
+                        if (Vector3.Dot(direction.normalized, transform.forward) > dotValue)
+                        {
+                            // 이미 타겟들에 있으면
+                            if (_enemyTargets.Contains(curTarget) || curTarget.IsDead) continue;
+
+                            // 타겟들 목록에 Add
+                            _enemyTargets.Add(curTarget);
+
+                            // UnitCtrl 업데이트
+                            _unitCtrl.UpdateTarget();
+                        }
+                    }
+                }
+            }
+
+            yield return _sortTime;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         // 아직 Init되지 않았거나, Unit이 아니거나 Collider가 몸이 아니거나, unitCtrl 이 Null일때
@@ -79,28 +128,11 @@ public class UnitEye : MonoBehaviour
             // target이 UnitCtrl 일때
             if (target != null)
             {
-                if(target._team == _unitCtrl._team) { return; }
+                _allTargets.Add(target);
 
-                // 범위 안에 있는지 체크
-                float dotValue = Mathf.Cos(Mathf.Deg2Rad * (_attackAngle / 2));
-                Vector3 direction = target.transform.position - transform.position;
+                if (target._team == _unitCtrl._team) { return; }
 
-                // 길이 체크  너무 멀진 않은가 ?
-                if (direction.magnitude < _attackRange)
-                {
-                    // 각도 체크  정해진 각도를 넘진 않았는가 ?
-                    if (Vector3.Dot(direction.normalized, transform.forward) > dotValue)
-                    {
-                        // 이미 타겟들에 있으면
-                        if (_targets.Contains(target) || target.IsDead) return;
-
-                        // 타겟들 목록에 Add
-                        _targets.Add(target);
-
-                        // UnitCtrl 업데이트
-                        _unitCtrl.UpdateTarget();
-                    }
-                }
+                
                 return;
             }
         }
@@ -120,18 +152,25 @@ public class UnitEye : MonoBehaviour
         // FieldObject 가 있으면
         if (target != null)
         {
-            // 현재 타겟들에 존재하고 아군이면
-            if (_targets.Contains(target) && target._team == _unitCtrl._team)
-            {
-                // 현재 타겟이 유닛의 타겟인지 체크
-                bool isUpdate = target == _targets[0] ? true : false;
+            if(_allTargets.Contains(target)) { return; }
 
-                // 뺀다.
-                _targets.Remove(target);
+            _allTargets.Remove(target);
 
-                // 현재 타겟이 유닛의 타겟이면 UnitCtrl 업데이트
-                if (isUpdate)
+            if(target._team == _unitCtrl._team)
+            { // 아군
+                if (_friendTargets.Contains(target))
+                {
+                    _friendTargets.Remove(target);
+                }
+            }
+            else
+            { // 적군
+                if (_enemyTargets.Contains(target))
+                {
+                    _enemyTargets.Remove(target);
+
                     _unitCtrl.UpdateTarget();
+                }
             }
         }
     } 

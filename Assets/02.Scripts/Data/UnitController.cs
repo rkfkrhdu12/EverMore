@@ -244,7 +244,7 @@ public class UnitController : FieldObject
     public float AttackDamage           => _status.AttackDamage;
     public float LeftAttackDamage       => _status.LeftAttackDamage;
     public float RightAttackDamage      => _status.RightAttackDamage;
-    public float AttackSpeed            => _status.AttackSpeed;
+    public override float AttackSpeed { get { return _status.AttackSpeed; } set { _status._attackSpeed = value; } }
     public float AttackRange            => _status._attackRange;
     public float MoveSpeed              => _status._moveSpeed;
     public int Cost                     => _status._cost;

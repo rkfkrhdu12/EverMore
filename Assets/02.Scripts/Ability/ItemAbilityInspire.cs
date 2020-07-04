@@ -1,27 +1,27 @@
-﻿
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemAbilityChill : ItemAbility
-{ // 한기
+public class ItemAbilityInspire : ItemAbility
+{ // 격려
 
     List<FieldObject> _objectList = new List<FieldObject>();
 
-    int curCCType = (int)eCrowdControl.Freezing;
+    int curCCType = (int)eCrowdControl.Inspire;
 
     public override void Update(float dt)
     {
         for (int i = 0; i < _objectList.Count; ++i)
         {
-            if (!_uCtrl._eye._enemyTargets.Contains(_objectList[i]))
+            if (!_uCtrl._eye._friendTargets.Contains(_objectList[i]))
             {
                 _objectList[i]._crowdControls[curCCType] = false;
 
-                _objectList[i].AttackSpeed += _objectList[i].AttackSpeed / Var[0];
+                _objectList[i].AttackSpeed -= _objectList[i].AttackSpeed / Var[0];
             }
         }
 
-        _objectList = _uCtrl._eye._enemyTargets;
+        _objectList = _uCtrl._eye._friendTargets;
 
         for (int i = 0; i < _objectList.Count; ++i)
         {
@@ -35,7 +35,7 @@ public class ItemAbilityChill : ItemAbility
 
                 _objectList[i]._crowdControls[curCCType] = true;
 
-                _objectList[i].AttackSpeed -= _objectList[i].AttackSpeed / Var[0];
+                _objectList[i].AttackSpeed += _objectList[i].AttackSpeed / Var[0];
             }
         }
     }

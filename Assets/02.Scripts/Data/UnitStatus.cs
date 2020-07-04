@@ -7,7 +7,7 @@ public struct UnitStatus
 {
     public eTeam _team;
 
-    public float _curhealth;
+    public float _curhealth;             public float Health => _curhealth;
     public float _maxhealth;
     public float _defensivePower;
 
@@ -101,31 +101,36 @@ public struct UnitStatus
 
     public int[] _equipedItems;
 
+    private void InitData()
+    {
+        _maxhealth = 0f;
+        _defensivePower = 0f;
+        _moveSpeed = 0;
+        _cost = 0;
+        _coolTime = 0f;
+        _weight = 0;
+        _minDamageIndex = 0;
+        _maxDamageIndex = 0;
+        _maxAttackDamages = new float[3];
+        _minAttackDamages = new float[3];
+        _abilIndex = 0;
+        _abilities = new ItemAbility[4];
+        _equipedItems = new int[4];
+        _attackRange = 0f;
+        _attackSpeed = 0f;
+    }
 
     public void UpdateItems()
+    #region Function Content
+
     {
-        {
-            _maxhealth = 0f;
-            _defensivePower = 0f;
-            _moveSpeed = 0;
-            _cost = 0;
-            _coolTime = 0f;
-            _weight = 0;
-            _minDamageIndex = 0;
-            _maxDamageIndex = 0;
-            _maxAttackDamages = new float[3];
-            _minAttackDamages = new float[3];
-            _abilIndex = 0;
-            _abilities = new ItemAbility[4];
-            _attackRange = 0f;
-            _attackSpeed = 0f;
-        }
+        InitData();
 
         ItemList itemList = Manager.Get<GameManager>().itemList;
 
         for (int i = 0; i < _equipedItems.Length; ++i)
         {
-            if(_equipedItems[i] == 0) { if (i == 2 || i == 3) { ++_maxDamageIndex; ++_minDamageIndex; } continue; }
+            if (_equipedItems[i] == 0) { if (i == 2 || i == 3) { ++_maxDamageIndex; ++_minDamageIndex; } continue; }
 
             itemList.ItemSearch(_equipedItems[i]).Equip(ref this);
         }
@@ -147,25 +152,21 @@ public struct UnitStatus
         }
     }
 
+    #endregion
+
     public void Init(eTeam team = eTeam.PLAYER)
+    #region Function Content
+
     {
         _team = team;
-        _maxhealth = 0f;
-        _defensivePower = 0f;
-        _moveSpeed = 3.5f;
-        _cost = 0;
-        _coolTime = 0f;
-        _weight = 0;
-        _maxAttackDamages = new float[2];
-        _minAttackDamages = new float[2];
-        _attackRange = 1f;
-        _attackSpeed = 1f;
 
-        _equipedItems = new int[4];
+        InitData();
 
         ItemList itemList = Manager.Get<GameManager>().itemList;
 
-        _equipedItems[0] = itemList.CodeSearch(GameItem.eCodeType.Helmet,0);
+        _equipedItems[0] = itemList.CodeSearch(GameItem.eCodeType.Helmet, 0);
         _equipedItems[1] = itemList.CodeSearch(GameItem.eCodeType.Bodyarmour, 0);
     }
+
+    #endregion
 }

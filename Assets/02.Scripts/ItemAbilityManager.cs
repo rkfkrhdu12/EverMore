@@ -34,7 +34,7 @@ public class ItemAbilityManager
             int     .TryParse(splitDatas[0], out abilityList[index]._code);
             abilityList[index]._name = splitDatas[1];
             float   .TryParse(splitDatas[2], out abilityList[index]._range);
-            float   .TryParse(splitDatas[3], out abilityList[index]._time);
+            float   .TryParse(splitDatas[3], out abilityList[index]._timeInterval);
             float   .TryParse(splitDatas[4], out abilityList[index]._condition);
 
             float var;
@@ -59,7 +59,7 @@ public class ItemAbility
     public string _name;                                public string Name => _name;
 
     public float _range;                                public float Range => _range;
-    public float _time;                                 public float Time => _time;
+    public float _timeInterval;                         public float Time => _timeInterval;
     public float _condition;                            public float Condition => _condition;
     public List<float> _variables = new List<float>();  public List<float> Var => _variables;
 
@@ -67,7 +67,7 @@ public class ItemAbility
 
     protected UnitStatus _us;
     protected UnitController _uCtrl;
-    protected float _timeInterval;
+    protected float _time;
 
     // Function
 
@@ -77,8 +77,6 @@ public class ItemAbility
     virtual public void Init(UnitStatus us)
     {
         _us = us;
-
-        _timeInterval = Time;
     }
 
     /// <summary>

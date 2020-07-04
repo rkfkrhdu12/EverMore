@@ -22,6 +22,7 @@ public class SpawnManager : MonoBehaviour
     {
 
 
+
         _curSpawnIndex = index;
     }
 
@@ -117,7 +118,7 @@ public class SpawnManager : MonoBehaviour
                     {
                         GameObject clone = Instantiate(_unitPrefabs, Vector3.zero, Quaternion.identity, null);
 
-                        if(clone.activeSelf) { yield return null; }
+                        if(clone.activeSelf) { _isGameEnd = true; }
 
                         GameObject healthBar = Instantiate(_unitHealthBarObject, Vector3.zero, Quaternion.identity, _unitHealthBarList);
 

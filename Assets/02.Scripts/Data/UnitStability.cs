@@ -19,10 +19,12 @@ public static class UnitStability
 
         var returnVal = _stabilityPerAttackSpeeds[digitOfTen];
 
-        int digitOfOne = stability % 10;
-        float SPAInterval = _stabilityPerAttackSpeeds[digitOfTen + 1] - _stabilityPerAttackSpeeds[digitOfTen];
-
-        returnVal += SPAInterval * (digitOfOne / 10);
+        if (stability < 100)
+        {
+            int digitOfOne = stability % 10;
+            float SPAInterval = _stabilityPerAttackSpeeds[digitOfTen + 1] - _stabilityPerAttackSpeeds[digitOfTen];
+            returnVal += SPAInterval * (digitOfOne / 10);
+        }
 
         return returnVal;
     }
@@ -42,12 +44,14 @@ public static class UnitStability
 
         var returnVal = _stabilityPerMoveSpeeds[digitOfTen];
 
-        float digitOfOne = stability % 10.0f / 10.0f;
-        float SPAInterval = _stabilityPerMoveSpeeds[digitOfTen + 1] -
-                            _stabilityPerMoveSpeeds[digitOfTen];
+        if (stability < 100)
+        {
+            float digitOfOne = stability % 10.0f / 10.0f;
+            float SPAInterval = _stabilityPerMoveSpeeds[digitOfTen + 1] -
+                                _stabilityPerMoveSpeeds[digitOfTen];
 
-        returnVal += SPAInterval * digitOfOne;
-
+            returnVal += SPAInterval * digitOfOne;
+        }
         return returnVal;
     }
 
