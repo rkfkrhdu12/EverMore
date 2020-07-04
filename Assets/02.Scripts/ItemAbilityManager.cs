@@ -72,18 +72,23 @@ public class ItemAbility
     // Function
 
     /// <summary>
-    /// 스폰되기 전에 작동
+    /// 딱 한번만 작동 / 스탯 업데이트
     /// </summary>
-    virtual public void Init(UnitStatus us)
+    virtual public void Awake(UnitStatus us)
     {
         _us = us;
     }
 
     /// <summary>
-    /// 다시 시작될 때 마다 작동
+    /// 스폰되고 출발하기전 작동 유닛이 꺼져있는 상태
+    /// </summary>
+    virtual public void Enable() { }
+
+    /// <summary>
+    /// 유닛이 스폰될때마다 작동 유닛이 켜지는 상태
     /// </summary>
     /// <param name="uCtrl"></param>
-    virtual public void Enable(UnitController uCtrl)
+    virtual public void Start(UnitController uCtrl)
     {
         _uCtrl = uCtrl;
     }
@@ -92,28 +97,20 @@ public class ItemAbility
     /// 매 프레임 업데이트 될 때 마다 작동
     /// </summary>
     /// <param name="dt"></param>
-    virtual public void Update(float dt)
-    {
-        if (_time <= 0) { return; }
-
-        _time -= dt;
-        if (_time <= 0) { TimeOver(); }
-    }
-
-    /// <summary>
-    /// 스폰되고 출발할때 작동
-    /// </summary>
-    virtual public void Awake() { }
+    virtual public void Update(float dt) { }
 
     /// <summary>
     /// 공격했을 때 작동
     /// </summary>
-    virtual public void Hit(FieldObject enemyUnit) {  }
+    virtual public void Attack(FieldObject enemyUnit) {  }
+
+    /// <summary>
+    /// 공격한 후 작동
+    /// </summary>
+    virtual public void Hit(ref float damage) {  }
+
     /// <summary>
     /// 데미지를 받았을 때 작동
     /// </summary>
     virtual public void Beaten(FieldObject enemyUnit) {  }
-
-    virtual public void TimeOver() { }
-
 }

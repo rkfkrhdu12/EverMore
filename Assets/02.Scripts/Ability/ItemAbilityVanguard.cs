@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class ItemAbilityVanguard : ItemAbility
 { // 선봉
-
     public bool _isActive = false;
 
     int _count = 1;
     public override void Update(float dt)
     {
-        base.Update(dt);
+        if(Time > 0)
+        {
+            _time -= dt;
+
+            if(Time <= 0)
+            {
+                _us._curhealth += Var[0];
+            }
+        }
 
         if (_isActive && _count <= Var[1])
         {
-            if(_time > 0)
+            if(_time <= 0)
             {
                 ++_count;
                 _time = 1.0f;
@@ -24,10 +31,5 @@ public class ItemAbilityVanguard : ItemAbility
         {
             _isActive = true;
         }
-    }
-
-    public override void TimeOver()
-    {
-        _us._curhealth += Var[0];
     }
 }
