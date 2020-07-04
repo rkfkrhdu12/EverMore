@@ -6,8 +6,10 @@ public class Tower : FieldObject
 {
     public Image _healthBar;
 
-    public void Awake()
+    override protected void Awake()
     {
+        base.Awake();
+
         _canvasRectTrs = _canvas.GetComponent<RectTransform>();
         _hpCamera = _canvas.worldCamera;
     }

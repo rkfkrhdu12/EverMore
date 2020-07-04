@@ -51,15 +51,13 @@ public class UnitController : FieldObject
         {
             if (_status._abilities[i] == null) { continue; }
 
-            Ability[i].Awake();
+            Ability[i].Enable();
         }
 
         ++_status._attackRange;
 
         CurState = eAni.IDLE;
 
-        SetHp(ref _status._maxhealth);
-        SetMaxHp(ref _status._maxhealth);
         _isDead = false;
         #endregion
     }
@@ -68,7 +66,7 @@ public class UnitController : FieldObject
 
     #region Unit Interaction
 
-    public override void DamageReceive(float damage, FieldObject receiveObject)
+    public override void DamageReceive(float statDamage, FieldObject receiveObject)
     {
         for (int i = 0; i < 4; ++i)
         {
@@ -78,7 +76,19 @@ public class UnitController : FieldObject
         }
 
         //데미지를 받습니다.
-        _curHp -= Mathf.Max(damage - _status._defensivePower, 0);
+        float damage = Mathf.Max(statDamage - (_status._defensivePower - receiveObject.DefensiveCleavage), 0);
+
+        if (((UnitController)receiveObject)._status._abilities != null)
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                if (_status._abilities[i] == null) { continue; }
+
+                Ability[i].Hit(ref damage);
+            }
+        }
+
+        _curHp -= damage;
 
         _healthBarImage.fillAmount = RemainHealth;
 
@@ -112,7 +122,7 @@ public class UnitController : FieldObject
         int weaponIndex = (int)GameItem.eCodeType.RightWeapon;
         ItemAbility abil = _status._abilities[weaponIndex];
         if (abil != null)
-            abil.Hit(_curTarget);
+            abil.Attack(_curTarget);
 
         _curTarget.DamageReceive(RightAttackDamage, this);
 
@@ -127,7 +137,7 @@ public class UnitController : FieldObject
         int weaponIndex = (int)GameItem.eCodeType.LeftWeapon;
         ItemAbility abil = _status._abilities[weaponIndex];
         if (abil != null)
-            abil.Hit(_curTarget);
+            abil.Attack(_curTarget);
 
         _curTarget.DamageReceive(LeftAttackDamage, this);
 
@@ -166,6 +176,11 @@ public class UnitController : FieldObject
     // 이 유닛의 애니메이션
     [SerializeField]
     private UnitAnimation _ani;
+
+    public Canvas _canvas;
+
+    private RectTransform _canvasRectTrs;
+    private Camera _hpCamera;
 
     // 이 유닛의 AI 
 
@@ -241,12 +256,14 @@ public class UnitController : FieldObject
 
     public UnitStatus _status;
 
+    public override float CurHealth { get => _status._curhealth; set => _status._curhealth = value; }
+    public override float MaxHealth { get => _status._maxhealth; set => _status._maxhealth = value; }
     public float AttackDamage           => _status.AttackDamage;
     public float LeftAttackDamage       => _status.LeftAttackDamage;
     public float RightAttackDamage      => _status.RightAttackDamage;
-    public override float AttackSpeed { get { return _status.AttackSpeed; } set { _status._attackSpeed = value; } }
+    public override float AttackSpeed   { get { return _status.AttackSpeed; } set { _status._attackSpeed = value; } }
     public float AttackRange            => _status._attackRange;
-    public float MoveSpeed              => _status._moveSpeed;
+    public override float MoveSpeed     { get { return _status._moveSpeed; } set { _status._moveSpeed = value; } }
     public int Cost                     => _status._cost;
     public float CoolTime               => _status._coolTime;
     public ItemAbility[] Ability        => _status.Abilities;
@@ -257,8 +274,10 @@ public class UnitController : FieldObject
 
     #region Monobehaviour Function
 
-    private void Awake()
+    override protected void Awake()
     {
+        base.Awake();
+
         if(_isTest)
         {
             _status = new UnitStatus();
@@ -296,7 +315,7 @@ public class UnitController : FieldObject
         {
             if (_status._abilities[i] == null) { continue; }
 
-            Ability[i].Enable(this);
+            Ability[i].Start(this);
         }
 
         #endregion
@@ -316,8 +335,10 @@ public class UnitController : FieldObject
         #endregion
     }
 
-    private void FixedUpdate()
+    override protected void FixedUpdate()
     {
+        base.FixedUpdate();
+
         //현재 상태가 비어 있거나, 죽었다면 : return
         if (_isDead) { CurState = eAni.IDLE; return; }
         
@@ -331,11 +352,6 @@ public class UnitController : FieldObject
             Ability[i].Update(Time.fixedDeltaTime);
         }
     }
-
-    public Canvas _canvas;
-
-    private RectTransform _canvasRectTrs;
-    private Camera _hpCamera;
 
     private void LateUpdate()
     {
@@ -409,9 +425,6 @@ public class UnitController : FieldObject
             }
         }
     }
-
-    void SetHp(ref float health) { _curHp = health; }
-    void SetMaxHp(ref float maxhealth) { _maxHp = maxhealth; }
 
     #endregion
 }

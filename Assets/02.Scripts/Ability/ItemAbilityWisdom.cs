@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemAbilityParvenu : ItemAbility
-{ // 졸부
+public class ItemAbilityWisdom : ItemAbility
+{ // 지혜
     override public void Awake(UnitStatus us)
     {
         base.Awake(us);
 
-        _us._cost -= (int)(_us._cost / Var[0]);
+        _us._coolTime -= _us._coolTime / Var[0];
     }
 }

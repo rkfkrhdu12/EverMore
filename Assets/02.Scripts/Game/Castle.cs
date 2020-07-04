@@ -1,7 +1,11 @@
 ﻿public class Castle : FieldObject
 {
-    private void Awake() =>
+    override protected void Awake()
+    {
+        base.Awake();
+
         _curHp = _maxHp = 100;
+    }
 
     public override void DamageReceive(float damage, FieldObject receiveObject)
     {

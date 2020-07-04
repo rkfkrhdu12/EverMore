@@ -11,6 +11,8 @@ public struct UnitStatus
     public float _maxhealth;
     public float _defensivePower;
 
+    public float _defensiveCleavage;
+
     public float[] _maxAttackDamages;    public float AttackDamage { get { return LeftAttackDamage + RightAttackDamage; } }
     public float[] _minAttackDamages;    public float LeftAttackDamage      { get { return Random.Range(_minAttackDamages[0], _maxAttackDamages[0]) + ((_minAttackDamages[1] == 0 && _maxAttackDamages[1] == 0) ? _minAttackDamages[2] : _minAttackDamages[2] / 2.0f); } }
     /*                             */    public float RightAttackDamage     { get { return Random.Range(_minAttackDamages[1], _maxAttackDamages[1]) + ((_minAttackDamages[0] == 0 && _maxAttackDamages[0] == 0) ? _minAttackDamages[2] : _minAttackDamages[2] / 2.0f); } }
@@ -118,6 +120,7 @@ public struct UnitStatus
         _equipedItems = new int[4];
         _attackRange = 0f;
         _attackSpeed = 0f;
+        _defensiveCleavage = 0;
     }
 
     public void UpdateItems()
@@ -148,7 +151,7 @@ public struct UnitStatus
         {
             if (_abilities[i] == null) { continue; }
 
-            _abilities[i].Init(this);
+            _abilities[i].Awake(this);
         }
     }
 
