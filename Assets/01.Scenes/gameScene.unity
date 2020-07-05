@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.183
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.053508077, g: 0.13441983, b: 0.1796894, a: 0.183}
+  m_IndirectSpecularColor: {r: 0.05353944, g: 0.1344117, b: 0.17973444, a: 0.183}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -615,6 +615,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 134589a785643d346bec5e28ab2a8306, type: 2}
+    - target: {fileID: -8346838765135737507, guid: 6b52473f9d3103247b0bc91b4d6b3a13,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -5602314551947084761, guid: 6b52473f9d3103247b0bc91b4d6b3a13,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 6b52473f9d3103247b0bc91b4d6b3a13,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -675,8 +685,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnitSpawnGreen
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 6b52473f9d3103247b0bc91b4d6b3a13,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5221956501552936333, guid: 6b52473f9d3103247b0bc91b4d6b3a13,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b52473f9d3103247b0bc91b4d6b3a13, type: 3}
+--- !u!1 &236406243 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5602314551947084761, guid: 6b52473f9d3103247b0bc91b4d6b3a13,
+    type: 3}
+  m_PrefabInstance: {fileID: 236406242}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &236406244
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236406243}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3025179133607064014, guid: 6b52473f9d3103247b0bc91b4d6b3a13, type: 3}
 --- !u!1001 &266932705
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1168,10 +1208,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de619fa6b1e39e42beb9b55c945b0af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _curHp: 0
-  _maxHp: 0
   _team: 0
   _isDead: 0
+  _curHp: 0
+  _maxHp: 0
+  _defenseCleavage: 0
+  DefaultCurHealth: 0
+  DefaultMaxHealth: 0
+  DefaultDefencePower: 0
+  DefaultAttackSpeed: 0
+  DefaultMoveSpeed: 0
+  DefaultDefensiveCleavage: 0
+  _isCrowdControls: 00000000000000
+  _CCTimes:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!114 &335219461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4749,10 +4805,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de619fa6b1e39e42beb9b55c945b0af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _curHp: 0
-  _maxHp: 0
   _team: 0
   _isDead: 0
+  _curHp: 0
+  _maxHp: 0
+  _defenseCleavage: 0
+  DefaultCurHealth: 0
+  DefaultMaxHealth: 0
+  DefaultDefencePower: 0
+  DefaultAttackSpeed: 0
+  DefaultMoveSpeed: 0
+  DefaultDefensiveCleavage: 0
+  _isCrowdControls: 00000000000000
+  _CCTimes:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!4 &1700119474
 Transform:
   m_ObjectHideFlags: 0
@@ -5115,6 +5187,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8346838765135737507, guid: b16cc57c4be066b44b7193c59a3b2b04,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: b16cc57c4be066b44b7193c59a3b2b04,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5170,16 +5247,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3588329912711987755, guid: b16cc57c4be066b44b7193c59a3b2b04,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: b16cc57c4be066b44b7193c59a3b2b04,
         type: 3}
       propertyPath: m_Name
       value: UnitSpawnBlue
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: b16cc57c4be066b44b7193c59a3b2b04,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1736149613011942466, guid: b16cc57c4be066b44b7193c59a3b2b04,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 134589a785643d346bec5e28ab2a8306, type: 2}
+    - target: {fileID: 5221956501552936333, guid: b16cc57c4be066b44b7193c59a3b2b04,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7563366841669875570, guid: b16cc57c4be066b44b7193c59a3b2b04,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5197,6 +5289,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b16cc57c4be066b44b7193c59a3b2b04, type: 3}
+--- !u!1 &1788966099 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3588329912711987755, guid: b16cc57c4be066b44b7193c59a3b2b04,
+    type: 3}
+  m_PrefabInstance: {fileID: 1788966098}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1788966100
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788966099}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1444909868921906229, guid: b16cc57c4be066b44b7193c59a3b2b04, type: 3}
 --- !u!1 &1828753338
 GameObject:
   m_ObjectHideFlags: 0
@@ -10416,10 +10528,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e990b618b1c217e4188259ab9fbdba9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _curHp: 60
-  _maxHp: 60
   _team: 0
   _isDead: 0
+  _curHp: 60
+  _maxHp: 60
+  _defenseCleavage: 0
+  DefaultCurHealth: 0
+  DefaultMaxHealth: 0
+  DefaultDefencePower: 0
+  DefaultAttackSpeed: 0
+  DefaultMoveSpeed: 0
+  DefaultDefensiveCleavage: 0
+  _isCrowdControls: 00000000000000
+  _CCTimes:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   _healthBar: {fileID: 279569270}
   _canvas: {fileID: 657735647}
   x: 3
@@ -10563,10 +10691,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e990b618b1c217e4188259ab9fbdba9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _curHp: 60
-  _maxHp: 60
   _team: 1
   _isDead: 0
+  _curHp: 60
+  _maxHp: 60
+  _defenseCleavage: 0
+  DefaultCurHealth: 0
+  DefaultMaxHealth: 0
+  DefaultDefencePower: 0
+  DefaultAttackSpeed: 0
+  DefaultMoveSpeed: 0
+  DefaultDefensiveCleavage: 0
+  _isCrowdControls: 00000000000000
+  _CCTimes:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   _healthBar: {fileID: 2025064640}
   _canvas: {fileID: 657735647}
   x: 3
@@ -15717,7 +15861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &6024072315254358232
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -16382,10 +16526,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e990b618b1c217e4188259ab9fbdba9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _curHp: 60
-  _maxHp: 60
   _team: 0
   _isDead: 0
+  _curHp: 60
+  _maxHp: 60
+  _defenseCleavage: 0
+  DefaultCurHealth: 0
+  DefaultMaxHealth: 0
+  DefaultDefencePower: 0
+  DefaultAttackSpeed: 0
+  DefaultMoveSpeed: 0
+  DefaultDefensiveCleavage: 0
+  _isCrowdControls: 00000000000000
+  _CCTimes:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   _healthBar: {fileID: 523717962}
   _canvas: {fileID: 657735647}
   x: 3
@@ -19016,10 +19176,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e990b618b1c217e4188259ab9fbdba9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _curHp: 60
-  _maxHp: 60
   _team: 1
   _isDead: 0
+  _curHp: 60
+  _maxHp: 60
+  _defenseCleavage: 0
+  DefaultCurHealth: 0
+  DefaultMaxHealth: 0
+  DefaultDefencePower: 0
+  DefaultAttackSpeed: 0
+  DefaultMoveSpeed: 0
+  DefaultDefensiveCleavage: 0
+  _isCrowdControls: 00000000000000
+  _CCTimes:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   _healthBar: {fileID: 2107100236}
   _canvas: {fileID: 657735647}
   x: 3

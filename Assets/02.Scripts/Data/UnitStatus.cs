@@ -117,7 +117,7 @@ public struct UnitStatus
         _minAttackDamages = new float[3];
         _abilIndex = 0;
         _abilities = new ItemAbility[4];
-        _equipedItems = new int[4];
+        //_equipedItems = new int[4]; // 업데이트 시에도 공유 하기 때문에 일단은 사용하지않음
         _attackRange = 0f;
         _attackSpeed = 0f;
         _defensiveCleavage = 0;
@@ -125,7 +125,6 @@ public struct UnitStatus
 
     public void UpdateItems()
     #region Function Content
-
     {
         InitData();
 
@@ -159,8 +158,8 @@ public struct UnitStatus
 
     public void Init(eTeam team = eTeam.PLAYER)
     #region Function Content
-
     {
+        _equipedItems = new int[4];
         _team = team;
 
         InitData();
