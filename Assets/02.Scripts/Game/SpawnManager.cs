@@ -16,12 +16,18 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private Vector3 _spawnPoint;
 
+    [SerializeField]
+    public GameObject _spawnAreaObject;
+
     int _curSpawnIndex = 0;
 
     public void SetSpawnIndex(int index)
     {
-
-
+        if (_isPlayer)
+        {
+            if (!_spawnAreaObject.activeSelf)
+                _spawnAreaObject.SetActive(true);
+        }
 
         _curSpawnIndex = index;
     }
@@ -55,6 +61,9 @@ public class SpawnManager : MonoBehaviour
 
             _isUnitSpawn[_curSpawnIndex] = true;
             _costMgr.UpdateIcon(_curSpawnIndex, true);
+
+            if (_spawnAreaObject.activeSelf)
+                _spawnAreaObject.SetActive(false);
         }
 
         Vector3 unitPos = _spawnPoint;
@@ -205,6 +214,14 @@ public class SpawnManager : MonoBehaviour
             items[3] = 303;
             _teamUnits.SetEquipedItems(2, items);
             _teamUnits.GetUnit(2).UpdateItems();
+        }
+    }
+
+    private void OnEnable()
+    {
+        if(_spawnAreaObject.activeSelf)
+        {
+            _spawnAreaObject.SetActive(false);
         }
     }
 

@@ -6,8 +6,13 @@ public class Tower : FieldObject
 {
     public Image _healthBar;
 
+    public SpawnManager _spawnMgr;
+
+    public GameObject _brokenObject;
+
     void Awake()
     {
+        _team = _spawnMgr._isPlayer ? eTeam.PLAYER : eTeam.ENEMY;
         _canvasRectTrs = _canvas.GetComponent<RectTransform>();
         _hpCamera = _canvas.worldCamera;
     }
@@ -19,7 +24,11 @@ public class Tower : FieldObject
         _healthBar.fillAmount = RemainHealth;
 
         if (_curHp <= 0)
+        {
             _isDead = true;
+            _brokenObject.SetActive(true);
+            gameObject.SetActive(false);
+        }
     }
 
     public Canvas _canvas;

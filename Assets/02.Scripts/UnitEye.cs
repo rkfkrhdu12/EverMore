@@ -32,9 +32,9 @@ public class UnitEye : MonoBehaviour
         {
             if (_enemyTargets.Count == 0)
             {
-                _isEnemy = true;
                 return null;
             }
+
             return _enemyTargets[0];
         }
     }
@@ -68,6 +68,8 @@ public class UnitEye : MonoBehaviour
 
         _attackRange = range * 2;
         _collider.radius = range * 2.5f;
+
+        StartCoroutine(SortTarget());
     }
 
     WaitForSeconds _sortTime = new WaitForSeconds(.5f);
@@ -136,13 +138,6 @@ public class UnitEye : MonoBehaviour
                 return;
             }
         }
-
-        // 포탑, 성채대상
-        {
-            var target = other.GetComponent<FieldObject>();
-
-
-        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -152,25 +147,19 @@ public class UnitEye : MonoBehaviour
         // FieldObject 가 있으면
         if (target != null)
         {
-            if(_allTargets.Contains(target)) { return; }
+            if (_allTargets.Contains(target)) { return; }
 
             _allTargets.Remove(target);
 
-            if(target._team == _unitCtrl._team)
-            { // 아군
-                if (_friendTargets.Contains(target))
-                {
-                    _friendTargets.Remove(target);
-                }
+            if (_friendTargets.Contains(target))
+            {
+                _friendTargets.Remove(target);
             }
-            else
-            { // 적군
-                if (_enemyTargets.Contains(target))
-                {
-                    _enemyTargets.Remove(target);
+            else if (_enemyTargets.Contains(target))
+            {
+                _enemyTargets.Remove(target);
 
-                    _unitCtrl.UpdateTarget();
-                }
+                _unitCtrl.UpdateTarget();
             }
         }
     } 

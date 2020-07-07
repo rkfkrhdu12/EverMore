@@ -225,7 +225,7 @@ namespace GameItem
             us._maxhealth += _health;
             us._defensivePower += _defense;
 
-            if (_range != -1) us._attackRange = (us._attackRange + _range) / 2;
+            if (_range != -1) us._attackRange = (us._attackRange > _range) ? us._attackRange : _range;
 
             if (_type <= eItemType.BodyArmour && _type != eItemType.None)
             {

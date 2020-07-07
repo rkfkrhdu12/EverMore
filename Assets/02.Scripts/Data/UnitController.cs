@@ -414,31 +414,26 @@ public class UnitController : FieldObject
 
         float remainingDistance = (_curTarget.transform.position - transform.position).magnitude;
 
-        if (_eye._isEnemy)
+        if (remainingDistance <= _navMeshAgent.stoppingDistance * 2
+            || (_navMeshAgent.velocity == Vector3.zero && remainingDistance <= _navMeshAgent.stoppingDistance * 2))
         {
-            if (remainingDistance <= _navMeshAgent.stoppingDistance * 2
-                || (_navMeshAgent.velocity == Vector3.zero && remainingDistance <= _navMeshAgent.stoppingDistance * 2))
-            {
-                transform.LookAt(_curTarget.transform);
+            transform.LookAt(_curTarget.transform);
 
-                CurState = eAni.ATTACK;
-            }
-            else
-            {
-                CurState = eAni.MOVE;
-            }
+            CurState = eAni.ATTACK;
         }
         else
         {
-            if (remainingDistance <= _navMeshAgent.stoppingDistance)
-            {
-                CurState = eAni.IDLE;
-            }
-            else
-            {
-                CurState = eAni.MOVE;
-            }
+            CurState = eAni.MOVE;
         }
+
+        //if (remainingDistance <= _navMeshAgent.stoppingDistance)
+        //{
+        //    CurState = eAni.IDLE;
+        //}
+        //else
+        //{
+        //    CurState = eAni.MOVE;
+        //}
     }
 
     #endregion
