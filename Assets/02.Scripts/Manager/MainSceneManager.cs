@@ -42,6 +42,9 @@ namespace MainSceneUI
 
         [Header("각각의 UI들")]
 
+        [SerializeField]
+        private GameObject _tutorialUI = null;
+
         #region Team UIs
         [SerializeField]
         private GameObject _choiceUnitTeamUI = null;
@@ -73,7 +76,7 @@ namespace MainSceneUI
         private void Awake()
         {
             //UI키 : UI 오브젝트 형태로 링크해줍니다.
-            InitUI(UIDataKey.Lobby);
+            InitUI(UIDataKey.Lobby, _tutorialUI);
             InitUI(UIDataKey.SetUnit, _setUnitUI);
             InitUI(UIDataKey.Matching, _MatchUI);
             InitUI(UIDataKey.ChoiceUnitTeam, _choiceUnitTeamUI);

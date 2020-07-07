@@ -418,6 +418,8 @@ public class UnitController : FieldObject
                                                   Time.deltaTime * 8.0f);
         }
 
+        if (_curTarget.CurHealth <= 0) _eye.UpdateTarget();
+
         float remainingDistance = (_curTarget.transform.position - transform.position).magnitude;
 
         if (remainingDistance <= _navMeshAgent.stoppingDistance * 2
