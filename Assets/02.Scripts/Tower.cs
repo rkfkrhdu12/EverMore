@@ -26,7 +26,9 @@ public class Tower : FieldObject
         if (_curHp <= 0)
         {
             _isDead = true;
+
             _brokenObject.SetActive(true);
+            _healthBar.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
     }
