@@ -22,6 +22,8 @@ public class UnitAnimation : MonoBehaviour
         _ani.SetFloat(_idAttackSpd, _unitCtrl.AttackSpeed);
         _ani.SetBool(_idAttack, false);
 
+        if (_unitCtrl._status._equipedItems == null) { LogMessage.Log("UNitCtrl Status is null Error"); return; }
+
         UnitAnimationManager.Update(_unitCtrl._status._equipedItems[2], _unitCtrl._status._equipedItems[3], _ani);
     }
 

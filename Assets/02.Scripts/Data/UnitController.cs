@@ -232,7 +232,7 @@ public class UnitController : FieldObject
     //필드 관점에서의 해당 유닛의 상태
     private FieldObject _curTarget = null;
 
-    ParticleSystem particle;
+    public ParticleSystem particle;
 
     #region 유닛 상태
 
@@ -304,14 +304,15 @@ public class UnitController : FieldObject
         base.OnEnable();
 
         #region UI Enable
+
         if (!_healthBarObject.activeSelf)
-            _healthBarObject.SetActive(true);
+                _healthBarObject.SetActive(true);
 
-        _healthBarImage = _healthBarObject.transform.GetChild(0).GetComponent<Image>();
-        _healthBarImage.fillAmount = RemainHealth;
+            _healthBarImage = _healthBarObject.transform.GetChild(0).GetComponent<Image>();
+            _healthBarImage.fillAmount = RemainHealth;
 
-        _canvasRectTrs = _canvas.GetComponent<RectTransform>();
-        _hpCamera = _canvas.worldCamera;
+            _canvasRectTrs = _canvas.GetComponent<RectTransform>();
+            _hpCamera = _canvas.worldCamera;
         #endregion
 
         #region AI Enable
@@ -360,16 +361,12 @@ public class UnitController : FieldObject
         //상태 변수를 통한, 유닛 업데이트
         UpdateUnit();
 
-        for (int i = 0; i < 4; ++i)
-        {
-            if (_status._abilities[i] == null) { continue; }
-
-            Ability[i].Update(Time.fixedDeltaTime);
-        }
     }
 
     private void LateUpdate()
     {
+        if(_canvasRectTrs == null && _hpCamera == null) { return; }
+
         var screenPos = Camera.main.WorldToScreenPoint(transform.position);
 
         if (screenPos.z < 0.0f)
@@ -395,11 +392,12 @@ public class UnitController : FieldObject
         if (_navMeshAgent.pathPending || !gameObject.activeSelf) { return; }
 
         UpdateMonobehaviour();
+
     }
 
     private void UpdateMonobehaviour()
     {
-        if (!_IsNavMeshAgent) { return; }
+        if (!_IsNavMeshAgent || _curTarget == null) { return; }
 
         if (_navMeshAgent.desiredVelocity.sqrMagnitude >= .1f * .1f)
         {
@@ -426,14 +424,12 @@ public class UnitController : FieldObject
             CurState = eAni.MOVE;
         }
 
-        //if (remainingDistance <= _navMeshAgent.stoppingDistance)
-        //{
-        //    CurState = eAni.IDLE;
-        //}
-        //else
-        //{
-        //    CurState = eAni.MOVE;
-        //}
+        for (int i = 0; i < 4; ++i)
+        {
+            if (_status._abilities[i] == null) { continue; }
+
+            Ability[i].Update(Time.fixedDeltaTime);
+        }
     }
 
     #endregion

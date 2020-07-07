@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.183
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.053533092, g: 0.13442189, b: 0.1797588, a: 0.183}
+  m_IndirectSpecularColor: {r: 0.053534992, g: 0.13441588, b: 0.17975052, a: 0.183}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -957,9 +957,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalImage: {fileID: 21300000, guid: 76b895a7062465546b6645f1d80fcb9c, type: 3}
-  reachImage: {fileID: 21300000, guid: c749cc85a4ec8ff42b0ee0bb2f9374ec, type: 3}
-  pressImage: {fileID: 21300000, guid: f221e4945f5ed4d4ea08676ed1c6f795, type: 3}
+  normalImage: {fileID: 21300000, guid: d8201d33ea23c354ab7fef8734bffd10, type: 3}
+  reachImage: {fileID: 21300000, guid: 72cee093df1febf429883ee8c46c8a23, type: 3}
+  pressImage: {fileID: 21300000, guid: b55446186fd252143a1a25c5e3eab14e, type: 3}
   selectImage: {fileID: 0}
   _isDefaultImageAlpha: 0
   _isSetNativeSize: 0
@@ -1014,7 +1014,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 76b895a7062465546b6645f1d80fcb9c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d8201d33ea23c354ab7fef8734bffd10, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1043,6 +1043,7 @@ GameObject:
   - component: {fileID: 320188548}
   - component: {fileID: 320188550}
   - component: {fileID: 320188549}
+  - component: {fileID: 320188551}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1088,7 +1089,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d8aae61bcc4d6c741bc04c760f460e04, type: 3}
+  m_Sprite: {fileID: -6445141981772577740, guid: 77472ae7fc8ad584787379910494356a,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1106,6 +1108,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320188547}
   m_CullTransparentMesh: 0
+--- !u!111 &320188551
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320188547}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 80c7bf68579d9d8499b72fb8874baaae, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &325689077
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2309,6 +2326,8 @@ MonoBehaviour:
   _victoryObject: {fileID: 1378979396}
   _defeatObject: {fileID: 2093065371}
   _canvas: {fileID: 657735647}
+  _victoryAnim: {fileID: 320188551}
+  _defeatAnim: {fileID: 2087523191}
 --- !u!1 &665299946
 GameObject:
   m_ObjectHideFlags: 0
@@ -6811,9 +6830,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalImage: {fileID: 21300000, guid: 76b895a7062465546b6645f1d80fcb9c, type: 3}
-  reachImage: {fileID: 21300000, guid: c749cc85a4ec8ff42b0ee0bb2f9374ec, type: 3}
-  pressImage: {fileID: 21300000, guid: f221e4945f5ed4d4ea08676ed1c6f795, type: 3}
+  normalImage: {fileID: 21300000, guid: d8201d33ea23c354ab7fef8734bffd10, type: 3}
+  reachImage: {fileID: 21300000, guid: 72cee093df1febf429883ee8c46c8a23, type: 3}
+  pressImage: {fileID: 21300000, guid: b55446186fd252143a1a25c5e3eab14e, type: 3}
   selectImage: {fileID: 0}
   _isDefaultImageAlpha: 0
   _isSetNativeSize: 0
@@ -6868,7 +6887,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 76b895a7062465546b6645f1d80fcb9c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d8201d33ea23c354ab7fef8734bffd10, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7390,6 +7409,7 @@ GameObject:
   - component: {fileID: 2087523188}
   - component: {fileID: 2087523190}
   - component: {fileID: 2087523189}
+  - component: {fileID: 2087523191}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -7435,7 +7455,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: af4b56341b9cce94394d01886b7b5c19, type: 3}
+  m_Sprite: {fileID: 5490583674552109335, guid: e6b85aa0a262dbd499a6422ba24e30c2,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7453,6 +7474,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2087523187}
   m_CullTransparentMesh: 0
+--- !u!111 &2087523191
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087523187}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 1f52a81d7611e0e4d9d68672623d385a, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 1f52a81d7611e0e4d9d68672623d385a, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &2093065371
 GameObject:
   m_ObjectHideFlags: 0

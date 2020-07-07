@@ -28,7 +28,7 @@ public class Tower : FieldObject
             _isDead = true;
 
             _brokenObject.SetActive(true);
-            _healthBar.gameObject.SetActive(false);
+            _healthBar.transform.parent.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
     }
