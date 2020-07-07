@@ -186,6 +186,20 @@ MonoBehaviour:
   DefaultAttackSpeed: 0
   DefaultMoveSpeed: 0
   DefaultDefensiveCleavage: 0
+  _spriteList:
+  - {fileID: 21300000, guid: 5d38eaa2a2e4c3b4aa0fa48fe615ef26, type: 3}
+  - {fileID: 21300000, guid: e2b47cf8ed4601d4193b1d010708eb8d, type: 3}
+  - {fileID: 21300000, guid: 19af1e9904c858546a284f8d2ba9b376, type: 3}
+  - {fileID: 21300000, guid: ec962212453b5f14081cb6d10a214da3, type: 3}
+  - {fileID: 21300000, guid: 70a08e20d725edb4cb91dd80ccef69e3, type: 3}
+  - {fileID: 21300000, guid: f6d30f62af3176c4084fd1830eba5c7f, type: 3}
+  - {fileID: 21300000, guid: a58ad5b99072a2e4f8cb272733a19c02, type: 3}
+  - {fileID: 21300000, guid: 90cfa3e0dcca39d4fa77ce16432451dd, type: 3}
+  - {fileID: 21300000, guid: 16de58b5c237cf847b6ba7cc045f7be2, type: 3}
+  - {fileID: 21300000, guid: ee43295ea26e8b045909dfbe0a79fc1e, type: 3}
+  - {fileID: 21300000, guid: e2b47cf8ed4601d4193b1d010708eb8d, type: 3}
+  _stateSpriteUIs: []
+  _curStateNum: 
   _isCrowdControls: 00000000000000
   _CCTimes:
   - 0
@@ -202,6 +216,7 @@ MonoBehaviour:
   _eye: {fileID: 1048384256781551297}
   effectObject: {fileID: 7244802936122393983}
   _enemyCastleObject: {fileID: 0}
+  particle: {fileID: 0}
   _healthBarObject: {fileID: 0}
   _healthBarImage: {fileID: 0}
   _curState: 0

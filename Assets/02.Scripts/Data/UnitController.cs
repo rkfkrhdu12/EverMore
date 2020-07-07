@@ -283,6 +283,8 @@ public class UnitController : FieldObject
     public float            CoolTime          => _status._coolTime;
     public ItemAbility[]    Ability           => _status.Abilities;
 
+
+
     #endregion
 
     #endregion
@@ -291,7 +293,6 @@ public class UnitController : FieldObject
 
     void Awake()
     {
-
         if (_isTest)
         {
             _status = new UnitStatus();
@@ -306,13 +307,21 @@ public class UnitController : FieldObject
         #region UI Enable
 
         if (!_healthBarObject.activeSelf)
-                _healthBarObject.SetActive(true);
+            _healthBarObject.SetActive(true);
 
-            _healthBarImage = _healthBarObject.transform.GetChild(0).GetComponent<Image>();
-            _healthBarImage.fillAmount = RemainHealth;
+        _healthBarImage = _healthBarObject.transform.GetChild(0).GetComponent<Image>();
 
-            _canvasRectTrs = _canvas.GetComponent<RectTransform>();
-            _hpCamera = _canvas.worldCamera;
+        int childCount = _healthBarObject.transform.childCount;
+        _stateSpriteUIs = new Image[childCount];
+        for (int i = 1; i < childCount; ++i)
+            _stateSpriteUIs[i - 1] = _healthBarObject.transform.GetChild(i).GetComponent<Image>();
+
+        _healthBarImage.fillAmount = RemainHealth;
+
+        _canvasRectTrs = _canvas.GetComponent<RectTransform>();
+        _hpCamera = _canvas.worldCamera;
+
+
         #endregion
 
         #region AI Enable

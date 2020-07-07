@@ -150,8 +150,8 @@ public class InGameSystem : MonoBehaviour
 
     #region Private Function
 
-    [SerializeField]      Animation _victoryAnim;
-    [SerializeField] Animation _defeatAnim;
+    [SerializeField]      Animator _victoryAnim;
+    [SerializeField] Animator _defeatAnim;
 
 
     void Victory()
@@ -162,7 +162,7 @@ public class InGameSystem : MonoBehaviour
         BlueSpawnMgr._isGameEnd = _isGameEnd;
 
         _victoryObject.SetActive(true);
-        _victoryAnim.Play();
+        //_victoryAnim.Play();
     }
 
     void Defeat()
@@ -173,7 +173,7 @@ public class InGameSystem : MonoBehaviour
         BlueSpawnMgr._isGameEnd = _isGameEnd;
 
         _defeatObject.SetActive(true);
-        _defeatAnim.Play();
+        //_defeatAnim.Play();
     }
 
     #endregion

@@ -7,4 +7,11 @@ public class ItemAbilityLife : ItemAbility
 
         _us._curhealth += _us._curhealth / Var[0];
     }
+
+    public override void Start(UnitController uCtrl)
+    {
+        base.Start(uCtrl);
+
+        _uCtrl._curStateNum.Add(8);
+    }
 }

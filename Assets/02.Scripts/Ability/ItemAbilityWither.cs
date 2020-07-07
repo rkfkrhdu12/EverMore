@@ -9,6 +9,8 @@ public class ItemAbilityWither : ItemAbility
 
         if (!enemyUnit._isCrowdControls[(int)_curType])
         {
+            _uCtrl._curStateNum.Add(10);
+
             enemyUnit.AttackSpeed   -= enemyUnit.DefaultAttackSpeed / Var[0];
             enemyUnit.MoveSpeed     -= enemyUnit.DefaultMoveSpeed / Var[1];
         }
@@ -23,6 +25,8 @@ public class ItemAbilityWither : ItemAbility
 
         if (type == _curType)
         {
+            _uCtrl._curStateNum.Remove(10);
+
             enemyUnit.AttackSpeed   += enemyUnit.DefaultAttackSpeed / Var[0];
             enemyUnit.MoveSpeed     += enemyUnit.DefaultMoveSpeed / Var[1];
         }

@@ -7,4 +7,11 @@ public class ItemAbilityQuick : ItemAbility
 
         _us._moveSpeed += _us._moveSpeed / Var[0];
     }
+
+    public override void Start(UnitController uCtrl)
+    {
+        base.Start(uCtrl);
+
+        _uCtrl._curStateNum.Add(9);
+    }
 }

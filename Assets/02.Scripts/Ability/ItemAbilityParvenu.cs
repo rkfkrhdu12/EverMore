@@ -7,4 +7,11 @@ public class ItemAbilityParvenu : ItemAbility
 
         _us._cost -= (int)(_us._cost / Var[0]);
     }
+
+    public override void Start(UnitController uCtrl)
+    {
+        base.Start(uCtrl);
+
+        _uCtrl._curStateNum.Add(6);
+    }
 }

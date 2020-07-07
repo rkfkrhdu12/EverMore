@@ -24,6 +24,14 @@ public class ItemAbilityManager
         abilityList.Add(new ItemAbilitySharpness());
         abilityList.Add(new ItemAbilitySharpness());
         abilityList.Add(new ItemAbilityFrostyFeet());
+        abilityList.Add(new ItemAbilityChill());
+        abilityList.Add(new ItemAbilityInspire());
+        abilityList.Add(new ItemAbilityVanguard());
+        abilityList.Add(new ItemAbilityParvenu());
+        abilityList.Add(new ItemAbilityWisdom());
+        abilityList.Add(new ItemAbilityLife());
+        abilityList.Add(new ItemAbilityQuick());
+        abilityList.Add(new ItemAbilityWither());
 
         int index = 0;
         foreach (var splitDatas in abilityDatas.Select(t => t.Split(',')))

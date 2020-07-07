@@ -9,9 +9,12 @@ public class ItemAbilityFrostyFeet : ItemAbility
 
         if (!enemyUnit._isCrowdControls[(int)_curType])
         {
+            enemyUnit._curStateNum.Add(2);
+
             enemyUnit.AttackSpeed   -= enemyUnit.DefaultAttackSpeed / Var[0];
             enemyUnit.MoveSpeed     -= enemyUnit.DefaultMoveSpeed / Var[0];
         }
+
 
         enemyUnit.CrowdControl(_curType, Time);
         enemyUnit.ExitCCFunction += ExitCC;
@@ -23,6 +26,8 @@ public class ItemAbilityFrostyFeet : ItemAbility
 
         if(type == _curType)
         {
+            enemyUnit._curStateNum.Remove(2);
+
             enemyUnit.AttackSpeed -= enemyUnit.DefaultAttackSpeed / Var[0];
             enemyUnit.MoveSpeed -= enemyUnit.DefaultMoveSpeed / Var[0];
         }

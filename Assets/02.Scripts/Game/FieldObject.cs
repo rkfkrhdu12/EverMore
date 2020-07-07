@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 public enum eCrowdControl
 {
@@ -39,6 +41,13 @@ public class FieldObject : MonoBehaviour
     [HideInInspector] public float DefaultDefensiveCleavage = 0;      public virtual float DefensiveCleavage      { get { return _defenseCleavage; }      set { _defenseCleavage = value; } }
     [HideInInspector] public float RemainHealth => CurHealth / MaxHealth;
 
+    public Sprite[] _spriteList;
+    public Dictionary<int, Sprite> _stateSprites = new Dictionary<int, Sprite>();
+
+    public Image[] _stateSpriteUIs;
+
+    public List<int> _curStateNum = new List<int>();
+
     public bool IsDead { get => _isDead; }
 
     public bool[] _isCrowdControls = new bool[(int)eCrowdControl.Last];
@@ -61,6 +70,11 @@ public class FieldObject : MonoBehaviour
         DefaultAttackSpeed  = AttackSpeed;
         DefaultMoveSpeed    = MoveSpeed;
         DefaultDefensiveCleavage = DefensiveCleavage;
+
+        for (int i = 0; i < _spriteList.Length; ++i) 
+        {
+            _stateSprites.Add(i, _spriteList[i]);
+        }
     }
 
     virtual protected void FixedUpdate()
@@ -76,6 +90,19 @@ public class FieldObject : MonoBehaviour
                     ExitCCFunction((eCrowdControl)i, this);
                 }
             }
+        }
+        
+        if(_stateSprites.Count <= 0 || _curStateNum.Count <= 0) { return; }
+
+        for (int i = 0; i < 3; ++i)
+        {
+            if (_curStateNum.Count <= i) { break; }
+
+            if (_stateSprites.ContainsKey(_curStateNum[i]) && _stateSpriteUIs[i] != null)
+            {
+                _stateSpriteUIs[i].sprite = _stateSprites[_curStateNum[i]];
+            }
+
         }
     }
 }

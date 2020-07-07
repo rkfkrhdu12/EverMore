@@ -13,6 +13,8 @@ public class ItemAbilityVanguard : ItemAbility
             if(Time <= 0)
             {
                 _us._curhealth += Var[0];
+
+                _uCtrl._curStateNum.Remove(5);
             }
         }
 
@@ -21,6 +23,8 @@ public class ItemAbilityVanguard : ItemAbility
             if(_time <= 0)
             {
                 ++_count;
+
+                _uCtrl._curStateNum.Add(5);
                 _time = 1.0f;
             }
         }

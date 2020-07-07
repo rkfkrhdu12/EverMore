@@ -5,6 +5,12 @@ public class ItemAbilityWisdom : ItemAbility
     {
         base.Awake(us);
 
-        _us._coolTime -= _us._coolTime / Var[0];
+    }
+
+    public override void Start(UnitController uCtrl)
+    {
+        base.Start(uCtrl);
+
+        _uCtrl._curStateNum.Add(7);
     }
 }
