@@ -389,6 +389,21 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 7990610973983005839, guid: d1fe2845c92fcce41bcfa46882c379fc,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7990610973983005839, guid: d1fe2845c92fcce41bcfa46882c379fc,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7990610973983005839, guid: d1fe2845c92fcce41bcfa46882c379fc,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8617636852645059955, guid: d1fe2845c92fcce41bcfa46882c379fc,
         type: 3}
       propertyPath: playOnAwake
@@ -497,17 +512,17 @@ PrefabInstance:
     - target: {fileID: 3075815113117108359, guid: e89667093c45d744b8f3d3aed99e929d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3075815113117108359, guid: e89667093c45d744b8f3d3aed99e929d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.61
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3075815113117108359, guid: e89667093c45d744b8f3d3aed99e929d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.79
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3075815113117108359, guid: e89667093c45d744b8f3d3aed99e929d,
         type: 3}
@@ -549,10 +564,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 157.332
       objectReference: {fileID: 0}
+    - target: {fileID: 3075815113117108360, guid: e89667093c45d744b8f3d3aed99e929d,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3075815113117108362, guid: e89667093c45d744b8f3d3aed99e929d,
         type: 3}
       propertyPath: m_Name
       value: TowHandSword&TwoHandSword_FX
+      objectReference: {fileID: 0}
+    - target: {fileID: 3075815113117108362, guid: e89667093c45d744b8f3d3aed99e929d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e89667093c45d744b8f3d3aed99e929d, type: 3}
@@ -588,6 +613,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7990610973983005839, guid: d1fe2845c92fcce41bcfa46882c379fc,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7990610973983005839, guid: d1fe2845c92fcce41bcfa46882c379fc,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7990610973983005839, guid: d1fe2845c92fcce41bcfa46882c379fc,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8617636852645059955, guid: d1fe2845c92fcce41bcfa46882c379fc,
         type: 3}
@@ -809,6 +849,21 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6070881654359738922, guid: 3fad4bd5ac37630419ea2d9206499af2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070881654359738922, guid: 3fad4bd5ac37630419ea2d9206499af2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070881654359738922, guid: 3fad4bd5ac37630419ea2d9206499af2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6070881654359738967, guid: 3fad4bd5ac37630419ea2d9206499af2,
         type: 3}
       propertyPath: m_IsActive
@@ -962,17 +1017,17 @@ PrefabInstance:
     - target: {fileID: 5249764698302437860, guid: 59aea605a0580a64ea196a1e8589d3f0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.21884562
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5249764698302437860, guid: 59aea605a0580a64ea196a1e8589d3f0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.95152134
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5249764698302437860, guid: 59aea605a0580a64ea196a1e8589d3f0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.7907105
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5249764698302437860, guid: 59aea605a0580a64ea196a1e8589d3f0,
         type: 3}
@@ -1042,17 +1097,17 @@ PrefabInstance:
     - target: {fileID: 679565373634813832, guid: 988964ff28ef2f4479809affe7088030,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.816
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 679565373634813832, guid: 988964ff28ef2f4479809affe7088030,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.67
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 679565373634813832, guid: 988964ff28ef2f4479809affe7088030,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 679565373634813832, guid: 988964ff28ef2f4479809affe7088030,
         type: 3}
@@ -1094,10 +1149,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 679565373634813835, guid: 988964ff28ef2f4479809affe7088030,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 679565373634813941, guid: 988964ff28ef2f4479809affe7088030,
         type: 3}
       propertyPath: m_Name
       value: Sword&Spear_FX
+      objectReference: {fileID: 0}
+    - target: {fileID: 679565373634813941, guid: 988964ff28ef2f4479809affe7088030,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 988964ff28ef2f4479809affe7088030, type: 3}

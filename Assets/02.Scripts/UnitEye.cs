@@ -43,8 +43,9 @@ public class UnitEye : MonoBehaviour
     {
         if (_enemyTargets.Count <= 0) { return; }
 
-        if (CurTarget.CurHealth <= 0 || !_isEnemy) 
+        if (CurTarget.CurHealth <= 0) 
         {
+            _allTargets.Remove(_enemyTargets[0]);
             _enemyTargets.Remove(_enemyTargets[0]);
 
             // UnitCtrl 업데이트

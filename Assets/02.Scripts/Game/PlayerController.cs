@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
             {
                 Vector3 dist = hitInfo.point - transform.position;
 
-                if (dist.sqrMagnitude < _spawnRange * _spawnRange)
+                // if (dist.sqrMagnitude < _spawnRange * _spawnRange)
                 { // Spawn
                     _spawnManager.SetSpawnPoint(hitInfo.point);
 

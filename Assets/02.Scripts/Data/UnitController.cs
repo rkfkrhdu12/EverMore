@@ -89,12 +89,12 @@ public class UnitController : FieldObject
             }
         }
 
-        _curHp -= damage;
+        CurHealth -= damage;
 
         _healthBarImage.fillAmount = RemainHealth;
 
         //체력이 0 초과라면 : 아래 코드 구문 실행 x
-        if (_curHp > 0) return;
+        if (CurHealth > 0) return;
 
         //사망 처리 한다.
         _isDead = true;

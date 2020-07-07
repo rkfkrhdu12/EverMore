@@ -31,8 +31,8 @@ public class FieldObject : MonoBehaviour
 
     public float _defenseCleavage = 0.0f;
 
-    [HideInInspector] public float DefaultCurHealth   = 0;            public virtual float CurHealth              { get { return _curHp; }        set { } }
-    [HideInInspector] public float DefaultMaxHealth   = 0;            public virtual float MaxHealth              { get { return _maxHp; }        set { } }
+    [HideInInspector] public float DefaultCurHealth   = 0;            public virtual float CurHealth              { get { return _curHp; }        set { _curHp = value; } }
+    [HideInInspector] public float DefaultMaxHealth   = 0;            public virtual float MaxHealth              { get { return _maxHp; }        set { _maxHp = value; } }
     [HideInInspector] public float DefaultDefencePower = 0;           public virtual float DefencePower           { get { return 0.0f; }          set { } }
     [HideInInspector] public float DefaultAttackSpeed = 0;            public virtual float AttackSpeed            { get { return 0.0f; }          set { } }
     [HideInInspector] public float DefaultMoveSpeed   = 0;            public virtual float MoveSpeed              { get { return 0.0f; }          set { } }
