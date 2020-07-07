@@ -369,7 +369,6 @@ public class UnitController : FieldObject
 
         //상태 변수를 통한, 유닛 업데이트
         UpdateUnit();
-
     }
 
     private void LateUpdate()

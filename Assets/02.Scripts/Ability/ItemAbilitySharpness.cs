@@ -5,7 +5,6 @@ public class ItemAbilitySharpness : ItemAbility
     {
         base.Awake(unit);
 
-
         _us._minAttackDamages[0] += _us._minAttackDamages[0] / _variables[0];
         _us._minAttackDamages[1] += _us._minAttackDamages[1] / _variables[0];
 
@@ -17,7 +16,7 @@ public class ItemAbilitySharpness : ItemAbility
     {
         base.Start(uCtrl);
 
-        _uCtrl._curStateNum.Remove(1);
+        _uCtrl._curStateNum.Add(1);
     }
 
 }
