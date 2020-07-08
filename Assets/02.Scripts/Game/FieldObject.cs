@@ -83,14 +83,10 @@ public class FieldObject : MonoBehaviour
         {
             if (_isCrowdControls[i])
             {
-                _CCTimes[i] -= Time.fixedDeltaTime;
-                if (ExitCCFunction != null)
-                {
-                    if (_CCTimes[i] <= 0.0f)
-                    {
-                        ExitCCFunction((eCrowdControl)i, this);
-                    }
-                }
+                _CCTimes[i] = Mathf.Max(0, _CCTimes[i] - Time.fixedDeltaTime);
+
+                if (_CCTimes[i] <= 0.0f)
+                    ExitCCFunction?.Invoke((eCrowdControl)i, this);
             }
         }
         
