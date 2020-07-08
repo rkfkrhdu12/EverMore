@@ -23,9 +23,13 @@ public class CostManager : MonoBehaviour
     {
         _levelMgr = levelData;
     }
+
+    [SerializeField]
+    float _startCost = 100;
+
     public void Enable(SpawnManager spawnMgr)
     {
-        _curCost = 100;
+        _curCost = _startCost;
 
         for (int i = 0; i < spawnMgr._teamUnits.Length; ++i)
         {
@@ -39,19 +43,14 @@ public class CostManager : MonoBehaviour
         }
     }
 
-    public void UpdateIcon(int index, bool isCoolDown)
-    {
-        if(isCoolDown)
-        { // 쿨타임 중
-            UnitIconManager.SetColor(_iconObjects[index], Color.gray);
-        }
-        else
-        { // 이 아님
-            UnitIconManager.SetColor(_iconObjects[index], Color.white);
-        }
-    }
-
     #region Variable
+    private float[] _coolDownTime = new float[6];
+    public void SetCoolDownUI(int index, float coolDown)
+    {
+        if (_iconObjects.Length <= index || _iconCoolTimeImage.Length <= index) { LogMessage.LogError("UpdateIcon index is Over"); return; }
+
+        _coolDownTime[index] = coolDown;
+    }
 
     [SerializeField]
     private Image _costImage = null;
@@ -60,6 +59,7 @@ public class CostManager : MonoBehaviour
     private TMP_Text _costText;
 
     public GameObject[] _iconObjects;
+    public Image[] _iconCoolTimeImage;
     
     public TMP_Text[] _unitCostTexts;
 
@@ -89,5 +89,15 @@ public class CostManager : MonoBehaviour
     private void Update()
     {
         CurCost = Mathf.Min(CurCost + Time.deltaTime * _levelMgr._costRegen, _levelMgr._maxCost);
+
+        for (int i = 0; i < _coolDownTime.Length; ++i)
+        {
+            if(_coolDownTime[i] >= 0)
+            {
+                _coolDownTime[i] -= Time.deltaTime;
+
+                _iconCoolTimeImage[i].fillAmount = 0.2f + _coolDownTime[i] * .6f;
+            }
+        }
     }
 }

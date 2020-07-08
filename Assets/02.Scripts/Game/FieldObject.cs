@@ -84,10 +84,12 @@ public class FieldObject : MonoBehaviour
             if (_isCrowdControls[i])
             {
                 _CCTimes[i] -= Time.fixedDeltaTime;
-
-                if (_CCTimes[i] <= 0.0f)
+                if (ExitCCFunction != null)
                 {
-                    ExitCCFunction((eCrowdControl)i, this);
+                    if (_CCTimes[i] <= 0.0f)
+                    {
+                        ExitCCFunction((eCrowdControl)i, this);
+                    }
                 }
             }
         }

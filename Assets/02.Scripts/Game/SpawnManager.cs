@@ -41,11 +41,23 @@ public class SpawnManager : MonoBehaviour
     List<GameObject> _unitList = new List<GameObject>();
 
     bool[] _isUnitSpawn = new bool[6];
-    WaitForSeconds[] _unitCoolTimes = new WaitForSeconds[6];
+    float[] _unitCoolIntervals = new float[6];
+    float[] _unitCoolTimes = new float[6];
 
     GameObject _curSpawnObject = null;
 
     public InGameSystem _inGameSystem;
+
+    public Transform _unitHealthBarList;
+    public GameObject _unitHealthBarObject;
+
+    public Canvas _canvas;
+
+    public bool _isGameEnd = false;
+    WaitForSeconds UpdateWaitTime = new WaitForSeconds(.25f);
+
+    CostManager _costMgr;
+
 
     /// <summary>
     /// UI의 버튼 혹은 설정된 키로 유닛을 스폰
@@ -60,7 +72,7 @@ public class SpawnManager : MonoBehaviour
             if (!_inGameSystem.CostConsumption(uStatus._cost)) { return; }
 
             _isUnitSpawn[_curSpawnIndex] = true;
-            _costMgr.UpdateIcon(_curSpawnIndex, true);
+            _costMgr.SetCoolDownUI(_curSpawnIndex, uStatus._coolTime);
 
             if (_spawnAreaObject.activeSelf)
                 _spawnAreaObject.SetActive(false);
@@ -99,13 +111,6 @@ public class SpawnManager : MonoBehaviour
         _curSpawnObject = null;
     }
 
-    public Transform _unitHealthBarList;
-    public GameObject _unitHealthBarObject;
-
-    public Canvas _canvas;
-
-    public bool _isGameEnd = false;
-    WaitForSeconds UpdateWaitTime = new WaitForSeconds(.25f);
     IEnumerator UpdateSpawnObject()
     {
         while (!_isGameEnd)
@@ -160,19 +165,24 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator UpdateUnitCoolTime(int index)
+    IEnumerator UpdateUnitCoolTime()
     {
-        while(!_isGameEnd)
+        while (!_isGameEnd)
         {
-            if (_isUnitSpawn[index])
+            for (int i = 0; i < _teamUnits.Length; ++i)
             {
-                yield return _unitCoolTimes[index];
+                if (_isUnitSpawn[i])
+                {
+                    _unitCoolTimes[i] += Time.deltaTime;
 
-                _isUnitSpawn[index] = false;
-                _costMgr.UpdateIcon(index , false);
+                    if (_unitCoolIntervals[i] <= _unitCoolTimes[i])
+                    {
+                        _isUnitSpawn[i] = false;
+                    }
+                }
+                else
+                    yield return UpdateWaitTime;
             }
-            else
-                yield return UpdateWaitTime;
         }
     }
 
@@ -225,7 +235,6 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    CostManager _costMgr;
     public void Enable(CostManager costMgr)
     {
         _costMgr = costMgr;
@@ -236,11 +245,10 @@ public class SpawnManager : MonoBehaviour
             us.UpdateItems();
 
             _isUnitSpawn[i] = false;
-            _unitCoolTimes[i] = new WaitForSeconds(us._coolTime);
-            StartCoroutine(UpdateUnitCoolTime(i));
+            _unitCoolIntervals[i] = us._coolTime;
+            StartCoroutine(UpdateUnitCoolTime());
         }
     }
-
 
     private void Update()
     {
