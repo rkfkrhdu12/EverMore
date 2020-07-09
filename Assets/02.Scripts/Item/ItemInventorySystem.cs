@@ -14,6 +14,8 @@ public class ItemInventorySystem : MonoBehaviour
     private UnitPhoto _unitPhoto;
     public Animator _saveAnimator;
 
+    ItemSlot _prevSlot;
+
     [SerializeField]
     private TeamManager _teamManager = null;
 
@@ -21,7 +23,10 @@ public class ItemInventorySystem : MonoBehaviour
     private GameObject _unitModelUI = null;
 
     [SerializeField]
-    private ButtonGroup _itemsButtonGroup;
+    private ButtonGroup _itemsButtonGroup = null;
+
+    [SerializeField]
+    private GameObject _unitDetailUI = null;
 
     public eCodeType Type   
     {
@@ -75,6 +80,8 @@ public class ItemInventorySystem : MonoBehaviour
         _equipedItems[1] = _itemList.CodeSearch(eCodeType.Bodyarmour, 0);
         _equipedItems[2] = 0;
         _equipedItems[3] = 0;
+
+        _unitDetailUI.SetActive(false);
     }
 
     bool isTesting = false;
@@ -170,8 +177,6 @@ public class ItemInventorySystem : MonoBehaviour
         _saveAnimator.SetTrigger("OnAnimation");
     }
 
-    ItemSlot _prevSlot;
-
     public void OnEquiped(ItemSlot curSlot)
     {
         if (_prevSlot != null)
@@ -194,6 +199,18 @@ public class ItemInventorySystem : MonoBehaviour
         { UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelUI.GetComponent<Animator>()); }
 
         _prevSlot = curSlot;
+    }
+
+    public void OnDetailUIEnable()
+    {
+        
+
+        _unitDetailUI.SetActive(true);
+    }
+
+    public void OnDetailUIDisable()
+    {
+
     }
 
     #region Private Function
