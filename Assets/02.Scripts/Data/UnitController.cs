@@ -447,13 +447,13 @@ public class UnitController : FieldObject
 
 public class UnitModelManager
 {
-    public static void Reset(GameObject unit, in int[] equipedItems)
+    public static bool Reset(GameObject unit, in int[] equipedItems)
     #region Function Content
     {
         if (0 == _modelItemPoint.Count)
             Init();
 
-        if (null == unit) { return; }
+        if (null == unit) { return false; }
 
         if (!unit.activeSelf) { unit.SetActive(true); }
 
@@ -492,6 +492,8 @@ public class UnitModelManager
 
             rightWeaponTrs.GetChild(index[1]).gameObject.SetActive(false);
         }
+
+        return true;
     }
     #endregion
 
@@ -542,13 +544,13 @@ public class UnitModelManager
 
     #endregion
 
-    public static void Update(GameObject unit, in int[] equipedItems, int prevItem = 0, int colorNum = 1)
+    public static bool Update(GameObject unit, in int[] equipedItems, int prevItem = 0, int colorNum = 1)
     #region Function Content
     {
         if (0 == _modelItemPoint.Count)
             Init();
 
-        if (null == unit) { return; }
+        if (null == unit) { return false; }
 
         if (!unit.activeSelf) { unit.SetActive(true); }
 
@@ -610,6 +612,8 @@ public class UnitModelManager
 
             rightWeaponTrs.GetChild(index[1]).gameObject.SetActive(true);
         }
+
+        return true;
     }
 
     #endregion
@@ -828,7 +832,7 @@ public class UnitIconManager
 
 public class UnitAnimationManager
 {
-    public static void Update(int leftWeaponCode, int rightWeaponCode, Animator ani)
+    public static bool Update(int leftWeaponCode, int rightWeaponCode, Animator ani)
     #region Function Content
 
     {
@@ -838,6 +842,8 @@ public class UnitAnimationManager
 
         if (num != -1)
             ani.SetInteger(_idWeaponType, num);
+
+        return true;
     }
 
     #endregion

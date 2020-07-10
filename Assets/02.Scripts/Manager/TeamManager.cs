@@ -151,7 +151,7 @@ public class TeamManager : MonoBehaviour
         }
     }
 
-    private readonly WaitForSeconds SideTime = new WaitForSeconds(0.075f);
+    private readonly WaitForSeconds SideTime = new WaitForSeconds(0.3f);
     private IEnumerator UnitTextureWaiting(RawImage rawImage)
     {
         //중간 텀

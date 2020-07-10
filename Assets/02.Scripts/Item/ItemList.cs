@@ -162,10 +162,11 @@ namespace GameItem
 
         // Weapon
         Sword = 3,
-        TwoHandSword,
+        NULL,
         Spear,
         Shield,
         Bow,
+        TwoHandSword,
 
         LAST,
     }

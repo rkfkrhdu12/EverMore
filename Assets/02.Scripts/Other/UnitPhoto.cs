@@ -22,19 +22,19 @@ public class UnitPhoto : MonoBehaviour
 
     private string _path;
 
-    private void Start()
+    private void Awake()
     {
         _path = $"{Application.persistentDataPath}";
         LogMessage.Log(_path);
     }
 
-    public void UpdateTexture(ref RawImage rawImage,in int[] equipedItems)
+    public void UpdateTexture(ref RawImage rawImage,in int[] equipedItems, bool isSetSize = false)
     {
         if (null == equipedItems) { return; }
 
         //_rawimage = rawImage;
 
-        StartCoroutine(ILoadTexture(equipedItems, rawImage));
+        StartCoroutine(ILoadTexture(equipedItems, rawImage, isSetSize));
     }
 
     public void SaveTexture(in int[] equipedItems)
@@ -44,15 +44,22 @@ public class UnitPhoto : MonoBehaviour
 
     private IEnumerator ISaveTexture(int[] equipedItems)
     {
+        while (_isUse)
+            yield return SideTime;
+        _isUse = true;
+
         Util.SaveRenderTextuerToPng(
             $@"{_path}/{equipedItems[0].ToString()}-head,{equipedItems[1].ToString()}-body,{equipedItems[2].ToString()}-leftWeapon,{equipedItems[3].ToString()}-rightWeapon.png",
                     renderTexture);
         
         //중간 텀
         yield return SideTime;
+
+        _isUse = false;
     }
 
-    private IEnumerator ILoadTexture(int[] equipedItems,RawImage rawImage)
+    public bool _isUse = false;
+    private IEnumerator ILoadTexture(int[] equipedItems, RawImage rawImage, bool isSetSize = false)
     {
         using (var uwr = UnityWebRequestTexture.GetTexture
             ($@"{_path}/{equipedItems[0].ToString()}-head,{equipedItems[1].ToString()}-body,{equipedItems[2].ToString()}-leftWeapon,{equipedItems[3].ToString()}-rightWeapon.png"))
@@ -61,22 +68,25 @@ public class UnitPhoto : MonoBehaviour
 
             if (uwr.isNetworkError || uwr.isHttpError)
             {
-                UnitModelManager.Update(_modelObject, equipedItems);
-
-                yield return SideTime;
-
+                while (_isUse)
+                    yield return SideTime;
+                _isUse = true;
+                
                 Util.SaveRenderTextuerToPng(
                     $@"{_path}/{equipedItems[0].ToString()}-head,{equipedItems[1].ToString()}-body,{equipedItems[2].ToString()}-leftWeapon,{equipedItems[3].ToString()}-rightWeapon.png",
                             renderTexture);
 
+                _isUse = false;
+
                 yield return SideTime;
             }
-
             var texture = DownloadHandlerTexture.GetContent(uwr);
 
             rawImage.texture = texture;
+            if (isSetSize)
+                rawImage.SetNativeSize();
         }
     }
 
-    private readonly WaitForSeconds SideTime = new WaitForSeconds(0.2f);
+    private readonly WaitForSeconds SideTime = new WaitForSeconds(0.15f);
 }

@@ -12,7 +12,6 @@ namespace Stage
         public int Index;
         public bool IsDown;
     }
-
     public class StageData
     {
         public Team Team;
@@ -42,6 +41,9 @@ namespace Stage
         public void StageClear()
         {
             ++_curStage;
+            _isStageUpdate = false;
+
+            UpdateStage();
         }
         
         public StageData GetStageData() { return _curStage < _stageDataList.Count ? _stageDataList[_curStage] : null; }
@@ -53,13 +55,7 @@ namespace Stage
 
             StageData curData = _stageDataList[_curStage];
 
-            for (int i = 0; i < curData.Team.Length; ++i)
-            {
-                UnitStatus us = curData.Team.GetUnit(i);
-
-                _unitPhoto.UpdateTexture(ref _stageUIs._enemyImages[i], us._equipedItems);
-                UnitIconManager.Update(_stageUIs._headIconObjects[i], us._equipedItems[0]);
-            }
+            UpdateStage();
         }
 
         #region Variable
@@ -73,14 +69,22 @@ namespace Stage
         [SerializeField]
         private UnitPhoto _unitPhoto = null;
 
+        [SerializeField]
+        private GameObject _modelObject = null;
+
+        bool _isStageUpdate = false;
         bool _isInit = false;
+
         #endregion
 
         #region Monobehaviour Function
 
-        private void Awake()
+        private void Start()
         {
             Init();
+
+            Debug.Log("StartCoroutine");
+            StartCoroutine(UpdateStage());
         }
 
         #endregion
@@ -134,8 +138,53 @@ namespace Stage
             }
 
             _stageDataList.Add(newData);
-        } 
+        }
 
+        WaitForSeconds time = new WaitForSeconds(.5f);
+        private IEnumerator UpdateStage()
+        {
+            if(_isStageUpdate) { yield return null; }
+            _isStageUpdate = true;
+
+            StageData curData = _stageDataList[_curStage];
+            Animator animator = _modelObject.GetComponent<Animator>();
+
+            for (int i = 0; i < curData.Team.Length; ++i)
+            {
+                UnitStatus curStatus = curData.Team.GetUnit(i);
+
+                int curHelmetCode = curStatus._equipedItems[0];
+                int curLeftWeaponCode = curStatus._equipedItems[2];
+                int curRightWeaponCode = curStatus._equipedItems[3];
+
+                GameObject curHeadIconObject = _stageUIs._headIconObjects[i];
+
+
+                UnitModelManager.Reset(_modelObject);
+
+                UnitModelManager.Update(_modelObject, curStatus._equipedItems);
+
+                UnitAnimationManager.Update(curLeftWeaponCode, curRightWeaponCode, animator);
+
+                UnitIconManager.Update(curHeadIconObject, curHelmetCode);
+
+                yield return time;
+
+                _unitPhoto.SaveTexture(curStatus._equipedItems);
+
+                while (_unitPhoto._isUse)
+                    yield return time;
+            }
+
+
+            for (int i = 0; i < curData.Team.Length; ++i) 
+            {
+                UnitStatus curStatus = curData.Team.GetUnit(i);
+                RawImage curRawImage = _stageUIs._enemyImages[i];
+
+                _unitPhoto.UpdateTexture(ref curRawImage, curStatus._equipedItems, true);
+            }
+        }
         #endregion
     }
 }

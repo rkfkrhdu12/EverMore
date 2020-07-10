@@ -8,12 +8,14 @@ using UnityEditor;
 // 여러 기능을 하는 유틸 클래스
 public static class Util
 {
-    public static void SaveRenderTextuerToPng(string path,  RenderTexture rt)
+    public static bool SaveRenderTextuerToPng(string path,  RenderTexture rt)
     {
         //렌더 텍스쳐를 바이트화 시킵니다.
         var bytes = toTexture2D(rt).EncodeToPNG();
         
-        File.WriteAllBytes(path, bytes);  
+        File.WriteAllBytes(path, bytes);
+
+        return true;
     }
             
     private static Texture2D toTexture2D(RenderTexture rTex)
