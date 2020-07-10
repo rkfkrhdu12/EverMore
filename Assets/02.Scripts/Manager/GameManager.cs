@@ -4,9 +4,6 @@ using UnityEngine.AddressableAssets;
 using GameplayIngredients;
 using UnityEngine;
 
-using Photon.Pun;
-using Photon.Realtime;
-
 [Serializable]
 public class stringTexture2D : SerializableDictionary<string, Texture2D>
 {

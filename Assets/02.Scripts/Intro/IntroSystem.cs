@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AnimatorPro;
 using UnityEngine.UI;
 
+
 public class IntroSystem : MonoBehaviour
 {
     #region Show Inspector
@@ -19,9 +20,6 @@ public class IntroSystem : MonoBehaviour
 
     [SerializeField]
     private GameObject _SetNickNameUI;
-
-    [SerializeField]
-    private Launcher _Launcher;
 
     #endregion
 
@@ -55,20 +53,9 @@ public class IntroSystem : MonoBehaviour
     {
         if (isGameStart && Input.anyKeyDown)
         {
-            if(_Launcher.gameObject.activeSelf)
-                Connect();
-            else
-                Manager.Get<SceneManagerPro>().LoadScene(SceneManagerPro.eScene.LOBBY);
+            Manager.Get<SceneManagerPro>().LoadScene(SceneManagerPro.eScene.LOBBY);
         }
     }
-
-    public void Connect()
-    {
-        Debug.Log("Connect()");
-
-        _Launcher.Connect();
-    }
-
 
     [AnimatorExit("Base Layer.MoveUp")]
     public void GameStart()

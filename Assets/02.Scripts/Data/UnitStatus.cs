@@ -3,7 +3,7 @@
 using GameplayIngredients;
 
 
-public struct UnitStatus
+public class UnitStatus
 {
     public eTeam _team;
 
@@ -131,7 +131,7 @@ public struct UnitStatus
         {
             if (_equipedItems[i] == 0) { if (i == 2 || i == 3) { ++_maxDamageIndex; ++_minDamageIndex; } continue; }
 
-            itemList.ItemSearch(_equipedItems[i]).Equip(ref this);
+            itemList.ItemSearch(_equipedItems[i]).Equip(this);
         }
 
         _curhealth = _maxhealth;

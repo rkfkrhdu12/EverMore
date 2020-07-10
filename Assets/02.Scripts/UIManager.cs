@@ -1,5 +1,4 @@
-﻿using Photon.Pun.Demo.PunBasics;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,10 +16,5 @@ public class UIManager : MonoBehaviour
     {
         _levelMgr.Init(_costMgr);
         _costMgr.Init(_levelMgr);
-    }
-
-    private void OnEnable()
-    {
-
     }
 }

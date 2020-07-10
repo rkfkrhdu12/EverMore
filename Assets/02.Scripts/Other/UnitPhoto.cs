@@ -61,6 +61,14 @@ public class UnitPhoto : MonoBehaviour
 
             if (uwr.isNetworkError || uwr.isHttpError)
             {
+                UnitModelManager.Update(_modelObject, equipedItems);
+
+                yield return SideTime;
+
+                Util.SaveRenderTextuerToPng(
+                    $@"{_path}/{equipedItems[0].ToString()}-head,{equipedItems[1].ToString()}-body,{equipedItems[2].ToString()}-leftWeapon,{equipedItems[3].ToString()}-rightWeapon.png",
+                            renderTexture);
+
                 yield return SideTime;
             }
 
@@ -70,5 +78,5 @@ public class UnitPhoto : MonoBehaviour
         }
     }
 
-    private readonly WaitForSeconds SideTime = new WaitForSeconds(0.25f);
+    private readonly WaitForSeconds SideTime = new WaitForSeconds(0.2f);
 }

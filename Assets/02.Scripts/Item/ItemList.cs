@@ -216,7 +216,7 @@ namespace GameItem
             float.TryParse(datas[13], out _speed);
         }
 
-        public virtual void Equip(ref UnitStatus us)
+        public virtual void Equip(UnitStatus us)
         {
             us._cost        += _cost;
             us._coolTime    += _coolTime;
@@ -238,7 +238,7 @@ namespace GameItem
             us.SetAbility(_ability);
         }
 
-        public virtual void UnEquip(ref UnitStatus us)
+        public virtual void UnEquip(UnitStatus us)
         {
             us._cost        -= _cost;
             us._coolTime    -= _coolTime;
@@ -270,17 +270,17 @@ namespace GameItem
 
         }
 
-        public override void Equip(ref UnitStatus us)
+        public override void Equip(UnitStatus us)
         {
-            base.Equip(ref us);
+            base.Equip(us);
 
             us._minAttackDamage += _minDamage;
             us._maxAttackDamage += _maxDamage;
         }      
 
-        public override void UnEquip(ref UnitStatus us)
+        public override void UnEquip(UnitStatus us)
         {
-            base.Equip(ref us);
+            base.Equip(us);
 
             us._minAttackDamage -= _minDamage;
             us._maxAttackDamage -= _maxDamage;
@@ -296,14 +296,14 @@ namespace GameItem
 
         }
 
-        public override void Equip(ref UnitStatus us)
+        public override void Equip(UnitStatus us)
         {
-            base.Equip(ref us);
+            base.Equip(us);
         }
 
-        public override void UnEquip(ref UnitStatus us)
+        public override void UnEquip(UnitStatus us)
         {
-            base.Equip(ref us);
+            base.Equip(us);
 
         }
     }

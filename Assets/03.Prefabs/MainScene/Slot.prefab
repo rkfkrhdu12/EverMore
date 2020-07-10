@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 5.299988, y: 9.833008}
-  m_SizeDelta: {x: 307, y: 307}
+  m_SizeDelta: {x: 108, y: 111}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2145098135528911370
 CanvasRenderer:
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 40ee32c519f5df44e8e17e7099c4b6cf, type: 3}
+  m_Texture: {fileID: 2800000, guid: ac218c90d6e63494dbf17be596ad1f50, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -165,6 +165,8 @@ MonoBehaviour:
   reachImage: {fileID: 21300000, guid: 75b9d6197f8672741ae9b6bfeaa8852a, type: 3}
   pressImage: {fileID: 21300000, guid: 26f5eca9a756f764395117264cfe973b, type: 3}
   selectImage: {fileID: 21300000, guid: 87519b5f368822b458e4e548c1801aa6, type: 3}
+  _isDefaultImageAlpha: 0
+  _isSetNativeSize: 0
   onButtonEvent:
     onEnter:
       m_PersistentCalls:
@@ -206,7 +208,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  _isDefaultImageAlpha: 0
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!114 &2145098137248645473

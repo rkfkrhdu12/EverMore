@@ -513,9 +513,12 @@ public class UnitModelManager
         // 방어구 장착 해제
         for (int i = 0; i < _leftWeaponPoint - 1; ++i)
         {
+            if(!unit.transform.GetChild(i).gameObject.activeSelf) { continue; }
+
             for (int j = 0; j < 2; ++j)
             {
-                unit.transform.GetChild(i).GetChild(j).gameObject.SetActive(false);
+                if (unit.transform.GetChild(i).GetChild(j).gameObject.activeSelf)
+                    unit.transform.GetChild(i).GetChild(j).gameObject.SetActive(false);
             }
         }
 
@@ -888,6 +891,12 @@ public class UnitAnimationManager
         aniName.Add("Shield&Shield");
         aniName.Add("&TwoHandSword");
         aniName.Add("TwoHandSword&TwoHandSword");
+        aniName.Add("Spear&");
+        aniName.Add("Sword&");
+        aniName.Add("TwoHandSword&");
+        aniName.Add("&Bow");
+        aniName.Add("Spear&Shield");
+        aniName.Add("Sword&Shield");
 
         _typeAnimationNum.Add("&", 5); // 아무 무기도 없을때 애니메이션은 Sword(제일 무난..)
     }

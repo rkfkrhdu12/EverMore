@@ -80,6 +80,8 @@ namespace MainSceneUI
             InitUI(UIDataKey.SetUnit, _setUnitUI);
             InitUI(UIDataKey.Matching, _MatchUI);
             InitUI(UIDataKey.ChoiceUnitTeam, _choiceUnitTeamUI);
+
+            UpdateScreen(UIDataKey.Lobby);
         }
         #endregion
 

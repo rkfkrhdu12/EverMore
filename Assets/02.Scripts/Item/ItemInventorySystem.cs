@@ -20,7 +20,7 @@ public class ItemInventorySystem : MonoBehaviour
     private TeamManager _teamManager = null;
 
     [SerializeField]
-    private GameObject _unitModelUI = null;
+    private GameObject _unitModelObject = null;
 
     [SerializeField]
     private ButtonGroup _itemsButtonGroup = null;
@@ -143,6 +143,9 @@ public class ItemInventorySystem : MonoBehaviour
     {
         Type = eCodeType.Helmet;
 
+        UnitModelManager.Reset(_unitModelObject);
+        UnitModelManager.Update(_unitModelObject, _equipedItems);
+
         Start();
     }
     #endregion
@@ -154,7 +157,7 @@ public class ItemInventorySystem : MonoBehaviour
 
     public void SetEquipedItems(int[] items)
     {
-        UnitModelManager.Reset(_unitModelUI, _equipedItems);
+        UnitModelManager.Reset(_unitModelObject, _equipedItems);
 
         // 유닛 아이템들이 유닛1 수정완료(5,6)   유닛2 수정완료(5,6)
 
@@ -166,7 +169,7 @@ public class ItemInventorySystem : MonoBehaviour
 
         UpdateModel();
 
-        UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelUI.GetComponent<Animator>());
+        UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelObject.GetComponent<Animator>());
     }
 
     public void OnSave()
@@ -196,7 +199,7 @@ public class ItemInventorySystem : MonoBehaviour
         UpdateModel(i.AniType, itemCode);
 
         if ((_curType == eCodeType.LeftWeapon || _curType == eCodeType.RightWeapon))
-        { UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelUI.GetComponent<Animator>()); }
+        { UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelObject.GetComponent<Animator>()); }
 
         _prevSlot = curSlot;
     }
@@ -211,6 +214,8 @@ public class ItemInventorySystem : MonoBehaviour
     public void OnDetailUIDisable()
     {
 
+
+        _unitDetailUI.SetActive(false);
     }
 
     #region Private Function
@@ -278,15 +283,15 @@ public class ItemInventorySystem : MonoBehaviour
 
     private void UpdateModel()
     {
-        if (_equipedItems == null && _unitModelUI == null) { return; }
+        if (_equipedItems == null && _unitModelObject == null) { return; }
         if (_equipedItems.Length == 0) { return; }
         
-        UnitModelManager.Update(_unitModelUI, _equipedItems);
+        UnitModelManager.Update(_unitModelObject, _equipedItems);
     }
 
     private void UpdateModel(eItemType itemType, int itemCode)
     {
-        if (_equipedItems == null && _unitModelUI == null) { return; }
+        if (_equipedItems == null && _unitModelObject == null) { return; }
         if (_equipedItems.Length == 0) { return; }
 
         int partsNum;
@@ -318,7 +323,7 @@ public class ItemInventorySystem : MonoBehaviour
             _equipedItems[partsNum] = itemCode;
         }
         
-        UnitModelManager.Update(_unitModelUI, _equipedItems, prevItem);
+        UnitModelManager.Update(_unitModelObject, _equipedItems, prevItem);
     }
 
     #endregion
