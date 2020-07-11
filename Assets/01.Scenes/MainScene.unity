@@ -11392,6 +11392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ani: {fileID: 1177589182}
   _unitCtrl: {fileID: 0}
+  _isCustom: 1
 --- !u!1 &1193928932
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ public class UnitAnimation : MonoBehaviour
     [SerializeField]
     private UnitController _unitCtrl = null;
 
-    bool _isCustom = false;
+    public bool _isCustom = false;
 
     private void OnEnable()
     {

@@ -46,17 +46,19 @@ public class SpawnManager : MonoBehaviour
 
         UnitStatus uStatus = _teamUnits.GetUnit(_curSpawnIndex);
 
+        if (_isUnitSpawn[_curSpawnIndex]) { return; }
+
         if (_isPlayer)
         {
-            if (_isUnitSpawn[_curSpawnIndex]) { return; }
             if (!_inGameSystem.CostConsumption(uStatus._cost)) { return; }
 
-            _isUnitSpawn[_curSpawnIndex] = true;
             _costMgr.SetCoolDownUI(_curSpawnIndex, uStatus._coolTime);
 
             if (_spawnAreaObject.activeSelf)
                 _spawnAreaObject.SetActive(false);
         }
+
+        _isUnitSpawn[_curSpawnIndex] = true;
 
         Vector3 unitPos = _spawnPoint;
 
@@ -140,8 +142,9 @@ public class SpawnManager : MonoBehaviour
     public Canvas _canvas;
 
     public bool _isGameEnd = false;
-    WaitForSeconds UpdateWaitTime = new WaitForSeconds(.25f);
+    WaitForSeconds UpdateWaitTime = new WaitForSeconds(1f);
 
+    [SerializeField]
     CostManager _costMgr;
     #endregion
 
@@ -205,17 +208,19 @@ public class SpawnManager : MonoBehaviour
         {
             for (int i = 0; i < _teamUnits.Length; ++i)
             {
+                yield return UpdateWaitTime;
+
                 if (_isUnitSpawn[i])
                 {
-                    _unitCoolTimes[i] += Time.deltaTime;
+                    _unitCoolTimes[i] += 1;
+
+                    LogMessage.Log("CoolDown " + i + "  " + (_unitCoolIntervals[i] - _unitCoolTimes[i]));
 
                     if (_unitCoolIntervals[i] <= _unitCoolTimes[i])
                     {
                         _isUnitSpawn[i] = false;
                     }
                 }
-                else
-                    yield return UpdateWaitTime;
             }
         }
     }
@@ -269,10 +274,8 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public void Enable(CostManager costMgr)
+    public void Enable()
     {
-        _costMgr = costMgr;
-
         for (int i = 0; i < _teamUnits.Length; ++i)
         {
             UnitStatus us = _teamUnits.GetUnit(i);

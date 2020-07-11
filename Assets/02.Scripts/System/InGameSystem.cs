@@ -109,7 +109,7 @@ public class InGameSystem : MonoBehaviour
 
         SpawnManager playerSpawnMgr = _isPlayerRed ? RedSpawnMgr : BlueSpawnMgr;
 
-        playerSpawnMgr.Enable(_costMgr);
+        playerSpawnMgr.Enable();
         _costMgr.Enable(playerSpawnMgr);
         _levelMgr.Enable();
     }

@@ -43,8 +43,6 @@ public class EnemyController : MonoBehaviour
         spawnTime -= Time.fixedDeltaTime;
         if(spawnTime <= 0)
         {
-            Debug.Log("Spawn");
-
             _spawnMgr.SetSpawnPoint(_curUnitData.IsDown ? _bottomLineTrn.position : _topLineTrn.position);
             _spawnMgr.SetSpawnIndex(_curUnitData.Index - 1);
             _spawnMgr.Spawn();
