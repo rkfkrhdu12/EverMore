@@ -6545,6 +6545,7 @@ MonoBehaviour:
     - {fileID: 918501147}
     - {fileID: 641502295}
   _unitPhoto: {fileID: 811457375}
+  _modelObject: {fileID: 1177589180}
 --- !u!1 &811457373
 GameObject:
   m_ObjectHideFlags: 0
@@ -6591,6 +6592,7 @@ MonoBehaviour:
   renderTexture: {fileID: 8400000, guid: 065981cff317d2f46bfe269f4e3b0050, type: 2}
   _modelObject: {fileID: 1177589180}
   _rawimage: {fileID: 379075315}
+  _isUse: 0
 --- !u!1 &861352357
 GameObject:
   m_ObjectHideFlags: 0
