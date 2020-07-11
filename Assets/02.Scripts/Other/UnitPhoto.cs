@@ -88,5 +88,23 @@ public class UnitPhoto : MonoBehaviour
         }
     }
 
+    public bool _isCheck = false;
+
+    public IEnumerator ICheckTexture(int[] equipedItems)
+    {
+        _isCheck = false;
+
+        using (var uwr = UnityWebRequestTexture.GetTexture
+            ($@"{_path}/{equipedItems[0].ToString()}-head,{equipedItems[1].ToString()}-body,{equipedItems[2].ToString()}-leftWeapon,{equipedItems[3].ToString()}-rightWeapon.png"))
+        {
+            yield return uwr.SendWebRequest();
+
+            if (uwr.isNetworkError || uwr.isHttpError)
+                _isCheck = false;
+            else
+                _isCheck = true;
+        }
+    }
+
     private readonly WaitForSeconds SideTime = new WaitForSeconds(0.15f);
 }

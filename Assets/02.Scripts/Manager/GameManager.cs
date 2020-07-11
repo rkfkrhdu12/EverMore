@@ -16,6 +16,9 @@ public class GameManager : Manager
     public void SetPlayerUnits(Team playerTeam) { _playerTeam = playerTeam; }
     public Team GetPlayerUnits()                { return _playerTeam; }
 
+    public void SetEnemyUnitData(Stage.StageData enemyStageData) { _enemyStageData = enemyStageData; }
+    public Stage.StageData GetEnemyUnitData() { return _enemyStageData; }
+
     #region Show Inspector
 
     //[Tooltip("아군인지 적군인지 선택")]
@@ -38,6 +41,7 @@ public class GameManager : Manager
 
     //팀에 대한 변수
     private Team _playerTeam;
+    private Stage.StageData _enemyStageData;
 
     //삭제에 대한 매니저 변수
     private DeleteObjectSystem _deleteObjectSystem;

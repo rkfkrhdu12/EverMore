@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using GameplayIngredients;
+
 namespace Stage
 {
     public struct SpawnUnit
@@ -40,7 +42,7 @@ namespace Stage
 
         public void StageClear()
         {
-            ++_curStage;
+            _curStage = Mathf.Min(_stageDataList.Count, _curStage + 1);
             _isStageUpdate = false;
 
             UpdateStage();
@@ -74,7 +76,6 @@ namespace Stage
 
         bool _isStageUpdate = false;
         bool _isInit = false;
-
         #endregion
 
         #region Monobehaviour Function
@@ -83,8 +84,9 @@ namespace Stage
         {
             Init();
 
-            Debug.Log("StartCoroutine");
-            StartCoroutine(UpdateStage());
+            _IUpdateStage = UpdateStage();
+
+            StartCoroutine(_IUpdateStage);
         }
 
         #endregion
@@ -140,42 +142,51 @@ namespace Stage
             _stageDataList.Add(newData);
         }
 
-        WaitForSeconds time = new WaitForSeconds(.5f);
+        IEnumerator _IUpdateStage;
+
+        WaitForSeconds waitTime = new WaitForSeconds(.5f);
         private IEnumerator UpdateStage()
         {
-            if(_isStageUpdate) { yield return null; }
+            if(_isStageUpdate) { StopCoroutine(_IUpdateStage); }
             _isStageUpdate = true;
 
             StageData curData = _stageDataList[_curStage];
             Animator animator = _modelObject.GetComponent<Animator>();
 
-            for (int i = 0; i < curData.Team.Length; ++i)
+            StartCoroutine(_unitPhoto.ICheckTexture(curData.Team.GetUnit(0)._equipedItems));
+
+            yield return waitTime;
+
+            Debug.Log(_unitPhoto._isCheck);
+            if (!_unitPhoto._isCheck)
             {
-                UnitStatus curStatus = curData.Team.GetUnit(i);
+                for (int i = 0; i < curData.Team.Length; ++i)
+                {
+                    UnitStatus curStatus = curData.Team.GetUnit(i);
 
-                int curHelmetCode = curStatus._equipedItems[0];
-                int curLeftWeaponCode = curStatus._equipedItems[2];
-                int curRightWeaponCode = curStatus._equipedItems[3];
+                    int curHelmetCode = curStatus._equipedItems[0];
+                    int curLeftWeaponCode = curStatus._equipedItems[2];
+                    int curRightWeaponCode = curStatus._equipedItems[3];
 
-                GameObject curHeadIconObject = _stageUIs._headIconObjects[i];
+                    GameObject curHeadIconObject = _stageUIs._headIconObjects[i];
 
 
-                UnitModelManager.Reset(_modelObject);
+                    UnitModelManager.Reset(_modelObject);
 
-                UnitModelManager.Update(_modelObject, curStatus._equipedItems);
+                    UnitModelManager.Update(_modelObject, curStatus._equipedItems);
 
-                UnitAnimationManager.Update(curLeftWeaponCode, curRightWeaponCode, animator);
+                    UnitAnimationManager.Update(curLeftWeaponCode, curRightWeaponCode, animator);
 
-                UnitIconManager.Update(curHeadIconObject, curHelmetCode);
+                    UnitIconManager.Update(curHeadIconObject, curHelmetCode);
 
-                yield return time;
+                    yield return waitTime;
 
-                _unitPhoto.SaveTexture(curStatus._equipedItems);
+                    _unitPhoto.SaveTexture(curStatus._equipedItems);
 
-                while (_unitPhoto._isUse)
-                    yield return time;
+                    while (_unitPhoto._isUse)
+                        yield return waitTime;
+                }
             }
-
 
             for (int i = 0; i < curData.Team.Length; ++i) 
             {
@@ -184,6 +195,10 @@ namespace Stage
 
                 _unitPhoto.UpdateTexture(ref curRawImage, curStatus._equipedItems, true);
             }
+
+            Manager.Get<GameManager>().SetEnemyUnitData(curData);
+
+            Debug.Log("End");
         }
         #endregion
     }
