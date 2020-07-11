@@ -14,10 +14,16 @@ public class UnitAnimation : MonoBehaviour
     [SerializeField]
     private UnitController _unitCtrl = null;
 
+    bool _isCustom = false;
+
     private void OnEnable()
     {
+        if(_isCustom) { return; }
+
         if(_unitCtrl == null)  { _unitCtrl = transform.parent.GetComponent<UnitController>(); LogMessage.Log("UnitAnimation : UnitCtrl is NULL"); } 
         if(_ani == null)       { _ani = GetComponent<Animator>();                             LogMessage.Log("UnitAnimation : Ani is NULL"); }
+
+        if (_unitCtrl._isTest) { return; }
 
         _ani.SetFloat(_idAttackSpd, _unitCtrl.AttackSpeed);
         _ani.SetBool(_idAttack, false);
@@ -48,16 +54,22 @@ public class UnitAnimation : MonoBehaviour
 
     public void OnEffect()
     {
+        if (_unitCtrl == null) { return; }
+
         _unitCtrl.OnEffect();
     }
 
     public void AttackRight()
     {
+        if (_unitCtrl == null) { return; }
+
         _unitCtrl.AttackRight();
     }
 
     public void AttackLeft()
     {
+        if (_unitCtrl == null) { return; }
+
         _unitCtrl.AttackLeft();
     }
 }

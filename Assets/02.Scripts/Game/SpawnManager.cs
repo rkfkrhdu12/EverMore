@@ -6,6 +6,96 @@ using GameplayIngredients;
 
 public class SpawnManager : MonoBehaviour
 {
+    public void SetSpawnIndex(int index)
+    {
+        if (_isPlayer)
+        {
+            if (!_spawnAreaObject.activeSelf)
+                _spawnAreaObject.SetActive(true);
+        }
+
+        _curSpawnIndex = index;
+    }
+
+    public void DestroyTopTower()
+    {
+        if (_spawnAreaChangedObject.activeSelf)
+            _spawnAreaChangedObject.SetActive(false);
+
+        _topSpawnAreaChangedObject.SetActive(false);
+    }
+
+    public void DestroyBottomTower()
+    {
+        if (_spawnAreaChangedObject.activeSelf)
+            _spawnAreaChangedObject.SetActive(false);
+
+        _bottomSpawnAreaChangedObject.SetActive(false);
+
+    }
+
+
+    /// <summary>
+    /// UI의 버튼 혹은 설정된 키로 유닛을 스폰
+    /// </summary>
+    public void Spawn()
+    #region Function Content
+
+    {
+        if(_isGameEnd) { return; }
+
+        UnitStatus uStatus = _teamUnits.GetUnit(_curSpawnIndex);
+
+        if (_isPlayer)
+        {
+            if (_isUnitSpawn[_curSpawnIndex]) { return; }
+            if (!_inGameSystem.CostConsumption(uStatus._cost)) { return; }
+
+            _isUnitSpawn[_curSpawnIndex] = true;
+            _costMgr.SetCoolDownUI(_curSpawnIndex, uStatus._coolTime);
+
+            if (_spawnAreaObject.activeSelf)
+                _spawnAreaObject.SetActive(false);
+        }
+
+        Vector3 unitPos = _spawnPoint;
+
+        if (_spawnPoint == Vector3.zero)
+        {
+            int randVal = Random.Range(0, 2);
+            bool isDown = 0 == randVal ? true : false;
+
+            unitPos = isDown ?
+                transform.position + new Vector3(1, 0, 2.5f) :
+                transform.position + new Vector3(1, 0, .5f);
+        }
+
+        _curSpawnObject.transform.position = unitPos;
+
+        UnitController unitCtrl = _curSpawnObject.GetComponent<UnitController>();
+
+        unitCtrl._enemyCastleObject = _enemySpawnManager.GetCastle();
+
+        if (unitCtrl._status != null)
+            if (unitCtrl._status._equipedItems != null)
+                UnitModelManager.Reset(_curSpawnObject.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
+
+        unitCtrl._status = uStatus;
+
+        UnitModelManager.Update(_curSpawnObject.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
+
+        unitCtrl.Spawn();
+
+        _curSpawnObject.SetActive(true);
+
+        // 새로운 유닛 오브젝트를 오브젝트풀에서 찾음
+        _curSpawnObject = null;
+    }
+
+    #endregion
+
+
+    #region Variable
     [SerializeField]
     private SpawnManager _enemySpawnManager = null;
     public Team _teamUnits;
@@ -17,20 +107,16 @@ public class SpawnManager : MonoBehaviour
     private Vector3 _spawnPoint;
 
     [SerializeField]
-    public GameObject _spawnAreaObject;
+    private GameObject _spawnAreaObject = null;
+
+    [SerializeField]
+    private GameObject _topSpawnAreaChangedObject = null;
+    [SerializeField]
+    private GameObject _bottomSpawnAreaChangedObject = null;
+    [SerializeField]
+    private GameObject _spawnAreaChangedObject = null;
 
     int _curSpawnIndex = 0;
-
-    public void SetSpawnIndex(int index)
-    {
-        if (_isPlayer)
-        {
-            if (!_spawnAreaObject.activeSelf)
-                _spawnAreaObject.SetActive(true);
-        }
-
-        _curSpawnIndex = index;
-    }
 
     public void SetSpawnPoint(Vector3 pos) => _spawnPoint = pos;
 
@@ -57,60 +143,7 @@ public class SpawnManager : MonoBehaviour
     WaitForSeconds UpdateWaitTime = new WaitForSeconds(.25f);
 
     CostManager _costMgr;
-
-
-    /// <summary>
-    /// UI의 버튼 혹은 설정된 키로 유닛을 스폰
-    /// </summary>
-    public void Spawn()
-    {
-        UnitStatus uStatus = _teamUnits.GetUnit(_curSpawnIndex);
-
-        if (_isPlayer)
-        {
-            if (_isUnitSpawn[_curSpawnIndex]) { return; }
-            if (!_inGameSystem.CostConsumption(uStatus._cost)) { return; }
-
-            _isUnitSpawn[_curSpawnIndex] = true;
-            _costMgr.SetCoolDownUI(_curSpawnIndex, uStatus._coolTime);
-
-            if (_spawnAreaObject.activeSelf)
-                _spawnAreaObject.SetActive(false);
-        }
-
-        Vector3 unitPos = _spawnPoint;
-
-        if(_spawnPoint == Vector3.zero)
-        {
-            int randVal = Random.Range(0, 2);
-            bool isDown = 0 == randVal ? true : false;
-
-            unitPos = isDown ?
-                transform.position + new Vector3(1, 0, 2.5f) :
-                transform.position + new Vector3(1, 0, .5f);
-        }
-
-        _curSpawnObject.transform.position = unitPos;
-
-        UnitController unitCtrl = _curSpawnObject.GetComponent<UnitController>();
-        
-        unitCtrl._enemyCastleObject = _enemySpawnManager.GetCastle();
-
-        if (unitCtrl._status != null)
-            if (unitCtrl._status._equipedItems != null)
-                UnitModelManager.Reset(_curSpawnObject.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
-
-        unitCtrl._status = uStatus;
-
-        UnitModelManager.Update(_curSpawnObject.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
-
-        unitCtrl.Spawn();
-
-        _curSpawnObject.SetActive(true);
-
-        // 새로운 유닛 오브젝트를 오브젝트풀에서 찾음
-        _curSpawnObject = null;
-    }
+    #endregion
 
     IEnumerator UpdateSpawnObject()
     {

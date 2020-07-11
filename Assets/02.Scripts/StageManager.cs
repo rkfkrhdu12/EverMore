@@ -170,7 +170,6 @@ namespace Stage
 
                     GameObject curHeadIconObject = _stageUIs._headIconObjects[i];
 
-
                     UnitModelManager.Reset(_modelObject);
 
                     UnitModelManager.Update(_modelObject, curStatus._equipedItems);

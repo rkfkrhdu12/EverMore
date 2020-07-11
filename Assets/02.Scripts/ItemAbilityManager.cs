@@ -21,7 +21,7 @@ public class ItemAbilityManager
 
         List<ItemAbility> abilityList = new List<ItemAbility>();
 
-        abilityList.Add(new ItemAbilitySharpness());
+        abilityList.Add(new ItemAbilitySharpness());            
         abilityList.Add(new ItemAbilitySharpness());
         abilityList.Add(new ItemAbilityFrostyFeet());
         abilityList.Add(new ItemAbilityChill());
@@ -32,6 +32,25 @@ public class ItemAbilityManager
         abilityList.Add(new ItemAbilityLife());
         abilityList.Add(new ItemAbilityQuick());
         abilityList.Add(new ItemAbilityWither());
+        abilityList.Add(new ItemAbility());
+        abilityList.Add(new ItemAbility());
+        abilityList.Add(new ItemAbility());
+        abilityList.Add(new ItemAbility());
+        abilityList.Add(new ItemAbility());
+        abilityList.Add(new ItemAbility());
+        abilityList.Add(new ItemAbilityLifesteal());
+        abilityList.Add(new ItemAbility());
+        abilityList.Add(new ItemAbility());
+        abilityList.Add(new ItemAbility());
+        abilityList.Add(new ItemAbilityColdBlow());
+        abilityList.Add(new ItemAbilityHotBlow());
+        abilityList.Add(new ItemAbilityMeanBlow());
+        abilityList.Add(new ItemAbility());
+        abilityList.Add(new ItemAbility());
+        abilityList.Add(new ItemAbilityDefenceSpiral());
+        abilityList.Add(new ItemAbilityDefencePenetrate());
+        abilityList.Add(new ItemAbilityDemolish());
+        abilityList.Add(new ItemAbility());
 
         int index = 0;
         foreach (var splitDatas in abilityDatas.Select(t => t.Split(',')))
@@ -53,6 +72,8 @@ public class ItemAbilityManager
             float   .TryParse(splitDatas[6], out var);
             if (var != 0) abilityList[index]._variables.Add(var);
 
+            abilityList[index]._info = splitDatas[7];
+
             _abilityList.Add(int.Parse(splitDatas[0]), abilityList[index++]);
         }
     }
@@ -70,6 +91,7 @@ public class ItemAbility
     public float _timeInterval;                         public float Time => _timeInterval;
     public float _condition;                            public float Condition => _condition;
     public List<float> _variables = new List<float>();  public List<float> Var => _variables;
+    public string _info;                                public string Info => _info;
 
     // Private
 

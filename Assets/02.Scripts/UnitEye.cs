@@ -65,6 +65,8 @@ public class UnitEye : MonoBehaviour
         if (!_collider) { _collider = GetComponent<SphereCollider>(); LogMessage.Log("UnitEye : Collider is NULL"); }
         if (!_unitCtrl) { _unitCtrl = transform.parent.GetComponent<UnitController>(); LogMessage.Log("UnitEye : UnitCtrl is NULL"); }
 
+        if(_unitCtrl._isTest) { return; }
+
         float range = Mathf.Max(_unitCtrl._status._attackRange, _minRange);
 
         _attackRange = range * 2;

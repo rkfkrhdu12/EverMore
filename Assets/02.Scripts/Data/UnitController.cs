@@ -128,6 +128,9 @@ public class UnitController : FieldObject
     {
         if (RightAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
 
+        float remainingDistance = (_curTarget.transform.position - transform.position).magnitude;
+        if (remainingDistance > _navMeshAgent.stoppingDistance * 2) { return; }
+
         float curDamage = RightAttackDamage;
 
         int weaponIndex = (int)GameItem.eCodeType.RightWeapon;
@@ -144,6 +147,9 @@ public class UnitController : FieldObject
     public void AttackLeft()
     {
         if (LeftAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
+
+        float remainingDistance = (_curTarget.transform.position - transform.position).magnitude;
+        if (remainingDistance > _navMeshAgent.stoppingDistance * 2) { return; }
 
         float curDamage = LeftAttackDamage;
 
@@ -183,8 +189,7 @@ public class UnitController : FieldObject
 
     #region Inspector
 
-    [SerializeField]
-    bool _isTest = false;
+    public bool _isTest = false;
 
     // 이 유닛의 애니메이션
     [SerializeField]
@@ -303,6 +308,8 @@ public class UnitController : FieldObject
     override protected void OnEnable()
     { // Spawn() -> OnEnable() 순서
         base.OnEnable();
+
+        if (_isTest) { return; }
 
         #region UI Enable
 

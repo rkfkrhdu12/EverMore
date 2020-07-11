@@ -224,6 +224,27 @@ public class ItemInventorySystem : MonoBehaviour
         _detailUIStatusTexts[i++].text = _unitStatus._coolTime.ToString();
         _detailUIStatusTexts[i++].text = _unitStatus._weight.ToString();
 
+        for (int j = 0; j < 4; ++j) _detailUIStatusTexts[i + j].gameObject.SetActive(false);
+
+        if (_unitStatus._abilities != null)
+        {
+            for (int j = 0; j < _unitStatus._abilities.Length; ++j)
+            {
+                if (_unitStatus._abilities[j] != null && !string.IsNullOrWhiteSpace(_unitStatus._abilities[j].Info))
+                {
+                    _detailUIStatusTexts[i].gameObject.SetActive(true);
+                    _detailUIStatusTexts[i].text = _unitStatus._abilities[j].Info;
+
+                    RectTransform rt = _detailUIStatusTexts[i].GetComponent<RectTransform>();
+                    
+                    rt.sizeDelta 
+                         = new Vector2(rt.sizeDelta.x, _detailUIStatusTexts[i].preferredHeight);
+
+                    ++i;
+                }
+            }
+        }
+
         _unitDetailUI.SetActive(true);
     }
 

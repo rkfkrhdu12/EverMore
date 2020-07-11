@@ -10,6 +10,8 @@ public class Tower : FieldObject
 
     public GameObject _brokenObject;
 
+    public bool _isBottomTower = false;
+
     void Awake()
     {
         _team = _spawnMgr._isPlayer ? eTeam.PLAYER : eTeam.ENEMY;
@@ -30,6 +32,11 @@ public class Tower : FieldObject
             _brokenObject.SetActive(true);
             _healthBar.transform.parent.gameObject.SetActive(false);
             gameObject.SetActive(false);
+
+            if (_isBottomTower)
+                _spawnMgr.DestroyBottomTower();
+            else
+                _spawnMgr.DestroyTopTower();
         }
     }
 
