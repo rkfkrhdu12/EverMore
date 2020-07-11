@@ -52,9 +52,14 @@ public class ItemInventorySystem : MonoBehaviour
 
     public ItemList _itemList;
 
-    private int[] _equipedItems = new int[4];
+    private UnitStatus _unitStatus = new UnitStatus();
+
+    private int[] _equipedItems { get { return _unitStatus._equipedItems; }  set { _unitStatus._equipedItems = value; } }
 
     #endregion
+
+    [SerializeField]
+    TMPro.TMP_Text[] _detailUIStatusTexts;
 
     #endregion
 
@@ -62,9 +67,10 @@ public class ItemInventorySystem : MonoBehaviour
 
     private void Awake()
     {
+        _unitStatus.Init();
         _unitPhoto = _teamManager.GetUnitPhoto();
 
-        if (null == _unitPhoto) { Debug.LogError("ItemInventorySystem : _unitPhoto is null"); }
+        if (null == _unitPhoto) { LogMessage.LogError("ItemInventorySystem : _unitPhoto is null"); }
 
         _itemList = Manager.Get<GameManager>().itemList;
 
@@ -206,7 +212,17 @@ public class ItemInventorySystem : MonoBehaviour
 
     public void OnDetailUIEnable()
     {
-        
+        _unitStatus.UpdateItems();
+
+        int i = 0;
+        _detailUIStatusTexts[i++].text = _unitStatus.Health.ToString();
+        _detailUIStatusTexts[i++].text = _unitStatus._cost.ToString();
+        _detailUIStatusTexts[i++].text = _unitStatus.AttackSpeed.ToString();
+        _detailUIStatusTexts[i++].text = ((int)_unitStatus._minAttackDamage).ToString() + "~" + ((int)_unitStatus._maxAttackDamage).ToString();
+        _detailUIStatusTexts[i++].text = _unitStatus._defensivePower.ToString();
+        _detailUIStatusTexts[i++].text = _unitStatus._attackRange.ToString();
+        _detailUIStatusTexts[i++].text = _unitStatus._coolTime.ToString();
+        _detailUIStatusTexts[i++].text = _unitStatus._weight.ToString();
 
         _unitDetailUI.SetActive(true);
     }

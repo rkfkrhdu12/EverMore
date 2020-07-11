@@ -35,7 +35,7 @@ public class UnitController : FieldObject
         #region Null Check
 
         if (_ani == null) { _ani = GetComponentInChildren<UnitAnimation>(); LogMessage.Log("UnitCtrl : AniPro is Null"); }
-        if (_IsNavMeshAgent) { } // { _navMeshAgent = GetComponent<NavMeshAgent>(); Debug.Log("UnitCtrl  NavAgent is Null"); }
+        if (_IsNavMeshAgent) { }
         if (_eye == null) { _eye = GetComponentInChildren<UnitEye>(); LogMessage.Log("UnitCtrl : Eye is Null"); }
         #endregion
 
@@ -205,7 +205,7 @@ public class UnitController : FieldObject
         {
             if (_navMeshAgent == null)
             {
-                _navMeshAgent = GetComponent<NavMeshAgent>(); Debug.Log("UnitCtrl  NavAgent is Null");
+                _navMeshAgent = GetComponent<NavMeshAgent>(); LogMessage.Log("UnitCtrl  NavAgent is Null");
 
                 if (_navMeshAgent == null) { return false; }
             }

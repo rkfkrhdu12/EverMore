@@ -29,7 +29,7 @@ public class UnitStatus
                 return _minAttackDamages[_minDamageIndex];
             }
 
-            return 0.0f;
+            return _minAttackDamages[0] + _minAttackDamages[1] + _minAttackDamages[2];
         }
 
         set
@@ -46,12 +46,12 @@ public class UnitStatus
     {
         get
         {
-            if (_minAttackDamages.Length - 1 > _maxDamageIndex)
+            if (_maxAttackDamages.Length - 1 > _maxDamageIndex)
             {
-                return _minAttackDamages[_maxDamageIndex];
+                return _maxAttackDamages[_maxDamageIndex];
             }
 
-            return 0.0f;
+            return _maxAttackDamages[0] + _maxAttackDamages[1] + _maxAttackDamages[2];
         }
 
         set

@@ -135,7 +135,7 @@ namespace MainSceneUI
         {
             _selectTeam = _teamManager.GetSelectTeam();
 
-            if(_selectTeam == null) { Debug.Log("설정된 팀 또는 팀의 유닛들이 불안정합니다."); return; }
+            if(_selectTeam == null) { LogMessage.Log("설정된 팀 또는 팀의 유닛들이 불안정합니다."); return; }
 
             Manager.Get<GameManager>().SetPlayerUnits(_selectTeam);
 

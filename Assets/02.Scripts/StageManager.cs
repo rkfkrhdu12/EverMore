@@ -18,14 +18,14 @@ namespace Stage
     {
         public Team Team;
 
-        public List<SpawnUnit> _spawnSecList;
+        public List<SpawnUnit> _spawnUnitData;
 
         public void Init()
         {
             Team = new Team();
             Team.Init(eTeam.ENEMY);
 
-            _spawnSecList = new List<SpawnUnit>();
+            _spawnUnitData = new List<SpawnUnit>();
         }
     }
 
@@ -134,7 +134,7 @@ namespace Stage
                 int updownNum; int.TryParse(splitDatas[2], out updownNum);
                 newUnit.IsDown = updownNum == 0 ? false : true;
 
-                newData._spawnSecList.Add(newUnit);
+                newData._spawnUnitData.Add(newUnit);
 
                 splitDatas = stageDatas[lineCount++].Split(',');
             }
@@ -157,7 +157,7 @@ namespace Stage
 
             yield return waitTime;
 
-            Debug.Log(_unitPhoto._isCheck);
+            LogMessage.Log(_unitPhoto._isCheck.ToString());
             if (!_unitPhoto._isCheck)
             {
                 for (int i = 0; i < curData.Team.Length; ++i)
@@ -198,7 +198,7 @@ namespace Stage
 
             Manager.Get<GameManager>().SetEnemyUnitData(curData);
 
-            Debug.Log("End");
+            LogMessage.Log("End");
         }
         #endregion
     }

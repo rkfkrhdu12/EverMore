@@ -87,7 +87,7 @@ public static class Util
             var bytearray = tex.EncodeToPNG();
             var savepath = $"{Application.dataPath}/Resources/Font/{i:00}.png";
             File.WriteAllBytes(savepath, bytearray);
-            Debug.Log(savepath);
+            LogMessage.Log(savepath);
         }
     }
 

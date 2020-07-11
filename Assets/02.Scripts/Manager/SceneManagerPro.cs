@@ -45,9 +45,9 @@ public class SceneManagerPro : Manager
         SceneManager.LoadScene(sceneName);
         //딕셔너리에 해당 씬 이름이 정의 되있는지 체크, 있으면 true, 없으면 false
         if (SceneName.ContainsValue(sceneName))
-            Debug.Log("Y bug ?");
+            LogMessage.Log("Y bug ?");
         else
-            Debug.LogWarning("This is an undefined scene name.");
+            LogMessage.LogWarning("This is an undefined scene name.");
     }
 
     public void LoadScene(eScene scene) =>

@@ -29,7 +29,7 @@ public class textPngToBase64 : MonoBehaviour
         //바이트를 웹에 올리기 좋은 Base64형태로 변환합니다.
         var PngToBase64 = Convert.ToBase64String(bytes);
 
-        Debug.Log(Application.dataPath);
+        LogMessage.Log(Application.dataPath);
         File.WriteAllBytes(Application.dataPath+"/a.png", bytes);
         //테스트 삼아 다시 텍스쳐 2D로 변환합니다.
         Profile.texture = base64ToTextuer2d(myImage);

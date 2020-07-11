@@ -129,7 +129,7 @@ public class TeamManager : MonoBehaviour
 
         RawImage rawImage;
         if ((rawImage = _unitSlots[selectUnitNum].transform.GetChild(0).GetChild(0).GetComponent<RawImage>())) { }
-        else { Debug.Log("UpdateChoiceUnitUI : Unit RawImage Load Error"); return; }
+        else { LogMessage.Log("UpdateChoiceUnitUI : Unit RawImage Load Error"); return; }
 
         UnitIconManager.Reset(iconObject);
 
@@ -173,7 +173,7 @@ public class TeamManager : MonoBehaviour
     {
         int unitCount = _teams[_curSelectTeamName].Length;
 
-        if (unitCount > _unitSlots.Length) { Debug.Log("TeamManager : OnUpdateUI UnitCount Error"); return; }
+        if (unitCount > _unitSlots.Length) { LogMessage.Log("TeamManager : OnUpdateUI UnitCount Error"); return; }
 
         for (int i = 0; i < _unitSlots.Length; ++i)
         {

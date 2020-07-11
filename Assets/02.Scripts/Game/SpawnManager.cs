@@ -96,8 +96,9 @@ public class SpawnManager : MonoBehaviour
         
         unitCtrl._enemyCastleObject = _enemySpawnManager.GetCastle();
 
-        if (unitCtrl._status._equipedItems != null)
-            UnitModelManager.Reset(_curSpawnObject.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
+        if (unitCtrl._status != null)
+            if (unitCtrl._status._equipedItems != null)
+                UnitModelManager.Reset(_curSpawnObject.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
 
         unitCtrl._status = uStatus;
 

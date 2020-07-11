@@ -17,4 +17,11 @@ public class LogMessage
         Debug.LogError(str);
         #endif
     }
+
+    public static void LogWarning(string str)
+    {
+        #if UNITY_EDITOR
+        Debug.LogWarning(str);
+        #endif
+    }
 }
