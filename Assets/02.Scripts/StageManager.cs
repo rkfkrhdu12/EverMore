@@ -164,11 +164,9 @@ namespace Stage
                 {
                     UnitStatus curStatus = curData.Team.GetUnit(i);
 
-                    int curHelmetCode = curStatus._equipedItems[0];
                     int curLeftWeaponCode = curStatus._equipedItems[2];
                     int curRightWeaponCode = curStatus._equipedItems[3];
 
-                    GameObject curHeadIconObject = _stageUIs._headIconObjects[i];
 
                     UnitModelManager.Reset(_modelObject);
 
@@ -176,7 +174,6 @@ namespace Stage
 
                     UnitAnimationManager.Update(curLeftWeaponCode, curRightWeaponCode, animator);
 
-                    UnitIconManager.Update(curHeadIconObject, curHelmetCode);
 
                     yield return waitTime;
 
@@ -191,7 +188,11 @@ namespace Stage
             {
                 UnitStatus curStatus = curData.Team.GetUnit(i);
                 RawImage curRawImage = _stageUIs._enemyImages[i];
+                GameObject curHeadIconObject = _stageUIs._headIconObjects[i];
 
+                int curHelmetCode = curStatus._equipedItems[0];
+
+                UnitIconManager.Update(curHeadIconObject, curHelmetCode);
                 _unitPhoto.UpdateTexture(ref curRawImage, curStatus._equipedItems, true);
             }
 

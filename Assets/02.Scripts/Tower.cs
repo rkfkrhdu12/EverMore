@@ -33,10 +33,11 @@ public class Tower : FieldObject
             _healthBar.transform.parent.gameObject.SetActive(false);
             gameObject.SetActive(false);
 
-            if (_isBottomTower)
-                _spawnMgr.DestroyBottomTower();
-            else
-                _spawnMgr.DestroyTopTower();
+            if (_spawnMgr._isPlayer)
+                if (_isBottomTower)
+                    _spawnMgr.DestroyBottomTower();
+                else
+                    _spawnMgr.DestroyTopTower();
         }
     }
 

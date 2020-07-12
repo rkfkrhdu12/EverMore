@@ -45,11 +45,12 @@ public class CostManager : MonoBehaviour
 
     #region Variable
     private float[] _coolDownTime = new float[6];
+    private float[] _coolDownInterval = new float[6];
     public void SetCoolDownUI(int index, float coolDown)
     {
         if (_iconObjects.Length <= index || _iconCoolTimeImage.Length <= index) { LogMessage.LogError("UpdateIcon index is Over"); return; }
 
-        _coolDownTime[index] = coolDown;
+        _coolDownTime[index] = _coolDownInterval[index] = coolDown;
     }
 
     [SerializeField]
@@ -96,7 +97,7 @@ public class CostManager : MonoBehaviour
             {
                 _coolDownTime[i] -= Time.deltaTime;
 
-                _iconCoolTimeImage[i].fillAmount = 0.2f + _coolDownTime[i] * .6f;
+                _iconCoolTimeImage[i].fillAmount = 0.2f + (_coolDownTime[i] / _coolDownInterval[i]) * .6f;
             }
         }
     }

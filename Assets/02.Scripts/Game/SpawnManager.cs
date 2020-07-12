@@ -38,25 +38,28 @@ public class SpawnManager : MonoBehaviour
     /// <summary>
     /// UI의 버튼 혹은 설정된 키로 유닛을 스폰
     /// </summary>
-    public void Spawn()
+    public bool Spawn()
     #region Function Content
-
     {
-        if(_isGameEnd) { return; }
+        if(_isGameEnd) { return false; }
 
         UnitStatus uStatus = _teamUnits.GetUnit(_curSpawnIndex);
 
-        if (_isUnitSpawn[_curSpawnIndex]) { return; }
+        if (_isUnitSpawn[_curSpawnIndex]) { return false; }
+        if (!_isdefaultSpawn) { return false; }
 
         if (_isPlayer)
         {
-            if (!_inGameSystem.CostConsumption(uStatus._cost)) { return; }
+            if (!_inGameSystem.CostConsumption(uStatus._cost)) { return false; }
 
             _costMgr.SetCoolDownUI(_curSpawnIndex, uStatus._coolTime);
 
             if (_spawnAreaObject.activeSelf)
                 _spawnAreaObject.SetActive(false);
         }
+        // 스폰 성공
+
+        _isdefaultSpawn = false;
 
         _isUnitSpawn[_curSpawnIndex] = true;
 
@@ -82,7 +85,12 @@ public class SpawnManager : MonoBehaviour
             if (unitCtrl._status._equipedItems != null)
                 UnitModelManager.Reset(_curSpawnObject.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
 
-        unitCtrl._status = uStatus;
+        UnitStatus newStatus = new UnitStatus();
+        newStatus._team = _isPlayer ? eTeam.PLAYER : eTeam.ENEMY;
+        newStatus._equipedItems = uStatus._equipedItems;
+        newStatus.UpdateItems();
+
+        unitCtrl._status = newStatus;
 
         UnitModelManager.Update(_curSpawnObject.transform.GetChild(0).gameObject, unitCtrl._status._equipedItems);
 
@@ -92,6 +100,8 @@ public class SpawnManager : MonoBehaviour
 
         // 새로운 유닛 오브젝트를 오브젝트풀에서 찾음
         _curSpawnObject = null;
+
+        return true;
     }
 
     #endregion
@@ -165,7 +175,7 @@ public class SpawnManager : MonoBehaviour
 
                 if (_curSpawnObject == null)
                 {
-                    for (int j = 0; j < 6; ++j)
+                    for (int j = 0; j < 10; ++j)
                     {
                         GameObject clone = Instantiate(_unitPrefabs, Vector3.zero, Quaternion.identity, null);
 
@@ -201,29 +211,7 @@ public class SpawnManager : MonoBehaviour
             _unitList[i].GetComponent<UnitController>()._isDead = true;
         }
     }
-
-    IEnumerator UpdateUnitCoolTime()
-    {
-        while (!_isGameEnd)
-        {
-            for (int i = 0; i < _teamUnits.Length; ++i)
-            {
-                yield return UpdateWaitTime;
-
-                if (_isUnitSpawn[i])
-                {
-                    _unitCoolTimes[i] += 1;
-
-                    LogMessage.Log("CoolDown " + i + "  " + (_unitCoolIntervals[i] - _unitCoolTimes[i]));
-
-                    if (_unitCoolIntervals[i] <= _unitCoolTimes[i])
-                    {
-                        _isUnitSpawn[i] = false;
-                    }
-                }
-            }
-        }
-    }
+    
 
     #region Monobehaviour Function
 
@@ -268,7 +256,14 @@ public class SpawnManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if(_spawnAreaObject.activeSelf)
+        if (_teamUnits._units == null)
+        {
+            _teamUnits.Init(_isPlayer ? eTeam.PLAYER : eTeam.ENEMY);
+
+            _teamUnits.UpdateItems();
+        }
+
+        if (_spawnAreaObject.activeSelf)
         {
             _spawnAreaObject.SetActive(false);
         }
@@ -276,52 +271,55 @@ public class SpawnManager : MonoBehaviour
 
     public void Enable()
     {
+        if (_teamUnits._units == null)
+        {
+            _teamUnits.Init(_isPlayer ? eTeam.PLAYER : eTeam.ENEMY);
+
+            _teamUnits.UpdateItems();
+        }
+
         for (int i = 0; i < _teamUnits.Length; ++i)
         {
             UnitStatus us = _teamUnits.GetUnit(i);
             us.UpdateItems();
 
             _isUnitSpawn[i] = false;
-            _unitCoolIntervals[i] = us._coolTime;
-            StartCoroutine(UpdateUnitCoolTime());
+            _unitCoolIntervals[i] = _unitCoolTimes[i] = us._coolTime;
         }
     }
 
+    readonly float _defaultSpawnInterval = .5f;
+    float _defaultSpawnTime = .5f;
+
+    bool _isdefaultSpawn = false;
     private void Update()
     {
-        // Test
-        if (!_isPlayer)
+        if (!_isGameEnd)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            for (int i = 0; i < _teamUnits.Length; ++i)
             {
-                SetSpawnIndex(0);
-                Spawn();
+                if (_isUnitSpawn[i])
+                {
+                    _unitCoolTimes[i] -= Time.deltaTime;
+
+                    if (0 >= _unitCoolTimes[i])
+                    {
+                        _unitCoolTimes[i] = _unitCoolIntervals[i];
+                        _isUnitSpawn[i] = false;
+                    }
+                }
             }
-            if (Input.GetKeyDown(KeyCode.W))
+
+            if(!_isdefaultSpawn)
             {
-                SetSpawnIndex(1);
-                Spawn();
+                _defaultSpawnTime -= Time.deltaTime;
+                if (_defaultSpawnTime <= 0) 
+                {
+                    _defaultSpawnTime = _defaultSpawnInterval;
+                    _isdefaultSpawn = true;
+                }
             }
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                SetSpawnIndex(2);
-                Spawn();
-            }
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                SetSpawnIndex(3);
-                Spawn();
-            }
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                SetSpawnIndex(4);
-                Spawn();
-            }
-            if (Input.GetKeyDown(KeyCode.Y))
-            {
-                SetSpawnIndex(5);
-                Spawn();
-            }
+
         }
     }
 

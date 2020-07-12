@@ -5,7 +5,7 @@ public class Team
 
     public const int UnitCount = 6;
 
-    private UnitStatus[] _units;
+    public UnitStatus[] _units;
     public int Length { get { return _units.Length; } }
 
     public void Init(eTeam team = eTeam.PLAYER)

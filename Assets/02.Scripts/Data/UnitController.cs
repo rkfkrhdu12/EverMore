@@ -79,13 +79,15 @@ public class UnitController : FieldObject
         //데미지를 받습니다.
         float damage = Mathf.Max(statDamage - (_status._defensivePower - receiveObject.DefensiveCleavage), 0);
 
-        if (((UnitController)receiveObject)._status._abilities != null)
+        UnitController uc = (UnitController)receiveObject;
+        
+        if (uc.Ability != null)
         {
             for (int i = 0; i < 4; ++i)
             {
-                if (_status._abilities[i] == null) { continue; }
+                if (uc.Ability[i] == null) { continue; }
 
-                Ability[i].Hit(ref damage);
+                uc.Ability[i].Hit(ref damage);
             }
         }
 
@@ -120,6 +122,9 @@ public class UnitController : FieldObject
     public void OnEffect()
     {
         if (particle == null) return;
+        
+        if (!particle.gameObject.activeSelf)
+            particle.gameObject.SetActive(true);
 
         particle.Play();
     }
@@ -253,17 +258,14 @@ public class UnitController : FieldObject
         {
             if (_curState != value && gameObject.activeSelf)
             {
-                if (!_navMeshAgent.pathPending)
+                switch (value)
                 {
-                    switch (value)
-                    {
-                        case eAni.IDLE: _navMeshAgent.isStopped = true; break;
-                        case eAni.MOVE:
-                            _navMeshAgent.isStopped = false;
-                            if (_curState == eAni.IDLE && !_eye._isEnemy) { _eye.UpdateTarget(); }
-                            break;
-                        case eAni.ATTACK: _navMeshAgent.isStopped = true; break;
-                    }
+                    case eAni.IDLE: _navMeshAgent.isStopped = true; break;
+                    case eAni.MOVE:
+                        _navMeshAgent.isStopped = false;
+                        if (_curState == eAni.IDLE && !_eye._isEnemy) { _eye.UpdateTarget(); }
+                        break;
+                    case eAni.ATTACK: _navMeshAgent.isStopped = true; break;
                 }
 
                 _ani.UpdateAni(value);
@@ -958,10 +960,7 @@ public class UnitEffectManager
         if (EffectObject.transform.childCount > n)
         {
             GameObject curObject = EffectObject.transform.GetChild(n).gameObject;
-
-            if (!curObject.activeSelf)
-                curObject.SetActive(true);
-
+            
             ps = curObject.GetComponent<ParticleSystem>();
         }
     }

@@ -73,13 +73,22 @@ public class GameManager : Manager
         itemList = new ItemList();
         itemList.Init();
 
-        //PlayerTeam : 초기화
-        _playerTeam = new Team();
-        //_playerTeam.InitTest();
-
         _deleteObjectSystem = new DeleteObjectSystem();
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        //Team : 초기화
+        _playerTeam = new Team();
+        _playerTeam.Init();
+        _playerTeam.UpdateItems();
+
+        _enemyStageData = new Stage.StageData();
+        _enemyStageData.Team = new Team();
+        _enemyStageData.Team.Init(eTeam.ENEMY);
+        _enemyStageData.Team.UpdateItems();
     }
 
     #endregion

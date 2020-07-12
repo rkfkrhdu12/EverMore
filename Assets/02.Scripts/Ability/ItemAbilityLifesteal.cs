@@ -12,6 +12,8 @@ public class ItemAbilityLifesteal : ItemAbility
 
     public override void Hit(ref float damage)
     {
+        if(_target == null) { return; }
+
         float overDamage = Mathf.Min(_target.CurHealth - damage, 0);
         float heal = damage - overDamage;
 

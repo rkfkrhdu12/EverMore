@@ -94,8 +94,6 @@ public class InGameSystem : MonoBehaviour
 
         _playerCtrl = playerSpawnMgr.GetComponent<PlayerController>();
 
-        playerSpawnMgr._teamUnits = Manager.Get<GameManager>().GetPlayerUnits();
-
         _levelMgr.Init(_costMgr);
         _costMgr.Init(_levelMgr);
     }

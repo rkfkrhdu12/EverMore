@@ -71,9 +71,12 @@ public class FieldObject : MonoBehaviour
         DefaultMoveSpeed    = MoveSpeed;
         DefaultDefensiveCleavage = DefensiveCleavage;
 
-        for (int i = 0; i < _spriteList.Length; ++i) 
+        if (_stateSprites.Count == 0)
         {
-            _stateSprites.Add(i, _spriteList[i]);
+            for (int i = 0; i < _spriteList.Length; ++i)
+            {
+                _stateSprites.Add(i, _spriteList[i]);
+            }
         }
     }
 

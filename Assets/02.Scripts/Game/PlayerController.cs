@@ -105,9 +105,10 @@ public class PlayerController : MonoBehaviour
                 { // Spawn
                     _spawnManager.SetSpawnPoint(hitInfo.point);
 
-                    _spawnManager.Spawn();
-
-                    _curMouseState = eMouseState.Spawn;
+                    if (_spawnManager.Spawn())
+                    {
+                        _curMouseState = eMouseState.Spawn;
+                    }
                 }
             }
         }
