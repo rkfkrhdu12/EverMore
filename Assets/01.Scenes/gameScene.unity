@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.183
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.053521734, g: 0.13441947, b: 0.17975584, a: 0.183}
+  m_IndirectSpecularColor: {r: 0.053523038, g: 0.13440688, b: 0.17974961, a: 0.183}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7965,7 +7965,7 @@ MonoBehaviour:
   _healthBar: {fileID: 2122230319}
   _spawnMgr: {fileID: 1146608602}
   _brokenObject: {fileID: 342121866}
-  _isBottomTower: 0
+  _isBottomTower: 1
   _canvas: {fileID: 953642701}
   x: 3
   y: 120
@@ -10474,7 +10474,7 @@ MonoBehaviour:
   _healthBar: {fileID: 1636900228}
   _spawnMgr: {fileID: 1586111608}
   _brokenObject: {fileID: 81643049}
-  _isBottomTower: 0
+  _isBottomTower: 1
   _canvas: {fileID: 953642701}
   x: 3
   y: 120
