@@ -45,7 +45,7 @@ namespace Stage
             _curStage = Mathf.Min(_stageDataList.Count, _curStage + 1);
             _isStageUpdate = false;
 
-            UpdateStage();
+            // UpdateStage();
         }
         
         public StageData GetStageData() { return _curStage < _stageDataList.Count ? _stageDataList[_curStage] : null; }
@@ -57,7 +57,7 @@ namespace Stage
 
             StageData curData = _stageDataList[_curStage];
 
-            UpdateStage();
+            // UpdateStage();
         }
 
         #region Variable
@@ -84,9 +84,9 @@ namespace Stage
         {
             Init();
 
-            _IUpdateStage = UpdateStage();
+            //_IUpdateStage = UpdateStage();
 
-            StartCoroutine(_IUpdateStage);
+            //StartCoroutine(_IUpdateStage);
         }
 
         #endregion
@@ -142,64 +142,64 @@ namespace Stage
             _stageDataList.Add(newData);
         }
 
-        IEnumerator _IUpdateStage;
+        //IEnumerator _IUpdateStage;
 
-        WaitForSeconds waitTime = new WaitForSeconds(.5f);
-        private IEnumerator UpdateStage()
-        {
-            if(_isStageUpdate) { StopCoroutine(_IUpdateStage); }
-            _isStageUpdate = true;
+        //WaitForSeconds waitTime = new WaitForSeconds(.5f);
+        //private IEnumerator UpdateStage()
+        //{
+        //    if(_isStageUpdate) { StopCoroutine(_IUpdateStage); }
+        //    _isStageUpdate = true;
 
-            StageData curData = _stageDataList[_curStage];
-            Animator animator = _modelObject.GetComponent<Animator>();
+        //    StageData curData = _stageDataList[_curStage];
+        //    Animator animator = _modelObject.GetComponent<Animator>();
 
-            StartCoroutine(_unitPhoto.ICheckTexture(curData.Team.GetUnit(0)._equipedItems));
+        //    StartCoroutine(_unitPhoto.ICheckTexture(curData.Team.GetUnit(0)._equipedItems));
 
-            yield return waitTime;
+        //    yield return waitTime;
 
-            LogMessage.Log(_unitPhoto._isCheck.ToString());
-            if (!_unitPhoto._isCheck)
-            {
-                for (int i = 0; i < curData.Team.Length; ++i)
-                {
-                    UnitStatus curStatus = curData.Team.GetUnit(i);
+        //    LogMessage.Log(_unitPhoto._isCheck.ToString());
+        //    if (!_unitPhoto._isCheck)
+        //    {
+        //        for (int i = 0; i < curData.Team.Length; ++i)
+        //        {
+        //            UnitStatus curStatus = curData.Team.GetUnit(i);
 
-                    int curLeftWeaponCode = curStatus._equipedItems[2];
-                    int curRightWeaponCode = curStatus._equipedItems[3];
-
-
-                    UnitModelManager.Reset(_modelObject);
-
-                    UnitModelManager.Update(_modelObject, curStatus._equipedItems);
-
-                    UnitAnimationManager.Update(curLeftWeaponCode, curRightWeaponCode, animator);
+        //            int curLeftWeaponCode = curStatus._equipedItems[2];
+        //            int curRightWeaponCode = curStatus._equipedItems[3];
 
 
-                    yield return waitTime;
+        //            UnitModelManager.Reset(_modelObject);
 
-                    _unitPhoto.SaveTexture(curStatus._equipedItems);
+        //            UnitModelManager.Update(_modelObject, curStatus._equipedItems);
 
-                    while (_unitPhoto._isUse)
-                        yield return waitTime;
-                }
-            }
+        //            UnitAnimationManager.Update(curLeftWeaponCode, curRightWeaponCode, animator);
 
-            for (int i = 0; i < curData.Team.Length; ++i) 
-            {
-                UnitStatus curStatus = curData.Team.GetUnit(i);
-                RawImage curRawImage = _stageUIs._enemyImages[i];
-                GameObject curHeadIconObject = _stageUIs._headIconObjects[i];
 
-                int curHelmetCode = curStatus._equipedItems[0];
+        //            yield return waitTime;
 
-                UnitIconManager.Update(curHeadIconObject, curHelmetCode);
-                _unitPhoto.UpdateTexture(ref curRawImage, curStatus._equipedItems, true);
-            }
+        //            _unitPhoto.SaveTexture(curStatus._equipedItems);
 
-            Manager.Get<GameManager>().SetEnemyUnitData(curData);
+        //            while (_unitPhoto._isUse)
+        //                yield return waitTime;
+        //        }
+        //    }
 
-            LogMessage.Log("End");
-        }
+        //    for (int i = 0; i < curData.Team.Length; ++i) 
+        //    {
+        //        UnitStatus curStatus = curData.Team.GetUnit(i);
+        //        RawImage curRawImage = _stageUIs._enemyImages[i];
+        //        GameObject curHeadIconObject = _stageUIs._headIconObjects[i];
+
+        //        int curHelmetCode = curStatus._equipedItems[0];
+
+        //        UnitIconManager.Update(curHeadIconObject, curHelmetCode);
+        //        _unitPhoto.UpdateTexture(ref curRawImage, curStatus._equipedItems, true);
+        //    }
+
+        //    Manager.Get<GameManager>().SetEnemyUnitData(curData);
+
+        //    LogMessage.Log("End");
+        //}
         #endregion
     }
 }

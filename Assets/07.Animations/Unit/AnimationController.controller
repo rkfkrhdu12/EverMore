@@ -2124,7 +2124,7 @@ AnimatorController:
   - m_Name: WeaponType
     m_Type: 3
     m_DefaultFloat: 0
-    m_DefaultInt: 1
+    m_DefaultInt: 12
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: Move
@@ -4544,9 +4544,12 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -2815559327898529610}
+  - first: {fileID: 1527659542912810557}
     second:
-    - {fileID: -6903151837374203971}
+    - {fileID: 2948624232939070372}
+  - first: {fileID: 2369382212018708983}
+    second:
+    - {fileID: 8108167921057510263}
   - first: {fileID: -556242299951544806}
     second:
     - {fileID: -3744528943779997791}
@@ -4567,48 +4570,45 @@ AnimatorStateMachine:
     - {fileID: -3543953531914209083}
     - {fileID: 1043642807085190971}
     - {fileID: -8486484240089771047}
-  - first: {fileID: 2369382212018708983}
-    second:
-    - {fileID: 8108167921057510263}
-  - first: {fileID: 5132837662512287736}
-    second:
-    - {fileID: -5998353983908374387}
-  - first: {fileID: 5016423895888783009}
-    second:
-    - {fileID: 8530850625762427287}
   - first: {fileID: -5029237058191813274}
     second:
     - {fileID: -889437642583268331}
-  - first: {fileID: 1527659542912810557}
-    second:
-    - {fileID: 2948624232939070372}
-  - first: {fileID: 4826933587406280157}
-    second:
-    - {fileID: 6166129598156630984}
   - first: {fileID: -3228144769055501894}
     second:
     - {fileID: -4310929444497570708}
+  - first: {fileID: 4826933587406280157}
+    second:
+    - {fileID: 6166129598156630984}
+  - first: {fileID: 5016423895888783009}
+    second:
+    - {fileID: 8530850625762427287}
+  - first: {fileID: 5132837662512287736}
+    second:
+    - {fileID: -5998353983908374387}
   - first: {fileID: 7641897550632076122}
     second:
     - {fileID: -838594761753963729}
-  - first: {fileID: -3053042861134376375}
+  - first: {fileID: -2815559327898529610}
     second:
-    - {fileID: -3790588260019832024}
-  - first: {fileID: 4170673441135203879}
-    second:
-    - {fileID: -1504964463171831376}
+    - {fileID: -6903151837374203971}
   - first: {fileID: -8024585784200737080}
     second:
     - {fileID: 4770228022293131741}
+  - first: {fileID: -3053042861134376375}
+    second:
+    - {fileID: -3790588260019832024}
+  - first: {fileID: -4720521158628002717}
+    second:
+    - {fileID: -1279846819404867773}
+  - first: {fileID: 4170673441135203879}
+    second:
+    - {fileID: -1504964463171831376}
   - first: {fileID: 2826568091541374030}
     second:
     - {fileID: 5203292358730923594}
   - first: {fileID: 3572563794712970277}
     second:
     - {fileID: 5404613805108900301}
-  - first: {fileID: -4720521158628002717}
-    second:
-    - {fileID: -1279846819404867773}
   - first: {fileID: 9005234716737212530}
     second:
     - {fileID: -688679063926602597}
