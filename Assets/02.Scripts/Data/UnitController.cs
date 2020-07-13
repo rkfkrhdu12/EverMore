@@ -849,7 +849,7 @@ public class UnitAnimationManager
 
         bool returnVal = FindNum(leftWeaponCode, rightWeaponCode, ref num);
 
-        if (num != -1)
+        if (num != -1 && ani != null)
             ani.SetInteger(_idWeaponType, num);
 
         return returnVal;

@@ -28,39 +28,42 @@ public class ItemSlot : MonoBehaviour
 
     public void OffSelect()
     {
+        if (!_isSelect) { return; }
+
         _isSelect = false;
 
-        //if (!_isSelect)
-        { // Default
-            _infoSlot.gameObject.SetActive(false);
-            _defaultSlot.gameObject.SetActive(true);
-        }
+        _infoSlot.gameObject.SetActive(false);
+        _defaultSlot.gameObject.SetActive(true);
 
-        UpdateText();
+        _defaultSlot.UpdateText();
     }
 
     public void OnSelect()
     {
+        if (_isSelect) 
+
         _isSelect = true;
 
-        //if (_isSelect)
-        { // Info
-            _infoSlot.gameObject.SetActive(true);
-            _defaultSlot.gameObject.SetActive(false);
-        }
+        _infoSlot.gameObject.SetActive(true);
+        _defaultSlot.gameObject.SetActive(false);
 
-        UpdateText();
+        _infoSlot.UpdateText();
     }
 
     private void Awake()
     {
         _defaultSlot._slot = this;
         _infoSlot._slot = this;
+
+        _buttonPro = GetComponent<ButtonPro>();
     }
 
     private void OnEnable()
     {
+        _isSelect = true;
+
         OffSelect();
+        _prevState = _buttonPro.isSelected;
     }
 
     private void Start()
@@ -68,6 +71,26 @@ public class ItemSlot : MonoBehaviour
         _defaultSlot._itemList = _invenSystem._itemList;
         _infoSlot._itemList = _invenSystem._itemList;
     }
+
+    ButtonPro _buttonPro;
+
+    bool _prevState;
+
+    private void FixedUpdate()
+    {
+        if(_buttonPro.isSelected != _prevState)
+        {
+            if(_buttonPro.isSelected)
+            {
+                OnSelect();
+            }
+            else
+            {
+                OffSelect();
+            }
+        }
+    }
+
 
     private void UpdateText()
     {
@@ -81,8 +104,5 @@ public class ItemSlot : MonoBehaviour
 
         }
     }
-
-    void UpdateIcon()
-    {
-    }
+    
 }

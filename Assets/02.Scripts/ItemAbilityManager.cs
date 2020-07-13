@@ -21,36 +21,43 @@ public class ItemAbilityManager
 
         List<ItemAbility> abilityList = new List<ItemAbility>();
 
-        abilityList.Add(new ItemAbilitySharpness());            
-        abilityList.Add(new ItemAbilitySharpness());
-        abilityList.Add(new ItemAbilityFrostyFeet());
-        abilityList.Add(new ItemAbilityChill());
-        abilityList.Add(new ItemAbilityInspire());
-        abilityList.Add(new ItemAbilityVanguard());
-        abilityList.Add(new ItemAbilityParvenu());
-        abilityList.Add(new ItemAbilityWisdom());
-        abilityList.Add(new ItemAbilityLife());
-        abilityList.Add(new ItemAbilityQuick());
-        abilityList.Add(new ItemAbilityWither());
-        abilityList.Add(new ItemAbility());
-        abilityList.Add(new ItemAbility());
-        abilityList.Add(new ItemAbility());
-        abilityList.Add(new ItemAbility());
-        abilityList.Add(new ItemAbility());
-        abilityList.Add(new ItemAbility());
-        abilityList.Add(new ItemAbilityLifesteal());
-        abilityList.Add(new ItemAbility());
-        abilityList.Add(new ItemAbility());
-        abilityList.Add(new ItemAbility());
-        abilityList.Add(new ItemAbilityColdBlow());
-        abilityList.Add(new ItemAbilityHotBlow());
-        abilityList.Add(new ItemAbilityMeanBlow());
-        abilityList.Add(new ItemAbility());
-        abilityList.Add(new ItemAbility());
-        abilityList.Add(new ItemAbilityDefenceSpiral());
-        abilityList.Add(new ItemAbilityDefencePenetrate());
-        abilityList.Add(new ItemAbilityDemolish());
-        abilityList.Add(new ItemAbility());
+        abilityList.Add(new ItemAbilitySharpness());            // 날카로움
+        abilityList.Add(new ItemAbilitySharpness());            // 날카로움
+        abilityList.Add(new ItemAbilityFrostyFeet());           // 서릿발
+        abilityList.Add(new ItemAbilityChill());                // 한기
+        abilityList.Add(new ItemAbilityInspire());              // 격려
+        abilityList.Add(new ItemAbilityVanguard());             // 선봉
+        abilityList.Add(new ItemAbilityParvenu());              // 졸부
+        abilityList.Add(new ItemAbilityWisdom());               // 지혜
+        abilityList.Add(new ItemAbilityLife());                 // 생명
+        abilityList.Add(new ItemAbilityQuick());                // 신속
+        abilityList.Add(new ItemAbilityWither());               // 쇄약
+
+        abilityList.Add(new ItemAbility());                     // 불길
+        abilityList.Add(new ItemAbility());                     // 독약
+        abilityList.Add(new ItemAbility());                     // 개전
+        abilityList.Add(new ItemAbility());                     // 원시
+        abilityList.Add(new ItemAbility());                     // 광기
+        abilityList.Add(new ItemAbility());                     // 사기진작
+
+        abilityList.Add(new ItemAbilityLifesteal());            // 흡혈
+
+        abilityList.Add(new ItemAbility());                     // 단말마 X
+        abilityList.Add(new ItemAbility());                     // 돌파
+        abilityList.Add(new ItemAbility());                     // 약탈
+
+        abilityList.Add(new ItemAbilityColdBlow());             // 차가운일격
+        abilityList.Add(new ItemAbilityHotBlow());              // 뜨거운일격
+        abilityList.Add(new ItemAbilityMeanBlow());             // 비열한일격
+
+        abilityList.Add(new ItemAbility());                     // 은신
+        abilityList.Add(new ItemAbility());                     // 피로
+
+        abilityList.Add(new ItemAbilityDefenceSpiral());        // 파괴
+        abilityList.Add(new ItemAbilityDefencePenetrate());     // 관통
+        abilityList.Add(new ItemAbilityDemolish());             // 철거
+
+        abilityList.Add(new ItemAbility());                     // 반격
 
         int index = 0;
         foreach (var splitDatas in abilityDatas.Select(t => t.Split(',')))
