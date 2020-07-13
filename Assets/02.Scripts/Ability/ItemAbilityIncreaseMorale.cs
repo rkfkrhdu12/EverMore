@@ -23,11 +23,14 @@ public class ItemAbilityIncreaseMorale : ItemAbility
         {
             if (!_uCtrl._eye._friendTargets.Contains(_objectList[i]))
             {
+                NavMeshAgent nav = _objectList[i].GetComponent<NavMeshAgent>();
+                if (nav == null) { continue; }
+
                 _objectList[i]._isCrowdControls[_curType] = false;
 
                 _objectList[i]._abilNameList.Remove(Name);
 
-                _objectList[i].GetComponent<NavMeshAgent>().speed -= _objectList[i].MoveSpeed / Var[0];
+                nav.speed -= _objectList[i].MoveSpeed / Var[0];
             }
         }
 
@@ -40,14 +43,16 @@ public class ItemAbilityIncreaseMorale : ItemAbility
             // 길이 체크  너무 멀진 않은가 ?
             if (direction.magnitude < _range)
             {
-                // 이미 빙결상태거나 죽은 상대면 패스
                 if (_objectList[i]._isCrowdControls[_curType] || _objectList[i].IsDead) return;
+
+                NavMeshAgent nav = _objectList[i].GetComponent<NavMeshAgent>();
+                if (nav == null) { continue; }
 
                 _objectList[i]._isCrowdControls[_curType] = true;
 
                 _objectList[i]._abilNameList.Add(Name);
 
-                _objectList[i].GetComponent<NavMeshAgent>().speed += _objectList[i].MoveSpeed / Var[0];
+                nav.speed += _objectList[i].MoveSpeed / Var[0];
             }
         }
     }
