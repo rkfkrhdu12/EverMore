@@ -162,6 +162,8 @@ public class ItemInventorySystem : MonoBehaviour
 
         UpdateSimpleStatusUI();
     }
+
+
     #endregion
 
     public void TypeHelmet()        { Type = eCodeType.Helmet;     }

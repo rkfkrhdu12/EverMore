@@ -53,9 +53,9 @@ public class PlayerController : MonoBehaviour
     {
         switch (_curMouseState)
         {
-            case eMouseState.None:                              break;
-            case eMouseState.Camera:                            break;
-            case eMouseState.Spawn:    UpdateSpawnInput();      break;
+            case eMouseState.None:                                                  break;
+            case eMouseState.Camera:                                                break;
+            case eMouseState.Spawn:    UpdateSpawnInput();                          break;
             case eMouseState.Spawning: UpdateSpawnInput(); UpdateSpawnPoint();      break;
         }
     }
