@@ -61,12 +61,6 @@ public class InGameSystem : MonoBehaviour
 
     public Canvas _canvas;
 
-    [SerializeField]
-    AudioClip _dangerSound = null;
-
-    [SerializeField]
-    private AudioSource _audio = null;
-
     // private
 
     PlayerController _playerCtrl;
@@ -104,7 +98,6 @@ public class InGameSystem : MonoBehaviour
         _costMgr.Init(_levelMgr);
     }
 
-    bool _isEndLoad = false;
     private void OnEnable()
     {
         StartCoroutine(StartLoading());
@@ -164,11 +157,6 @@ public class InGameSystem : MonoBehaviour
 
         RedHealthBar.fillAmount = RedBase.RemainHealth;
 
-        if(RedHealthBar.fillAmount <= 0.5f)
-        {
-            _audio.clip = _dangerSound;
-        }
-
         if (RedBase.IsDead)
         {
             if (!_isPlayerRed)  Victory();
@@ -182,7 +170,6 @@ public class InGameSystem : MonoBehaviour
             if (_isPlayerRed)   Victory();
             else                Defeat();
         }
-
 
         if (Input.GetKeyDown(KeyCode.M))
         {

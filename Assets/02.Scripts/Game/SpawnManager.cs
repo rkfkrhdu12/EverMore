@@ -17,10 +17,13 @@ public class SpawnManager : MonoBehaviour
         _curSpawnIndex = index;
     }
 
+    public bool _isNotTower = false;
     public void DestroyTopTower()
     {
         if (_spawnAreaChangedObject.activeSelf)
             _spawnAreaChangedObject.SetActive(false);
+        else
+            _isNotTower = true;
 
         _topSpawnAreaChangedObject.SetActive(false);
     }
@@ -29,6 +32,8 @@ public class SpawnManager : MonoBehaviour
     {
         if (_spawnAreaChangedObject.activeSelf)
             _spawnAreaChangedObject.SetActive(false);
+        else
+            _isNotTower = true;
 
         _bottomSpawnAreaChangedObject.SetActive(false);
 
@@ -268,6 +273,8 @@ public class SpawnManager : MonoBehaviour
         {
             _spawnAreaObject.SetActive(false);
         }
+
+        _isNotTower = false;
     }
 
     public void Enable()
