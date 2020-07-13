@@ -43,6 +43,8 @@ public class GameManager : Manager
     private Team _playerTeam;
     private Stage.StageData _enemyStageData;
 
+    public bool _stageClear = false;
+
     //삭제에 대한 매니저 변수
     private DeleteObjectSystem _deleteObjectSystem;
 
@@ -68,6 +70,7 @@ public class GameManager : Manager
     private void OnAwake()
     {
         Application.targetFrameRate = 60;
+        _stageClear = false;
 
         //itemList : 초기화
         itemList = new ItemList();
@@ -93,25 +96,4 @@ public class GameManager : Manager
 
     #endregion
 
-    #region Private Function
-
-    //private IEnumerator getUnitTexture()
-    //{
-    //    //유닛 텍스쳐 리소스를 가져옵니다.
-    //    Addressables.LoadResourceLocationsAsync(unitPhotos).Completed += op =>
-    //    {
-    //        foreach (var data in op.Result)
-    //            Addressables.LoadAssetAsync<Texture2D>(data.PrimaryKey).Completed += handle =>
-    //                st.Add(data.PrimaryKey, handle.Result);
-    //    };
-
-    //    //1초 정도 대기
-    //    yield return new WaitForSeconds(1f);
-
-    //    //리소스를 해제합니다.
-    //    foreach (var texture2d in st.Values)
-    //        Addressables.Release(texture2d);
-    //}
-
-    #endregion
 }

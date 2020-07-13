@@ -40,6 +40,16 @@ namespace Stage
     public class StageManager : MonoBehaviour
     { // 현재 적 레벨 관리와 정보를 인게임에 전달
 
+        public void OnStageEasy()
+        {
+            Manager.Get<GameManager>().SetEnemyUnitData(_stageDataList[0]);
+        }
+
+        public void OnStageHard()
+        {
+            Manager.Get<GameManager>().SetEnemyUnitData(_stageDataList[1]);
+        }
+
         public void StageClear()
         {
             _curStage = Mathf.Min(_stageDataList.Count, _curStage + 1);
@@ -56,8 +66,6 @@ namespace Stage
                 Init();
 
             StageData curData = _stageDataList[_curStage];
-
-            // UpdateStage();
         }
 
         #region Variable
@@ -97,6 +105,7 @@ namespace Stage
             _isInit = true;
 
             InitStage("Stage01");
+            InitStage("Stage02");
         }
 
         private void InitStage(string fileName)

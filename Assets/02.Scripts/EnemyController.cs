@@ -11,10 +11,13 @@ public class EnemyController : MonoBehaviour
 
     Stage.StageData _stageData;
 
+    private void Awake()
+    {
+        _isSpawnEnd = true;
+    }
+
     public void Enable()
     {
-        _isSpawnEnd = false;
-
         _stageData = Manager.Get<GameManager>().GetEnemyUnitData();
         if(_stageData == null) { _isSpawnEnd = true; }
 
@@ -25,6 +28,8 @@ public class EnemyController : MonoBehaviour
         _curUnitData = _stageData._spawnUnitData[_curUnitDataNum];
 
         spawnTime = prevSpawnSec = _curUnitData.SpawnSec;
+
+        _isSpawnEnd = false;
     }
 
     Stage.SpawnUnit _curUnitData;

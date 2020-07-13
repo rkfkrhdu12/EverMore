@@ -2886,9 +2886,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalImage: {fileID: 21300000, guid: 0be9791f62293c24382a0cbed38f1863, type: 3}
-  reachImage: {fileID: 21300000, guid: b99fad202d0403740a0cdcb5f53c7e8c, type: 3}
-  pressImage: {fileID: 21300000, guid: 57254e43c68518d43af8e0b709ee5cb5, type: 3}
+  normalImage: {fileID: 21300000, guid: 891a3d67e6b366144bccf3bb273df783, type: 3}
+  reachImage: {fileID: 21300000, guid: 19ebfc6234eb6044bbb86b972e75e02b, type: 3}
+  pressImage: {fileID: 21300000, guid: cc07cde7cbb15fc40b1ce395e91fac36, type: 3}
   selectImage: {fileID: 0}
   _isDefaultImageAlpha: 0
   _isSetNativeSize: 0
@@ -2911,6 +2911,17 @@ MonoBehaviour:
     onClick:
       m_PersistentCalls:
         m_Calls:
+        - m_Target: {fileID: 809457531}
+          m_MethodName: OnStageHard
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: gameScene
+            m_BoolArgument: 0
+          m_CallState: 2
         - m_Target: {fileID: 1989406324}
           m_MethodName: OnGameStart
           m_Mode: 5
@@ -2943,7 +2954,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0be9791f62293c24382a0cbed38f1863, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 891a3d67e6b366144bccf3bb273df783, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4012,7 +4023,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &505839737
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4030,7 +4041,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 546, y: -163}
-  m_SizeDelta: {x: 740.46, y: 702.2}
+  m_SizeDelta: {x: 715, y: 719}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &505839738
 MonoBehaviour:
@@ -4044,9 +4055,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1931b649e036d44dab5469348fd3f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalImage: {fileID: 21300000, guid: 625df2e022192fc4ebf1504df0b9a1eb, type: 3}
-  reachImage: {fileID: 21300000, guid: 9e1069cfeb322dd40b2287bd3763923b, type: 3}
-  pressImage: {fileID: 21300000, guid: ee6e8c579fe867c4ea9a6b5be4e7da66, type: 3}
+  normalImage: {fileID: 21300000, guid: 31be5086afa04f24fac129f889731b91, type: 3}
+  reachImage: {fileID: 21300000, guid: bdd643326db67574b98e345df393ed86, type: 3}
+  pressImage: {fileID: 21300000, guid: 2572cf341638fd3479adcb283430e623, type: 3}
   selectImage: {fileID: 0}
   _isDefaultImageAlpha: 0
   _isSetNativeSize: 0
@@ -4068,7 +4079,29 @@ MonoBehaviour:
         m_Calls: []
     onClick:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 809457531}
+          m_MethodName: OnStageEasy
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1989406324}
+          m_MethodName: OnGameStart
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: gameScene
+            m_BoolArgument: 0
+          m_CallState: 2
   _buttonGroup: {fileID: 0}
   isSelected: 0
 --- !u!114 &505839739
@@ -4090,7 +4123,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 625df2e022192fc4ebf1504df0b9a1eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 31be5086afa04f24fac129f889731b91, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12559,7 +12592,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1247279301
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13026,7 +13059,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1299594762
 RectTransform:
   m_ObjectHideFlags: 0

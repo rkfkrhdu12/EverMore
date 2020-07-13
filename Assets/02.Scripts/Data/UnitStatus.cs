@@ -91,7 +91,18 @@ public class UnitStatus
     }
     #endregion
 
-    public float _attackSpeed;      public float AttackSpeed => _attackSpeed;
+    public float _attackSpeed;      public float AttackSpeed
+    {
+        get
+        {
+            float retVal = _attackSpeed;
+
+            if (_equipedItems[2] != 0 && _equipedItems[3] != 0)
+                retVal = retVal / 2 - .3f ;
+
+            return retVal;
+        }
+    }
     public float _attackRange;      
 
     public float _moveSpeed;

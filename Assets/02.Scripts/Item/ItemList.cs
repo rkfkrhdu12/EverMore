@@ -234,7 +234,6 @@ namespace GameItem
                 us._maxAttackDamages[0] += _maxDamage;
             }
 
-            if (_speed != -1) us._attackSpeed = (us._attackSpeed + _speed) / 2;
 
             us.SetAbility(_ability);
         }
@@ -277,7 +276,9 @@ namespace GameItem
 
             us._minAttackDamage += _minDamage;
             us._maxAttackDamage += _maxDamage;
-        }      
+
+            if (_speed != -1) us._attackSpeed += _speed;
+        }
 
         public override void UnEquip(UnitStatus us)
         {
@@ -285,6 +286,8 @@ namespace GameItem
 
             us._minAttackDamage -= _minDamage;
             us._maxAttackDamage -= _maxDamage;
+
+            if (_speed != -1) us._attackSpeed -= _speed;
         }
     }
 

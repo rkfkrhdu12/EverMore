@@ -136,8 +136,8 @@ public class InGameSystem : MonoBehaviour
         if (_loadingScreenImage.gameObject.activeSelf)
             _loadingScreenImage.gameObject.SetActive(false);
 
-        SpawnManager playerSpawnMgr = _isPlayerRed ? RedSpawnMgr : BlueSpawnMgr;
-        EnemyController enemyController = (_isPlayerRed ? BlueSpawnMgr : RedSpawnMgr).GetComponent<EnemyController>();
+        SpawnManager playerSpawnMgr = RedSpawnMgr;
+        EnemyController enemyController = BlueSpawnMgr.GetComponent<EnemyController>();
 
         playerSpawnMgr.Enable();
         enemyController.Enable();
