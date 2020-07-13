@@ -15,7 +15,10 @@ public class TowerProjectile : Projectile
 
     protected override void FixedUpdate()
     {
-        if(Target == null) DeleteObjectSystem.AddDeleteObject(gameObject);
+        if (Target == null || !Target.gameObject.activeSelf || Target.CurHealth <= 0)
+        {
+            DeleteObjectSystem.AddDeleteObject(gameObject);
+        }
 
         base.FixedUpdate();
     }
