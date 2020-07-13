@@ -48,14 +48,18 @@ public class Tower : FieldObject
         }
     }
 
+    float _attackDamage = 15;
+    float _attackRange = 6;
 
     void Awake()
     {
         _team = _spawnMgr._isPlayer ? eTeam.PLAYER : eTeam.ENEMY;
         _canvasRectTrs = _canvas.GetComponent<RectTransform>();
         _hpCamera = _canvas.worldCamera;
-    }
 
+        GetComponent<SphereCollider>().radius = _attackRange * 4.28f;
+    }
+    
     override protected void FixedUpdate()
     {
         if (CurTarget == null) { return; }
@@ -66,7 +70,7 @@ public class Tower : FieldObject
         {
             _attackTime = _attackInterval;
 
-            updateTarget.DamageReceive(10, this);
+            updateTarget.DamageReceive(_attackDamage, this);
             if(updateTarget.CurHealth <= 0) { _targetList.Remove(updateTarget); }
         }
     }

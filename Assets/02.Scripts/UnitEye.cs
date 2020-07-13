@@ -69,8 +69,8 @@ public class UnitEye : MonoBehaviour
 
         float range = Mathf.Max(_unitCtrl._status._attackRange, _minRange);
 
-        _attackRange = range * 2;
-        _collider.radius = range * 2.5f;
+        _attackRange = range;
+        _collider.radius = range * 1.25f;
 
         StartCoroutine(SortTarget());
     }
