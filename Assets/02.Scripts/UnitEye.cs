@@ -72,6 +72,10 @@ public class UnitEye : MonoBehaviour
         _attackRange = range;
         _collider.radius = range * 1.25f;
 
+        _allTargets.Clear();
+        _enemyTargets.Clear();
+        _friendTargets.Clear();
+
         StartCoroutine(SortTarget());
     }
 
@@ -131,12 +135,11 @@ public class UnitEye : MonoBehaviour
             var target = other.GetComponent<FieldObject>();
 
             // target이 UnitCtrl 일때
-            if (target != null)
+            if (target != null && !_allTargets.Contains(target))
             {
                 _allTargets.Add(target);
 
                 if (target._team == _unitCtrl._team) { return; }
-
                 
                 return;
             }
@@ -150,7 +153,7 @@ public class UnitEye : MonoBehaviour
         // FieldObject 가 있으면
         if (target != null)
         {
-            if (_allTargets.Contains(target)) { return; }
+            if (!_allTargets.Contains(target)) { return; }
 
             _allTargets.Remove(target);
 

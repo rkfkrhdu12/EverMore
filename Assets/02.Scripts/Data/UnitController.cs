@@ -103,8 +103,10 @@ public class UnitController : FieldObject
 
         _healthBarObject.SetActive(false);
 
+        gameObject.transform.position = Vector3.zero;
         //해당 유닛과 체력바를 삭제 목록에 올립니다.
-        DeleteObjectSystem.AddDeleteObject(gameObject);
+        DeleteObjectSystem.AddDeleteObject(gameObject, true);
+        
     }
     #endregion
 

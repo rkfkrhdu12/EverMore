@@ -60,7 +60,6 @@ public class Tower : FieldObject
 
     public void UpdateTarget()
     {
-        if(CurTarget.CurHealth <= 0)
         {
             _targetList.Remove(CurTarget);
         }
