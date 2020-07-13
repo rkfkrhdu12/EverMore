@@ -228,8 +228,9 @@ public class UnitController : FieldObject
     public UnitEye _eye;
 
     [SerializeField]
-    private GameObject effectObject;
+    private GameObject _effectObject;
 
+    public GameObject _abilEffectObject;
     #endregion
 
     // 아이템 능력 번호
@@ -345,7 +346,7 @@ public class UnitController : FieldObject
 
         #region Effect Enable
 
-        UnitEffectManager.Update(_status._equipedItems[2], _status._equipedItems[3], ref particle, ref effectObject);
+        UnitEffectManager.Update(_status._equipedItems[2], _status._equipedItems[3], ref particle, ref _effectObject);
 
         if (particle != null)
         {

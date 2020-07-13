@@ -7,6 +7,14 @@ public class ItemAbilityInspire : ItemAbility
 
     readonly int _curType = (int)eCrowdControl.Inspire;
 
+    public override void Start(UnitController uCtrl)
+    {
+        base.Start(uCtrl);
+
+        // Blue
+        _uCtrl._abilEffectObject.transform.GetChild(1).gameObject.SetActive(true);
+    }
+
     public override void Update(float dt)
     {
         for (int i = 0; i < _objectList.Count; ++i)

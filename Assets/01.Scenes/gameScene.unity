@@ -1235,7 +1235,7 @@ GameObject:
   - component: {fileID: 116213938}
   - component: {fileID: 116213939}
   m_Layer: 0
-  m_Name: BGM (2)
+  m_Name: AMB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1248,11 +1248,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116213937}
-  m_LocalRotation: {x: 0.000000016689238, y: 0.92424244, z: -0.38180625, w: -0.00000004039993}
-  m_LocalPosition: {x: -690.4461, y: -363.13712, z: 54.544487}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -54.77803, y: 0, z: 15.544761}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1949314788}
+  m_Father: {fileID: 918775873}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &116213939
@@ -9906,6 +9906,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 583235416}
+  - {fileID: 116213938}
+  - {fileID: 1413197963}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10442,8 +10444,6 @@ MonoBehaviour:
   _victoryObject: {fileID: 731078685}
   _defeatObject: {fileID: 1227043779}
   _canvas: {fileID: 953642701}
-  _dangerSound: {fileID: 8300000, guid: faf4eda34472b80499a5f65cfa76c533, type: 3}
-  _audio: {fileID: 0}
   _loadingScreenObject: {fileID: 1816374242}
   _loadingBarImage: {fileID: 1186613700}
 --- !u!114 &953642704
@@ -15533,7 +15533,7 @@ GameObject:
   - component: {fileID: 1413197963}
   - component: {fileID: 1413197964}
   m_Layer: 0
-  m_Name: BGM (3)
+  m_Name: AMB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15546,11 +15546,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413197962}
-  m_LocalRotation: {x: 0.000000016689238, y: 0.92424244, z: -0.38180625, w: -0.00000004039993}
-  m_LocalPosition: {x: -728.0382, y: -338.9553, z: 78.81831}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -17.185917, y: 0, z: -18.718624}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1949314788}
+  m_Father: {fileID: 918775873}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1413197964
@@ -21139,8 +21139,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1781092613}
-  - {fileID: 116213938}
-  - {fileID: 1413197963}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

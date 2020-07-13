@@ -33,7 +33,7 @@ public class ItemAbilityManager
         abilityList.Add(new ItemAbilityQuick());                // 신속
         abilityList.Add(new ItemAbilityWither());               // 쇄약
 
-        abilityList.Add(new ItemAbility());                     // 불길
+        abilityList.Add(new ItemAbilityFlame());                // 불길
         abilityList.Add(new ItemAbility());                     // 독약
         abilityList.Add(new ItemAbility());                     // 개전
         abilityList.Add(new ItemAbility());                     // 원시

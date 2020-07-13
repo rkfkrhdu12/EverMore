@@ -53,6 +53,11 @@ public class FieldObject : MonoBehaviour
     public delegate void ExitCC(eCrowdControl type, FieldObject obj);
     public ExitCC ExitCCFunction;
 
+    public void DamageDot(float damage)
+    {
+        CurHealth -= damage;
+    }
+
     public void CrowdControl(eCrowdControl curCC, float time)
     {
         _isCrowdControls[(int)curCC] = true;
@@ -67,7 +72,6 @@ public class FieldObject : MonoBehaviour
         DefaultAttackSpeed  = AttackSpeed;
         DefaultMoveSpeed    = MoveSpeed;
         DefaultDefensiveCleavage = DefensiveCleavage;
-
     }
 
     virtual protected void FixedUpdate()

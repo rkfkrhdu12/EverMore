@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemAbilityFlame : ItemAbility
-{
+{ // 불길
     readonly eCrowdControl _curType = eCrowdControl.Burn;
 
     public override void Attack(FieldObject enemyUnit, ref float damage)
@@ -14,8 +14,6 @@ public class ItemAbilityFlame : ItemAbility
         {
             _uCtrl._abilNameList.Add(Name);
 
-            enemyUnit.AttackSpeed -= enemyUnit.DefaultAttackSpeed / Var[0];
-            enemyUnit.MoveSpeed -= enemyUnit.DefaultMoveSpeed / Var[1];
         }
 
         enemyUnit.CrowdControl(_curType, 1.0f);
@@ -31,12 +29,14 @@ public class ItemAbilityFlame : ItemAbility
         {
             _uCtrl._abilNameList.Remove(Name);
 
-            enemyUnit.AttackSpeed += enemyUnit.DefaultAttackSpeed / Var[0];
-            enemyUnit.MoveSpeed += enemyUnit.DefaultMoveSpeed / Var[1];
+            enemyUnit.DamageDot(Var[0]);
         }
 
-        if(ccCount >= Time)
-        enemyUnit.ExitCCFunction -= ExitCC;
+        if (ccCount >= Time)
+        {
+            _uCtrl._abilNameList.Remove(Name);
+            enemyUnit.ExitCCFunction -= ExitCC;
+        }
     }
 
 }
