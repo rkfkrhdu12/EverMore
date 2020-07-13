@@ -48,8 +48,8 @@ public class Tower : FieldObject
         }
     }
 
-    float _attackDamage = 15;
-    float _attackRange = 6;
+    [SerializeField] float _attackDamage = 15;
+    [SerializeField] float _attackRange = 6;
 
     void Awake()
     {

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.183
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.053533252, g: 0.13442023, b: 0.17975679, a: 0.183}
+  m_IndirectSpecularColor: {r: 0.053522926, g: 0.13441193, b: 0.17975606, a: 0.183}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7968,6 +7968,8 @@ MonoBehaviour:
   _brokenObject: {fileID: 342121866}
   _isBottomTower: 1
   _canvas: {fileID: 953642701}
+  _attackDamage: 15
+  _attackRange: 7.5
 --- !u!64 &808937281
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10566,6 +10568,8 @@ MonoBehaviour:
   _brokenObject: {fileID: 81643049}
   _isBottomTower: 1
   _canvas: {fileID: 953642701}
+  _attackDamage: 15
+  _attackRange: 7.5
 --- !u!64 &1011622611
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11238,6 +11242,8 @@ MonoBehaviour:
   _brokenObject: {fileID: 1387843141}
   _isBottomTower: 0
   _canvas: {fileID: 953642701}
+  _attackDamage: 15
+  _attackRange: 7.5
 --- !u!64 &1064207677
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -14093,6 +14099,8 @@ MonoBehaviour:
   _brokenObject: {fileID: 918025712}
   _isBottomTower: 0
   _canvas: {fileID: 953642701}
+  _attackDamage: 15
+  _attackRange: 7.5
 --- !u!64 &1358846596
 MeshCollider:
   m_ObjectHideFlags: 0
