@@ -847,17 +847,17 @@ public class UnitAnimationManager
     {
         int num = -1;
 
-        FindNum(leftWeaponCode, rightWeaponCode, ref num);
+        bool returnVal = FindNum(leftWeaponCode, rightWeaponCode, ref num);
 
         if (num != -1)
             ani.SetInteger(_idWeaponType, num);
 
-        return true;
+        return returnVal;
     }
 
     #endregion
 
-    public static void FindNum(int leftWeaponCode, int rightWeaponCode, ref int num)
+    public static bool FindNum(int leftWeaponCode, int rightWeaponCode, ref int num)
     #region Function Content
 
     {
@@ -874,9 +874,11 @@ public class UnitAnimationManager
         StringBuilder sb = new StringBuilder(leftString);
         sb.Append("&").Append(rightString);
 
-        if (!_typeAnimationNum.ContainsKey(sb.ToString())) { num = _typeAnimationNum["&"]; return; }
+        if (!_typeAnimationNum.ContainsKey(sb.ToString())) { return false; }
 
         num = _typeAnimationNum[sb.ToString()];
+
+        return true;
     }
 
     #endregion
@@ -912,6 +914,7 @@ public class UnitAnimationManager
         aniName.Add("&Bow");
         aniName.Add("Spear&Shield");
         aniName.Add("Sword&Shield");
+        aniName.Add("Spear&Sword");
 
         _typeAnimationNum.Add("&", 5); // 아무 무기도 없을때 애니메이션은 Sword(제일 무난..)
     }

@@ -195,6 +195,17 @@ public class ItemInventorySystem : MonoBehaviour
 
     public void OnEquiped(ItemSlot curSlot)
     {
+        int itemCode = curSlot.ItemNumber;
+
+        Item i = _itemList.ItemSearch(itemCode);
+        if (i == null) { LogMessage.Log("ItemInventorySystem : UpdateEquipedItem i is Error"); return; }
+
+        switch (_curType)
+        {
+            case eCodeType.LeftWeapon:  if (!UnitAnimationManager.Update(itemCode, _equipedItems[3], _unitModelObject.GetComponent<Animator>())) { return; } break;
+            case eCodeType.RightWeapon: if (!UnitAnimationManager.Update(_equipedItems[2], itemCode, _unitModelObject.GetComponent<Animator>())) { return; } break;
+        }
+
         if (_prevSlot != null)
         {
             _prevSlot.OffSelect();
@@ -202,17 +213,7 @@ public class ItemInventorySystem : MonoBehaviour
 
         curSlot.OnSelect();
 
-        int itemCode = curSlot.ItemNumber;
-
-        Item i = _itemList.ItemSearch(itemCode);
-        if (i == null) { LogMessage.Log("ItemInventorySystem : UpdateEquipedItem i is Error"); return; }
-
-        // 모델링 업데이트
-
         UpdateModel(i.AniType, itemCode);
-
-        if ((_curType == eCodeType.LeftWeapon || _curType == eCodeType.RightWeapon))
-        { UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelObject.GetComponent<Animator>()); }
 
         _prevSlot = curSlot;
     }

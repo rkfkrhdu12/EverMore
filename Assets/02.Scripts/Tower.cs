@@ -25,6 +25,7 @@ public class Tower : FieldObject
     readonly float _attackInterval = 1.0f;
     float _attackTime = 1.0f;
 
+    public GameObject _projectileObject = null;
 
     public override void DamageReceive(float damage, FieldObject receiveObject)
     {
