@@ -202,8 +202,8 @@ public class ItemInventorySystem : MonoBehaviour
 
         switch (_curType)
         {
-            case eCodeType.LeftWeapon:  if (!UnitAnimationManager.Update(itemCode, _equipedItems[3], _unitModelObject.GetComponent<Animator>())) { return; } break;
-            case eCodeType.RightWeapon: if (!UnitAnimationManager.Update(_equipedItems[2], itemCode, _unitModelObject.GetComponent<Animator>())) { return; } break;
+            case eCodeType.RightWeapon:  if (!UnitAnimationManager.Update(itemCode, _equipedItems[3], _unitModelObject.GetComponent<Animator>())) { return; } break;
+            case eCodeType.LeftWeapon: if (!UnitAnimationManager.Update(_equipedItems[2], itemCode, _unitModelObject.GetComponent<Animator>())) { return; } break;
         }
 
         if (_prevSlot != null)

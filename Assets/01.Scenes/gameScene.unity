@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.183
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.05351897, g: 0.13441788, b: 0.17975591, a: 0.183}
+  m_IndirectSpecularColor: {r: 0.053539097, g: 0.13441083, b: 0.17973281, a: 0.183}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8059,6 +8059,8 @@ MonoBehaviour:
   _brokenObject: {fileID: 342121866}
   _isBottomTower: 1
   _canvas: {fileID: 953642701}
+  _projectileObject: {fileID: 2354187080212507542, guid: 130b86746531f984b8aeb32f2648f054,
+    type: 3}
   _attackDamage: 15
   _attackRange: 7.5
 --- !u!64 &808937281
@@ -10660,6 +10662,8 @@ MonoBehaviour:
   _brokenObject: {fileID: 81643049}
   _isBottomTower: 1
   _canvas: {fileID: 953642701}
+  _projectileObject: {fileID: 2354187080212507542, guid: 130b86746531f984b8aeb32f2648f054,
+    type: 3}
   _attackDamage: 15
   _attackRange: 7.5
 --- !u!64 &1011622611
@@ -11335,6 +11339,8 @@ MonoBehaviour:
   _brokenObject: {fileID: 1387843141}
   _isBottomTower: 0
   _canvas: {fileID: 953642701}
+  _projectileObject: {fileID: 2354187080212507542, guid: 130b86746531f984b8aeb32f2648f054,
+    type: 3}
   _attackDamage: 15
   _attackRange: 7.5
 --- !u!64 &1064207677
@@ -14193,6 +14199,8 @@ MonoBehaviour:
   _brokenObject: {fileID: 918025712}
   _isBottomTower: 0
   _canvas: {fileID: 953642701}
+  _projectileObject: {fileID: 2354187080212507542, guid: 130b86746531f984b8aeb32f2648f054,
+    type: 3}
   _attackDamage: 15
   _attackRange: 7.5
 --- !u!64 &1358846596
@@ -16267,7 +16275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1542121349
 Transform:
   m_ObjectHideFlags: 0
