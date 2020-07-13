@@ -197,7 +197,9 @@ public class ItemInventorySystem : MonoBehaviour
     }
 
     public eItemType[] _errorAniTypes;
-    public GameObject[] _errorAnimations;
+    public Animator[] _errorAnimators;
+
+    readonly string _errorMessageAniKey = "OnTrigger";
 
     public void OnEquiped(ItemSlot curSlot)
     {
@@ -212,9 +214,11 @@ public class ItemInventorySystem : MonoBehaviour
                 if (!UnitAnimationManager.Update(itemCode, _equipedItems[3], null))
                 {
                     for (int j = 0; j < _errorAniTypes.Length; ++j)
-                        if (i.AniType == _errorAniTypes[j]) 
-                            _errorAnimations[j].SetActive(true);
-
+                        if (i.AniType == _errorAniTypes[j])
+                        {
+                            _errorAnimators[j].gameObject.SetActive(true);
+                            _errorAnimators[j].SetTrigger(_errorMessageAniKey);
+                        }
                     return;
                 }
                 break;
@@ -223,8 +227,10 @@ public class ItemInventorySystem : MonoBehaviour
                 {
                     for (int j = 0; j < _errorAniTypes.Length; ++j)
                         if (i.AniType == _errorAniTypes[j])
-                            _errorAnimations[j].SetActive(true);
-
+                        {
+                            _errorAnimators[j].gameObject.SetActive(true);
+                            _errorAnimators[j].SetTrigger(_errorMessageAniKey);
+                        }
                     return;
                 }
                 break;

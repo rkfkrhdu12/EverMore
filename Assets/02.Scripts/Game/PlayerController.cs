@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private SpawnManager _spawnManager = null;
 
-    KeyCode[] _spawnKeyCode = new KeyCode[5];
+    KeyCode[] _spawnKeyCode = new KeyCode[6];
 
     eMouseState _curMouseState;
     private enum eMouseState
@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
         _spawnKeyCode[i++] = KeyCode.Alpha3;
         _spawnKeyCode[i++] = KeyCode.Alpha4;
         _spawnKeyCode[i++] = KeyCode.Alpha5;
+        _spawnKeyCode[i++] = KeyCode.Alpha6;
     }
 
     void Update()
@@ -74,7 +75,6 @@ public class PlayerController : MonoBehaviour
                 Spawn(i);
         }
     }
-
 
     public int rayDistance = 200;
 
