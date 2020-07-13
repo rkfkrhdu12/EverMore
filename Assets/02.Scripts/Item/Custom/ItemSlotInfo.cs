@@ -32,6 +32,7 @@ public class ItemSlotInfo : MonoBehaviour
         CoolDown,
         AtkSpeed,
         Weight,
+        Ability,
     }
 
     public void UpdateText()
@@ -51,6 +52,7 @@ public class ItemSlotInfo : MonoBehaviour
         _statusTexts[(int)eStatusState.CoolDown].text   = i.CoolTime.ToString();
         _statusTexts[(int)eStatusState.AtkSpeed].text   = i.AttackSpeed.ToString();
         _statusTexts[(int)eStatusState.Weight].text     = i.Weight.ToString();
+        _statusTexts[(int)eStatusState.Ability].text     = i.Ability.Info;
 
         UpdateIcon(i);
     }

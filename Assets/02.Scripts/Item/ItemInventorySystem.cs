@@ -65,6 +65,8 @@ public class ItemInventorySystem : MonoBehaviour
 
     [SerializeField]
     TMPro.TMP_Text[] _detailUIStatusTexts;
+    [SerializeField]
+    TMPro.TMP_Text[] _simpleUIStatusTexts;
 
     #endregion
 
@@ -160,6 +162,8 @@ public class ItemInventorySystem : MonoBehaviour
         UnitModelManager.Update(_unitModelObject, _equipedItems);
 
         Start();
+
+        UpdateSimpleStatusUI();
     }
     #endregion
 
@@ -183,6 +187,8 @@ public class ItemInventorySystem : MonoBehaviour
         UpdateModel();
 
         UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelObject.GetComponent<Animator>());
+
+        UpdateSimpleStatusUI();
     }
 
     public void OnSave()
@@ -215,13 +221,13 @@ public class ItemInventorySystem : MonoBehaviour
 
         UnitAnimationManager.Update(_equipedItems[2], _equipedItems[3], _unitModelObject.GetComponent<Animator>());
 
+        UpdateSimpleStatusUI();
+
         _prevSlot = curSlot;
     }
 
     public void OnDetailUIEnable()
     {
-        _unitStatus.UpdateItems();
-
         int i = 0;
         _detailUIStatusTexts[i++].text = _unitStatus.Health.ToString();
         _detailUIStatusTexts[i++].text = _unitStatus._cost.ToString();
@@ -258,12 +264,24 @@ public class ItemInventorySystem : MonoBehaviour
 
     public void OnDetailUIDisable()
     {
-
-
         _unitDetailUI.SetActive(false);
     }
 
     #region Private Function
+
+    private void UpdateSimpleStatusUI()
+    {
+        _unitStatus.UpdateItems();
+
+        if(_simpleUIStatusTexts.Length < 4) { return; }
+
+        int i = 0;
+        _simpleUIStatusTexts[i++].text = _unitStatus._coolTime.ToString();
+        _simpleUIStatusTexts[i++].text = ((int)_unitStatus._minAttackDamage).ToString() + "~" + ((int)_unitStatus._maxAttackDamage).ToString();
+        _simpleUIStatusTexts[i++].text = _unitStatus.Health.ToString();
+        _simpleUIStatusTexts[i++].text = _unitStatus._cost.ToString();
+        _simpleUIStatusTexts[i++].text = _unitStatus._defensivePower.ToString();
+    }
 
     private void UpdateInventory()
     {

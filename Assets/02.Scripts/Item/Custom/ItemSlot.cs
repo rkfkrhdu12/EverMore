@@ -2,6 +2,7 @@
 using GameplayIngredients;
 using TMPro;
 using GameItem;
+using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
@@ -28,8 +29,7 @@ public class ItemSlot : MonoBehaviour
 
     public void OffSelect()
     {
-        if (!_isSelect) { return; }
-
+        if(!_isSelect) { return; }
         _isSelect = false;
 
         _infoSlot.gameObject.SetActive(false);
@@ -40,8 +40,7 @@ public class ItemSlot : MonoBehaviour
 
     public void OnSelect()
     {
-        if (_isSelect) 
-
+        if(_isSelect) { return; }
         _isSelect = true;
 
         _infoSlot.gameObject.SetActive(true);
@@ -55,15 +54,17 @@ public class ItemSlot : MonoBehaviour
         _defaultSlot._slot = this;
         _infoSlot._slot = this;
 
-        _buttonPro = GetComponent<ButtonPro>();
+        _image = GetComponent<Image>();
     }
 
     private void OnEnable()
     {
-        _isSelect = true;
+        _isSelect = !GetComponent<ButtonPro>().isSelected;
 
-        OffSelect();
-        _prevState = _buttonPro.isSelected;
+        if (!_isSelect)
+            OnSelect();
+        else
+            OffSelect();
     }
 
     private void Start()
@@ -72,25 +73,27 @@ public class ItemSlot : MonoBehaviour
         _infoSlot._itemList = _invenSystem._itemList;
     }
 
-    ButtonPro _buttonPro;
-
-    bool _prevState;
+    [SerializeField] Sprite[] _spriteState;
+    Image _image;
 
     private void FixedUpdate()
     {
-        if(_buttonPro.isSelected != _prevState)
-        {
-            if(_buttonPro.isSelected)
-            {
-                OnSelect();
-            }
-            else
-            {
-                OffSelect();
-            }
-        }
+        UpdateUI();
     }
 
+    public void UpdateUI()
+    {
+        if(_spriteState.Length < 2) { return; }
+
+        if (_image.sprite == _spriteState[0])
+        {
+            OffSelect();
+        }
+        else if(_image.sprite == _spriteState[1])
+        {
+            OnSelect();
+        }
+    }
 
     private void UpdateText()
     {
