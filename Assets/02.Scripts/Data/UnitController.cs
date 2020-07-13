@@ -789,8 +789,8 @@ public class UnitIconManager
     #region Private Function
     private static void InitData(ref List<string> iconNames)
     {
-        GameItem.eCodeType helmet = GameItem.eCodeType.Helmet;
         GameItem.eCodeType armour = GameItem.eCodeType.Bodyarmour;
+        GameItem.eCodeType helmet = GameItem.eCodeType.Helmet;
         int count = _itemList.GetCodeItemCount(helmet);
         for (int i = 0; i < count; ++i)
         {

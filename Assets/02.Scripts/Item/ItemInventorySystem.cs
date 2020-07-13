@@ -3,6 +3,7 @@ using GameplayIngredients;
 using UnityEngine;
 
 using GameItem;
+using UnityEngine.UI;
 
 public class ItemInventorySystem : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class ItemInventorySystem : MonoBehaviour
 
     private UnitPhoto _unitPhoto;
     public Animator _saveAnimator;
+    [SerializeField]
+    private Sprite _defaultSaveSprite = null;
+    [SerializeField]
+    private Image _saveImage = null;
 
     ItemSlot _prevSlot;
 
@@ -148,6 +153,8 @@ public class ItemInventorySystem : MonoBehaviour
     private void OnEnable()
     {
         Type = eCodeType.Helmet;
+
+        _saveImage.sprite = _defaultSaveSprite;
 
         UnitModelManager.Reset(_unitModelObject);
         UnitModelManager.Update(_unitModelObject, _equipedItems);
