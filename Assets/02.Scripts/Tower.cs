@@ -57,7 +57,7 @@ public class Tower : FieldObject
         _canvasRectTrs = _canvas.GetComponent<RectTransform>();
         _hpCamera = _canvas.worldCamera;
 
-        GetComponent<SphereCollider>().radius = _attackRange * 4.28f;
+        GetComponent<SphereCollider>().radius = _attackRange / 4.28f;
     }
     
     override protected void FixedUpdate()

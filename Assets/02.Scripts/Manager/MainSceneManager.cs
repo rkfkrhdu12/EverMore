@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using GameplayIngredients;
 using UnityEngine;
 using UnityEngine.UI;
@@ -83,7 +84,42 @@ namespace MainSceneUI
 
             UpdateScreen(UIDataKey.Lobby);
         }
+
+        private void OnEnable()
+        {
+            StartCoroutine(StartLoading());
+        }
+
         #endregion
+
+        [SerializeField] Image _loadingScreenImage = null;
+        [SerializeField] Sprite[] _loadingAnimation;
+
+        WaitForSeconds _loadingScreenTime = new WaitForSeconds(1.0f);
+        IEnumerator StartLoading()
+        {
+            if (_loadingScreenImage == null) yield break;
+
+            int i = 0;
+
+            if (!_loadingScreenImage.gameObject.activeSelf)
+                _loadingScreenImage.gameObject.SetActive(true);
+
+            _loadingScreenImage.sprite = _loadingAnimation[++i % _loadingAnimation.Length];
+
+            yield return _loadingScreenTime;
+            _loadingScreenImage.sprite = _loadingAnimation[++i % _loadingAnimation.Length];
+
+            yield return _loadingScreenTime;
+            _loadingScreenImage.sprite = _loadingAnimation[++i % _loadingAnimation.Length];
+
+            yield return _loadingScreenTime;
+            _loadingScreenImage.sprite = _loadingAnimation[++i % _loadingAnimation.Length];
+
+            if (_loadingScreenImage.gameObject.activeSelf)
+                _loadingScreenImage.gameObject.SetActive(false);
+        }
+
 
         #region Private Function
         private void InitUI(string key, GameObject ui = null)
