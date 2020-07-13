@@ -97,8 +97,12 @@ public class ItemInventorySystem : MonoBehaviour
         _unitDetailUI.SetActive(false);
     }
 
+    bool _isStart = false;
     private void Start()
     {
+        if (_isStart) { return; }
+        _isStart = true;
+
         List<string> armourList = new List<string>();
 
         eCodeType helmet = eCodeType.Helmet;

@@ -12,6 +12,6 @@ public class ItemAbilityLife : ItemAbility
     {
         base.Start(uCtrl);
 
-        _uCtrl._curStateNum.Add(8);
+        _uCtrl._abilNameList.Add(Name);
     }
 }

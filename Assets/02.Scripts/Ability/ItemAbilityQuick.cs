@@ -12,6 +12,6 @@ public class ItemAbilityQuick : ItemAbility
     {
         base.Start(uCtrl);
 
-        _uCtrl._curStateNum.Add(9);
+        _uCtrl._abilNameList.Add(Name);
     }
 }

@@ -12,6 +12,5 @@ public class ItemAbilityParvenu : ItemAbility
     {
         base.Start(uCtrl);
 
-        _uCtrl._curStateNum.Add(6);
     }
 }

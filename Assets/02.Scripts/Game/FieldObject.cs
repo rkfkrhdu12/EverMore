@@ -41,12 +41,9 @@ public class FieldObject : MonoBehaviour
     [HideInInspector] public float DefaultDefensiveCleavage = 0;      public virtual float DefensiveCleavage      { get { return _defenseCleavage; }      set { _defenseCleavage = value; } }
     [HideInInspector] public float RemainHealth => CurHealth / MaxHealth;
 
-    public Sprite[] _spriteList;
-    [HideInInspector] public Dictionary<int, Sprite> _stateSprites = new Dictionary<int, Sprite>();
-
     [HideInInspector] public Image[] _stateSpriteUIs;
 
-    [HideInInspector] public List<int> _curStateNum = new List<int>();
+    [HideInInspector] public List<string> _abilNameList = new List<string>();
 
     public bool IsDead { get => _isDead; }
 
@@ -71,13 +68,6 @@ public class FieldObject : MonoBehaviour
         DefaultMoveSpeed    = MoveSpeed;
         DefaultDefensiveCleavage = DefensiveCleavage;
 
-        if (_stateSprites.Count == 0)
-        {
-            for (int i = 0; i < _spriteList.Length; ++i)
-            {
-                _stateSprites.Add(i, _spriteList[i]);
-            }
-        }
     }
 
     virtual protected void FixedUpdate()
@@ -93,17 +83,14 @@ public class FieldObject : MonoBehaviour
             }
         }
         
-        if(_stateSprites.Count <= 0 || _curStateNum.Count <= 0) { return; }
-
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < 3 && i < _abilNameList.Count; ++i)
         {
-            if (_curStateNum.Count <= i) { break; }
-
-            if (_stateSprites.ContainsKey(_curStateNum[i]) && _stateSpriteUIs[i] != null)
-            {
-                _stateSpriteUIs[i].sprite = _stateSprites[_curStateNum[i]];
-            }
-
+            UnitAbilityIconManager.Update(_stateSpriteUIs[i].sprite, _abilNameList[i]);
+                
+            //if (_stateSprites.ContainsKey(_curStateNum[i]) && _stateSpriteUIs[i] != null)
+            //{
+            //    _stateSpriteUIs[i].sprite = _stateSprites[_curStateNum[i]];
+            //}
         }
     }
 }

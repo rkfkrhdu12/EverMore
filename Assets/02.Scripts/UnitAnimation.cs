@@ -18,7 +18,7 @@ public class UnitAnimation : MonoBehaviour
 
     private void OnEnable()
     {
-        if(_isCustom) { return; }
+        if (_isCustom) { return; }
 
         if(_unitCtrl == null)  { _unitCtrl = transform.parent.GetComponent<UnitController>(); LogMessage.Log("UnitAnimation : UnitCtrl is NULL"); } 
         if(_ani == null)       { _ani = GetComponent<Animator>();                             LogMessage.Log("UnitAnimation : Ani is NULL"); }

@@ -14,7 +14,7 @@ public class ItemAbilityVanguard : ItemAbility
             {
                 _us._curhealth += Var[0];
 
-                _uCtrl._curStateNum.Remove(5);
+                _uCtrl._abilNameList.Remove(Name);
             }
         }
 
@@ -24,7 +24,7 @@ public class ItemAbilityVanguard : ItemAbility
             {
                 ++_count;
 
-                _uCtrl._curStateNum.Add(5);
+                _uCtrl._abilNameList.Add(Name);
                 _time = 1.0f;
             }
         }

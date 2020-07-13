@@ -15,7 +15,7 @@ public class ItemAbilityChill : ItemAbility
             {
                 _objectList[i]._isCrowdControls[_curType] = false;
 
-                _objectList[i]._curStateNum.Remove(3);
+                _objectList[i]._abilNameList.Remove(Name);
 
                 _objectList[i].AttackSpeed += _objectList[i].AttackSpeed / Var[0];
             }
@@ -35,7 +35,7 @@ public class ItemAbilityChill : ItemAbility
 
                 _objectList[i]._isCrowdControls[_curType] = true;
 
-                _objectList[i]._curStateNum.Add(3);
+                _objectList[i]._abilNameList.Add(Name);
 
                 _objectList[i].AttackSpeed -= _objectList[i].AttackSpeed / Var[0];
             }

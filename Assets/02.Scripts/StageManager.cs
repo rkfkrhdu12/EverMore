@@ -45,6 +45,11 @@ namespace Stage
             Manager.Get<GameManager>().SetEnemyUnitData(_stageDataList[0]);
         }
 
+        public void OnStageNormal()
+        {
+            Manager.Get<GameManager>().SetEnemyUnitData(_stageDataList[2]);
+        }
+
         public void OnStageHard()
         {
             Manager.Get<GameManager>().SetEnemyUnitData(_stageDataList[1]);
@@ -109,6 +114,7 @@ namespace Stage
 
             InitStage("Stage01");
             InitStage("Stage02");
+            InitStage("Stage03");
         }
 
         private void InitStage(string fileName)

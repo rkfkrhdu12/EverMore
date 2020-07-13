@@ -27,7 +27,7 @@ public class DeleteObjectSystem
         if (_trashCan == null) { _trashCan = new GameObject(); }
 
         if (!isNotChangedParent)
-            gObject?.transform.SetParent(_trashCan?.transform);
+            gObject?.transform.SetParent(_trashCan.transform);
 
         gObject?.SetActive(false);
 

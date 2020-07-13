@@ -11,6 +11,6 @@ public class ItemAbilityWisdom : ItemAbility
     {
         base.Start(uCtrl);
 
-        _uCtrl._curStateNum.Add(7);
+        _uCtrl._abilNameList.Add(Name);
     }
 }

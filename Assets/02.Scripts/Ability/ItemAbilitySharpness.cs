@@ -16,7 +16,7 @@ public class ItemAbilitySharpness : ItemAbility
     {
         base.Start(uCtrl);
 
-        _uCtrl._curStateNum.Add(1);
+        _uCtrl._abilNameList.Add(Name);
     }
 
 }

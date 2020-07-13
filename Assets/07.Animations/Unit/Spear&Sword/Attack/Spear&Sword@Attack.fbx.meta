@@ -62,21 +62,24 @@ ModelImporter:
       - time: 0.10166665
         functionName: OnEffect
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: 11f56b6668def3b41a4c0cdc6cbbdb21,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.16685738
         functionName: AttackLeft
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: 11f56b6668def3b41a4c0cdc6cbbdb21,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.6455789
         functionName: AttackRight
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: 11f56b6668def3b41a4c0cdc6cbbdb21,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
