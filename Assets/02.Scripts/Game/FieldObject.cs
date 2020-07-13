@@ -85,7 +85,7 @@ public class FieldObject : MonoBehaviour
         
         for (int i = 0; i < 3 && i < _abilNameList.Count; ++i)
         {
-            UnitAbilityIconManager.Update(_stateSpriteUIs[i].sprite, _abilNameList[i]);
+            UnitAbilityIconManager.Update(_stateSpriteUIs[i], _abilNameList[i]);
                 
             //if (_stateSprites.ContainsKey(_curStateNum[i]) && _stateSpriteUIs[i] != null)
             //{
