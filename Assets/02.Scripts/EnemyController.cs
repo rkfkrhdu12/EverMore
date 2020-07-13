@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
 
     Stage.StageData _stageData;
 
-    public void OnEnable()
+    public void Enable()
     {
         _stageData = Manager.Get<GameManager>().GetEnemyUnitData();
         if(_stageData == null) { _isSpawnEnd = true; }

@@ -98,16 +98,51 @@ public class InGameSystem : MonoBehaviour
         _costMgr.Init(_levelMgr);
     }
 
+    bool _isEndLoad = false;
     private void OnEnable()
     {
+        StartCoroutine(StartLoading());
+        
         _victoryObject.SetActive(false);
         _defeatObject.SetActive(false);
+    }
+
+    [SerializeField] Image _loadingScreenImage = null;
+    [SerializeField] Sprite[] _loadingAnimation;
+
+    WaitForSeconds _loadingScreenTime = new WaitForSeconds(1.0f);
+    IEnumerator StartLoading()
+    {
+        if (_loadingScreenImage == null) yield break;
+
+        int i = 0;
+
+        if (!_loadingScreenImage.gameObject.activeSelf)
+            _loadingScreenImage.gameObject.SetActive(true);
+
+        _loadingScreenImage.sprite = _loadingAnimation[i++ % _loadingAnimation.Length];
+
+        yield return _loadingScreenTime;
+        _loadingScreenImage.sprite = _loadingAnimation[i++ % _loadingAnimation.Length];
+
+        yield return _loadingScreenTime;
+        _loadingScreenImage.sprite = _loadingAnimation[i++ % _loadingAnimation.Length];
+
+        yield return _loadingScreenTime;
+        _loadingScreenImage.sprite = _loadingAnimation[i++ % _loadingAnimation.Length];
+
+        if (_loadingScreenImage.gameObject.activeSelf)
+            _loadingScreenImage.gameObject.SetActive(false);
+
+
 
         _timerUITime = int.Parse(_timerText.text);
 
         SpawnManager playerSpawnMgr = _isPlayerRed ? RedSpawnMgr : BlueSpawnMgr;
+        SpawnManager enemySpawnMgr = _isPlayerRed ? BlueSpawnMgr : RedSpawnMgr;
 
         playerSpawnMgr.Enable();
+        enemySpawnMgr.Enable();
         _costMgr.Enable(playerSpawnMgr);
         _levelMgr.Enable();
     }
@@ -140,10 +175,6 @@ public class InGameSystem : MonoBehaviour
 
     #region Private Function
 
-    [SerializeField]      Animator _victoryAnim;
-    [SerializeField] Animator _defeatAnim;
-
-
     void Victory()
     {
         _isGameEnd = true;
@@ -152,7 +183,6 @@ public class InGameSystem : MonoBehaviour
         BlueSpawnMgr._isGameEnd = _isGameEnd;
 
         _victoryObject.SetActive(true);
-        //_victoryAnim.Play();
     }
 
     void Defeat()
@@ -163,7 +193,6 @@ public class InGameSystem : MonoBehaviour
         BlueSpawnMgr._isGameEnd = _isGameEnd;
 
         _defeatObject.SetActive(true);
-        //_defeatAnim.Play();
     }
 
     #endregion

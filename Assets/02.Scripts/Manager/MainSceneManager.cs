@@ -105,16 +105,16 @@ namespace MainSceneUI
             if (!_loadingScreenImage.gameObject.activeSelf)
                 _loadingScreenImage.gameObject.SetActive(true);
 
-            _loadingScreenImage.sprite = _loadingAnimation[++i % _loadingAnimation.Length];
+            _loadingScreenImage.sprite = _loadingAnimation[i++ % _loadingAnimation.Length];
 
             yield return _loadingScreenTime;
-            _loadingScreenImage.sprite = _loadingAnimation[++i % _loadingAnimation.Length];
+            _loadingScreenImage.sprite = _loadingAnimation[i++ % _loadingAnimation.Length];
 
             yield return _loadingScreenTime;
-            _loadingScreenImage.sprite = _loadingAnimation[++i % _loadingAnimation.Length];
+            _loadingScreenImage.sprite = _loadingAnimation[i++ % _loadingAnimation.Length];
 
             yield return _loadingScreenTime;
-            _loadingScreenImage.sprite = _loadingAnimation[++i % _loadingAnimation.Length];
+            _loadingScreenImage.sprite = _loadingAnimation[i++ % _loadingAnimation.Length];
 
             if (_loadingScreenImage.gameObject.activeSelf)
                 _loadingScreenImage.gameObject.SetActive(false);

@@ -21,7 +21,7 @@ public class UnitEye : MonoBehaviour
     public List<FieldObject> _enemyTargets  = new List<FieldObject>();
     public List<FieldObject> _friendTargets = new List<FieldObject>();
 
-    private float _minRange = 3f;
+    private float _minRange = 5f;
 
     /// <summary>
     /// 충돌하지 않고 있으면 Null
