@@ -78,9 +78,6 @@ public class TeamManager : MonoBehaviour
     [SerializeField, Tooltip("팀이름 UI")]
     private TMP_Text _choiceUnitTeamNameUI = null;
 
-    public bool _isTest = true;
-    public Stage.StageManager _stageManager = null;
-
     #endregion
 
     #region SetUnit
@@ -117,13 +114,6 @@ public class TeamManager : MonoBehaviour
     private void OnEnable()
     {
         _curSelectTeamName = _teamNameList[0];
-    }
-
-    private void Start()
-    {
-        if (!_isTest) { return; }
-
-        _teams[_teamNameList[1]] = _stageManager.GetTeam(1);
     }
 
     #endregion

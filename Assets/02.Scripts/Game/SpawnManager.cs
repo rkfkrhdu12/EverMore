@@ -63,6 +63,8 @@ public class SpawnManager : MonoBehaviour
             if (_spawnAreaObject.activeSelf)
                 _spawnAreaObject.SetActive(false);
         }
+
+        if(_curSpawnObject == null) { return false; }
         // 스폰 성공
 
         _isdefaultSpawn = false;

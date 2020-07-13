@@ -144,6 +144,15 @@ namespace MainSceneUI
 
         #endregion
 
+        public void OnExitGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit(); // 어플리케이션 종료
+#endif
+        }
+
         public void UpdateScreen(string key)
         {
             //인자로 넘어온 키 값이 카운트에 없을 경우 : return
