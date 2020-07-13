@@ -26,6 +26,9 @@ public class UnitAbilityIconManager : MonoBehaviour
 
         for (int i = 0; i < count; ++i)
         {
+            if(_stateSprites.ContainsKey(_abilNames[i])) { continue; }
+            if(_stateSprites.ContainsValue(_spriteList[i])) { continue; }
+
             _stateSprites.Add(_abilNames[i], _spriteList[i]);
         }
     }
