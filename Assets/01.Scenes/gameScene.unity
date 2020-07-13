@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.183
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.05352338, g: 0.13440871, b: 0.17975467, a: 0.183}
+  m_IndirectSpecularColor: {r: 0.053527694, g: 0.13441661, b: 0.17975518, a: 0.183}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10157,6 +10157,8 @@ MonoBehaviour:
   _victoryObject: {fileID: 731078685}
   _defeatObject: {fileID: 1227043779}
   _canvas: {fileID: 953642701}
+  _dangerSound: {fileID: 8300000, guid: faf4eda34472b80499a5f65cfa76c533, type: 3}
+  _audio: {fileID: 1077596971}
   _loadingScreenObject: {fileID: 1816374242}
   _loadingBarImage: {fileID: 1186613700}
 --- !u!114 &953642704
@@ -11849,11 +11851,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: fc40e3fef2744cc4b9ced2f830954368, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.514
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
