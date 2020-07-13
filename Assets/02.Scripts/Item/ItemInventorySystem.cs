@@ -97,12 +97,8 @@ public class ItemInventorySystem : MonoBehaviour
         _unitDetailUI.SetActive(false);
     }
 
-    bool isTesting = false;
     private void Start()
     {
-        if (isTesting) { return; }
-
-        #region Test
         List<string> armourList = new List<string>();
 
         eCodeType helmet = eCodeType.Helmet;
@@ -146,9 +142,6 @@ public class ItemInventorySystem : MonoBehaviour
             _inventory[(int)eCodeType.LeftWeapon].Add(num);
             _inventory[(int)eCodeType.RightWeapon].Add(num);
         }
-
-        isTesting = true;
-        #endregion
     }
 
     //매번 UI가 활성화 될 때, 호출됩니다.

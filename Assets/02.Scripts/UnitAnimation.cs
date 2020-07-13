@@ -23,8 +23,6 @@ public class UnitAnimation : MonoBehaviour
         if(_unitCtrl == null)  { _unitCtrl = transform.parent.GetComponent<UnitController>(); LogMessage.Log("UnitAnimation : UnitCtrl is NULL"); } 
         if(_ani == null)       { _ani = GetComponent<Animator>();                             LogMessage.Log("UnitAnimation : Ani is NULL"); }
 
-        if (_unitCtrl._isTest) { return; }
-
         _ani.SetFloat(_idAttackSpd, _unitCtrl.AttackSpeed);
         _ani.SetBool(_idAttack, false);
 

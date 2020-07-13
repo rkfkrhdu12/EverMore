@@ -106,7 +106,14 @@ public class Tower : FieldObject
         {
             _attackTime = _attackInterval;
 
-            _ani.SetTrigger(_aniKeyOnAttack);
+            float targetRadius = CurTarget.GetComponent<CapsuleCollider>().radius;
+
+            float distance = (CurTarget.transform.position - transform.position).magnitude - targetRadius;
+
+            if (distance <= _attackRange)
+                _ani.SetTrigger(_aniKeyOnAttack);
+            else
+                UpdateTarget();
         }
     }
 
