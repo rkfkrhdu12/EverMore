@@ -133,7 +133,7 @@ public class UnitController : FieldObject
 
     public void AttackRight()
     {
-        if (RightAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
+        if (RightAttackDamage == 0 || CurState != eAni.ATTACK) { return; }
 
         float remainingDistance = (_curTarget.transform.position - transform.position).magnitude;
         if (remainingDistance > _navMeshAgent.stoppingDistance * 2) { return; }
@@ -153,7 +153,7 @@ public class UnitController : FieldObject
 
     public void AttackLeft()
     {
-        if (LeftAttackDamage == 0 || _isTest || CurState != eAni.ATTACK) { return; }
+        if (LeftAttackDamage == 0 || CurState != eAni.ATTACK) { return; }
 
         float remainingDistance = (_curTarget.transform.position - transform.position).magnitude;
         if (remainingDistance > _navMeshAgent.stoppingDistance * 2) { return; }
@@ -195,8 +195,6 @@ public class UnitController : FieldObject
     #region Variable
 
     #region Inspector
-
-    public bool _isTest = false;
 
     // 이 유닛의 애니메이션
     [SerializeField]
@@ -300,20 +298,9 @@ public class UnitController : FieldObject
 
     #region Monobehaviour Function
 
-    void Awake()
-    {
-        if (_isTest)
-        {
-            _status = new UnitStatus();
-            _status.Init();
-        }
-    }
-
     override protected void OnEnable()
     { // Spawn() -> OnEnable() 순서
         base.OnEnable();
-
-        if (_isTest) { return; }
 
         #region UI Enable
 
