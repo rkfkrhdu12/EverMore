@@ -73,6 +73,9 @@ public class FieldObject : MonoBehaviour
         DefaultAttackSpeed  = AttackSpeed;
         DefaultMoveSpeed    = MoveSpeed;
         DefaultDefensiveCleavage = DefensiveCleavage;
+
+        _isCrowdControls = new bool[(int)eCrowdControl.Last];
+        _CCTimes = new float[(int)eCrowdControl.Last];
     }
 
     virtual protected void FixedUpdate()
