@@ -13,7 +13,7 @@ public class Tower : FieldObject
 
     public bool _isBottomTower = false;
 
-    List<UnitController> _targetList = new List<UnitController>();
+    public List<UnitController> _targetList = new List<UnitController>();
 
     UnitController CurTarget { get { if (_targetList.Count != 0) return _targetList[0]; else return null; } }
 

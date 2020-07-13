@@ -12772,6 +12772,8 @@ MonoBehaviour:
   - {fileID: 1816746819}
   _UnitAddImage: {fileID: 21300000, guid: ac218c90d6e63494dbf17be596ad1f50, type: 3}
   _choiceUnitTeamNameUI: {fileID: 411778707}
+  _isTest: 1
+  _stageManager: {fileID: 809457531}
   _itemInventory: {fileID: 26390427}
 --- !u!1 &1237765530
 GameObject:

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.183
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.053534158, g: 0.13441633, b: 0.179752, a: 0.183}
+  m_IndirectSpecularColor: {r: 0.053522572, g: 0.13441041, b: 0.17975552, a: 0.183}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2077,6 +2077,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 02c72ac4d04e36241a46f4b458838477,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02c72ac4d04e36241a46f4b458838477, type: 3}
 --- !u!1 &216088991 stripped
@@ -2358,6 +2363,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 33c8db9e2b227dc499bdd868e897a2cb,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33c8db9e2b227dc499bdd868e897a2cb, type: 3}
@@ -5433,6 +5443,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 2093039ca52be4649be6a09ce309a1e3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 2093039ca52be4649be6a09ce309a1e3,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2093039ca52be4649be6a09ce309a1e3, type: 3}
 --- !u!4 &524311192 stripped
@@ -5441,6 +5461,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 524311191}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &524311193 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 2093039ca52be4649be6a09ce309a1e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 524311191}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &524311194
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524311193}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6206849629555422820, guid: 2093039ca52be4649be6a09ce309a1e3, type: 3}
 --- !u!1 &533423804
 GameObject:
   m_ObjectHideFlags: 0
@@ -6086,6 +6126,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: f2bb3557b680ebc4b981ba282b7895a0,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2bb3557b680ebc4b981ba282b7895a0, type: 3}
@@ -7786,6 +7831,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 583170a0695b5624b9acafb1821b9f58,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 583170a0695b5624b9acafb1821b9f58,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 583170a0695b5624b9acafb1821b9f58, type: 3}
 --- !u!4 &733215571 stripped
@@ -8275,6 +8330,7 @@ MonoBehaviour:
   _spawnMgr: {fileID: 1146608602}
   _brokenObject: {fileID: 342121866}
   _isBottomTower: 1
+  _targetList: []
   _canvas: {fileID: 953642701}
   _projectileObject: {fileID: 6812068648908037301, guid: 130b86746531f984b8aeb32f2648f054,
     type: 3}
@@ -10361,6 +10417,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 05d96718604ead647813ef9036b89e50,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05d96718604ead647813ef9036b89e50, type: 3}
 --- !u!4 &970152412 stripped
@@ -10375,6 +10436,20 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 970152411}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &970152414
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970152413}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4418614455616001024, guid: 05d96718604ead647813ef9036b89e50, type: 3}
 --- !u!1 &974564224
 GameObject:
   m_ObjectHideFlags: 0
@@ -10825,6 +10900,7 @@ MonoBehaviour:
   _spawnMgr: {fileID: 1586111608}
   _brokenObject: {fileID: 81643049}
   _isBottomTower: 1
+  _targetList: []
   _canvas: {fileID: 953642701}
   _projectileObject: {fileID: 6812068648908037301, guid: 130b86746531f984b8aeb32f2648f054,
     type: 3}
@@ -11555,6 +11631,7 @@ MonoBehaviour:
   _spawnMgr: {fileID: 1586111608}
   _brokenObject: {fileID: 1387843141}
   _isBottomTower: 0
+  _targetList: []
   _canvas: {fileID: 953642701}
   _projectileObject: {fileID: 6812068648908037301, guid: 130b86746531f984b8aeb32f2648f054,
     type: 3}
@@ -12085,6 +12162,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 26422804acca97e43bcaa480735ab345,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26422804acca97e43bcaa480735ab345, type: 3}
 --- !u!1 &1129551674 stripped
@@ -12099,6 +12181,20 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1129551673}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &1129551676
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129551674}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5235648689648786991, guid: 26422804acca97e43bcaa480735ab345, type: 3}
 --- !u!1001 &1130223528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12181,6 +12277,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3d41a99c2b0465949b5fcbbc411071b5,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d41a99c2b0465949b5fcbbc411071b5, type: 3}
 --- !u!4 &1130223529 stripped
@@ -12195,6 +12296,20 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1130223528}
   m_PrefabAsset: {fileID: 0}
+--- !u!64 &1130223531
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130223530}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6750423293286134506, guid: 3d41a99c2b0465949b5fcbbc411071b5, type: 3}
 --- !u!1 &1134206599
 GameObject:
   m_ObjectHideFlags: 0
@@ -14513,6 +14628,7 @@ MonoBehaviour:
   _spawnMgr: {fileID: 1146608602}
   _brokenObject: {fileID: 918025712}
   _isBottomTower: 0
+  _targetList: []
   _canvas: {fileID: 953642701}
   _projectileObject: {fileID: 6812068648908037301, guid: 130b86746531f984b8aeb32f2648f054,
     type: 3}
@@ -16641,7 +16757,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1542121349
 Transform:
   m_ObjectHideFlags: 0

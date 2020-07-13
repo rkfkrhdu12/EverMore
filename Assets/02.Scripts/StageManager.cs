@@ -58,6 +58,9 @@ namespace Stage
             Manager.Get<GameManager>().SetEnemyUnitData(_stageDataList[_curStage]);
         }
         
+        // Test
+        public Team GetTeam(int index) { return _stageDataList[index].Team; }
+
         public StageData GetStageData() { return _curStage < _stageDataList.Count ? _stageDataList[_curStage] : null; }
 
         public void OnUpdateUI()
