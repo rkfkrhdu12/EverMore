@@ -14,8 +14,7 @@ public class ItemAbilityFrostyFeet : ItemAbility
             enemyUnit.AttackSpeed   -= enemyUnit.DefaultAttackSpeed / Var[0];
             enemyUnit.MoveSpeed     -= enemyUnit.DefaultMoveSpeed / Var[0];
         }
-
-
+        
         enemyUnit.CrowdControl(_curType, Time);
         enemyUnit.ExitCCFunction += ExitCC;
     }

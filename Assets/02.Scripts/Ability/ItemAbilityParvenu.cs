@@ -12,5 +12,6 @@ public class ItemAbilityParvenu : ItemAbility
     {
         base.Start(uCtrl);
 
+        _uCtrl._abilNameList.Add(Name);
     }
 }

@@ -10,6 +10,16 @@ public class ItemAbilityColdBlow : ItemAbility
         if (enemyUnit._isCrowdControls[(int)_curType])
         {
             damage += damage / Var[0];
+
+            enemyUnit._abilNameList.Add(Name);
+        }
+    }
+
+    void ExitCC(eCrowdControl type, FieldObject enemyUnit)
+    {
+        if(type == _curType)
+        {
+            enemyUnit._abilNameList.Remove(Name);
         }
     }
 }

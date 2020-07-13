@@ -81,7 +81,8 @@ public class ItemAbilityManager
 
             abilityList[index]._info = splitDatas[7];
 
-            UnitAbilityIconManager.AddName(abilityList[index].Name);
+            if (!UnitAbilityIconManager._isAddNameEnd)
+                UnitAbilityIconManager.AddName(abilityList[index].Name);
 
             _abilityList.Add(int.Parse(splitDatas[0]), abilityList[index++]);
         }
@@ -132,8 +133,6 @@ public class ItemAbility
     virtual public void Start(UnitController uCtrl)
     {
         _uCtrl = uCtrl;
-
-        _uCtrl._abilNameList.Add(Name);
     }
 
     /// <summary>

@@ -10,6 +10,8 @@ public class ItemAbilityDefenceSpiral : ItemAbility
 
         if (!enemyUnit._isCrowdControls[(int)_curType])
         {
+            enemyUnit._abilNameList.Add(Name);
+
             enemyUnit.DefencePower -= enemyUnit.DefaultDefencePower / Var[0];
         }
 
@@ -23,6 +25,8 @@ public class ItemAbilityDefenceSpiral : ItemAbility
 
         if (type == _curType)
         {
+            enemyUnit._abilNameList.Remove(Name);
+
             enemyUnit.DefencePower += enemyUnit.DefaultDefencePower / Var[0];
         }
 

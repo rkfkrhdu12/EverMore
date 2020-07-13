@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UnitAbilityIconManager : MonoBehaviour
 {
@@ -39,13 +40,13 @@ public class UnitAbilityIconManager : MonoBehaviour
         _abilNames.Add(abilName);
     }
 
-    public static void Update(Sprite sprite, string abilName)
+    public static void Update(Image image, string abilName)
     {
         if (_abilNames == null || _stateSprites == null) { return; } 
 
         if(_stateSprites.ContainsKey(abilName))
         {
-            sprite = _stateSprites[abilName];
+            image.sprite = _stateSprites[abilName];
         }
     }
 }

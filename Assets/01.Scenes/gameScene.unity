@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.183
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.053522572, g: 0.13441041, b: 0.17975552, a: 0.183}
+  m_IndirectSpecularColor: {r: 0.05352338, g: 0.13440871, b: 0.17975467, a: 0.183}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8314,9 +8314,8 @@ MonoBehaviour:
   DefaultAttackSpeed: 0
   DefaultMoveSpeed: 0
   DefaultDefensiveCleavage: 0
-  _spriteList: []
   _stateSpriteUIs: []
-  _curStateNum: 
+  _abilNameList: []
   _isCrowdControls: 00000000000000
   _CCTimes:
   - 0
@@ -10884,9 +10883,8 @@ MonoBehaviour:
   DefaultAttackSpeed: 0
   DefaultMoveSpeed: 0
   DefaultDefensiveCleavage: 0
-  _spriteList: []
   _stateSpriteUIs: []
-  _curStateNum: 
+  _abilNameList: []
   _isCrowdControls: 00000000000000
   _CCTimes:
   - 0
@@ -11615,9 +11613,8 @@ MonoBehaviour:
   DefaultAttackSpeed: 0
   DefaultMoveSpeed: 0
   DefaultDefensiveCleavage: 0
-  _spriteList: []
   _stateSpriteUIs: []
-  _curStateNum: 
+  _abilNameList: []
   _isCrowdControls: 00000000000000
   _CCTimes:
   - 0
@@ -11811,6 +11808,133 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1070806777}
   m_Mesh: {fileID: 2871469715313346890, guid: 57b90c274fe659041865f5ee9a7db3c1, type: 3}
+--- !u!1 &1077596969
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1077596970}
+  - component: {fileID: 1077596971}
+  m_Layer: 0
+  m_Name: BGM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1077596970
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077596969}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1384172273}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1077596971
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077596969}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1095564192
 GameObject:
   m_ObjectHideFlags: 0
@@ -12551,9 +12675,8 @@ MonoBehaviour:
   DefaultAttackSpeed: 0
   DefaultMoveSpeed: 0
   DefaultDefensiveCleavage: 0
-  _spriteList: []
   _stateSpriteUIs: []
-  _curStateNum: 
+  _abilNameList: []
   _isCrowdControls: 00000000000000
   _CCTimes:
   - 0
@@ -14612,9 +14735,8 @@ MonoBehaviour:
   DefaultAttackSpeed: 0
   DefaultMoveSpeed: 0
   DefaultDefensiveCleavage: 0
-  _spriteList: []
   _stateSpriteUIs: []
-  _curStateNum: 
+  _abilNameList: []
   _isCrowdControls: 00000000000000
   _CCTimes:
   - 0
@@ -14808,6 +14930,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1378185533}
   m_Mesh: {fileID: 3517531072619254875, guid: 81f7665112b110942994e3854db6d2b9, type: 3}
+--- !u!1 &1384172272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1384172273}
+  m_Layer: 0
+  m_Name: Sound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1384172273
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384172272}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 745.2239, y: 418.72076, z: 0.00026437733}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1077596970}
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1387843139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17202,9 +17355,8 @@ MonoBehaviour:
   DefaultAttackSpeed: 0
   DefaultMoveSpeed: 0
   DefaultDefensiveCleavage: 0
-  _spriteList: []
   _stateSpriteUIs: []
-  _curStateNum: 
+  _abilNameList: []
   _isCrowdControls: 00000000000000
   _CCTimes:
   - 0

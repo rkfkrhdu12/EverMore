@@ -12,4 +12,12 @@ public class ItemAbilityHotBlow : ItemAbility
             damage += damage / Var[0];
         }
     }
+
+    void ExitCC(eCrowdControl type, FieldObject enemyUnit)
+    {
+        if (type == _curType)
+        {
+            enemyUnit._abilNameList.Remove(Name);
+        }
+    }
 }

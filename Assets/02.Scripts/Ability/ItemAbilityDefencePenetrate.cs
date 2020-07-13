@@ -6,6 +6,7 @@ public class ItemAbilityDefencePenetrate : ItemAbility
         base.Start(uCtrl);
 
         uCtrl._defenseCleavage = Var[0];
+        uCtrl._abilNameList.Add(Name);
     }
 }
 
