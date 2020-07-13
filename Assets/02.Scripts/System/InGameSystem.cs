@@ -105,6 +105,8 @@ public class InGameSystem : MonoBehaviour
         
         _victoryObject.SetActive(false);
         _defeatObject.SetActive(false);
+
+        _timerUITime = int.Parse(_timerText.text);
     }
 
     [SerializeField] Image _loadingScreenImage = null;
@@ -134,17 +136,15 @@ public class InGameSystem : MonoBehaviour
         if (_loadingScreenImage.gameObject.activeSelf)
             _loadingScreenImage.gameObject.SetActive(false);
 
-
-
-        _timerUITime = int.Parse(_timerText.text);
-
         SpawnManager playerSpawnMgr = _isPlayerRed ? RedSpawnMgr : BlueSpawnMgr;
-        SpawnManager enemySpawnMgr = _isPlayerRed ? BlueSpawnMgr : RedSpawnMgr;
+        EnemyController enemyController = (_isPlayerRed ? BlueSpawnMgr : RedSpawnMgr).GetComponent<EnemyController>();
 
         playerSpawnMgr.Enable();
-        enemySpawnMgr.Enable();
+        enemyController.Enable();
         _costMgr.Enable(playerSpawnMgr);
         _levelMgr.Enable();
+
+        _isEndLoad = true;
     }
 
     private void Update()

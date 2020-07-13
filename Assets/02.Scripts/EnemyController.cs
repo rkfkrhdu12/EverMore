@@ -13,11 +13,14 @@ public class EnemyController : MonoBehaviour
 
     public void Enable()
     {
+        _isSpawnEnd = false;
+
         _stageData = Manager.Get<GameManager>().GetEnemyUnitData();
         if(_stageData == null) { _isSpawnEnd = true; }
 
         _spawnMgr._teamUnits = _stageData.Team;
         _spawnMgr._teamUnits.UpdateItems();
+        _spawnMgr.Enable();
 
         _curUnitData = _stageData._spawnUnitData[_curUnitDataNum];
 
@@ -37,7 +40,7 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(_isSpawnEnd) { return; }
+        if (_isSpawnEnd) { return; }
         if (_stageData == null) { _isSpawnEnd = true; return; }
 
         spawnTime -= Time.fixedDeltaTime;

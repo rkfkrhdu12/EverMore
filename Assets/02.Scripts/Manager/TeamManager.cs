@@ -95,9 +95,9 @@ public class TeamManager : MonoBehaviour
     private void Awake()
     {
         string[] teamNames = new string[3];
-        teamNames[0] = "예비1팀";
-        teamNames[1] = "예비2팀";
-        teamNames[2] = "예비3팀";
+        teamNames[0] = "1팀";
+        teamNames[1] = "2팀";
+        teamNames[2] = "3팀";
 
         for (int i = 0; i < 3; ++i)
         {
