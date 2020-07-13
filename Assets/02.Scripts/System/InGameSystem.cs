@@ -143,8 +143,6 @@ public class InGameSystem : MonoBehaviour
         enemyController.Enable();
         _costMgr.Enable(playerSpawnMgr);
         _levelMgr.Enable();
-
-        _isEndLoad = true;
     }
 
     private void Update()
@@ -169,14 +167,6 @@ public class InGameSystem : MonoBehaviour
         {
             if (_isPlayerRed)   Victory();
             else                Defeat();
-        }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            if (_audio.isPlaying)
-                _audio.Stop();
-            else
-                _audio.Play();
         }
     }
     #endregion
