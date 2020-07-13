@@ -61,6 +61,12 @@ public class InGameSystem : MonoBehaviour
 
     public Canvas _canvas;
 
+    [SerializeField]
+    AudioClip _dangerSound = null;
+
+    [SerializeField]
+    private AudioSource _audio = null;
+
     // private
 
     PlayerController _playerCtrl;
@@ -157,6 +163,11 @@ public class InGameSystem : MonoBehaviour
         _timerText.text = "" + ((int)_timerUITime).ToString();
 
         RedHealthBar.fillAmount = RedBase.RemainHealth;
+
+        if(RedHealthBar.fillAmount <= 0.5f)
+        {
+            _audio.clip = _dangerSound;
+        }
 
         if (RedBase.IsDead)
         {

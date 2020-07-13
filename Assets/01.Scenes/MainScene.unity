@@ -202,10 +202,10 @@ MonoBehaviour:
   - {fileID: 2101611333}
   - {fileID: 266215108}
   _errorAniTypes: 060000000700000008000000
-  _errorAnimations:
-  - {fileID: 1746682731}
-  - {fileID: 1404734385}
-  - {fileID: 1124515566}
+  _errorAnimators:
+  - {fileID: 1746682733}
+  - {fileID: 1404734387}
+  - {fileID: 1124515568}
 --- !u!114 &26390428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11506,7 +11506,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1124515567
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14205,7 +14205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1404734386
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16374,7 +16374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1746682732
 RectTransform:
   m_ObjectHideFlags: 0

@@ -38,10 +38,15 @@ public class SpawnManager : MonoBehaviour
     /// <summary>
     /// UI의 버튼 혹은 설정된 키로 유닛을 스폰
     /// </summary>
+
+    bool _isSpawning = false;
     public bool Spawn()
     #region Function Content
     {
-        if(_isGameEnd) { return false; }
+        if (_isSpawning)  { return false; }
+        if (_isGameEnd) { return false; }
+
+        _isSpawning = true;
 
         UnitStatus uStatus = _teamUnits.GetUnit(_curSpawnIndex);
 
@@ -101,6 +106,7 @@ public class SpawnManager : MonoBehaviour
         // 새로운 유닛 오브젝트를 오브젝트풀에서 찾음
         _curSpawnObject = null;
 
+        _isSpawning = false;
         return true;
     }
 
