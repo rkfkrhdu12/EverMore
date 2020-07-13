@@ -3259,7 +3259,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC608\uBE441\uD300"
+  m_text: "1\uD300"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6adbb44c546841c4a9fc796194267c9d, type: 2}
   m_sharedMaterial: {fileID: -6336469063090418080, guid: 6adbb44c546841c4a9fc796194267c9d,
@@ -3269,8 +3269,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4278327606
+  m_fontColor: {r: 0.21176472, g: 0.098039225, b: 0.007843138, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5413,7 +5413,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &667679131
 RectTransform:
   m_ObjectHideFlags: 0
