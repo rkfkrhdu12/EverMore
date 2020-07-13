@@ -11,6 +11,7 @@ public enum eCrowdControl
     Inspire,
     Wither,
     DefensiveSpiral,
+    IncreaseMorale,
 
     Last
 }

@@ -38,7 +38,7 @@ public class ItemAbilityManager
         abilityList.Add(new ItemAbility());                     // 개전
         abilityList.Add(new ItemAbility());                     // 원시
         abilityList.Add(new ItemAbility());                     // 광기
-        abilityList.Add(new ItemAbility());                     // 사기진작
+        abilityList.Add(new ItemAbilityIncreaseMorale());       // 사기진작
 
         abilityList.Add(new ItemAbilityLifesteal());            // 흡혈
 
