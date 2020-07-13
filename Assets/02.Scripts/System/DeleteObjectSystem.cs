@@ -22,14 +22,16 @@ public class DeleteObjectSystem
     /// </summary>
     /// <param name="gObject">삭제할 오브젝트</param>
     // GameObject를 넣어두면 SetActive(false), SetParent(null) 실행 후 실제로 삭제하진 않음.
-    public static void AddDeleteObject(GameObject gObject, string name = "")
+    public static void AddDeleteObject(GameObject gObject, bool isNotChangedParent = false)
     {
         if (_trashCan == null) { _trashCan = new GameObject(); }
 
-        gObject?.transform.SetParent(_trashCan != null ? _trashCan.transform : null);
+        if (!isNotChangedParent)
+            gObject?.transform.SetParent(_trashCan?.transform);
+
         gObject?.SetActive(false);
 
-        if (gObject != null) _deleteObjList.Add(name + (++_count).ToString(), gObject);
+        if (gObject != null) _deleteObjList.Add((++_count).ToString(), gObject);
     }
 
     #endregion

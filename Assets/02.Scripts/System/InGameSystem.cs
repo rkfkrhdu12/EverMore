@@ -109,32 +109,33 @@ public class InGameSystem : MonoBehaviour
         _timerUITime = int.Parse(_timerText.text);
     }
 
-    [SerializeField] Image _loadingScreenImage = null;
-    [SerializeField] Sprite[] _loadingAnimation;
+    [SerializeField] GameObject _loadingScreenObject = null;
+    [SerializeField] Image _loadingBarImage = null;
 
-    WaitForSeconds _loadingScreenTime = new WaitForSeconds(1.0f);
+    WaitForSeconds _loadingScreenTime1 = new WaitForSeconds(.2f);
+    WaitForSeconds _loadingScreenTime2 = new WaitForSeconds(.2f);
+    WaitForSeconds _loadingScreenTime3 = new WaitForSeconds(.1f);
     IEnumerator StartLoading()
     {
-        if (_loadingScreenImage == null) yield break;
+        if (_loadingScreenObject == null) yield break;
 
         int i = 0;
 
-        if (!_loadingScreenImage.gameObject.activeSelf)
-            _loadingScreenImage.gameObject.SetActive(true);
+        if (!_loadingScreenObject.gameObject.activeSelf)
+            _loadingScreenObject.gameObject.SetActive(true);
 
-        _loadingScreenImage.sprite = _loadingAnimation[i++ % _loadingAnimation.Length];
+        _loadingBarImage.fillAmount = 0.0f;
 
-        yield return _loadingScreenTime;
-        _loadingScreenImage.sprite = _loadingAnimation[i++ % _loadingAnimation.Length];
+        yield return _loadingScreenTime1;
+        _loadingBarImage.fillAmount += .7f;
 
-        yield return _loadingScreenTime;
-        _loadingScreenImage.sprite = _loadingAnimation[i++ % _loadingAnimation.Length];
+        yield return _loadingScreenTime2;
+        _loadingBarImage.fillAmount += .3f;
 
-        yield return _loadingScreenTime;
-        _loadingScreenImage.sprite = _loadingAnimation[i++ % _loadingAnimation.Length];
+        yield return _loadingScreenTime3;
 
-        if (_loadingScreenImage.gameObject.activeSelf)
-            _loadingScreenImage.gameObject.SetActive(false);
+        if (_loadingScreenObject.gameObject.activeSelf)
+            _loadingScreenObject.gameObject.SetActive(false);
 
         SpawnManager playerSpawnMgr = RedSpawnMgr;
         EnemyController enemyController = BlueSpawnMgr.GetComponent<EnemyController>();

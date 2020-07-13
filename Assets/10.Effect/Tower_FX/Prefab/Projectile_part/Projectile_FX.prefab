@@ -148,13 +148,15 @@ GameObject:
   - component: {fileID: 6812068648908037256}
   - component: {fileID: 6812068648908037259}
   - component: {fileID: 6812068648908037258}
+  - component: {fileID: -2481949807402703652}
+  - component: {fileID: 1953617706221449313}
   m_Layer: 0
   m_Name: Projectile_FX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6812068648908037256
 Transform:
   m_ObjectHideFlags: 0
@@ -4988,6 +4990,57 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &-2481949807402703652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6812068648908037301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d38d435bbe57f4f9d45269e1c4b9af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _team: 0
+  _isDead: 0
+  _curHp: 0
+  _maxHp: 0
+  _defenseCleavage: 0
+  DefaultCurHealth: 0
+  DefaultMaxHealth: 0
+  DefaultDefencePower: 0
+  DefaultAttackSpeed: 0
+  DefaultMoveSpeed: 0
+  DefaultDefensiveCleavage: 0
+  _spriteList: []
+  _stateSpriteUIs: []
+  _curStateNum: 
+  _isCrowdControls: 00000000000000
+  _CCTimes:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  Parent: {fileID: 0}
+  Target: {fileID: 0}
+  AttackDamage: 0
+--- !u!135 &1953617706221449313
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6812068648908037301}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6812068649290387647
 GameObject:
   m_ObjectHideFlags: 0

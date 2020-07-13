@@ -214,8 +214,6 @@ public class ItemInventorySystem : MonoBehaviour
             case eCodeType.RightWeapon:
                 if (!UnitAnimationManager.Update(itemCode, _equipedItems[3], null))
                 {
-                    if(itemCode == 0 || _equipedItems[3] == 0) { return; }
-
                     for (int j = 0; j < _errorAniTypes.Length; ++j)
                         if (i.AniType == _errorAniTypes[j]) 
                             _errorAnimations[j].SetActive(true);
@@ -223,10 +221,9 @@ public class ItemInventorySystem : MonoBehaviour
                     return;
                 }
                 break;
-            case eCodeType.LeftWeapon:   if (!UnitAnimationManager.Update(_equipedItems[2], itemCode, null))
+            case eCodeType.LeftWeapon:
+                if (!UnitAnimationManager.Update(_equipedItems[2], itemCode, null))
                 {
-                    if (itemCode == 0 || _equipedItems[2] == 0) { return; }
-
                     for (int j = 0; j < _errorAniTypes.Length; ++j)
                         if (i.AniType == _errorAniTypes[j])
                             _errorAnimations[j].SetActive(true);

@@ -28,8 +28,8 @@ public class FieldObject : MonoBehaviour
 
     public virtual void DamageReceive(float damage, FieldObject receiveObject) { }
 
-    [HideInInspector] public float _curHp;
-    [HideInInspector] public float _maxHp;
+    public float _curHp;
+    public float _maxHp;
 
     [HideInInspector] public float _defenseCleavage = 0.0f;
 

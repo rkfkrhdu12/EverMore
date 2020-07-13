@@ -26,7 +26,15 @@ public class Tower : FieldObject
     float _attackTime = 1.0f;
 
     [SerializeField] GameObject _projectileObject = null;
+    [SerializeField] Transform _projectileSpawnPoint = null;
     [SerializeField] ParticleSystem _readyParticle = null;
+
+    [SerializeField] float _attackDamage = 15;
+    [SerializeField] float _attackRange = 6;
+
+    readonly string _aniKeyOnAttack = "OnAttack";
+
+    Animator _ani;
 
     public override void DamageReceive(float damage, FieldObject receiveObject)
     {
@@ -50,11 +58,39 @@ public class Tower : FieldObject
         }
     }
 
-    [SerializeField] float _attackDamage = 15;
-    [SerializeField] float _attackRange = 6;
+    public void UpdateTarget()
+    {
+        if(CurTarget.CurHealth <= 0)
+        {
+            _targetList.Remove(CurTarget);
+        }
+    }
+
+    public void Attack()
+    {
+        if (_projectileObject == null || _projectileSpawnPoint == null) { return; }
+
+        Projectile clone = Instantiate(_projectileObject, _projectileSpawnPoint.position, Quaternion.identity, null).GetComponent<Projectile>();
+        if(clone == null) { return; }
+
+        clone.Parent = this;
+        clone.Target = CurTarget;
+        clone.AttackDamage = _attackDamage;
+        clone.MoveSpeed = 8f;
+        clone._team = _team;
+
+        clone.gameObject.SetActive(true);
+    }
+
+    public void OnEffect()
+    {
+        _readyParticle.Play();
+    }
 
     void Awake()
     {
+        _ani = GetComponent<Animator>();
+
         _team = _spawnMgr._isPlayer ? eTeam.PLAYER : eTeam.ENEMY;
         _canvasRectTrs = _canvas.GetComponent<RectTransform>();
         _hpCamera = _canvas.worldCamera;
@@ -65,15 +101,13 @@ public class Tower : FieldObject
     override protected void FixedUpdate()
     {
         if (CurTarget == null) { return; }
-        UnitController updateTarget = CurTarget;
 
         _attackTime -= Time.deltaTime;
         if (_attackTime <= 0)
         {
             _attackTime = _attackInterval;
 
-            updateTarget.DamageReceive(_attackDamage, this);
-            if(updateTarget.CurHealth <= 0) { _targetList.Remove(updateTarget); }
+            _ani.SetTrigger(_aniKeyOnAttack);
         }
     }
 
