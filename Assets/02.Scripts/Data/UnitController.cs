@@ -79,9 +79,9 @@ public class UnitController : FieldObject
         //데미지를 받습니다.
         float damage = Mathf.Max(statDamage - (_status._defensivePower - receiveObject.DefensiveCleavage), 0);
 
-        UnitController uc = (UnitController)receiveObject;
+        UnitController uc = receiveObject.GetComponent<UnitController>();
         
-        if (uc.Ability != null)
+        if (uc != null)
         {
             for (int i = 0; i < 4; ++i)
             {

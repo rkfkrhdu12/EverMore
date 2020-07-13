@@ -28,10 +28,10 @@ public class FieldObject : MonoBehaviour
 
     public virtual void DamageReceive(float damage, FieldObject receiveObject) { }
 
-    public float _curHp;
-    public float _maxHp;
+    [HideInInspector] public float _curHp;
+    [HideInInspector] public float _maxHp;
 
-    public float _defenseCleavage = 0.0f;
+    [HideInInspector] public float _defenseCleavage = 0.0f;
 
     [HideInInspector] public float DefaultCurHealth   = 0;            public virtual float CurHealth              { get { return _curHp; }        set { _curHp = value; } }
     [HideInInspector] public float DefaultMaxHealth   = 0;            public virtual float MaxHealth              { get { return _maxHp; }        set { _maxHp = value; } }
@@ -42,16 +42,16 @@ public class FieldObject : MonoBehaviour
     [HideInInspector] public float RemainHealth => CurHealth / MaxHealth;
 
     public Sprite[] _spriteList;
-    public Dictionary<int, Sprite> _stateSprites = new Dictionary<int, Sprite>();
+    [HideInInspector] public Dictionary<int, Sprite> _stateSprites = new Dictionary<int, Sprite>();
 
-    public Image[] _stateSpriteUIs;
+    [HideInInspector] public Image[] _stateSpriteUIs;
 
-    public List<int> _curStateNum = new List<int>();
+    [HideInInspector] public List<int> _curStateNum = new List<int>();
 
     public bool IsDead { get => _isDead; }
 
-    public bool[] _isCrowdControls = new bool[(int)eCrowdControl.Last];
-    public float[] _CCTimes = new float[(int)eCrowdControl.Last];
+    [HideInInspector] public bool[] _isCrowdControls = new bool[(int)eCrowdControl.Last];
+    [HideInInspector] public float[] _CCTimes = new float[(int)eCrowdControl.Last];
 
     public delegate void ExitCC(eCrowdControl type, FieldObject obj);
     public ExitCC ExitCCFunction;

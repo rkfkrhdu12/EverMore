@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.183
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.05351049, g: 0.13444412, b: 0.17964898, a: 0.183}
+  m_IndirectSpecularColor: {r: 0.053520735, g: 0.1344211, b: 0.1797547, a: 0.183}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7903,6 +7903,7 @@ GameObject:
   - component: {fileID: 808937282}
   - component: {fileID: 808937281}
   - component: {fileID: 808937280}
+  - component: {fileID: 808937284}
   m_Layer: 9
   m_Name: WatchTowerRed
   m_TagString: Untagged
@@ -7967,8 +7968,6 @@ MonoBehaviour:
   _brokenObject: {fileID: 342121866}
   _isBottomTower: 1
   _canvas: {fileID: 953642701}
-  x: 3
-  y: 120
 --- !u!64 &808937281
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -8030,6 +8029,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808937278}
   m_Mesh: {fileID: 3279689969012078854, guid: 81f7665112b110942994e3854db6d2b9, type: 3}
+--- !u!135 &808937284
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808937278}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &815288592
 GameObject:
   m_ObjectHideFlags: 0
@@ -10412,6 +10424,7 @@ GameObject:
   - component: {fileID: 1011622612}
   - component: {fileID: 1011622611}
   - component: {fileID: 1011622610}
+  - component: {fileID: 1011622614}
   m_Layer: 9
   m_Name: WatchTowerBlue
   m_TagString: Untagged
@@ -10476,8 +10489,6 @@ MonoBehaviour:
   _brokenObject: {fileID: 81643049}
   _isBottomTower: 1
   _canvas: {fileID: 953642701}
-  x: 3
-  y: 120
 --- !u!64 &1011622611
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10539,6 +10550,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1011622608}
   m_Mesh: {fileID: 7897998592092248639, guid: 81f7665112b110942994e3854db6d2b9, type: 3}
+--- !u!135 &1011622614
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011622608}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1020281144
 GameObject:
   m_ObjectHideFlags: 0
@@ -11072,6 +11096,7 @@ GameObject:
   - component: {fileID: 1064207678}
   - component: {fileID: 1064207677}
   - component: {fileID: 1064207676}
+  - component: {fileID: 1064207680}
   m_Layer: 9
   m_Name: WatchTowerBlue2
   m_TagString: Untagged
@@ -11136,8 +11161,6 @@ MonoBehaviour:
   _brokenObject: {fileID: 1387843141}
   _isBottomTower: 0
   _canvas: {fileID: 953642701}
-  x: 3
-  y: 120
 --- !u!64 &1064207677
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11199,6 +11222,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064207674}
   m_Mesh: {fileID: 3193836936907397828, guid: 81f7665112b110942994e3854db6d2b9, type: 3}
+--- !u!135 &1064207680
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064207674}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1070806777
 GameObject:
   m_ObjectHideFlags: 0
@@ -13879,6 +13915,7 @@ GameObject:
   - component: {fileID: 1358846597}
   - component: {fileID: 1358846596}
   - component: {fileID: 1358846595}
+  - component: {fileID: 1358846599}
   m_Layer: 9
   m_Name: WatchTowerRed2
   m_TagString: Untagged
@@ -13943,8 +13980,6 @@ MonoBehaviour:
   _brokenObject: {fileID: 918025712}
   _isBottomTower: 0
   _canvas: {fileID: 953642701}
-  x: 3
-  y: 120
 --- !u!64 &1358846596
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -14006,6 +14041,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1358846593}
   m_Mesh: {fileID: -1326604363900235600, guid: 81f7665112b110942994e3854db6d2b9, type: 3}
+--- !u!135 &1358846599
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358846593}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1378185533
 GameObject:
   m_ObjectHideFlags: 0

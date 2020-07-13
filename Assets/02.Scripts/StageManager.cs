@@ -45,7 +45,7 @@ namespace Stage
             _curStage = Mathf.Min(_stageDataList.Count, _curStage + 1);
             _isStageUpdate = false;
 
-            // UpdateStage();
+            Manager.Get<GameManager>().SetEnemyUnitData(_stageDataList[_curStage]);
         }
         
         public StageData GetStageData() { return _curStage < _stageDataList.Count ? _stageDataList[_curStage] : null; }
@@ -84,9 +84,7 @@ namespace Stage
         {
             Init();
 
-            //_IUpdateStage = UpdateStage();
-
-            //StartCoroutine(_IUpdateStage);
+            Manager.Get<GameManager>().SetEnemyUnitData(_stageDataList[_curStage]);
         }
 
         #endregion
