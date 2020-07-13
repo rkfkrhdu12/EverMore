@@ -1,106 +1,40 @@
 fileFormatVersion: 2
-guid: 5776b5c388cc2104991bf751b58ac0d6
+guid: 012e7ee9f048bb44e9045ef73a63fdda
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6982001591055265763
-    second: Custom_Caution_Bow_8
+      213: -7660271166004901702
+    second: Custom_Caution_TwoHandSword_0
   - first:
-      213: 640665607988025483
-    second: Custom_Caution_Bow_8
+      213: 7299955032049593181
+    second: Custom_Caution_TwoHandSword_1
   - first:
-      213: 33039520742963349
-    second: Custom_Caution_Bow_8
+      213: -4129691226519106856
+    second: Custom_Caution_TwoHandSword_2
   - first:
-      213: -1753919264263042304
-    second: Custom_Caution_Bow_8
+      213: -5485235229853788491
+    second: Custom_Caution_TwoHandSword_3
   - first:
-      213: -5447773218902209619
-    second: Custom_Caution_Bow_8
+      213: 8455333294713202505
+    second: Custom_Caution_TwoHandSword_4
   - first:
-      213: 9094158478846887568
-    second: Custom_Caution_Bow_8
+      213: -5848436736974506269
+    second: Custom_Caution_TwoHandSword_5
   - first:
-      213: -550425090771960966
-    second: Custom_Caution_Bow_8
+      213: -874350070650242852
+    second: Custom_Caution_TwoHandSword_6
   - first:
-      213: 3640239107774689831
-    second: Custom_Caution_Bow_8
+      213: 5954686888767502941
+    second: Custom_Caution_TwoHandSword_7
   - first:
-      213: -7699977063515299002
-    second: Custom_Caution_Bow_8
+      213: -6707856438590782631
+    second: Custom_Caution_TwoHandSword_8
   - first:
-      213: -2615259187967632915
-    second: Custom_Caution_Bow_9
+      213: 6757939878409784154
+    second: Custom_Caution_TwoHandSword_9
   - first:
-      213: -7637212631238895515
-    second: Custom_Caution_Bow_10
-  - first:
-      213: -5062695255294973525
-    second: Custom_Caution_Bow_11
-  - first:
-      213: 3591212928422863171
-    second: Custom_Caution_Bow_12
-  - first:
-      213: -7375256742552377730
-    second: Custom_Caution_Bow_14
-  - first:
-      213: 9053344192121148006
-    second: Custom_Caution_Bow_8
-  - first:
-      213: -9109264746047343234
-    second: Custom_Caution_Bow_8
-  - first:
-      213: -2763882381041267725
-    second: Custom_Caution_Bow_8
-  - first:
-      213: 46404618458613529
-    second: Custom_Caution_Bow_8
-  - first:
-      213: -8639296640207067610
-    second: Custom_Caution_Bow_8
-  - first:
-      213: -8487338385413708836
-    second: Custom_Caution_Bow_8
-  - first:
-      213: 3705916232884433100
-    second: Custom_Caution_Bow_8
-  - first:
-      213: -5529490045065790369
-    second: Custom_Caution_Bow_8
-  - first:
-      213: 3611033704194811985
-    second: Custom_Caution_Bow_9
-  - first:
-      213: -9109264746047343234
-    second: Custom_Caution_Bow_8
-  - first:
-      213: 9053344192121148006
-    second: Custom_Caution_Bow_8
-  - first:
-      213: -2763882381041267725
-    second: Custom_Caution_Bow_8
-  - first:
-      213: 46404618458613529
-    second: Custom_Caution_Bow_8
-  - first:
-      213: -8639296640207067610
-    second: Custom_Caution_Bow_8
-  - first:
-      213: -8487338385413708836
-    second: Custom_Caution_Bow_8
-  - first:
-      213: 3705916232884433100
-    second: Custom_Caution_Bow_8
-  - first:
-      213: -5529490045065790369
-    second: Custom_Caution_Bow_8
-  - first:
-      213: -9109264746047343234
-    second: Custom_Caution_Bow_1
-  - first:
-      213: 33039520742963349
-    second: Custom_Caution_Bow_2
+      213: -2804620367597117936
+    second: Custom_Caution_TwoHandSword_10
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -160,7 +94,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -172,7 +106,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -186,7 +120,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Custom_Caution_Bow_0
+      name: Custom_Caution_TwoHandSword_0
       rect:
         serializedVersion: 2
         x: 0
@@ -194,20 +128,20 @@ TextureImporter:
         width: 248
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6621ab87390f3ad70800000000000000
-      internalID: 9053344192121148006
+      spriteID: ab84c1bd5ff31b590800000000000000
+      internalID: -7660271166004901702
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Custom_Caution_Bow_1
+      name: Custom_Caution_TwoHandSword_1
       rect:
         serializedVersion: 2
         x: 248
@@ -215,146 +149,20 @@ TextureImporter:
         width: 248
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e75fbd6f9f3659180800000000000000
-      internalID: -9109264746047343234
+      spriteID: d5b24a1cc66ae4560800000000000000
+      internalID: 7299955032049593181
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Custom_Caution_Bow_3
-      rect:
-        serializedVersion: 2
-        x: 744
-        y: 0
-        width: 248
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3fb031d3e97b4a9d0800000000000000
-      internalID: -2763882381041267725
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Custom_Caution_Bow_4
-      rect:
-        serializedVersion: 2
-        x: 992
-        y: 0
-        width: 248
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 917c92f21ccd4a000800000000000000
-      internalID: 46404618458613529
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Custom_Caution_Bow_5
-      rect:
-        serializedVersion: 2
-        x: 1240
-        y: 0
-        width: 248
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6266b3b8a7d0b1880800000000000000
-      internalID: -8639296640207067610
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Custom_Caution_Bow_6
-      rect:
-        serializedVersion: 2
-        x: 1488
-        y: 0
-        width: 248
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cd3e0e0d4bae63a80800000000000000
-      internalID: -8487338385413708836
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Custom_Caution_Bow_7
-      rect:
-        serializedVersion: 2
-        x: 1736
-        y: 0
-        width: 248
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cc03e64dd2f0e6330800000000000000
-      internalID: 3705916232884433100
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Custom_Caution_Bow_8
-      rect:
-        serializedVersion: 2
-        x: 1984
-        y: 0
-        width: 248
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f5c7bcab91e4343b0800000000000000
-      internalID: -5529490045065790369
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Custom_Caution_Bow_2
+      name: Custom_Caution_TwoHandSword_2
       rect:
         serializedVersion: 2
         x: 496
@@ -362,20 +170,146 @@ TextureImporter:
         width: 248
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 598fe61e441657000800000000000000
-      internalID: 33039520742963349
+      spriteID: 8da0843a5b360b6c0800000000000000
+      internalID: -4129691226519106856
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Custom_Caution_Bow_9
+      name: Custom_Caution_TwoHandSword_3
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 0
+        width: 248
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b65b17de9780e3b0800000000000000
+      internalID: -5485235229853788491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom_Caution_TwoHandSword_4
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 0
+        width: 248
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 947e9e055d0675570800000000000000
+      internalID: 8455333294713202505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom_Caution_TwoHandSword_5
+      rect:
+        serializedVersion: 2
+        x: 1240
+        y: 0
+        width: 248
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e63a4926cd26dea0800000000000000
+      internalID: -5848436736974506269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom_Caution_TwoHandSword_6
+      rect:
+        serializedVersion: 2
+        x: 1488
+        y: 0
+        width: 248
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd8fd854e3fadd3f0800000000000000
+      internalID: -874350070650242852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom_Caution_TwoHandSword_7
+      rect:
+        serializedVersion: 2
+        x: 1736
+        y: 0
+        width: 248
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5ab9a11d2c43a250800000000000000
+      internalID: 5954686888767502941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom_Caution_TwoHandSword_8
+      rect:
+        serializedVersion: 2
+        x: 1984
+        y: 0
+        width: 248
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 953ca7ddb18e8e2a0800000000000000
+      internalID: -6707856438590782631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom_Caution_TwoHandSword_9
       rect:
         serializedVersion: 2
         x: 2232
@@ -389,8 +323,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: de9dc91ff9bb4bbd0800000000000000
-      internalID: -2615259187967632915
+      spriteID: a5bcf0aa38609cd50800000000000000
+      internalID: 6757939878409784154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Custom_Caution_TwoHandSword_10
+      rect:
+        serializedVersion: 2
+        x: 2480
+        y: 0
+        width: 248
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01e5c8b92acf319d0800000000000000
+      internalID: -2804620367597117936
       vertices: []
       indices: 
       edges: []
@@ -398,7 +353,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 20e44b782070b3340a9afa82d33b4220
+    spriteID: aaf1a1019a1aeac4dab758bf928239cf
     internalID: 0
     vertices: []
     indices: 

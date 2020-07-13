@@ -199,6 +199,9 @@ public class ItemInventorySystem : MonoBehaviour
         _saveAnimator.SetTrigger("OnAnimation");
     }
 
+    public eItemType[] _errorAniTypes;
+    public GameObject[] _errorAnimations;
+
     public void OnEquiped(ItemSlot curSlot)
     {
         int itemCode = curSlot.ItemNumber;
@@ -208,8 +211,29 @@ public class ItemInventorySystem : MonoBehaviour
 
         switch (_curType)
         {
-            case eCodeType.RightWeapon:  if (!UnitAnimationManager.Update(itemCode, _equipedItems[3], null)) { return; } break;
-            case eCodeType.LeftWeapon:   if (!UnitAnimationManager.Update(_equipedItems[2], itemCode, null)) { return; } break; 
+            case eCodeType.RightWeapon:
+                if (!UnitAnimationManager.Update(itemCode, _equipedItems[3], null))
+                {
+                    if(itemCode == 0 || _equipedItems[3] == 0) { return; }
+
+                    for (int j = 0; j < _errorAniTypes.Length; ++j)
+                        if (i.AniType == _errorAniTypes[j]) 
+                            _errorAnimations[j].SetActive(true);
+
+                    return;
+                }
+                break;
+            case eCodeType.LeftWeapon:   if (!UnitAnimationManager.Update(_equipedItems[2], itemCode, null))
+                {
+                    if (itemCode == 0 || _equipedItems[2] == 0) { return; }
+
+                    for (int j = 0; j < _errorAniTypes.Length; ++j)
+                        if (i.AniType == _errorAniTypes[j])
+                            _errorAnimations[j].SetActive(true);
+
+                    return;
+                }
+                break;
         }
 
         if (_prevSlot != null)
@@ -229,13 +253,13 @@ public class ItemInventorySystem : MonoBehaviour
     public void OnDetailUIEnable()
     {
         int i = 0;
-        _detailUIStatusTexts[i++].text = _unitStatus.Health.ToString();
+        _detailUIStatusTexts[i++].text = ((int)_unitStatus.Health).ToString();
         _detailUIStatusTexts[i++].text = _unitStatus._cost.ToString();
-        _detailUIStatusTexts[i++].text = _unitStatus.AttackSpeed.ToString();
+        _detailUIStatusTexts[i++].text = ((int)_unitStatus.AttackSpeed).ToString();
         _detailUIStatusTexts[i++].text = ((int)_unitStatus._minAttackDamage).ToString() + "~" + ((int)_unitStatus._maxAttackDamage).ToString();
-        _detailUIStatusTexts[i++].text = _unitStatus._defensivePower.ToString();
-        _detailUIStatusTexts[i++].text = _unitStatus._attackRange.ToString();
-        _detailUIStatusTexts[i++].text = _unitStatus._coolTime.ToString();
+        _detailUIStatusTexts[i++].text = ((int)_unitStatus._defensivePower).ToString();
+        _detailUIStatusTexts[i++].text = ((int)_unitStatus._attackRange).ToString();
+        _detailUIStatusTexts[i++].text = ((int)_unitStatus._coolTime).ToString();
         _detailUIStatusTexts[i++].text = _unitStatus._weight.ToString();
 
         for (int j = 0; j < 4; ++j) _detailUIStatusTexts[i + j].gameObject.SetActive(false);
@@ -276,11 +300,11 @@ public class ItemInventorySystem : MonoBehaviour
         if(_simpleUIStatusTexts.Length < 4) { return; }
 
         int i = 0;
-        _simpleUIStatusTexts[i++].text = _unitStatus._coolTime.ToString();
+        _simpleUIStatusTexts[i++].text = ((int)_unitStatus._coolTime).ToString();
         _simpleUIStatusTexts[i++].text = ((int)_unitStatus._minAttackDamage).ToString() + "~" + ((int)_unitStatus._maxAttackDamage).ToString();
-        _simpleUIStatusTexts[i++].text = _unitStatus.Health.ToString();
+        _simpleUIStatusTexts[i++].text = ((int)_unitStatus.Health).ToString();
         _simpleUIStatusTexts[i++].text = _unitStatus._cost.ToString();
-        _simpleUIStatusTexts[i++].text = _unitStatus._defensivePower.ToString();
+        _simpleUIStatusTexts[i++].text = ((int)_unitStatus._defensivePower).ToString();
     }
 
     private void UpdateInventory()
