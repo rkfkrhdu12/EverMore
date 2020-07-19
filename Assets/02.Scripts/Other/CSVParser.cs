@@ -1,31 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System;
 using System.Text.RegularExpressions;
-using UnityEngine.Events;
-using UnityEngine.AddressableAssets;
-using System.Threading.Tasks;
 
 public class CSVParser
 {
-    //IEnumerator LoadItemList(UnityAction<TextAsset> ppap)
-    //{
-    //    Addressables.LoadAssetAsync<TextAsset>("ItemList").Completed += op =>
-    //    {
-    //         ppap(op.Result);
-    //    };
-
-    //    yield return null;
-    //  }
-
-
-    //private async void da()
-    //{
-    //    await Addressables.LoadAssetAsync<TextAsset>("ItemList");
-
-    //}
-
     public static List<string> Read(string fileName)
     {
         var list = new List<string>();

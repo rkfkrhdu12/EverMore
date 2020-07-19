@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class ItemAbilityManager
 {
@@ -32,31 +30,24 @@ public class ItemAbilityManager
         abilityList.Add(new ItemAbilityLife());                 // 생명
         abilityList.Add(new ItemAbilityQuick());                // 신속
         abilityList.Add(new ItemAbilityWither());               // 쇄약
-
         abilityList.Add(new ItemAbilityFlame());                // 불길
         abilityList.Add(new ItemAbility());                     // 독약
         abilityList.Add(new ItemAbility());                     // 개전
         abilityList.Add(new ItemAbility());                     // 원시
         abilityList.Add(new ItemAbility());                     // 광기
         abilityList.Add(new ItemAbilityIncreaseMorale());       // 사기진작
-
         abilityList.Add(new ItemAbilityLifesteal());            // 흡혈
-
         abilityList.Add(new ItemAbility());                     // 단말마 X
         abilityList.Add(new ItemAbility());                     // 돌파
         abilityList.Add(new ItemAbility());                     // 약탈
-
         abilityList.Add(new ItemAbilityColdBlow());             // 차가운일격
         abilityList.Add(new ItemAbilityHotBlow());              // 뜨거운일격
         abilityList.Add(new ItemAbilityMeanBlow());             // 비열한일격
-
         abilityList.Add(new ItemAbility());                     // 은신
         abilityList.Add(new ItemAbility());                     // 피로
-
         abilityList.Add(new ItemAbilityDefenceSpiral());        // 파괴
         abilityList.Add(new ItemAbilityDefencePenetrate());     // 관통
         abilityList.Add(new ItemAbilityDemolish());             // 철거
-
         abilityList.Add(new ItemAbility());                     // 반격
 
         int index = 0;
